@@ -67,6 +67,8 @@ class Cart {
   }
 
   async getDates(): Promise<Array<CartBookableDate>> {
+    // TODO: TZ selection
+    // Intl.DateTimeFormat().resolvedOptions().timeZone
     const response = await this.client.request(getDatesQuery, {
       id: this.cart.id
     });
