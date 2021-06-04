@@ -1,0 +1,8 @@
+overwrite: true
+schema: "./schema.json"
+generates:
+  src/graph.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-document-nodes"

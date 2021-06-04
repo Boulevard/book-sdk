@@ -1,0 +1,42 @@
+{
+  "name": "blvd-book",
+  "version": "0.0.1",
+  "description": "A JS client for the Boulevard API",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "npx jest",
+    "gen": "exec scripts/gen-schemas.sh && graphql-codegen --config codegen.yml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boulevard/blvd-js.git"
+  },
+  "author": {
+    "name": "James Bradley",
+    "email": "jbradley@blvd.co"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Boulevard/blvd-js/issues"
+  },
+  "homepage": "https://github.com/Boulevard/blvd-js#readme",
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.13.0",
+    "@boulevard/eslint-config": "^2.2.0",
+    "@graphql-codegen/cli": "1.21.5",
+    "@graphql-codegen/introspection": "1.18.2",
+    "@graphql-codegen/typescript": "1.22.1",
+    "@graphql-codegen/typescript-document-nodes": "1.17.12",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.18.1",
+    "@graphql-codegen/typescript-operations": "1.18.0",
+    "@types/jest": "^26.0.22",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.4",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0"
+  }
+}
