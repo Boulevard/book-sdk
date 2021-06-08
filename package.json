@@ -1,8 +1,8 @@
 {
-  "name": "blvd-book",
+  "name": "@boulevard/book-sdk",
   "version": "0.0.1",
   "description": "A JS client for the Boulevard API",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "scripts": {
     "build": "yarn run clean && yarn run rollup -c rollup.config.js",
     "clean": "rm -rf lib*",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Boulevard/blvd-js.git"
+    "url": "git+https://github.com/Boulevard/book-sdk.git"
   },
   "author": {
     "name": "James Bradley",
@@ -19,9 +19,9 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Boulevard/blvd-js/issues"
+    "url": "https://github.com/Boulevard/book-sdk/issues"
   },
-  "homepage": "https://github.com/Boulevard/blvd-js#readme",
+  "homepage": "https://github.com/Boulevard/book-sdk#readme",
   "devDependencies": {
     "@babel/preset-typescript": "^7.13.0",
     "@boulevard/eslint-config": "^2.2.0",
