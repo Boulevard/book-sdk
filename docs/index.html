@@ -1,0 +1,179 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@boulevard/book-sdk</title>
+	<meta name="description" content="Documentation for @boulevard/book-sdk">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@boulevard/book-sdk</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@boulevard/book-sdk</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#blvd-book-sdk" id="blvd-book-sdk" style="color: inherit; text-decoration: none;">
+					<h1>Blvd Book SDK</h1>
+				</a>
+				<p>Boulevard is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses.</p>
+				<p>Use this SDK to create your own custom booking experiences for Boulevard.</p>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting Started</h2>
+				</a>
+				<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
+					<h3>Setup</h3>
+				</a>
+				<p>Head over to the <a href="https://developers.joinblvd.com/getting-started/introduction">Boulevard Developer Portal</a> to get set up with a sandbox account and API application. You&#39;ll need your business ID and and API key to use this package:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">businessId</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;312bf55a-b6c5-48f2-ab40-eef5d78277ac&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">apiKey</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span style="color: #000000">;</span>
+</code></pre>
+				<a href="#client-side" id="client-side" style="color: inherit; text-decoration: none;">
+					<h3>Client-Side</h3>
+				</a>
+				<p>The simplest flow is the unauthenticated client API, which you can use to create an appointment for a new client:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Blvd</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;blvd-book&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Step 1: Create a `business` object to interact with the API.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Blvd</span><span style="color: #000000">(</span><span style="color: #001080">businessId</span><span style="color: #000000">, </span><span style="color: #001080">apiKey</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">// Step 2: Choose a location and start by creating a cart</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locations</span><span style="color: #000000"> = </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">locations</span><span style="color: #000000">.</span><span style="color: #795E26">list</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cart</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">carts</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">locations</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]);</span>
+
+<span style="color: #008000">// Step 3: Select and add items to the card</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">item</span><span style="color: #000000"> = </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #001080">availableCategories</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">availableItems</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">];</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">addItem</span><span style="color: #000000">(</span><span style="color: #001080">item</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">// Step 4: Find available timeslots</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">dates</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">getBookableDates</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">times</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">getBookableTimes</span><span style="color: #000000">(</span><span style="color: #001080">dates</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]);</span>
+
+<span style="color: #008000">// Step 5: Reserve a timeslot, add details, and book!</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">reserve</span><span style="color: #000000">(</span><span style="color: #001080">times</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]);</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">email:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;john.doe@gmail.com&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;John&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">lastName:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Doe&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">phoneNumber:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;+13105555555&quot;</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">book</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">card:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;John Doe&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">number:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;4242424242424242&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">cvv:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;111&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">exp_month:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">exp_year:</span><span style="color: #000000"> </span><span style="color: #098658">2020</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/appointments.html" class="tsd-kind-icon">Appointments</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/blvd.html" class="tsd-kind-icon">Blvd</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/businesses.html" class="tsd-kind-icon">Businesses</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/cart.html" class="tsd-kind-icon">Cart</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/carts.html" class="tsd-kind-icon">Carts</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/clients.html" class="tsd-kind-icon">Clients</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/locations.html" class="tsd-kind-icon">Locations</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/memberships.html" class="tsd-kind-icon">Memberships</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

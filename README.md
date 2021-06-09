@@ -20,7 +20,7 @@ const apiKey = "00000000-0000-0000-0000-000000000000";
 The simplest flow is the unauthenticated client API, which you can use to create an appointment for a new client:
 
 ```js
-import Blvd from "blvd-book";
+import { Blvd } from "blvd-book";
 
 // Step 1: Create a `business` object to interact with the API.
 const client = new Blvd(businessId, apiKey);
