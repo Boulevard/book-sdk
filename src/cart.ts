@@ -44,6 +44,7 @@ class Cart {
 
   /**
    * @async
+   * @category Checkout & Paymment
    * @description Add a credit card payment method to a cart.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -81,6 +82,7 @@ class Cart {
 
   /**
    * @async
+   * @category Offers
    * @description Add an offer to a cart
    * @param offerCode The offer code identifier
    * @public
@@ -93,6 +95,7 @@ class Cart {
 
   /**
    * @async
+   * @category Bookable Items
    * @description Add a bookable item to a cart
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -109,6 +112,7 @@ class Cart {
 
   /**
    * @async
+   * @category Gift Cards
    * @description Add a gift card item to a cart
    * @param price Price applied to the gift card item
    * @public
@@ -129,6 +133,7 @@ class Cart {
 
   /**
    * @async
+   * @category Purchasable Items
    * @description Add a purchasable item to a cart
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -145,6 +150,7 @@ class Cart {
 
   /**
    * @async
+   * @category Gift Cards
    * @description Create an email fulfillment for a gift card item. A digital copy of the gift card will be sent to the recipient after the order is completed.
    * @public
    * @param itemId ID - ID of the CartGiftCardItem.
@@ -164,6 +170,7 @@ class Cart {
 
   /**
    * @async
+   * @category Guests
    * @description Add a guest to a cart.
    * @public
    * @todo Implement
@@ -174,6 +181,7 @@ class Cart {
 
   /**
    * @async
+   * @category Gift Cards
    * @description Delete a gift card item email fulfillment.
    * @public
    * @param itemId ID - ID of the CartGiftCardItem.
@@ -187,6 +195,7 @@ class Cart {
 
   /**
    * @async
+   * @category Guests
    * @description Delete a cart's guest. Using this invalidates existing reservations.
    * @public
    * @todo Implement
@@ -197,12 +206,13 @@ class Cart {
 
   /**
    * @async
+   * @category Bookable Items
    * @description Retrieves available dates for all bookable cart items.
    * @public
    * @returns {Promise} Promise containing the list of Bookable Dates
    * @todo Implement Arguments
    */
-  async getDates(): Promise<Array<CartBookableDate>> {
+  async getBookableDates(): Promise<Array<CartBookableDate>> {
     // TODO: TZ selection
     // Intl.DateTimeFormat().resolvedOptions().timeZone
     const response = await this.client.request(getDatesQuery, {
@@ -214,6 +224,7 @@ class Cart {
 
   /**
    * @async
+   * @category Bookable Items
    * @description Retrieves available staff variants for a specific bookable cart item, given a time that was retrieved earlier using `getTimes`. In other words, returns all variants that can be selected for the item while still keeping the overall starting time.
    * @public
    * @param {timeId} ID - ID of the bookable time.
@@ -221,7 +232,7 @@ class Cart {
    * @returns {Promise} Promise containing the list of Bookable Item Staff Variants
    * @todo Implement
    */
-  async getStaffVariants(
+  async getBookableStaffVariants(
     time: Scalars["ID"],
     itemId: Scalars["ID"]
   ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
@@ -230,12 +241,15 @@ class Cart {
 
   /**
    * @async
+   * @category Bookable Items
    * @description Retrieves available times for all bookable cart items, given a date that was retrieved earlier using `getDates`.
    * @public
    * @param {date} Date - an ISO8601 string for the date that should be searched through.
    * @returns {Promise} Promise containing the list of Bookable Times
    */
-  async getTimes(date: Scalars["Date"]): Promise<Array<CartBookableTime>> {
+  async getBookableTimes(
+    date: Scalars["Date"]
+  ): Promise<Array<CartBookableTime>> {
     const response = await this.client.request(getTimesQuery, {
       id: this.cart.id,
       searchDate: date
@@ -246,6 +260,7 @@ class Cart {
 
   /**
    * @async
+   * @category Offers
    * @description Remove an offer from the cart.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -262,12 +277,13 @@ class Cart {
    * @returns {Promise} Promise containing the updated cart
    * @todo Implement
    */
-  async removeSelectedItem(item: CartBookableItem): Promise<Cart> {
+  async removeSelectedItem(id: Scalars["ID"]): Promise<Cart> {
     return undefined;
   }
 
   /**
    * @async
+   * @category Bookable Items
    * @description Reserve one starting time for bookable cart items, i.e. all bookable items are to be performed starting at this time. Note that this call may fail if the time is no longer available.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -284,6 +300,7 @@ class Cart {
 
   /**
    * @async
+   * @category Checkout & Paymment
    * @description Select an available payment method to be used with all selected cart items. Note that this call may fail if the payment method is not compatible with all items.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -295,6 +312,7 @@ class Cart {
 
   /**
    * @async
+   * @category Details
    * @description Take ownership of a cart, linking the cart to a Boulevard account.
    * @protected
    * @returns {Promise} Promise containing the updated cart
@@ -306,6 +324,7 @@ class Cart {
 
   /**
    * @async
+   * @category Details
    * @description Cart fields to update. Only some fields can be updated, there are other operations available to update more fields.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -326,6 +345,7 @@ class Cart {
 
   /**
    * @async
+   * @category Gift Cards
    * @description Update a gift card item email fulfillment.
    * @public
    * @todo Implement
@@ -345,6 +365,7 @@ class Cart {
 
   /**
    * @async
+   * @category Guests
    * @description Update a cart's guest.
    * @public
    * @todo Implement
@@ -363,6 +384,7 @@ class Cart {
 
   /**
    * @async
+   * @category Bookable Items
    * @description Update a cart's selected bookable item.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -382,6 +404,7 @@ class Cart {
 
   /**
    * @async
+   * @category Gift Card Items
    * @description Update a cart's selected gift card item.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -399,7 +422,8 @@ class Cart {
 
   /**
    * @async
-   * @description Update a cart's selected gift card item.
+   * @category Purchasable Items
+   * @description Update a cart's selected purchasable item.
    * @public
    * @returns {Promise} Promise containing the updated cart
    * @todo Implement
@@ -415,6 +439,7 @@ class Cart {
 
   /**
    * @async
+   * @category Checkout & Paymment
    * @description Completes the checkout process.
    * @public
    * @returns {Promise} Promise containing the updated cart
