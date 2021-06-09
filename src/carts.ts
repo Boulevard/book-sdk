@@ -18,7 +18,8 @@ import {
   CartBookableTime,
   CartBookableDate,
   Scalars,
-  CartClientInformationInput
+  CartClientInformationInput,
+  CartAvailableBookableItemStaffVariant
 } from "./graph";
 
 type AddItemType = "ProductLocation" | "Service";
@@ -66,6 +67,13 @@ class Cart {
     return newCart;
   }
 
+  /**
+   * @async
+   * @description Retrieves available dates for all bookable cart items.
+   * @public
+   * @returns {Promise} Promise containing the list of Bookable Dates
+   * @todo Implement Arguments
+   */
   async getDates(): Promise<Array<CartBookableDate>> {
     // TODO: TZ selection
     // Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -76,6 +84,29 @@ class Cart {
     return response.cartBookableDates;
   }
 
+  /**
+   * @async
+   * @description Retrieves available staff variants for a specific bookable cart item, given a time that was retrieved earlier using `getTimes`. In other words, returns all variants that can be selected for the item while still keeping the overall starting time.
+   * @public
+   * @param {timeId} ID - ID of the bookable time.
+   * @param {itemId} ID - ID of the selected bookable item.
+   * @returns {Promise} Promise containing the list of Bookable Item Staff Variants
+   * @todo Implement
+   */
+  async getStaffVariants(
+    timeId: Scalars["ID"],
+    itemId: Scalars["ID"]
+  ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
+    return undefined;
+  }
+
+  /**
+   * @async
+   * @description Retrieves available times for all bookable cart items, given a date that was retrieved earlier using `getDates`.
+   * @public
+   * @param {date} Date - an ISO8601 string for the date that should be searched through.
+   * @returns {Promise} Promise containing the list of Bookable Times
+   */
   async getTimes(date: Scalars["Date"]): Promise<Array<CartBookableTime>> {
     const response = await this.client.request(getTimesQuery, {
       id: this.cart.id,
@@ -136,5 +167,16 @@ export default class Carts {
     });
 
     return new Cart(this.client, response.createCart.cart);
+  }
+
+  /**
+   * @async
+   * @description Retrieves a cart by ID
+   * @param {id} ID the ID of the cart
+   * @protected
+   * @todo Implement
+   */
+  private async get(id: Scalars["ID"]): Promise<Array<Cart>> {
+    return undefined;
   }
 }
