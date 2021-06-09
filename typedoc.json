@@ -1,6 +1,6 @@
 {
   "excludePrivate": false,
   "excludeInternal": true,
-  "entryPoints": ["./src/index.ts"],
+  "entryPoints": ["./src/blvd.ts", "./src/graph.d.ts"],
   "out": "docs"
 }

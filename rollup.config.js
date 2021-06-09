@@ -5,7 +5,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default [
   {
-    input: "src/index.ts",
+    input: "src/blvd.ts",
     output: {
       sourcemap: true,
       dir: "lib",
@@ -15,7 +15,7 @@ export default [
     plugins: [typescript()]
   },
   {
-    input: "src/index.ts",
+    input: "src/blvd.ts",
     output: {
       sourcemap: true,
       file: "lib/index.umd.js",

@@ -1,0 +1,274 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CartErrorCode | @boulevard/book-sdk</title>
+	<meta name="description" content="Documentation for @boulevard/book-sdk">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@boulevard/book-sdk</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@boulevard/book-sdk</a>
+				</li>
+				<li>
+					<a href="../modules/graph.html">graph</a>
+				</li>
+				<li>
+					<a href="graph.carterrorcode.html">CartErrorCode</a>
+				</li>
+			</ul>
+			<h1>Enumeration CartErrorCode</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Machine-readable cart validation error code.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Enumeration members</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="graph.carterrorcode.html#cartgiftcarditemprice" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="graph.carterrorcode.html#cartmissingclientinformation" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="graph.carterrorcode.html#cartmissingitempaymentmethod" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="graph.carterrorcode.html#cartmissingitemtime" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="graph.carterrorcode.html#cartmissingitems" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Items</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cartgiftcarditemprice" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_GIFT_CARD_ITEM_PRICE&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/849247c/src/graph.d.ts#L912">graph.d.ts:912</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>One or more gift card items do not have a valid price.</p>
+						</div>
+						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
+							<h2>Resolution</h2>
+						</a>
+						<p>All gift card items in the cart must have a price in the acceptable range.
+							See cartAvailableGiftCardItem.minPrice and cartAvailableGiftCardItem.maxPrice
+						for upper and lower bound price limits.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cartmissingclientinformation" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Missing<wbr>Client<wbr>Information</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_CLIENT_INFORMATION&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/849247c/src/graph.d.ts#L923">graph.d.ts:923</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This cart is not associated with an existing client, therefore separate
+							client information is required.</p>
+						</div>
+						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
+							<h2>Resolution</h2>
+						</a>
+						<p>Anonymous carts cannot be checked out. Either an existing user needs to own
+							the cart, or client information must be added using the <code>clientInformation</code>
+						field.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cartmissingitempaymentmethod" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_PAYMENT_METHOD&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/849247c/src/graph.d.ts#L933">graph.d.ts:933</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>One or more cart items is missing a payment method.</p>
+						</div>
+						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
+							<h2>Resolution</h2>
+						</a>
+						<p>All items in the cart that require payment must have a payment method set
+							before checking out. These items will each have a separate item-specific
+						validation error with the same code.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cartmissingitemtime" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Missing<wbr>Item<wbr>Time</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_TIME&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/849247c/src/graph.d.ts#L946">graph.d.ts:946</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>One or more bookable items is missing a reserved time.</p>
+						</div>
+						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
+							<h2>Resolution</h2>
+						</a>
+						<p>All bookable items in the cart must have a reserved time before checking
+							out. These items will each have a separate item-specific validation error
+						with the same code.</p>
+						<p>Note that times are only reserved temporarily and will expire unless the
+						cart is checked out before the expiration time.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cartmissingitems" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Missing<wbr>Items</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEMS&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/849247c/src/graph.d.ts#L955">graph.d.ts:955</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>No cart items have been selected, at least one is required.</p>
+						</div>
+						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
+							<h2>Resolution</h2>
+						</a>
+						<p>Add one or more items to the cart before checking out, empty carts cannot be
+						checked out.</p>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/blvd.html">blvd</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/graph.html">graph</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-enum tsd-parent-kind-module">
+						<a href="graph.carterrorcode.html" class="tsd-kind-icon">Cart<wbr>Error<wbr>Code</a>
+						<ul>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="graph.carterrorcode.html#cartgiftcarditemprice" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="graph.carterrorcode.html#cartmissingclientinformation" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="graph.carterrorcode.html#cartmissingitempaymentmethod" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="graph.carterrorcode.html#cartmissingitemtime" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="graph.carterrorcode.html#cartmissingitems" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Items</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

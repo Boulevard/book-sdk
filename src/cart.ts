@@ -33,6 +33,9 @@ import {
 class Cart {
   availableCategories: Array<CartAvailableCategory>;
   selectedItems: Array<CartItem>;
+  /**
+   * @internal
+   */
   private paymentToken?: string;
   /**
    * @internal
