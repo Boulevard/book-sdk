@@ -1,22 +1,60 @@
 import { gql } from "graphql-request";
 
-export const addItemMutation = (mutation: string) => gql` 
-mutation AddItem($id: ID!, $itemId: ID!) {
-  ${mutation}(input: { id: $id, itemId: $itemId }) {
-    cart {
-      id
-      selectedItems {
+export const addBookableItemMutation = gql`
+  mutation AddCartBookableItem($id: ID!, $itemId: ID!) {
+    addCartSelectedBookableItem(input: { id: $id, itemId: $itemId }) {
+      cart {
         id
-        price
-        lineTotal
-        item {
+        selectedItems {
           id
-          name
+          price
+          lineTotal
+          item {
+            id
+            name
+          }
         }
       }
     }
   }
-}
+`;
+
+export const addGiftCardItemMutation = gql`
+  mutation AddCartGiftCardItem($id: ID!, $itemId: ID!) {
+    addCartSelectedGiftCardItem(input: { id: $id, itemId: $itemId }) {
+      cart {
+        id
+        selectedItems {
+          id
+          price
+          lineTotal
+          item {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const addPurchasableItemMutation = gql`
+  mutation AddCartPurchasableItem($id: ID!, $itemId: ID!) {
+    addCartSelectedPurchasableItem(input: { id: $id, itemId: $itemId }) {
+      cart {
+        id
+        selectedItems {
+          id
+          price
+          lineTotal
+          item {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const getDatesQuery = gql`
