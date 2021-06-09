@@ -8,7 +8,7 @@ import {
   reserveCartMutation,
   updateCartMutation
 } from "./carts/graph";
-import Client from "./client";
+import { Client } from "./client";
 import {
   Location,
   // TODO: Handle the naming conflicts between the generated types and the SDK
@@ -37,6 +37,9 @@ type PaymentDetails = {
 class Cart {
   availableCategories: Array<CartAvailableCategory>;
   selectedItems: Array<CartItem>;
+  /**
+   * @internal
+   */
   constructor(private client: Client, private cart: GraphQLCart) {
     this.availableCategories = cart.availableCategories;
     this.selectedItems = [];
@@ -158,7 +161,11 @@ class Cart {
   }
 }
 
-export default class Carts {
+class Carts {
+  /**
+   * @internal
+   * @param client
+   */
   constructor(private client: Client) {}
 
   async create(location: Location): Promise<Cart> {
@@ -180,3 +187,5 @@ export default class Carts {
     return undefined;
   }
 }
+
+export { Cart, Carts };

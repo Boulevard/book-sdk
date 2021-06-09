@@ -1,7 +1,10 @@
-import GraphClient from "./client";
+import { Client as GraphClient } from "./client";
 import { Client } from "./graph";
 
-export default class Clients {
+class Clients {
+  /**
+   * @internal
+   */
   constructor(private client: GraphClient) {}
 
   /**
@@ -15,3 +18,5 @@ export default class Clients {
     return undefined;
   }
 }
+
+export { Clients };

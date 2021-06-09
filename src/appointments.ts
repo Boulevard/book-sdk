@@ -1,7 +1,11 @@
-import Client from "./client";
+import { Client } from "./client";
 import { Appointment, Scalars } from "./graph";
 
-export default class Appointments {
+class Appointments {
+  /**
+   * @internal
+   * @param client
+   */
   constructor(private client: Client) {}
 
   /**
@@ -26,3 +30,4 @@ export default class Appointments {
     return undefined;
   }
 }
+export { Appointments };

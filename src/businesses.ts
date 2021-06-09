@@ -1,7 +1,11 @@
-import Client from "./client";
+import { Client } from "./client";
 import { Business } from "./graph";
 
-export default class Businesses {
+class Businesses {
+  /**
+   * @internal
+   * @param client
+   */
   constructor(private client: Client) {}
 
   /**
@@ -15,3 +19,5 @@ export default class Businesses {
     return undefined;
   }
 }
+
+export { Businesses };

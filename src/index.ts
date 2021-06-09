@@ -1,12 +1,12 @@
-import Appointments from "./appointments";
-import Businesses from "./businesses";
-import Carts from "./carts";
-import Client from "./client";
-import Clients from "./clients";
-import Locations from "./locations";
-import Memberships from "./memberships";
+import { Appointments } from "./appointments";
+import { Businesses } from "./businesses";
+import { Cart, Carts } from "./carts";
+import { Client } from "./client";
+import { Clients } from "./clients";
+import { Locations } from "./locations";
+import { Memberships } from "./memberships";
 
-export default class Blvd {
+class Blvd {
   appointments: Appointments;
   businesses: Businesses;
   carts: Carts;
@@ -23,3 +23,14 @@ export default class Blvd {
     this.memberships = new Memberships(client);
   }
 }
+
+export {
+  Blvd,
+  Appointments,
+  Businesses,
+  Cart,
+  Carts,
+  Clients,
+  Locations,
+  Memberships
+};

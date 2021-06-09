@@ -1,7 +1,10 @@
-import Client from "./client";
+import { Client } from "./client";
 import { Membership } from "./graph";
 
-export default class Memberships {
+class Memberships {
+  /**
+   * @internal
+   */
   constructor(private client: Client) {}
 
   /**
@@ -15,3 +18,5 @@ export default class Memberships {
     return undefined;
   }
 }
+
+export { Memberships };

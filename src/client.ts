@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
 
-export default class Client {
+class Client {
   private client: GraphQLClient;
   constructor(businessID: string, private apiKey: string) {
     this.client = new GraphQLClient(
@@ -22,3 +22,5 @@ export default class Client {
     return { Authorization: `Basic ${this.token()}` };
   }
 }
+
+export { Client };
