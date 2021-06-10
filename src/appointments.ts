@@ -13,17 +13,29 @@ import {
 } from "./graph";
 
 class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
+  /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
+  /** Information about the cancellation, if present */
   cancellation?: AppointmentCancellation;
+  /** Boolean signifying if the appointment is cancelled or not */
   cancelled: Scalars["Boolean"];
+  /** The client of the appointment */
   client: Client;
+  /** When the appointment was created (in Etc/UTC) */
   createdAt: Scalars["DateTime"];
+  /** The duration of the appointment */
   duration: Scalars["Int"];
+  /** End time for the appointment */
   endAt: Scalars["DateTime"];
+  /** The ID of an object */
   id: Scalars["ID"];
+  /** The Location where this appointment was booked. */
   location: Location;
+  /** Internal notes on the appointment */
   notes?: Scalars["String"];
+  /** Start time for the appointment */
   startAt: Scalars["DateTime"];
+  /** The state of the appointment. */
   state: AppointmentState;
 
   /**
