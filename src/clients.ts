@@ -1,5 +1,5 @@
 import { PlatformClient } from "./platformClient";
-import { Client } from "./graph";
+import { Client } from "./client";
 
 class Clients {
   /**
@@ -8,10 +8,12 @@ class Clients {
   constructor(private platformClient: PlatformClient) {}
 
   /**
+   * Look up the authenticated client
+   *
    * @async
-   * @description Look up the authenticated client
+   * @description
    * @protected
-   * @returns {Promise} Promise containing the Client
+   * @returns Promise containing the Client
    * @todo Implement
    */
   private async get(): Promise<Client> {

@@ -6,6 +6,7 @@ import { PlatformClient } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Memberships } from "./memberships";
+import { Client } from "./client";
 
 class Blvd {
   appointments: Appointments;
@@ -32,6 +33,7 @@ export {
   Businesses,
   Cart,
   Carts,
+  Client,
   Clients,
   Locations,
   Memberships
