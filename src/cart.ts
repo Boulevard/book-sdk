@@ -1,4 +1,3 @@
-import { gql } from "graphql-request";
 import {
   addBookableItemMutation,
   addCardPaymentMethodMutation,
@@ -34,7 +33,8 @@ import {
   CartClientInformation,
   CartAdvanceGratuity,
   CartAvailableItem,
-  Location
+  Location,
+  CreateCartGuestInput
 } from "./graph";
 
 class Cart implements Omit<GraphCart, "startTimeId"> {
@@ -140,15 +140,19 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
    * @internal
    */
   constructor(private platformClient: PlatformClient, cart: GraphCart) {
+    // TODO:
+    // Intl.DateTimeFormat().resolvedOptions().timeZone
+
     Object.assign(this, cart);
   }
 
   /**
+   * Add a credit card payment method to a cart.
+   *
    * @async
    * @category Checkout & Payment
-   * @description Add a credit card payment method to a cart.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    */
   async addCardPaymentMethod(details: {
     card: {
@@ -182,46 +186,65 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Add an offer to a cart
+   *
    * @async
    * @category Offers
-   * @description Add an offer to a cart
    * @param offerCode The offer code identifier
    * @public
-   * @returns {Promise} Promise containing the updated cart
    * @todo Implement
+   * @todo Confirm return type
    */
-  async addOffer(offerCode: string) {
+  async addOffer(offerCode: string): Promise<Cart> {
     return undefined;
   }
 
   /**
+   * Add a bookable item to a cart
+   *
    * @async
    * @category Bookable Items
-   * @description Add a bookable item to a cart
+   * @param item The bookable item
+   * @param opts.discountCode Optional discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
+   * @param opts.guest The guest this item is booked for. A null value indicates the cart owner, or current client. When finding available times for bookable items, it's assumed that two items having different guests can be booked simultaneously.
+   * @param opts.options Selected bookable item options. Note that the selections must conform to the option group requirements, e.g. limits on the number of options. Otherwise an error is returned.
+   * @param opts.staffVariant The selected bookable item staff variant.
    * @public
-   * @returns {Promise} Promise containing the updated cart
-   * @todo Implement optional arguments
+   * @returns Promise containing the updated cart
    */
-  async addBookableItem(item: CartItem): Promise<Cart> {
+  async addBookableItem(
+    item: CartBookableItem,
+    opts?: {
+      discountCode?: string;
+      guest?: CartGuest;
+      options?: Array<CartAvailableBookableItemOption>;
+      staffVariant?: CartAvailableBookableItemStaffVariant;
+    }
+  ): Promise<Cart> {
     await this.platformClient.request(addBookableItemMutation, {
       id: this.id,
-      itemId: item.id
+      itemId: item.id,
+      itemDiscountCode: opts?.discountCode,
+      itemGuestId: opts?.guest?.id,
+      itemOptionIds: opts?.options,
+      itemStaffVariantId: opts?.staffVariant?.id
     });
 
     return this;
   }
 
   /**
+   * Add a gift card item to a cart
+   *
    * @async
    * @category Gift Cards
-   * @description Add a gift card item to a cart
+   * @param item The gift card item
    * @param price Price applied to the gift card item
    * @public
-   * @returns {Promise} Promise containing the updated cart
-   * @todo Implement optional arguments
+   * @returns Promise containing the updated cart
    */
   async addGiftCardItem(
-    item: CartItem,
+    item: CartGiftCardItem,
     price: Scalars["Money"]
   ): Promise<Cart> {
     await this.platformClient.request(addGiftCardItemMutation, {
@@ -233,88 +256,133 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Add a purchasable item to a cart
+   *
    * @async
    * @category Purchasable Items
-   * @description Add a purchasable item to a cart
+   * @description
+   * @param item The purchasable item
+   * @param opts.discountCode Discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
    * @public
-   * @returns {Promise} Promise containing the updated cart
-   * @todo Implement optional arguments
+   * @returns Promise containing the updated cart
    */
-  async addPurchasableItem(item: CartItem): Promise<Cart> {
+  async addPurchasableItem(
+    item: CartPurchasableItem,
+    opts?: { discountCode?: string }
+  ): Promise<Cart> {
     await this.platformClient.request(addPurchasableItemMutation, {
       id: this.id,
-      itemId: item.id
+      itemId: item.id,
+      itemDiscountCode: opts?.discountCode
     });
 
     return this;
   }
 
   /**
+   * Completes the checkout process.
+   *
+   * This will first check for any errors in the cart, aborting if any errors exist.
+   * Then, it will lock the cart, proceed to attempt to charge the card for any purchaseable items,
+   * book all appointments, send relevant email receipts and confirmations, and then mark the cart as completed.
+   *
    * @async
-   * @category Gift Cards
-   * @description Create an email fulfillment for a gift card item. A digital copy of the gift card will be sent to the recipient after the order is completed.
+   * @category Checkout & Payment
+   * @description
    * @public
-   * @param itemId ID - ID of the CartGiftCardItem.
-   * @param sender The name of the person sending the item.
-   * @param recipientEmail The email of the person receiving the item
-   * @param recipientName The name of the person receiving the item
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
+  async checkout(): Promise<Cart> {
+    return undefined;
+  }
+
+  /**
+   * Create an email fulfillment for a gift card item. A digital copy of the gift card will be sent to the recipient after the order is completed.
+   *
+   * @async
+   * @category Gift Cards
+   * @public
+   * @param item The CartGiftCardItem.
+   * @param sender The name of the person sending the item.
+   * @param recipient.email The email of the person receiving the item
+   * @param recipient.name The name of the person receiving the item
+   * @param opts.message A message to include from the sender
+   * @todo Implement
+   * @todo Determine return type
+   */
   async createGiftCardItemEmailFulfillment(
-    itemId: Scalars["ID"],
+    item: CartGiftCardItem,
     sender: string,
-    recipientEmail: Scalars["Email"],
-    recipientName: string
+    recipient: { email: Scalars["Email"]; name: string },
+    opts?: { message?: string }
   ): Promise<unknown> {
     return undefined;
   }
 
   /**
+   * Add a guest to a cart.
+   *
    * @async
    * @category Guests
-   * @description Add a guest to a cart.
    * @public
    * @todo Implement
+   * @todo Determine return type
    */
-  async createGuest(email: Scalars["Email"]): Promise<unknown> {
+  async createGuest(input: {
+    email?: Scalars["Email"];
+    firstName?: Scalars["String"];
+    lastName?: Scalars["String"];
+    phoneNumber?: Scalars["PhoneNumber"];
+  }): Promise<unknown> {
     return undefined;
   }
 
   /**
+   * Delete a gift card item email fulfillment.
+   *
    * @async
    * @category Gift Cards
-   * @description Delete a gift card item email fulfillment.
    * @public
-   * @param itemId ID - ID of the CartGiftCardItem.
+   * @param item The CartGiftCardItem.
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async deleteGiftCardItemEmailFulfillment(
-    itemId: Scalars["ID"]
-  ): Promise<unknown> {
+    item: CartGiftCardItem
+  ): Promise<Cart> {
     return undefined;
   }
 
   /**
+   * Delete a cart's guest. Using this invalidates existing reservations.
+   *
    * @async
    * @category Guests
-   * @description Delete a cart's guest. Using this invalidates existing reservations.
    * @public
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
-  async deleteGuest(guestId: Scalars["ID"]): Promise<unknown> {
+  async deleteGuest(guest: CartGuest): Promise<Cart> {
     return undefined;
   }
 
   /**
+   * Retrieves available dates for all bookable cart items.
+   *
    * @async
    * @category Bookable Items
-   * @description Retrieves available dates for all bookable cart items.
+   * @param opts.searchRangeLower Lower (inclusive) search range bound. When null, the current date plus the location's minimum booking lead time (i.e. the earliest possible date to book) is used.
+   * @param opts.searchRangeUpper Upper (inclusive) search range bound. When null, the lower bound plus one week is used.
    * @public
-   * @returns {Promise} Promise containing the list of Bookable Dates
+   * @returns Promise containing the list of Bookable Dates
    * @todo Implement Arguments
+   * @todo Support Timezone
    */
-  async getBookableDates(): Promise<Array<CartBookableDate>> {
-    // TODO: TZ selection
+  async getBookableDates(opts: {
+    searchRangeLower?: Scalars["Date"];
+    searchRangeUpper?: Scalars["Date"];
+  }): Promise<Array<CartBookableDate>> {
     // Intl.DateTimeFormat().resolvedOptions().timeZone
     const response = await this.platformClient.request(getDatesQuery, {
       id: this.id
@@ -324,29 +392,47 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   *
+   * Retrieves available staff variants for a specific bookable cart item, given
+   * a time that was retrieved earlier using `cartBookableTimes`. In other words,
+   * returns all variants that can be selected for the item while still keeping
+   * the overall starting time.
+   *
+   * #### Caveats
+   *
+   * Because this query assumes that variants of other items stay constant,
+   * variants of multiple items must be updated separately by retrieving the
+   * variants for one item first, updating that item, and then retrieving the
+   * variants for another item.
+   *
+   * Timing of an item is affected when the variant is updated, which is why any
+   * existing reservations are invalidated and the times must be reserved again
+   * using `reserveCartBookableItems`.
+   *
    * @async
    * @category Bookable Items
-   * @description Retrieves available staff variants for a specific bookable cart item, given a time that was retrieved earlier using `getTimes`. In other words, returns all variants that can be selected for the item while still keeping the overall starting time.
    * @public
-   * @param {timeId} ID - ID of the bookable time.
-   * @param {itemId} ID - ID of the selected bookable item.
-   * @returns {Promise} Promise containing the list of Bookable Item Staff Variants
+   * @param time The bookable time.
+   * @param item The selected bookable item.
+   * @returns Promise containing the list of Bookable Item Staff Variants
    * @todo Implement
    */
   async getBookableStaffVariants(
-    time: Scalars["ID"],
-    itemId: Scalars["ID"]
+    time: CartBookableTime,
+    item: CartBookableItem
   ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
     return undefined;
   }
 
   /**
+   * Retrieves available times for all bookable cart items, given a date that was retrieved earlier using `getDates`.
+   *
    * @async
    * @category Bookable Items
-   * @description Retrieves available times for all bookable cart items, given a date that was retrieved earlier using `getDates`.
    * @public
    * @param {date} Date - an ISO8601 string for the date that should be searched through.
-   * @returns {Promise} Promise containing the list of Bookable Times
+   * @returns Promise containing the list of Bookable Times
+   * @todo Support Timezone
    */
   async getBookableTimes(
     date: Scalars["Date"]
@@ -360,11 +446,13 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Remove an offer from the cart.
+   *
    * @async
    * @category Offers
-   * @description Remove an offer from the cart.
+   * @param offer The Offer code
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async removeOffer(offer: CartOffer): Promise<Cart> {
@@ -372,22 +460,27 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Remove a selected item from a cart. Using this invalidates existing reservations when the item being removed is a bookable item.
+   *
    * @async
-   * @description Remove a selected item from a cart. Using this invalidates existing reservations when the item being removed is a bookable item.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
-  async removeSelectedItem(id: Scalars["ID"]): Promise<Cart> {
+  async removeSelectedItem(
+    item: CartBookableItem | CartGiftCardItem | CartPurchasableItem
+  ): Promise<Cart> {
     return undefined;
   }
 
   /**
+   * Reserve one starting time for bookable cart items, i.e. all bookable items are to be performed starting at this time.
+   * Note that this call may fail if the time is no longer available.
+   *
    * @async
    * @category Bookable Items
-   * @description Reserve one starting time for bookable cart items, i.e. all bookable items are to be performed starting at this time. Note that this call may fail if the time is no longer available.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async reserveBookableItems(bookableTime: CartBookableTime): Promise<Cart> {
@@ -400,23 +493,33 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Select an available payment method to be used with all selected cart items.
+   * Note that this call may fail if the payment method is not compatible with all items.
+   *
+   * This is currently the only way to associate payment methods with cart items.
+   * Other mutations may be added later in order to support more complex payment scenarios.
+   *
    * @async
    * @category Checkout & Payment
-   * @description Select an available payment method to be used with all selected cart items. Note that this call may fail if the payment method is not compatible with all items.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
-  async selectPaymentMethod(item: CartItemPaymentMethod): Promise<Cart> {
+  async selectPaymentMethod(
+    paymentMethod: CartItemPaymentMethod
+  ): Promise<Cart> {
     return undefined;
   }
 
   /**
+   * Take ownership of a cart, linking the cart to a Boulevard account.
+   *
+   * Using this mutation invalidates existing reservations.
+   *
    * @async
    * @category Details
-   * @description Take ownership of a cart, linking the cart to a Boulevard account.
    * @protected
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async takeOwnership(): Promise<Cart> {
@@ -424,11 +527,12 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Update a cart. Only some fields can be updated, there are other operations available to update more fields.
+   *
    * @async
    * @category Details
-   * @description Cart fields to update. Only some fields can be updated, there are other operations available to update more fields.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    */
   async update(opts: {
     advanceGratuity?: CartAdvanceGratuityInput;
@@ -445,35 +549,42 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Update a gift card item email fulfillment.
+   *
    * @async
    * @category Gift Cards
-   * @description Update a gift card item email fulfillment.
+   * @param opts.sender.name The name of the person sending the item.
+   * @param opts.recipient.email The email of the person receiving the item
+   * @param opts.recipient.name The name of the person receiving the item
+   * @param opts.message A message to include from the sender
    * @public
    * @todo Implement
+   * @todo Determine return type
    */
   async updateGiftCardItemEmailFulfillment(
     item: CartGiftCardItem,
-    opts: {
+    opts?: {
       deliveryDate?: Scalars["Date"];
-      messageFromSender?: string;
-      recipientEmail?: Scalars["Date"];
-      recipientName?: string;
-      senderName?: string;
+      message?: string;
+      recipient: { email?: Scalars["Email"]; name?: string };
+      sender?: { name?: string };
     }
   ): Promise<unknown> {
     return undefined;
   }
 
   /**
+   * Update a cart's guest.
+   *
    * @async
    * @category Guests
-   * @description Update a cart's guest.
    * @public
    * @todo Implement
+   * @todo Determine return type
    */
   async updateGuest(
     guest: CartGuest,
-    opts: {
+    opts?: {
       email?: Scalars["Email"];
       firstName?: string;
       lastName?: string;
@@ -484,16 +595,24 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Update a cart's selected bookable item.
+   *
+   * This invalidates existing reservations when the guest, staff variant, or options are updated.
+   *
    * @async
    * @category Bookable Items
-   * @description Update a cart's selected bookable item.
+   * @param item The bookable item
+   * @param opts.discountCode Optional discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
+   * @param opts.guest The guest this item is booked for. A null value indicates the cart owner, or current client. When finding available times for bookable items, it's assumed that two items having different guests can be booked simultaneously.
+   * @param opts.options Selected bookable item options. Note that the selections must conform to the option group requirements, e.g. limits on the number of options. Otherwise an error is returned.
+   * @param opts.staffVariant The selected bookable item staff variant.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async updateSelectedBookableItem(
     item: CartBookableItem,
-    opts: {
+    opts?: {
       discountCode?: string;
       guest?: CartGuest;
       options?: Array<CartAvailableBookableItemOption>;
@@ -504,16 +623,19 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Update a cart's selected gift card item.
+   *
    * @async
    * @category Gift Card Items
-   * @description Update a cart's selected gift card item.
+   * @param item The gift card item
+   * @param opts.price Price applied to the gift card item
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async updateSelectedGiftCardItem(
     item: CartGiftCardItem,
-    opts: {
+    opts?: {
       design?: GiftCardDesign;
       price?: Scalars["Money"];
     }
@@ -522,31 +644,21 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
   }
 
   /**
+   * Update a cart's selected purchasable item.
+   *
    * @async
    * @category Purchasable Items
-   * @description Update a cart's selected purchasable item.
+   * @param opts.discountCode Optional discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
    * @public
-   * @returns {Promise} Promise containing the updated cart
+   * @returns Promise containing the updated cart
    * @todo Implement
    */
   async updateSelectedPurchasableItem(
     item: CartPurchasableItem,
-    opts: {
+    opts?: {
       discountCode?: string;
     }
   ): Promise<Cart> {
-    return undefined;
-  }
-
-  /**
-   * @async
-   * @category Checkout & Payment
-   * @description Completes the checkout process.
-   * @public
-   * @returns {Promise} Promise containing the updated cart
-   * @todo Implement
-   */
-  async checkout() {
     return undefined;
   }
 }
