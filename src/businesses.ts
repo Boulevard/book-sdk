@@ -12,7 +12,7 @@ class Businesses {
    *
    * @async
    * @public
-   * @returns {Promise} Promise containing the Business
+   * @returns Promise containing the Business
    * @todo Implement
    */
   private async get(): Promise<Business> {

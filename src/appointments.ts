@@ -55,7 +55,7 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
    * @param bookableTime The encoded data representing an available appointment slot (can be computed using rescheduleAvailableTimes())
    * @param sendNotification Creates a notification for the dashboard users to let them know that the appointment has been self-rescheduled by the client.
    * @protected
-   * @returns {Promise} Promise containing the updated Appointment
+   * @returns Promise containing the updated Appointment
    * @todo Implement
    */
   async reschedule(
@@ -72,7 +72,7 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
    * @param searchRangeLower The lower range (inclusive) of dates to search for appointment availability.
    * @param searchRangeUpper The upper range (inclusive) of dates to search for appointment availability.
    * @protected
-   * @returns {Promise} Promise containing a list of AvailableRescheduleDate
+   * @returns Promise containing a list of AvailableRescheduleDate
    * @todo Implement
    */
   async rescheduleAvaialableDates(
@@ -88,7 +88,7 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
    * @async
    * @param date The date that should be searched for available times.
    * @protected
-   * @returns {Promise} Promise containing a list of AvailableRescheduleTime
+   * @returns Promise containing a list of AvailableRescheduleTime
    * @todo Implement
    * @todo Timezone support
    */
@@ -103,7 +103,7 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
    *
    * @async
    * @protected
-   * @returns {Promise} Promise containing the updated Appointment
+   * @returns Promise containing the updated Appointment
    * @todo Implement
    */
   async cancel(notes?: string): Promise<Appointment> {
@@ -121,7 +121,7 @@ class Appointments {
    * @async
    * @param {id} ID the ID of the appointment
    * @protected
-   * @returns {Promise} Promise containing the Appointment
+   * @returns Promise containing the Appointment
    * @todo Implement
    */
   private async get(id: Scalars["ID"]): Promise<Appointment> {
@@ -134,7 +134,7 @@ class Appointments {
    * @async
    * @description
    * @protected
-   * @returns {Promise} Promise containing the list of Appointments
+   * @returns Promise containing the list of Appointments
    * @todo Implement (pagination?)
    */
   private async all(): Promise<Array<Appointment>> {

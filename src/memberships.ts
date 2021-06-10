@@ -8,10 +8,11 @@ class Memberships {
   constructor(private platformClient: PlatformClient) {}
 
   /**
+   * List memberships for the authenticated client
+   *
    * @async
-   * @description List memberships for the authenticated client
    * @protected
-   * @returns {Promise} Promise containing the list of Memberships
+   * @returns Promise containing the list of Memberships
    * @todo Implement (pagination?)
    */
   private async all(): Promise<Array<Membership>> {
