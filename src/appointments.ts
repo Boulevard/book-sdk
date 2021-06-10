@@ -49,8 +49,9 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
   }
 
   /**
+   * Reschedule the provided appointment to a new date and time.
+   *
    * @async
-   * @description Reschedule the provided appointment to a new date and time.
    * @param bookableTime The encoded data representing an available appointment slot (can be computed using rescheduleAvailableTimes())
    * @param sendNotification Creates a notification for the dashboard users to let them know that the appointment has been self-rescheduled by the client.
    * @protected
@@ -65,8 +66,9 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
   }
 
   /**
+   * Get the available dates for the provided appointment.
+   *
    * @async
-   * @description Get the available dates for the provided appointment.
    * @param searchRangeLower The lower range (inclusive) of dates to search for appointment availability.
    * @param searchRangeUpper The upper range (inclusive) of dates to search for appointment availability.
    * @protected
@@ -81,8 +83,9 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
   }
 
   /**
+   * Get the available appointment times on a particular date for the provided appointment.
+   *
    * @async
-   * @description Get the available appointment times on a particular date for the provided appointment.
    * @param date The date that should be searched for available times.
    * @protected
    * @returns {Promise} Promise containing a list of AvailableRescheduleTime
@@ -96,8 +99,9 @@ class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
   }
 
   /**
+   * Cancel an Appointment.
+   *
    * @async
-   * @description Cancel an Appointment.
    * @protected
    * @returns {Promise} Promise containing the updated Appointment
    * @todo Implement
@@ -125,8 +129,10 @@ class Appointments {
   }
 
   /**
+   * List appointments for the authenticated client
+   *
    * @async
-   * @description List appointments for the authenticated client
+   * @description
    * @protected
    * @returns {Promise} Promise containing the list of Appointments
    * @todo Implement (pagination?)

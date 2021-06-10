@@ -21,7 +21,8 @@ class Carts {
 
   /**
    * @async
-   * @description Retrieves a cart by ID
+   * Retrieves a cart by ID
+   *
    * @param {id} ID the ID of the cart
    * @protected
    * @todo Implement
@@ -31,4 +32,4 @@ class Carts {
   }
 }
 
-export { Cart, Carts };
+export { Carts };

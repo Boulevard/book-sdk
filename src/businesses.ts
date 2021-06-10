@@ -8,8 +8,9 @@ class Businesses {
   constructor(private platformClient: PlatformClient) {}
 
   /**
+   * Look up the currently authenticated business
+   *
    * @async
-   * @description Look up the currently authenticated business
    * @public
    * @returns {Promise} Promise containing the Business
    * @todo Implement
