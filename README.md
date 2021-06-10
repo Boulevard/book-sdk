@@ -47,7 +47,7 @@ await cart.update({
   phoneNumber: "+13105555555"
 });
 
-await cart.book({
+await cart.addCardPaymentMethod({
   card: {
     name: "John Doe",
     number: "4242424242424242",
@@ -56,4 +56,6 @@ await cart.book({
     exp_year: 2020
   }
 });
+
+await cart.checkout();
 ```
