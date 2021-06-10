@@ -132,7 +132,6 @@ class Appointments {
    * List appointments for the authenticated client
    *
    * @async
-   * @description
    * @protected
    * @returns Promise containing the list of Appointments
    * @todo Implement (pagination?)

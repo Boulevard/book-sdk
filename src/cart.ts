@@ -260,7 +260,6 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
    *
    * @async
    * @category Purchasable Items
-   * @description
    * @param item The purchasable item
    * @param opts.discountCode Discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
    * @public
@@ -288,7 +287,6 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
    *
    * @async
    * @category Checkout & Payment
-   * @description
    * @public
    * @returns Promise containing the updated cart
    * @todo Implement

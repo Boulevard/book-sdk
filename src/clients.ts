@@ -11,7 +11,6 @@ class Clients {
    * Look up the authenticated client
    *
    * @async
-   * @description
    * @protected
    * @returns Promise containing the Client
    * @todo Implement
