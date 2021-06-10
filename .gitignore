@@ -2,3 +2,4 @@ node_modules
 lib*
 .env
 schema.json
+.DS_Store
