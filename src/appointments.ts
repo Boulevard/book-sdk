@@ -1,23 +1,52 @@
-import { Client } from "./client";
-import { Appointment as GraphAppointment, Scalars } from "./graph";
+import { PlatformClient } from "./platformClient";
+import {
+  Appointment as GraphAppointment,
+  AppointmentCancellation,
+  AppointmentService,
+  AvailableRescheduleDate,
+  AvailableRescheduleTime,
+  CartBookableTime,
+  Scalars,
+  Client,
+  Location,
+  AppointmentState
+} from "./graph";
 
-class Appointment {
+class Appointment implements Omit<GraphAppointment, "clientId" | "locationId"> {
+  appointmentServices: Array<AppointmentService>;
+  cancellation?: AppointmentCancellation;
+  cancelled: Scalars["Boolean"];
+  client: Client;
+  createdAt: Scalars["DateTime"];
+  duration: Scalars["Int"];
+  endAt: Scalars["DateTime"];
+  id: Scalars["ID"];
+  location: Location;
+  notes?: Scalars["String"];
+  startAt: Scalars["DateTime"];
+  state: AppointmentState;
+
   /**
    * @internal
    */
-  constructor(private client: Client, private appointment: GraphAppointment) {}
+  constructor(
+    private platformClient: PlatformClient,
+    appointment: GraphAppointment
+  ) {
+    Object.assign(this, appointment);
+  }
 
   /**
    * @async
    * @description Reschedule the provided appointment to a new date and time.
-   * @param bookableTimeId The encoded data representing an available appointment slot (can be computed using rescheduleAvailableTimes())
+   * @param bookableTime The encoded data representing an available appointment slot (can be computed using rescheduleAvailableTimes())
    * @param sendNotification Creates a notification for the dashboard users to let them know that the appointment has been self-rescheduled by the client.
    * @protected
    * @returns {Promise} Promise containing the updated Appointment
    * @todo Implement
    */
   async reschedule(
-    bookableTimeId: Scalars["ID"],
+    bookableTime: CartBookableTime,
     sendNotification: boolean
   ): Promise<Appointment> {
     return undefined;
@@ -29,13 +58,13 @@ class Appointment {
    * @param searchRangeLower The lower range (inclusive) of dates to search for appointment availability.
    * @param searchRangeUpper The upper range (inclusive) of dates to search for appointment availability.
    * @protected
-   * @returns {Promise} Promise containing the updated Appointment
+   * @returns {Promise} Promise containing a list of AvailableRescheduleDate
    * @todo Implement
    */
   async rescheduleAvaialableDates(
     searchRangeLower: Scalars["Date"],
     searchRangeUpper: Scalars["Date"]
-  ): Promise<Appointment> {
+  ): Promise<Array<AvailableRescheduleDate>> {
     return undefined;
   }
 
@@ -44,10 +73,13 @@ class Appointment {
    * @description Get the available appointment times on a particular date for the provided appointment.
    * @param date The date that should be searched for available times.
    * @protected
-   * @returns {Promise} Promise containing the updated Appointment
+   * @returns {Promise} Promise containing a list of AvailableRescheduleTime
    * @todo Implement
+   * @todo Timezone support
    */
-  async rescheduleAvaialableTimes(date: Scalars["Date"]): Promise<Appointment> {
+  async rescheduleAvaialableTimes(
+    date: Scalars["Date"]
+  ): Promise<Array<AvailableRescheduleTime>> {
     return undefined;
   }
 
@@ -67,7 +99,7 @@ class Appointments {
   /**
    * @internal
    */
-  constructor(private client: Client) {}
+  constructor(private platformClient: PlatformClient) {}
 
   /**
    * @async
@@ -91,4 +123,4 @@ class Appointments {
     return undefined;
   }
 }
-export { Appointments };
+export { Appointment, Appointments };

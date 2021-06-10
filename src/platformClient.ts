@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
 
-class Client {
+class PlatformClient {
   private client: GraphQLClient;
   constructor(businessID: string, private apiKey: string) {
     this.client = new GraphQLClient(
@@ -23,4 +23,4 @@ class Client {
   }
 }
 
-export { Client };
+export { PlatformClient };

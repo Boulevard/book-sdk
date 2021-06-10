@@ -1,7 +1,7 @@
-import { Appointments } from "./appointments";
+import { Appointment, Appointments } from "./appointments";
 import { Businesses } from "./businesses";
 import { Cart, Carts } from "./carts";
-import { Client } from "./client";
+import { PlatformClient } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Memberships } from "./memberships";
@@ -14,7 +14,7 @@ class Blvd {
   locations: Locations;
   memberships: Memberships;
   constructor(apiKey: string, businessID: string) {
-    const client = new Client(apiKey, businessID);
+    const client = new PlatformClient(apiKey, businessID);
     this.appointments = new Appointments(client);
     this.businesses = new Businesses(client);
     this.carts = new Carts(client);
@@ -26,6 +26,7 @@ class Blvd {
 
 export {
   Blvd,
+  Appointment,
   Appointments,
   Businesses,
   Cart,

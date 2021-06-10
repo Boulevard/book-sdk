@@ -1,11 +1,11 @@
-import { Client as GraphClient } from "./client";
+import { PlatformClient } from "./platformClient";
 import { Client } from "./graph";
 
 class Clients {
   /**
    * @internal
    */
-  constructor(private client: GraphClient) {}
+  constructor(private platformClient: PlatformClient) {}
 
   /**
    * @async

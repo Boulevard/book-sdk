@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { createCartMutation } from "./carts/graph";
-import { Client } from "./client";
+import { PlatformClient } from "./platformClient";
 import { Location, Scalars } from "./graph";
 import { Cart } from "./cart";
 
@@ -9,14 +9,14 @@ class Carts {
    * @internal
    * @param client
    */
-  constructor(private client: Client) {}
+  constructor(private platformClient: PlatformClient) {}
 
   async create(location: Location): Promise<Cart> {
-    const response = await this.client.request(createCartMutation, {
+    const response = await this.platformClient.request(createCartMutation, {
       locationId: location.id
     });
 
-    return new Cart(this.client, response.createCart.cart);
+    return new Cart(this.platformClient, response.createCart.cart);
   }
 
   /**
@@ -26,7 +26,7 @@ class Carts {
    * @protected
    * @todo Implement
    */
-  private async get(id: Scalars["ID"]): Promise<Array<Cart>> {
+  private async get(id: Scalars["ID"]): Promise<Cart> {
     return undefined;
   }
 }

@@ -9,7 +9,7 @@ import {
   reserveCartMutation,
   updateCartMutation
 } from "./carts/graph";
-import { Client } from "./client";
+import { PlatformClient } from "./platformClient";
 import {
   Cart as GraphCart,
   CartAvailableCategory,
@@ -40,14 +40,14 @@ class Cart {
   /**
    * @internal
    */
-  constructor(private client: Client, private cart: GraphCart) {
+  constructor(private platformClient: PlatformClient, private cart: GraphCart) {
     this.availableCategories = cart.availableCategories;
     this.selectedItems = [];
   }
 
   /**
    * @async
-   * @category Checkout & Paymment
+   * @category Checkout & Payment
    * @description Add a credit card payment method to a cart.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -74,7 +74,7 @@ class Cart {
       }
     );
     const { token } = await response.json();
-    await this.client.request(addCardPaymentMethodMutation, {
+    await this.platformClient.request(addCardPaymentMethodMutation, {
       id: this.cart.id,
       token: this.paymentToken,
       select: true
@@ -105,7 +105,7 @@ class Cart {
    * @todo Implement optional arguments
    */
   async addBookableItem(item: CartItem): Promise<Cart> {
-    await this.client.request(addBookableItemMutation, {
+    await this.platformClient.request(addBookableItemMutation, {
       id: this.cart.id,
       itemId: item.id
     });
@@ -126,7 +126,7 @@ class Cart {
     item: CartItem,
     price: Scalars["Money"]
   ): Promise<Cart> {
-    await this.client.request(addGiftCardItemMutation, {
+    await this.platformClient.request(addGiftCardItemMutation, {
       id: this.cart.id,
       itemId: item.id
     });
@@ -143,7 +143,7 @@ class Cart {
    * @todo Implement optional arguments
    */
   async addPurchasableItem(item: CartItem): Promise<Cart> {
-    await this.client.request(addPurchasableItemMutation, {
+    await this.platformClient.request(addPurchasableItemMutation, {
       id: this.cart.id,
       itemId: item.id
     });
@@ -218,7 +218,7 @@ class Cart {
   async getBookableDates(): Promise<Array<CartBookableDate>> {
     // TODO: TZ selection
     // Intl.DateTimeFormat().resolvedOptions().timeZone
-    const response = await this.client.request(getDatesQuery, {
+    const response = await this.platformClient.request(getDatesQuery, {
       id: this.cart.id
     });
 
@@ -253,7 +253,7 @@ class Cart {
   async getBookableTimes(
     date: Scalars["Date"]
   ): Promise<Array<CartBookableTime>> {
-    const response = await this.client.request(getTimesQuery, {
+    const response = await this.platformClient.request(getTimesQuery, {
       id: this.cart.id,
       searchDate: date
     });
@@ -293,7 +293,7 @@ class Cart {
    * @todo Implement
    */
   async reserveBookableItems(bookableTime: CartBookableTime): Promise<Cart> {
-    await this.client.request(reserveCartMutation, {
+    await this.platformClient.request(reserveCartMutation, {
       id: this.cart.id,
       bookableTimeId: bookableTime.id
     });
@@ -303,7 +303,7 @@ class Cart {
 
   /**
    * @async
-   * @category Checkout & Paymment
+   * @category Checkout & Payment
    * @description Select an available payment method to be used with all selected cart items. Note that this call may fail if the payment method is not compatible with all items.
    * @public
    * @returns {Promise} Promise containing the updated cart
@@ -338,7 +338,7 @@ class Cart {
     clientMessage?: string;
     discountCode?: string;
   }): Promise<Cart> {
-    await this.client.request(updateCartMutation, {
+    await this.platformClient.request(updateCartMutation, {
       id: this.cart.id,
       ...opts
     });
@@ -442,7 +442,7 @@ class Cart {
 
   /**
    * @async
-   * @category Checkout & Paymment
+   * @category Checkout & Payment
    * @description Completes the checkout process.
    * @public
    * @returns {Promise} Promise containing the updated cart

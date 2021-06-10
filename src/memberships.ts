@@ -1,11 +1,11 @@
-import { Client } from "./client";
+import { PlatformClient } from "./platformClient";
 import { Membership } from "./graph";
 
 class Memberships {
   /**
    * @internal
    */
-  constructor(private client: Client) {}
+  constructor(private platformClient: PlatformClient) {}
 
   /**
    * @async
