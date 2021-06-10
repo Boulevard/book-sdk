@@ -104,7 +104,7 @@
 <span style="color: #000000">  </span><span style="color: #001080">phoneNumber:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;+13105555555&quot;</span>
 <span style="color: #000000">});</span>
 
-<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">book</span><span style="color: #000000">({</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">addCardPaymentMethod</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">card:</span><span style="color: #000000"> {</span>
 <span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;John Doe&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">number:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;4242424242424242&quot;</span><span style="color: #000000">,</span>
@@ -113,6 +113,8 @@
 <span style="color: #000000">    </span><span style="color: #001080">exp_year:</span><span style="color: #000000"> </span><span style="color: #098658">2020</span>
 <span style="color: #000000">  }</span>
 <span style="color: #000000">});</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">checkout</span><span style="color: #000000">();</span>
 </code></pre>
 			</div>
 		</div>

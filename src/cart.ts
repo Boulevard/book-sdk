@@ -37,7 +37,8 @@ import {
   CreateCartGuestInput
 } from "./graph";
 
-class Cart implements Omit<GraphCart, "startTimeId"> {
+class Cart
+  implements Omit<GraphCart, "availableItem" | "startTimeId" | "selectedItem"> {
   advanceGratuity?: CartAdvanceGratuity;
   /**
    * Categories of items available to be checked out.
@@ -49,15 +50,6 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
    * are handled when items cannot be added.
    */
   availableCategories: Array<CartAvailableCategory>;
-  /**
-   * Finds one available item by its ID.
-   *
-   * Note that this item updates as the cart changes. For instance, incompatible
-   * items may be disabled after others are added to the cart. Clients should
-   * retrieve this item again after mutations or make sure errors are handled
-   * when items cannot be added.
-   */
-  availableItem?: CartAvailableItem;
   /**
    * Payment methods available for this cart. Some methods may already be
    * present, for instance when the current user is authenticated. Additional
@@ -113,8 +105,6 @@ class Cart implements Omit<GraphCart, "startTimeId"> {
    * offers cannot be removed from the cart.
    */
   offers: Array<CartOffer>;
-  /** Finds one selected item pending checkout by its ID. */
-  selectedItem?: CartItem;
   /**
    * All selected items pending checkout.
    *
