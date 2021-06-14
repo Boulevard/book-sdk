@@ -1,19 +1,7 @@
 import fetch from "cross-fetch";
 import { PlatformClient, PlatformTarget } from "./platformClient";
 
-jest.mock("cross-fetch", () => ({
-  __esModule: true,
-  ...jest.requireActual("cross-fetch"),
-  default: jest.fn(() =>
-    Promise.resolve({
-      ok: true,
-      headers: { get: () => "application/json" },
-      json: () => Promise.resolve({ data: {} })
-    })
-  )
-}));
-
-jest.mock("cross-fetch");
+jest.mock("cross-fetch", mockFetch({}));
 
 describe("testing api", () => {
   test("fetches sandbox locations", () => {

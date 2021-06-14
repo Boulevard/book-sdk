@@ -2,20 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Blvd } from "./blvd";
 import fetch from "cross-fetch";
 
-jest.mock("cross-fetch", () => ({
-  __esModule: true,
-  ...jest.requireActual("cross-fetch"),
-  default: jest.fn(() =>
-    Promise.resolve({
-      ok: true,
-      headers: { get: () => "application/json" },
-      json: () =>
-        Promise.resolve({ data: { locations: { edges: [{ node: {} }] } } })
-    })
-  )
-}));
-
-jest.mock("cross-fetch");
+jest.mock("cross-fetch", mockFetch({ locations: { edges: [{ node: {} }] } }));
 
 describe("testing api", () => {
   test("fetches sandbox locations", () => {
