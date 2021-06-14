@@ -10,7 +10,8 @@ jest.mock("cross-fetch", () => ({
     Promise.resolve({
       ok: true,
       headers: { get: () => "application/json" },
-      json: () => Promise.resolve({ data: { locations: { edges: [] } } })
+      json: () =>
+        Promise.resolve({ data: { locations: { edges: [{ node: {} }] } } })
     })
   )
 }));
@@ -28,9 +29,7 @@ describe("testing api", () => {
     expect(fetch).toHaveBeenCalledWith(
       `https://sandbox.joinblvd.com/api/2020-01/${businessID}/client`,
       expect.objectContaining({
-        body: expect.stringContaining(
-          "query GetLocations {\\n    locations(first: 100)"
-        )
+        body: expect.stringContaining("locations(first: 100)")
       })
     );
   });
@@ -45,9 +44,7 @@ describe("testing api", () => {
     expect(fetch).toHaveBeenCalledWith(
       `https://dashboard.boulevard.io/api/2020-01/${businessID}/client`,
       expect.objectContaining({
-        body: expect.stringContaining(
-          "query GetLocations {\\n    locations(first: 100)"
-        )
+        body: expect.stringContaining("locations(first: 100)")
       })
     );
   });
@@ -67,9 +64,7 @@ describe("testing api", () => {
     expect(fetch).toHaveBeenCalledWith(
       `http://localhost:4000/api/2020-01/${businessID}/client`,
       expect.objectContaining({
-        body: expect.stringContaining(
-          "query GetLocations {\\n    locations(first: 100)"
-        )
+        body: expect.stringContaining("locations(first: 100)")
       })
     );
   });
