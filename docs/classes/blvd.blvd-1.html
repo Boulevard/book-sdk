@@ -106,25 +106,44 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Blvd<span class="tsd-signature-symbol">(</span>apiKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, businessID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="blvd.blvd-1.html" class="tsd-signature-type" data-tsd-kind="Class">Blvd</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Blvd<span class="tsd-signature-symbol">(</span>apiKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, businessID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, target<span class="tsd-signature-symbol">?: </span><a href="../enums/blvd.platformtarget.html" class="tsd-signature-type" data-tsd-kind="Enumeration">PlatformTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="blvd.blvd-1.html" class="tsd-signature-type" data-tsd-kind="Class">Blvd</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L17">blvd.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L17">blvd.ts:17</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new instance of the Boulevard client.</p>
+								</div>
+								<p>You can create a Sandbox account and generate credentials at <a href="https://developers.joinblvd.com/">https://developers.joinblvd.com/</a></p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>apiKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The API Key of your application</p>
+									</div>
 								</li>
 								<li>
 									<h5>businessID: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The ID of the business</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <a href="../enums/blvd.platformtarget.html" class="tsd-signature-type" data-tsd-kind="Enumeration">PlatformTarget</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The backend target for this client. Defaults to <a href="../enums/blvd.platformtarget.html#sandbox">PlatformTarget.Sandbox</a></p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="blvd.blvd-1.html" class="tsd-signature-type" data-tsd-kind="Class">Blvd</a></h4>
+							<p>A new Boulevard client instance</p>
 						</li>
 					</ul>
 				</section>
@@ -137,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">appointments<span class="tsd-signature-symbol">:</span> <a href="blvd.appointments.html" class="tsd-signature-type" data-tsd-kind="Class">Appointments</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L12">blvd.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L12">blvd.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -147,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">businesses<span class="tsd-signature-symbol">:</span> <a href="blvd.businesses.html" class="tsd-signature-type" data-tsd-kind="Class">Businesses</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L13">blvd.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L13">blvd.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,7 +176,7 @@
 					<div class="tsd-signature tsd-kind-icon">carts<span class="tsd-signature-symbol">:</span> <a href="blvd.carts.html" class="tsd-signature-type" data-tsd-kind="Class">Carts</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L14">blvd.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L14">blvd.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -167,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">clients<span class="tsd-signature-symbol">:</span> <a href="blvd.clients.html" class="tsd-signature-type" data-tsd-kind="Class">Clients</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L15">blvd.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L15">blvd.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">locations<span class="tsd-signature-symbol">:</span> <a href="blvd.locations.html" class="tsd-signature-type" data-tsd-kind="Class">Locations</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L16">blvd.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L16">blvd.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">memberships<span class="tsd-signature-symbol">:</span> <a href="blvd.memberships.html" class="tsd-signature-type" data-tsd-kind="Class">Memberships</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/c8614e3/src/blvd.ts#L17">blvd.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/blvd.ts#L17">blvd.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,6 +228,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/blvd.platformtarget.html" class="tsd-kind-icon">Platform<wbr>Target</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="blvd.appointment.html" class="tsd-kind-icon">Appointment</a>
 					</li>

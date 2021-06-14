@@ -2,7 +2,7 @@ import { Appointment, Appointments } from "./appointments";
 import { Businesses } from "./businesses";
 import { Cart } from "./cart";
 import { Carts } from "./carts";
-import { PlatformClient } from "./platformClient";
+import { PlatformClient, PlatformTarget } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Memberships } from "./memberships";
@@ -15,8 +15,19 @@ class Blvd {
   clients: Clients;
   locations: Locations;
   memberships: Memberships;
-  constructor(apiKey: string, businessID: string) {
-    const client = new PlatformClient(apiKey, businessID);
+  /**
+   * Creates a new instance of the Boulevard client.
+   *
+   * You can create a Sandbox account and generate credentials at https://developers.joinblvd.com/
+   *
+   * @param apiKey The API Key of your application
+   * @param businessID The ID of the business
+   * @param target The backend target for this client. Defaults to {@link PlatformTarget.Sandbox}
+   * @public
+   * @returns A new Boulevard client instance
+   */
+  constructor(apiKey: string, businessID: string, target?: PlatformTarget) {
+    const client = new PlatformClient(apiKey, businessID, target);
     this.appointments = new Appointments(client);
     this.businesses = new Businesses(client);
     this.carts = new Carts(client);
@@ -36,5 +47,6 @@ export {
   Client,
   Clients,
   Locations,
-  Memberships
+  Memberships,
+  PlatformTarget
 };
