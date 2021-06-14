@@ -11,12 +11,22 @@ class Carts {
    */
   constructor(private platformClient: PlatformClient) {}
 
-  async create(location: Location): Promise<Cart> {
+  /**
+   * @async
+   * Creates a new Cart
+   *
+   * @param opts.timezone Optional time zone that {@link CartBookableDate} and {@link CartBookableTime} should be converted to, e.g. the client's time zone. The search range dates are also interpreted using this. When omitted, the browser timezone is used.
+   * @protected
+   */
+  async create(
+    location: Location,
+    opts?: { timezone?: string }
+  ): Promise<Cart> {
     const response = await this.platformClient.request(createCartMutation, {
       locationId: location.id
     });
 
-    return new Cart(this.platformClient, response.createCart.cart);
+    return new Cart(this.platformClient, response.createCart.cart, opts);
   }
 
   /**

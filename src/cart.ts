@@ -119,6 +119,9 @@ class Cart
   startTime?: Scalars["NaiveDateTime"];
   /** Summary of the cart, including e.g. line item totals. */
   summary: CartSummary;
+
+  timezone: string;
+
   /** Timestamp when the cart was last updated. */
   updatedAt: Scalars["DateTime"];
 
@@ -129,9 +132,13 @@ class Cart
   /**
    * @internal
    */
-  constructor(private platformClient: PlatformClient, cart: GraphCart) {
-    // TODO:
-    // Intl.DateTimeFormat().resolvedOptions().timeZone
+  constructor(
+    private platformClient: PlatformClient,
+    cart: GraphCart,
+    opts?: { timezone?: string }
+  ) {
+    this.timezone =
+      opts?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     Object.assign(this, cart);
   }
@@ -362,18 +369,19 @@ class Cart
    * @category Bookable Items
    * @param opts.searchRangeLower Lower (inclusive) search range bound. When null, the current date plus the location's minimum booking lead time (i.e. the earliest possible date to book) is used.
    * @param opts.searchRangeUpper Upper (inclusive) search range bound. When null, the lower bound plus one week is used.
+   * @param opts.timezone Optional override for the timezone set in {@link Carts.create}
    * @public
    * @returns Promise containing the list of Bookable Dates
    * @todo Implement Arguments
-   * @todo Support Timezone
    */
   async getBookableDates(opts: {
     searchRangeLower?: Scalars["Date"];
     searchRangeUpper?: Scalars["Date"];
+    timezone?: string;
   }): Promise<Array<CartBookableDate>> {
-    // Intl.DateTimeFormat().resolvedOptions().timeZone
     const response = await this.platformClient.request(getDatesQuery, {
-      id: this.id
+      id: this.id,
+      tz: opts?.timezone || this.timezone
     });
 
     return response.cartBookableDates;
@@ -419,15 +427,17 @@ class Cart
    * @category Bookable Items
    * @public
    * @param {date} Date - an ISO8601 string for the date that should be searched through.
+   * @param opts.timezone Optional override for the timezone set in {@link Carts.create}
    * @returns Promise containing the list of Bookable Times
-   * @todo Support Timezone
    */
   async getBookableTimes(
-    date: Scalars["Date"]
+    date: Scalars["Date"],
+    opts?: { timezone?: string }
   ): Promise<Array<CartBookableTime>> {
     const response = await this.platformClient.request(getTimesQuery, {
       id: this.id,
-      searchDate: date
+      searchDate: date,
+      tz: opts?.timezone || this.timezone
     });
 
     return response.cartBookableTimes;
