@@ -2,11 +2,11 @@ import { Scalars, Maybe } from "../graph";
 import { CartItemErrorCode } from "../graph";
 import * as Graph from "../graph";
 import { CartGuest } from "./guests";
-import { PlatformClient } from "../platformClient";
+import { Node, PlatformClient } from "../platformClient";
 import { Staff } from "../staff";
 
 /** Abstract available item that can be checked out. */
-class CartAvailableItem {
+class CartAvailableItem extends Node<Graph.CartAvailableItem> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -30,33 +30,19 @@ class CartAvailableItem {
 
   /** Short human-readable name. */
   name: Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(item: Graph.CartAvailableItem) {
-    Object.assign(this, item);
-  }
 }
 
 /** Cart item payment method. */
-class CartItemPaymentMethod {
+class CartItemPaymentMethod extends Node<Graph.CartItemPaymentMethod> {
   /** ID of the method. */
   id: Scalars["ID"];
 
   /** Short human-readable name. */
   name: Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(method: Graph.CartItemPaymentMethod) {
-    Object.assign(this, method);
-  }
 }
 
 /** Abstract item added using the `addCart...Item` mutations. */
-class CartItem {
+class CartItem extends Node<Graph.CartItem> {
   /** Total discount amount on the price. */
   discountAmount: Scalars["Money"];
 
@@ -84,12 +70,9 @@ class CartItem {
   /** Total tax amount on the discounted price. */
   taxAmount: Scalars["Money"];
 
-  constructor(
-    private platformClient: PlatformClient,
-    cartItem: Graph.CartItem
-  ) {
-    Object.assign(this, cartItem);
-    this.item = new CartAvailableItem(cartItem.item);
+  constructor(platformClient: PlatformClient, cartItem: Graph.CartItem) {
+    super(platformClient, cartItem);
+    this.item = new CartAvailableItem(platformClient, cartItem.item);
   }
 
   /** Payment methods available for this item.
@@ -108,7 +91,7 @@ class CartItem {
 }
 
 /** Send the item to a recipient via email. */
-class CartItemEmailFulfillment {
+class CartItemEmailFulfillment extends Node<Graph.CartItemEmailFulfillment> {
   /** Optionally specify a delivery date for the email. */
   deliveryDate: Maybe<Scalars["Date"]>;
 
@@ -125,13 +108,6 @@ class CartItemEmailFulfillment {
 
   /** The name of the person sending the item. */
   senderName: Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(fulfilment: Graph.CartItemEmailFulfillment) {
-    Object.assign(this, fulfilment);
-  }
 }
 
 /** Cart item validation error. */
@@ -151,8 +127,14 @@ class CartAvailableBookableItem extends CartAvailableItem {
   /**
    * Groups of available options for modifying the booked service. These can be
    * used to modify the booked item and may affect pricing and timing.
+   *
+   * @todo implement
    */
-  optionGroups: Array<CartAvailableBookableItemOptionGroup>;
+  async getOptionGroups(): Promise<
+    Array<CartAvailableBookableItemOptionGroup>
+  > {
+    return undefined;
+  }
   /**
    * List of optional staff variants that can be chosen. Variants may have
    * different pricing and timing.
@@ -161,7 +143,11 @@ class CartAvailableBookableItem extends CartAvailableItem {
    * selected time. The business can also enforce this, in which case this list
    * is empty.
    */
-  staffVariants: Array<CartAvailableBookableItemStaffVariant>;
+  async getStaffVariants(): Promise<
+    Array<CartAvailableBookableItemStaffVariant>
+  > {
+    return undefined;
+  }
 }
 
 /**
@@ -171,7 +157,9 @@ class CartAvailableBookableItem extends CartAvailableItem {
  * the bookable item is added. An error is returned if the selections don’t meet
  * those requirements.
  */
-type CartAvailableBookableItemOptionGroup = {
+class CartAvailableBookableItemOptionGroup extends Node<
+  Graph.CartAvailableBookableItemOptionGroup
+> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -187,12 +175,18 @@ type CartAvailableBookableItemOptionGroup = {
   /** Short human-readable name. */
   name: Scalars["String"];
 
-  /** List of selectable options. */
-  options: Array<CartAvailableBookableItemOption>;
-};
+  /** List of selectable options.
+   * @todo implement
+   */
+  async getOptions(): Promise<Array<CartAvailableBookableItemOption>> {
+    return undefined;
+  }
+}
 
 /** Option of a bookable item that can be selected. */
-type CartAvailableBookableItemOption = {
+class CartAvailableBookableItemOption extends Node<
+  Graph.CartAvailableBookableItemOption
+> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -210,7 +204,7 @@ type CartAvailableBookableItemOption = {
 
   /** Amount added to price when selected. */
   priceDelta: Scalars["Money"];
-};
+}
 
 /** Gift card that can be purchased through `addCartSelectedGiftCardItem`. */
 class CartAvailableGiftCardItem extends CartAvailableItem {
@@ -274,7 +268,9 @@ class CartBookableItem extends CartItem {
 }
 
 /** Staff variant of a bookable item. */
-class CartAvailableBookableItemStaffVariant {
+class CartAvailableBookableItemStaffVariant extends Node<
+  Graph.CartAvailableBookableItemStaffVariant
+> {
   /** Duration of the variant in minutes. */
   duration: Scalars["Int"];
 
@@ -286,23 +282,15 @@ class CartAvailableBookableItemStaffVariant {
 
   /** Staff member booked. */
   staff: Staff;
-
-  /**
-   * @internal
-   */
-  constructor(variant: Graph.CartAvailableBookableItemStaffVariant) {
-    Object.assign(this, variant);
-    this.staff = new Staff(variant.staff);
-  }
 }
 
 /** Specified design for a CartItemEmailFulfillment. */
-type CartItemGiftCardDesign = {
+class CartItemGiftCardDesign extends Node<Graph.CartItemGiftCardDesign> {
   backgroundColor: Maybe<Scalars["String"]>;
   foregroundText: Maybe<Scalars["String"]>;
   id: Scalars["ID"];
   image: Maybe<Scalars["String"]>;
-};
+}
 
 /** A gift card item that can be purchased. */
 class CartGiftCardItem extends CartItem {
@@ -312,7 +300,7 @@ class CartGiftCardItem extends CartItem {
 }
 
 /** Displayed price range of an item, before tax. */
-type CartPriceRange = {
+class CartPriceRange extends Node<Graph.CartPriceRange> {
   /** Maximum price. */
   max: Scalars["Money"];
 
@@ -321,7 +309,7 @@ type CartPriceRange = {
 
   /** Whether the price is variable, i.e. the minimum and maximum differ. */
   variable: Scalars["Boolean"];
-};
+}
 
 /** An item that can be purchased. */
 class CartPurchasableItem extends CartItem {}

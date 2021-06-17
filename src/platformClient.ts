@@ -6,6 +6,28 @@ export enum PlatformTarget {
   Live
 }
 
+class Node<T> {
+  /**
+   * @internal
+   */
+  protected platformClient: PlatformClient;
+
+  /**
+   * @internal
+   */
+  protected platformTarget: PlatformTarget = PlatformTarget.Sandbox;
+
+  constructor(
+    platformClient: PlatformClient,
+    graphItem: T,
+    platformTarget: PlatformTarget = PlatformTarget.Sandbox
+  ) {
+    this.platformClient = platformClient;
+    this.platformTarget = platformTarget;
+    Object.assign(this, graphItem);
+  }
+}
+
 class PlatformClient {
   private client: GraphQLClient;
   constructor(
@@ -49,4 +71,4 @@ class PlatformClient {
   }
 }
 
-export { PlatformClient };
+export { PlatformClient, Node };

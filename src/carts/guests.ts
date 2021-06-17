@@ -1,8 +1,9 @@
 import { Scalars, Maybe } from "../graph";
 import * as Graph from "../graph";
+import { Node } from "../platformClient";
 
 /** A guest that can be associated with a bookable item. */
-class CartGuest {
+class CartGuest extends Node<Graph.CartGuest> {
   /** Email address, if provided. */
   email: Maybe<Scalars["Email"]>;
 
@@ -32,13 +33,6 @@ class CartGuest {
 
   /** Mobile phone, if provided. */
   phoneNumber: Maybe<Scalars["PhoneNumber"]>;
-
-  /**
-   * @internal
-   */
-  constructor(guest: Graph.CartGuest) {
-    Object.assign(this, guest);
-  }
 }
 
 export { CartGuest };

@@ -1,9 +1,10 @@
-import { Maybe, Scalars, Staff as GraphStaff } from "./graph";
-import { PlatformClient } from "./platformClient";
+import { Node, PlatformClient } from "./platformClient";
+import { Maybe, Scalars } from "./graph";
+import * as Graph from "./graph";
 
-class Staff {
+class Staff extends Node<Graph.Staff> {
   /** A biography of the staff member */
-  bio?: Maybe<Scalars["String"]>;
+  bio: Maybe<Scalars["String"]>;
 
   /** The first name of the staff member. */
   firstName: Scalars["String"];
@@ -16,26 +17,25 @@ class Staff {
   lastName: Scalars["String"];
 
   /** The nickname of the staff member */
-  nickname?: Maybe<Scalars["String"]>;
+  nickname: Maybe<Scalars["String"]>;
 
   /** The role the staff member holds at the business */
   role: StaffRole;
 
   updatedAt: Scalars["DateTime"];
 
-  /**
-   * @internal
-   */
-  constructor(staff: GraphStaff) {
-    Object.assign(this, staff);
+  constructor(platformClient, staff) {
+    super(platformClient, staff);
+    this.role = new StaffRole(platformClient, staff.role);
   }
 }
 
-type StaffRole = {
+class StaffRole extends Node<Graph.StaffRole> {
   /** The ID of an object */
   id: Scalars["ID"];
+
   /** Name of the role */
   name: Scalars["String"];
-};
+}
 
 export { Staff, StaffRole };

@@ -79,72 +79,13 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.appointment.html" class="tsd-kind-icon">Appointment</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.appointmentcancellation.html" class="tsd-kind-icon">Appointment<wbr>Cancellation</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.appointmentservice.html" class="tsd-kind-icon">Appointment<wbr>Service</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.appointments-1.html" class="tsd-kind-icon">Appointments</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.availablerescheduledate.html" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Date</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/appointments.availablerescheduletime.html" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Time</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="appointments.html#availablerescheduledate" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Date</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="appointments.html#availablerescheduletime" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Time</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="availablerescheduledate" class="tsd-anchor"></a>
-					<h3>Available<wbr>Reschedule<wbr>Date</h3>
-					<div class="tsd-signature tsd-kind-icon">Available<wbr>Reschedule<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>date<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Date&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/appointments.ts#L38">appointments.ts:38</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>date<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Date&quot;</span><span class="tsd-signature-symbol">]</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Matched date for the booking.</p>
-									</div>
-									<p>Note that this date may differ from the one at the location when a specific
-										time zone is requested using the <code>tz</code> argument. The date uses the requested
-									time zone, or the location&#39;s time zone when <code>tz</code> is null.</p>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="availablerescheduletime" class="tsd-anchor"></a>
-					<h3>Available<wbr>Reschedule<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">Available<wbr>Reschedule<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>bookableTimeId<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>startTime<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;DateTime&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/appointments.ts#L31">appointments.ts:31</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>bookable<wbr>Time<wbr>Id<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>start<wbr>Time<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;DateTime&quot;</span><span class="tsd-signature-symbol">]</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Matched start time for the booking.</p>
-									</div>
-								</div>
-							</li>
-						</ul>
 					</div>
 				</section>
 			</section>
@@ -190,16 +131,19 @@
 						<a href="../classes/appointments.appointment.html" class="tsd-kind-icon">Appointment</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/appointments.appointmentcancellation.html" class="tsd-kind-icon">Appointment<wbr>Cancellation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/appointments.appointmentservice.html" class="tsd-kind-icon">Appointment<wbr>Service</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/appointments.appointments-1.html" class="tsd-kind-icon">Appointments</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="appointments.html#availablerescheduledate" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Date</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/appointments.availablerescheduledate.html" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Date</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="appointments.html#availablerescheduletime" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Time</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/appointments.availablerescheduletime.html" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Time</a>
 					</li>
 				</ul>
 			</nav>

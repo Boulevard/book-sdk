@@ -31,8 +31,8 @@ class Carts {
 
     return new Cart(
       this.platformClient,
-      this.platformTarget,
       response.createCart.cart,
+      this.platformTarget,
       opts
     );
   }
@@ -51,8 +51,8 @@ class Carts {
 
     return new Cart(
       this.platformClient,
-      this.platformTarget,
       response.cart,
+      this.platformTarget,
       opts
     );
   }

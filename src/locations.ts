@@ -1,16 +1,19 @@
-import { PlatformClient } from "./platformClient";
-import {
-  Address,
-  Location as GraphLocation,
-  LocationEdge,
-  Maybe,
-  Scalars
-} from "./graph";
+import { Node, PlatformClient } from "./platformClient";
+import { Maybe, Scalars } from "./graph";
+import * as Graph from "./graph";
 import { getLocationsQuery } from "./locations/graph";
 
-class Location {
+class Address extends Node<Graph.Address> {
+  city: Maybe<Scalars["String"]>;
+  line1: Maybe<Scalars["String"]>;
+  line2: Maybe<Scalars["String"]>;
+  state: Maybe<Scalars["String"]>;
+  zip: Maybe<Scalars["String"]>;
+}
+
+class Location extends Node<Graph.Location> {
   /** The location's address */
-  address: Address;
+  address: Graph.Address;
 
   /** The location's logo */
   avatar: Maybe<Scalars["String"]>;
@@ -37,8 +40,9 @@ class Location {
   /**
    * @internal
    */
-  constructor(private platformClient: PlatformClient, location: GraphLocation) {
-    Object.assign(this, location);
+  constructor(platformClient: PlatformClient, location: Graph.Location) {
+    super(platformClient, location);
+    this.address = new Address(platformClient, location.address);
   }
 }
 
@@ -58,7 +62,7 @@ class Locations {
   async list(): Promise<Array<Location>> {
     const response = await this.platformClient.request(getLocationsQuery);
     return response.locations.edges.map(
-      (edge: LocationEdge) => new Location(this.platformClient, edge.node)
+      (edge: Graph.LocationEdge) => new Location(this.platformClient, edge.node)
     );
   }
 }

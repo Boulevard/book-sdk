@@ -1,12 +1,13 @@
-import { Maybe, Scalars, Service as GraphService } from "./graph";
-import { PlatformClient } from "./platformClient";
+import { Node, PlatformClient } from "./platformClient";
+import { Maybe, Scalars } from "./graph";
+import * as Graph from "./graph";
 
-type ServiceCategory = {
+class ServiceCategory extends Node<Graph.ServiceCategory> {
   /** Name */
   name: Scalars["String"];
-};
+}
 
-class Service {
+class Service extends Node<Graph.Service> {
   /** Service Category */
   category: ServiceCategory;
 
@@ -25,8 +26,9 @@ class Service {
   /**
    * @internal
    */
-  constructor(private platformClient: PlatformClient, service: GraphService) {
-    Object.assign(this, service);
+  constructor(platformClient: PlatformClient, service: Graph.Service) {
+    super(platformClient, service);
+    this.category = new ServiceCategory(platformClient, service.category);
   }
 }
 

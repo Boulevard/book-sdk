@@ -1,5 +1,5 @@
 import * as graph from "./carts/graph";
-import { PlatformClient, PlatformTarget } from "./platformClient";
+import { Node, PlatformClient, PlatformTarget } from "./platformClient";
 import {
   Scalars,
   Maybe,
@@ -27,15 +27,15 @@ import {
 import { CartGuest } from "./carts/guests";
 
 /** Gratuity set in advance for bookable items. */
-type CartAdvanceGratuity = {
+class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
   fixed?: Maybe<Scalars["Money"]>;
 
   /** Percentage gratuity amount, has to be set if `fixed` is not set. */
   percentage?: Maybe<Scalars["Float"]>;
-};
+}
 
 /** Category of items that can be checked out. */
-class CartAvailableCategory {
+class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
   /**
    * Items available to be checked out.
    *
@@ -66,10 +66,10 @@ class CartAvailableCategory {
    * @internal
    */
   constructor(
-    private platformClient: PlatformClient,
+    platformClient: PlatformClient,
     category: Graph.CartAvailableCategory
   ) {
-    Object.assign(this, category);
+    super(platformClient, category);
     this.availableItems = category.availableItems.map(
       (
         item:
@@ -79,11 +79,11 @@ class CartAvailableCategory {
       ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
-            return new CartAvailableBookableItem(item);
+            return new CartAvailableBookableItem(this.platformClient, item);
           case "CartAvailableGiftCardItem":
-            return new CartAvailableGiftCardItem(item);
+            return new CartAvailableGiftCardItem(this.platformClient, item);
           case "CartAvailablePurchasableItem":
-            return new CartAvailablePurchasableItem(item);
+            return new CartAvailablePurchasableItem(this.platformClient, item);
         }
       }
     );
@@ -91,7 +91,7 @@ class CartAvailableCategory {
 }
 
 /** Available starting date for bookable items in a cart. */
-class CartBookableDate {
+class CartBookableDate extends Node<Graph.CartBookableDate> {
   /**
    * Available date for the bookable items.
    *
@@ -100,36 +100,22 @@ class CartBookableDate {
    * time zone, or the location's time zone when `tz` is null.
    */
   date: Scalars["Date"];
-
-  /**
-   * @internal
-   */
-  constructor(date: Graph.CartBookableDate) {
-    Object.assign(this, date);
-  }
 }
 
 /** Available starting time for bookable items in a cart. */
-class CartBookableTime {
+class CartBookableTime extends Node<Graph.CartBookableTime> {
   /** ID of this particular time. */
   id: Scalars["ID"];
 
   /** Available start time for the earliest bookable item. */
   startTime: Scalars["DateTime"];
-
-  /**
-   * @internal
-   */
-  constructor(time: Graph.CartBookableTime) {
-    Object.assign(this, time);
-  }
 }
 
 /**
  * Client information supplied when checking out as a new user or on behalf of
  * someone else than the current user.
  */
-type CartClientInformation = {
+class CartClientInformation extends Node<Graph.CartClientInformation> {
   /** Email address. */
   email?: Maybe<Scalars["Email"]>;
 
@@ -141,10 +127,10 @@ type CartClientInformation = {
 
   /** Mobile phone number. */
   phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
-};
+}
 
 /** Cart validation error. */
-type CartError = {
+class CartError extends Node<Graph.CartError> {
   /** Machine-readable code. */
   code: CartErrorCode;
 
@@ -153,26 +139,19 @@ type CartError = {
 
   /** Short human-readable message. */
   message: Scalars["String"];
-};
+}
 
 /** Features available to the cart. */
-class CartFeatures {
+class CartFeatures extends Node<Graph.CartFeatures> {
   /** Whether gift cards are available to be purchased in this cart. */
   giftCardPurchaseEnabled: Scalars["Boolean"];
 
   /** Whether payment info is required to check out services in this cart. */
   paymentInfoRequired: Scalars["Boolean"];
-
-  /**
-   * @internal
-   */
-  constructor(features: Graph.CartFeatures) {
-    Object.assign(this, features);
-  }
 }
 
 /** Offer added to a cart, see the `offers` field. */
-class CartOffer {
+class CartOffer extends Node<Graph.CartOffer> {
   /**
    * Whether this offer is applied to any items currently in the cart.
    *
@@ -190,17 +169,10 @@ class CartOffer {
 
   /** Human-readable name. */
   name: Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(offer: Graph.CartOffer) {
-    Object.assign(this, offer);
-  }
 }
 
 /** Summary of the cart, including e.g. line item totals. */
-class CartSummary {
+class CartSummary extends Node<Graph.CartSummary> {
   deposit: DepositType;
 
   /** Total required deposit amount. */
@@ -226,16 +198,9 @@ class CartSummary {
 
   /** Total after gratuity, discounts, taxes, and rounding. */
   total: Scalars["Money"];
-
-  /**
-   * @internal
-   */
-  constructor(cartSummary: Graph.CartSummary) {
-    Object.assign(this, cartSummary);
-  }
 }
 
-class Cart {
+class Cart extends Node<Graph.Cart> {
   /** Optional gratuity defined in advance for bookable items. */
   advanceGratuity: Maybe<CartAdvanceGratuity>;
 
@@ -299,16 +264,16 @@ class Cart {
    * @internal
    */
   constructor(
-    private platformClient: PlatformClient,
-    private platformTarget: PlatformTarget,
+    platformClient: PlatformClient,
     cart: Graph.Cart,
+    platformTarget: PlatformTarget,
     opts?: { timezone?: string }
   ) {
+    super(platformClient, cart, platformTarget);
     this.timezone =
       opts?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    Object.assign(this, cart);
-    this.summary = new CartSummary(cart.summary);
+    this.summary = new CartSummary(platformClient, cart.summary);
   }
 
   /**
@@ -547,6 +512,7 @@ class Cart {
     return {
       cart: this.refresh(response.createCartGiftCardItemEmailFulfillment.cart),
       emailFulfillment: new CartItemEmailFulfillment(
+        this.platformClient,
         response.createCartGiftCardItemEmailFulfillment.emailFulfillment
       )
     };
@@ -579,7 +545,7 @@ class Cart {
 
     return {
       cart: this.refresh(response.createGuest.cart),
-      guest: new CartGuest(response.createGuest.guest)
+      guest: new CartGuest(this.platformClient, response.createGuest.guest)
     };
   }
 
@@ -672,7 +638,7 @@ class Cart {
     );
 
     return response.cart.availablePaymentMethods.map(
-      category => new CartItemPaymentMethod(category)
+      category => new CartItemPaymentMethod(this.platformClient, category)
     );
   }
 
@@ -699,7 +665,9 @@ class Cart {
       tz: opts?.timezone || this.timezone
     });
 
-    return response.cartBookableDates.map(date => new CartBookableDate(date));
+    return response.cartBookableDates.map(
+      date => new CartBookableDate(this.platformClient, date)
+    );
   }
 
   /**
@@ -737,7 +705,8 @@ class Cart {
     );
 
     return response.cart.cartBookableStaffVariants.map(
-      category => new CartAvailableBookableItemStaffVariant(category)
+      category =>
+        new CartAvailableBookableItemStaffVariant(this.platformClient, category)
     );
   }
 
@@ -761,7 +730,9 @@ class Cart {
       tz: opts?.timezone || this.timezone
     });
 
-    return response.cartBookableTimes.map(time => new CartBookableTime(time));
+    return response.cartBookableTimes.map(
+      time => new CartBookableTime(this.platformClient, time)
+    );
   }
 
   /**
@@ -772,7 +743,7 @@ class Cart {
       id: this.id
     });
 
-    return new CartFeatures(response.cart.features);
+    return new CartFeatures(this.platformClient, response.cart.features);
   }
 
   /**
@@ -786,7 +757,9 @@ class Cart {
       id: this.id
     });
 
-    return response.cart.guests.map(guest => new CartGuest(guest));
+    return response.cart.guests.map(
+      guest => new CartGuest(this.platformClient, guest)
+    );
   }
 
   /**
@@ -812,7 +785,9 @@ class Cart {
       id: this.id
     });
 
-    return response.cart.offers.map(guest => new CartOffer(guest));
+    return response.cart.offers.map(
+      guest => new CartOffer(this.platformClient, guest)
+    );
   }
 
   /**
@@ -1037,6 +1012,7 @@ class Cart {
     return {
       cart: this.refresh(response.updateCartGiftCardItemEmailFulfillment.cart),
       emailFulfillment: new CartItemEmailFulfillment(
+        this.platformClient,
         response.updateCartGiftCardItemEmailFulfillment.emailFulfillment
       )
     };
@@ -1075,7 +1051,7 @@ class Cart {
 
     return {
       cart: this.refresh(response.updateGuest.cart),
-      guest: new CartGuest(response.updateGuest.guest)
+      guest: new CartGuest(this.platformClient, response.updateGuest.guest)
     };
   }
   /**
@@ -1186,7 +1162,7 @@ class Cart {
   }
 
   private refresh(newCart) {
-    return new Cart(this.platformClient, this.platformTarget, newCart);
+    return new Cart(this.platformClient, newCart, this.platformTarget);
   }
 }
 

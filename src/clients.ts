@@ -1,13 +1,10 @@
 import { clientQuery, updateClientMutation } from "./clients/graph";
-import {
-  Maybe,
-  Scalars,
-  UpdateClientInput,
-  Client as GraphClient
-} from "./graph";
-import { PlatformClient } from "./platformClient";
+import { UpdateClientInput } from "./graph";
+import { Maybe, Scalars } from "./graph";
+import * as Graph from "./graph";
+import { Node, PlatformClient } from "./platformClient";
 
-class Client {
+class Client extends Node<Graph.Client> {
   /** Email address */
   email: Maybe<Scalars["Email"]>;
 
@@ -29,13 +26,6 @@ class Client {
   name: Maybe<Scalars["String"]>;
 
   updatedAt: Scalars["DateTime"];
-
-  /**
-   * @internal
-   */
-  constructor(private platformClient: PlatformClient, client: GraphClient) {
-    Object.assign(this, client);
-  }
 
   /**
    * Update the authenticated client

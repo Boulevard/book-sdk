@@ -1,17 +1,7 @@
-import { PlatformClient } from "./platformClient";
-import {
-  Appointment as GraphAppointment,
-  AppointmentCancellation,
-  Scalars,
-  AppointmentState,
-  AppointmentEdge,
-  AppointmentService as GraphAppointmentService,
-  Maybe,
-  CancelAppointmentInput,
-  AppointmentRescheduleAvailableTimesInput,
-  AppointmentRescheduleAvailableDatesInput,
-  AppointmentRescheduleInput
-} from "./graph";
+import { Node, PlatformClient } from "./platformClient";
+import { AppointmentCancellationReason, AppointmentState } from "./graph";
+import { Scalars, Maybe } from "./graph";
+import * as Graph from "./graph";
 import {
   myAppointmentsQuery,
   appointmentQuery,
@@ -28,14 +18,14 @@ import { Location } from "./locations";
 import { Client } from "./clients";
 import { CartBookableTime } from "./carts";
 
-type AvailableRescheduleTime = {
+class AvailableRescheduleTime extends Node<Graph.AvailableRescheduleTime> {
   bookableTimeId: Scalars["ID"];
 
   /** Matched start time for the booking. */
   startTime: Scalars["DateTime"];
-};
+}
 
-type AvailableRescheduleDate = {
+class AvailableRescheduleDate extends Node<Graph.AvailableRescheduleDate> {
   /**
    * Matched date for the booking.
    *
@@ -44,9 +34,9 @@ type AvailableRescheduleDate = {
    * time zone, or the location's time zone when `tz` is null.
    */
   date: Scalars["Date"];
-};
+}
 
-class AppointmentService {
+class AppointmentService extends Node<Graph.AppointmentService> {
   /** Duration for the entire service (including add-ons) */
   duration: Scalars["Int"];
 
@@ -78,16 +68,23 @@ class AppointmentService {
    * @internal
    */
   constructor(
-    private platformClient: PlatformClient,
-    appointmentService: GraphAppointmentService
+    platformClient: PlatformClient,
+    appointmentService: Graph.AppointmentService
   ) {
-    Object.assign(this, appointmentService);
-    this.staff = new Staff(appointmentService.staff);
+    super(platformClient, appointmentService);
+    this.staff = new Staff(platformClient, appointmentService.staff);
     this.service = new Service(this.platformClient, appointmentService.service);
   }
 }
 
-class Appointment {
+class AppointmentCancellation extends Node<Graph.AppointmentCancellation> {
+  /** Datetime the appointment was cancelled in UTC. */
+  cancelledAt: Scalars["DateTime"];
+  notes: Maybe<Scalars["String"]>;
+  reason: AppointmentCancellationReason;
+}
+
+class Appointment extends Node<Graph.Appointment> {
   /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
 
@@ -121,11 +118,11 @@ class Appointment {
   /**
    * @internal
    */
-  constructor(
-    private platformClient: PlatformClient,
-    appointment: GraphAppointment
-  ) {
-    Object.assign(this, appointment);
+  constructor(platformClient: PlatformClient, appointment: Graph.Appointment) {
+    super(platformClient, appointment);
+    this.cancellation =
+      appointment.cancellation &&
+      new AppointmentCancellation(platformClient, appointment.cancellation);
     this.appointmentServices = appointment.appointmentServices.map(
       appointmentService =>
         new AppointmentService(this.platformClient, appointmentService)
@@ -145,7 +142,7 @@ class Appointment {
     bookableTime: CartBookableTime,
     sendNotification: boolean
   ): Promise<Appointment> {
-    const input: AppointmentRescheduleInput = {
+    const input: Graph.AppointmentRescheduleInput = {
       appointmentId: this.id,
       bookableTimeId: bookableTime.id,
       sendNotification
@@ -175,7 +172,7 @@ class Appointment {
     searchRangeLower: Scalars["Date"],
     searchRangeUpper: Scalars["Date"]
   ): Promise<Array<AvailableRescheduleDate>> {
-    const input: AppointmentRescheduleAvailableDatesInput = {
+    const input: Graph.AppointmentRescheduleAvailableDatesInput = {
       appointmentId: this.id,
       searchRangeLower,
       searchRangeUpper
@@ -201,7 +198,7 @@ class Appointment {
   async rescheduleAvailableTimes(
     date: Scalars["Date"]
   ): Promise<Array<AvailableRescheduleTime>> {
-    const input: AppointmentRescheduleAvailableTimesInput = {
+    const input: Graph.AppointmentRescheduleAvailableTimesInput = {
       appointmentId: this.id,
       date
     };
@@ -222,7 +219,7 @@ class Appointment {
    * @returns Promise containing the updated Appointment
    */
   async cancel(notes?: string): Promise<Appointment> {
-    const input: CancelAppointmentInput = {
+    const input: Graph.CancelAppointmentInput = {
       id: this.id,
       notes
     };
@@ -304,13 +301,14 @@ class Appointments {
     });
 
     return response.myAppointments.edges.map(
-      (edge: AppointmentEdge) => edge.node
+      (edge: Graph.AppointmentEdge) => edge.node
     );
   }
 }
 export {
   Appointment,
   Appointments,
+  AppointmentCancellation,
   AppointmentService,
   AppointmentState,
   AvailableRescheduleTime,

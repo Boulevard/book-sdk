@@ -1,9 +1,10 @@
-import { PlatformClient } from "./platformClient";
-import { Business as GraphBusiness, Maybe, Scalars } from "./graph";
+import { Node, PlatformClient } from "./platformClient";
+import { Maybe, Scalars } from "./graph";
+import * as Graph from "./graph";
 import { businessLocationsQuery, businessQuery } from "./businesses/graph";
 import { Location } from "./locations";
 
-class Business {
+class Business extends Node<Graph.Business> {
   avatar: Maybe<Scalars["String"]>;
 
   /** The ID of an object */
@@ -24,13 +25,6 @@ class Business {
 
   /** The business' website. This could be an empty string. */
   website: Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(private platformClient: PlatformClient, business: GraphBusiness) {
-    Object.assign(this, business);
-  }
 
   /**
    * Get all locations for this business
