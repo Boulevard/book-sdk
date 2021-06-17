@@ -2,7 +2,13 @@ import { gql } from "graphql-request";
 import { createCartMutation } from "./carts/graph";
 import { PlatformClient } from "./platformClient";
 import { Location, Scalars } from "./graph";
-import { Cart } from "./cart";
+import {
+  Cart,
+  DepositType,
+  CartSummary,
+  CartGuest,
+  CartItemEmailFulfillment
+} from "./cart";
 
 /** Available starting time for bookable items in a cart. */
 type CartBookableTime = {
@@ -51,4 +57,12 @@ class Carts {
   }
 }
 
-export { Carts, CartBookableTime };
+export {
+  Cart,
+  DepositType,
+  CartSummary,
+  CartItemEmailFulfillment,
+  Carts,
+  CartGuest,
+  CartBookableTime
+};

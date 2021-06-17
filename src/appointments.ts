@@ -82,7 +82,7 @@ class AppointmentService {
     appointmentService: GraphAppointmentService
   ) {
     Object.assign(this, appointmentService);
-    this.staff = new Staff(this.platformClient, appointmentService.staff);
+    this.staff = new Staff(appointmentService.staff);
     this.service = new Service(this.platformClient, appointmentService.service);
   }
 }

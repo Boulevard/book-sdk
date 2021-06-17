@@ -3,124 +3,324 @@ import {
   addCardPaymentMethodMutation,
   addGiftCardItemMutation,
   addPurchasableItemMutation,
-  getDatesQuery,
-  getTimesQuery,
+  availableCategoriesQuery,
+  availablePaymentMethodsQuery,
+  checkoutCartMutation,
+  createCartGiftCardItemEmailFulfillmentMutation,
+  createGuestMutation,
+  deleteCartGiftCardItemEmailFulfillmentMutation,
+  deleteGuestMutation,
+  datesQuery,
+  timesQuery,
   reserveCartMutation,
-  updateCartMutation
+  updateCartMutation,
+  bookableStaffVariantsQuery
 } from "./carts/graph";
 import { PlatformClient } from "./platformClient";
 import {
   Cart as GraphCart,
-  CartAvailableCategory,
+  CartAvailableCategory as GraphCartAvailableCategory,
   CartItem,
-  CartBookableTime,
-  CartBookableDate,
+  CartBookableTime as GraphCartBookableTime,
+  CartSummary as GraphCartSummary,
+  CartBookableDate as GraphCartBookableDate,
   Scalars,
   CartClientInformationInput,
-  CartAvailableBookableItemStaffVariant,
+  CartAvailableBookableItemStaffVariant as GraphCartAvailableBookableItemStaffVariant,
   CartOffer,
   CartBookableItem,
-  CartItemPaymentMethod,
+  CartItemPaymentMethod as GraphCartItemPaymentMethod,
   CartAdvanceGratuityInput,
   CartGiftCardItem,
-  CartGuest,
+  CartGuest as GraphCartGuest,
   CartAvailableBookableItemOption,
   GiftCardDesign,
   CartPurchasableItem,
-  CartSummary,
   CartFeatures,
   CartError,
   CartClientInformation,
   CartAdvanceGratuity,
   CartAvailableItem,
   Location,
-  CreateCartGuestInput
+  CartItemEmailFulfillment as GraphCartItemEmailFulfillment,
+  CreateCartGuestInput,
+  Maybe,
+  DepositType,
+  AddCartSelectedBookableItemInput,
+  AddCartSelectedGiftCardItemInput,
+  AddCartSelectedPurchasableItemInput,
+  CheckoutCartInput,
+  CreateCartGiftCardItemEmailFulfillmentInput,
+  DeleteCartGiftCardItemEmailFulfillmentInput,
+  DeleteCartGuestInput
 } from "./graph";
+import { Staff } from "./staff";
 
-class Cart
-  implements Omit<GraphCart, "availableItem" | "startTimeId" | "selectedItem"> {
-  advanceGratuity?: CartAdvanceGratuity;
+/** Staff variant of a bookable item. */
+class CartAvailableBookableItemStaffVariant {
+  /** Duration of the variant in minutes. */
+  duration: Scalars["Int"];
+
+  /** ID of the variant. */
+  id: Scalars["ID"];
+
+  /** Price of the variant before discounts and taxes. */
+  price: Scalars["Money"];
+
+  /** Staff member booked. */
+  staff: Staff;
+
   /**
-   * Categories of items available to be checked out.
-   *
-   * Note that this list updates as the cart changes. For instance, some
-   * incompatible items may be disabled after others are added to the cart.
-   *
-   * Clients should retrieve this list again after mutations or make sure errors
-   * are handled when items cannot be added.
+   * @internal
    */
-  availableCategories: Array<CartAvailableCategory>;
+  constructor(variant: GraphCartAvailableBookableItemStaffVariant) {
+    Object.assign(this, variant);
+    this.staff = new Staff(variant.staff);
+  }
+}
+
+/** Category of items that can be checked out. */
+class CartAvailableCategory {
   /**
-   * Payment methods available for this cart. Some methods may already be
-   * present, for instance when the current user is authenticated. Additional
-   * methods can be added using the `addCart...PaymentMethod` mutations.
+   * Items available to be checked out.
    *
-   * Note that not all of these payment methods can be used with every cart item.
-   * Subsets of supported payment methods are available through the item objects
-   * instead.
+   * Note that this list updates as the cart changes. For instance, incompatible
+   * items may be disabled after others are added to the cart. Clients should
+   * retrieve this list again after mutations or make sure errors are handled
+   * when items cannot be added.
    */
-  availablePaymentMethods: Array<CartItemPaymentMethod>;
+  availableItems: Array<CartAvailableItem>;
+
+  /** Short optional description. */
+  description: Maybe<Scalars["String"]>;
+
+  /** Whether the category should appear as disabled. */
+  disabled: Scalars["Boolean"];
+
+  /** Message detailing why `disabled` is set. Might not be available. */
+  disabledDescription: Maybe<Scalars["String"]>;
+
+  /** Short human-readable name. */
+  name: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(
+    private platformClient: PlatformClient,
+    category: GraphCartAvailableCategory
+  ) {
+    Object.assign(this, category);
+    // TODO: Fetch and isntantiate CartAvailableItems
+  }
+}
+
+/** Available starting date for bookable items in a cart. */
+class CartBookableDate {
+  /**
+   * Available date for the bookable items.
+   *
+   * Note that this date may differ from the one at the location when a specific
+   * time zone is requested using the `tz` argument. The date uses the requested
+   * time zone, or the location's time zone when `tz` is null.
+   */
+  date: Scalars["Date"];
+
+  /**
+   * @internal
+   */
+  constructor(date: GraphCartBookableDate) {
+    Object.assign(this, date);
+  }
+}
+
+/** Available starting time for bookable items in a cart. */
+class CartBookableTime {
+  /** ID of this particular time. */
+  id: Scalars["ID"];
+
+  /** Available start time for the earliest bookable item. */
+  startTime: Scalars["DateTime"];
+
+  /**
+   * @internal
+   */
+  constructor(time: GraphCartBookableTime) {
+    Object.assign(this, time);
+  }
+}
+
+/** Send the item to a recipient via email. */
+class CartItemEmailFulfillment {
+  /** Optionally specify a delivery date for the email. */
+  deliveryDate: Maybe<Scalars["Date"]>;
+
+  id: Scalars["ID"];
+
+  /** Optionally include a message from the sender to the recipient. */
+  messageFromSender: Maybe<Scalars["String"]>;
+
+  /** The email the item should be sent to. */
+  recipientEmail: Scalars["Email"];
+
+  /** The name of the person receiving the item. */
+  recipientName: Scalars["String"];
+
+  /** The name of the person sending the item. */
+  senderName: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(fulfilment: GraphCartItemEmailFulfillment) {
+    Object.assign(this, fulfilment);
+  }
+}
+
+/** Cart item payment method. */
+class CartItemPaymentMethod {
+  /** ID of the method. */
+  id: Scalars["ID"];
+
+  /** Short human-readable name. */
+  name: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(method: GraphCartItemPaymentMethod) {
+    Object.assign(this, method);
+    // TODO: Handle interface implementations?
+  }
+}
+
+/** A guest that can be associated with a bookable item. */
+class CartGuest {
+  /** Email address, if provided. */
+  email: Maybe<Scalars["Email"]>;
+
+  /** First name, if provided. */
+  firstName: Maybe<Scalars["String"]>;
+
+  /** ID of the guest. */
+  id: Scalars["ID"];
+
+  /**
+   * Name of the guest if provided, otherwise a user-friendly fallback name that
+   * uniquely identifies the guest.
+   */
+  label: Scalars["String"];
+
+  /** Last name, if provided. */
+  lastName: Maybe<Scalars["String"]>;
+
+  /**
+   * Positive ordinal number starting at 1.
+   *
+   * This is for display purposes, don't use this to uniquely identify guests.
+   * Use the `id` field for that instead. Also, don't assume this scheme follows
+   * any predefined ordering.
+   */
+  number: Scalars["Int"];
+
+  /** Mobile phone, if provided. */
+  phoneNumber: Maybe<Scalars["PhoneNumber"]>;
+
+  /**
+   * @internal
+   */
+  constructor(guest: GraphCartGuest) {
+    Object.assign(this, guest);
+  }
+}
+
+/** Summary of the cart, including e.g. line item totals. */
+class CartSummary {
+  deposit: DepositType;
+
+  /** Total required deposit amount. */
+  depositAmount: Scalars["Money"];
+
+  /** Total discount amount on the subtotal. */
+  discountAmount: Scalars["Money"];
+
+  /** Total gratuity amount on the subtotal. */
+  gratuityAmount: Scalars["Money"];
+
+  /** Whether a payment method is required */
+  paymentMethodRequired: Scalars["Boolean"];
+
+  /** Rounding amount on the discounted and taxed subtotal. */
+  roundingAmount: Scalars["Money"];
+
+  /** Subtotal before gratuity, discounts, taxes, and rounding. */
+  subtotal: Scalars["Money"];
+
+  /** Total tax amount on the discounted subtotal. */
+  taxAmount: Scalars["Money"];
+
+  /** Total after gratuity, discounts, taxes, and rounding. */
+  total: Scalars["Money"];
+
+  /**
+   * @internal
+   */
+  constructor(cartSummary: GraphCartSummary) {
+    Object.assign(this, cartSummary);
+  }
+}
+
+class Cart {
+  /** Optional gratuity defined in advance for bookable items. */
+  advanceGratuity: Maybe<CartAdvanceGratuity>;
+
   /**
    * Optional client information supplied when checking out on behalf of someone
    * else than the current user.
    */
-  clientInformation?: CartClientInformation;
+  clientInformation: Maybe<CartClientInformation>;
+
   /** Optional message from the client to the business. */
-  clientMessage?: Scalars["String"];
+  clientMessage: Maybe<Scalars["String"]>;
+
   /**
    * Timestamp of when the cart was completed.
    *
    * This field cannot be edited and once completed cannot be changed.
    */
-  completedAt?: Scalars["DateTime"];
+  completedAt: Maybe<Scalars["DateTime"]>;
+
   /**
    * When the cart has reserved bookable items, the end time of the latest item.
    * This value is `null` when there are no reservations.
    */
-  endTime?: Scalars["NaiveDateTime"];
+  endTime: Maybe<Scalars["NaiveDateTime"]>;
+
   /** Current validation errors. */
   errors: Array<CartError>;
+
   /**
    * When the cart has reserved bookable items, the timestamp when reservations
    * (e.g. service time selections) expire and need to be selected again. This
    * value is `null` when there are no reservations and is reset into the future
    * whenever a new reservation is added.
    */
-  expiresAt?: Scalars["DateTime"];
-  /** Features available to the cart. */
-  features: CartFeatures;
-  /** A list of guests added to the cart */
-  guests: Array<CartGuest>;
+  expiresAt: Maybe<Scalars["DateTime"]>;
+
   /** The ID of an object */
   id: Scalars["ID"];
+
   /** Timestamp when the cart was created. */
   insertedAt: Scalars["DateTime"];
-  /** Location associated with the cart */
-  location: Location;
-  /**
-   * A list of offers applied to the cart.
-   *
-   * Offers can be applied manually using `addCartOffer` and an offer code, but
-   * it's also possible for offers to be auto-applied. At this time auto-applied
-   * offers cannot be removed from the cart.
-   */
-  offers: Array<CartOffer>;
-  /**
-   * All selected items pending checkout.
-   *
-   * Note that the ordering of this list is not stable, and may change depending
-   * on the current state of the cart.
-   */
-  selectedItems: Array<CartItem>;
+
   /**
    * When the cart has reserved bookable items, the starting time of the earliest
    * item. This value is `null` when there are no reservations.
    */
-  startTime?: Scalars["NaiveDateTime"];
+  startTime: Maybe<Scalars["NaiveDateTime"]>;
+
   /** Summary of the cart, including e.g. line item totals. */
   summary: CartSummary;
-
-  timezone: string;
 
   /** Timestamp when the cart was last updated. */
   updatedAt: Scalars["DateTime"];
@@ -128,7 +328,13 @@ class Cart
   /**
    * @internal
    */
+  private timezone: string;
+
+  /**
+   * @internal
+   */
   private paymentToken?: string;
+
   /**
    * @internal
    */
@@ -141,6 +347,7 @@ class Cart
       opts?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     Object.assign(this, cart);
+    this.summary = new CartSummary(cart.summary);
   }
 
   /**
@@ -218,16 +425,23 @@ class Cart
       staffVariant?: CartAvailableBookableItemStaffVariant;
     }
   ): Promise<Cart> {
-    await this.platformClient.request(addBookableItemMutation, {
+    const input: AddCartSelectedBookableItemInput = {
       id: this.id,
       itemId: item.id,
       itemDiscountCode: opts?.discountCode,
       itemGuestId: opts?.guest?.id,
-      itemOptionIds: opts?.options,
+      itemOptionIds: opts?.options?.map(option => option.id),
       itemStaffVariantId: opts?.staffVariant?.id
-    });
+    };
+    const response = await this.platformClient.request(
+      addBookableItemMutation,
+      { input }
+    );
 
-    return this;
+    return new Cart(
+      this.platformClient,
+      response.addCartSelectedBookableItem.cart
+    );
   }
 
   /**
@@ -244,12 +458,20 @@ class Cart
     item: CartGiftCardItem,
     price: Scalars["Money"]
   ): Promise<Cart> {
-    await this.platformClient.request(addGiftCardItemMutation, {
+    const input: AddCartSelectedGiftCardItemInput = {
       id: this.id,
-      itemId: item.id
-    });
+      itemId: item.id,
+      itemPrice: price
+    };
+    const response = await this.platformClient.request(
+      addGiftCardItemMutation,
+      { input }
+    );
 
-    return this;
+    return new Cart(
+      this.platformClient,
+      response.addCartSelectedGiftCardItem.cart
+    );
   }
 
   /**
@@ -266,13 +488,20 @@ class Cart
     item: CartPurchasableItem,
     opts?: { discountCode?: string }
   ): Promise<Cart> {
-    await this.platformClient.request(addPurchasableItemMutation, {
+    const input: AddCartSelectedPurchasableItemInput = {
       id: this.id,
       itemId: item.id,
       itemDiscountCode: opts?.discountCode
-    });
+    };
+    const response = await this.platformClient.request(
+      addPurchasableItemMutation,
+      { input }
+    );
 
-    return this;
+    return new Cart(
+      this.platformClient,
+      response.addCartSelectedPurchasableItem.cart
+    );
   }
 
   /**
@@ -286,10 +515,16 @@ class Cart
    * @category Checkout & Payment
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async checkout(): Promise<Cart> {
-    return undefined;
+    const input: CheckoutCartInput = {
+      id: this.id
+    };
+    const response = await this.platformClient.request(checkoutCartMutation, {
+      input
+    });
+
+    return new Cart(this.platformClient, response.checkoutCart.cart);
   }
 
   /**
@@ -303,16 +538,37 @@ class Cart
    * @param recipient.email The email of the person receiving the item
    * @param recipient.name The name of the person receiving the item
    * @param opts.message A message to include from the sender
-   * @todo Implement
-   * @todo Determine return type
    */
   async createGiftCardItemEmailFulfillment(
     item: CartGiftCardItem,
     sender: string,
+    deliveryDate: Scalars["Date"],
     recipient: { email: Scalars["Email"]; name: string },
     opts?: { message?: string }
-  ): Promise<unknown> {
-    return undefined;
+  ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
+    const input: CreateCartGiftCardItemEmailFulfillmentInput = {
+      id: this.id,
+      itemId: item.id,
+      deliveryDate,
+      messageFromSender: opts?.message,
+      recipientEmail: recipient.email,
+      recipientName: recipient.name,
+      senderName: sender
+    };
+    const response = await this.platformClient.request(
+      createCartGiftCardItemEmailFulfillmentMutation,
+      { input }
+    );
+
+    return {
+      cart: new Cart(
+        this.platformClient,
+        response.createCartGiftCardItemEmailFulfillment.cart
+      ),
+      emailFulfillment: new CartItemEmailFulfillment(
+        response.createCartGiftCardItemEmailFulfillment.emailFulfillment
+      )
+    };
   }
 
   /**
@@ -321,16 +577,26 @@ class Cart
    * @async
    * @category Guests
    * @public
-   * @todo Implement
-   * @todo Determine return type
    */
-  async createGuest(input: {
+  async createGuest(opts: {
     email?: Scalars["Email"];
     firstName?: Scalars["String"];
     lastName?: Scalars["String"];
     phoneNumber?: Scalars["PhoneNumber"];
-  }): Promise<unknown> {
-    return undefined;
+  }): Promise<{ cart: Cart; guest: CartGuest }> {
+    const input: CreateCartGuestInput = {
+      id: this.id,
+      ...opts
+    };
+
+    const response = await this.platformClient.request(createGuestMutation, {
+      input
+    });
+
+    return {
+      cart: new Cart(this.platformClient, response.createGuest.cart),
+      guest: new CartGuest(response.createGuest.guest)
+    };
   }
 
   /**
@@ -341,12 +607,26 @@ class Cart
    * @public
    * @param item The CartGiftCardItem.
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async deleteGiftCardItemEmailFulfillment(
     item: CartGiftCardItem
   ): Promise<Cart> {
-    return undefined;
+    const input: DeleteCartGiftCardItemEmailFulfillmentInput = {
+      id: this.id,
+      itemId: item.id
+    };
+
+    const response = await this.platformClient.request(
+      deleteCartGiftCardItemEmailFulfillmentMutation,
+      {
+        input
+      }
+    );
+
+    return new Cart(
+      this.platformClient,
+      response.deleteCartGiftCardItemEmailFulfillment.cart
+    );
   }
 
   /**
@@ -356,10 +636,60 @@ class Cart
    * @category Guests
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async deleteGuest(guest: CartGuest): Promise<Cart> {
-    return undefined;
+    const input: DeleteCartGuestInput = {
+      id: this.id,
+      guestId: guest.id
+    };
+
+    const response = await this.platformClient.request(deleteGuestMutation, {
+      input
+    });
+
+    return new Cart(this.platformClient, response.deleteGuest.cart);
+  }
+
+  /**
+   * Categories of items available to be checked out.
+   *
+   * Note that this list updates as the cart changes. For instance, some
+   * incompatible items may be disabled after others are added to the cart.
+   *
+   * Clients should retrieve this list again after mutations or make sure errors
+   * are handled when items cannot be added.
+   *
+   * @async
+   * @public
+   * @returns Promise containing the list of available categories
+   */
+  async getAvailableCategories(): Promise<Array<CartAvailableCategory>> {
+    const response = await this.platformClient.request(
+      availableCategoriesQuery
+    );
+
+    return response.cart.availableCategories.map(
+      category => new CartAvailableCategory(this.platformClient, category)
+    );
+  }
+
+  /**
+   * Payment methods available for this cart. Some methods may already be
+   * present, for instance when the current user is authenticated. Additional
+   * methods can be added using the `addCart...PaymentMethod` mutations.
+   *
+   * Note that not all of these payment methods can be used with every cart item.
+   * Subsets of supported payment methods are available through the item objects
+   * instead.
+   */
+  async getAvailablePaymentMethods(): Promise<Array<CartItemPaymentMethod>> {
+    const response = await this.platformClient.request(
+      availablePaymentMethodsQuery
+    );
+
+    return response.cart.availablePaymentMethods.map(
+      category => new CartItemPaymentMethod(category)
+    );
   }
 
   /**
@@ -372,19 +702,20 @@ class Cart
    * @param opts.timezone Optional override for the timezone set in {@link Carts.create}
    * @public
    * @returns Promise containing the list of Bookable Dates
-   * @todo Implement Arguments
    */
   async getBookableDates(opts: {
     searchRangeLower?: Scalars["Date"];
     searchRangeUpper?: Scalars["Date"];
     timezone?: string;
   }): Promise<Array<CartBookableDate>> {
-    const response = await this.platformClient.request(getDatesQuery, {
+    const response = await this.platformClient.request(datesQuery, {
       id: this.id,
+      searchRangeLower: opts.searchRangeLower,
+      searchRangeUpper: opts.searchRangeUpper,
       tz: opts?.timezone || this.timezone
     });
 
-    return response.cartBookableDates;
+    return response.cartBookableDates.map(date => new CartBookableDate(date));
   }
 
   /**
@@ -411,13 +742,19 @@ class Cart
    * @param time The bookable time.
    * @param item The selected bookable item.
    * @returns Promise containing the list of Bookable Item Staff Variants
-   * @todo Implement
    */
   async getBookableStaffVariants(
     time: CartBookableTime,
     item: CartBookableItem
   ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
-    return undefined;
+    const response = await this.platformClient.request(
+      bookableStaffVariantsQuery,
+      { id: this.id, itemId: item.id, bookableTimeId: time.id }
+    );
+
+    return response.cart.cartBookableStaffVariants.map(
+      category => new CartAvailableBookableItemStaffVariant(category)
+    );
   }
 
   /**
@@ -434,13 +771,58 @@ class Cart
     date: Scalars["Date"],
     opts?: { timezone?: string }
   ): Promise<Array<CartBookableTime>> {
-    const response = await this.platformClient.request(getTimesQuery, {
+    const response = await this.platformClient.request(timesQuery, {
       id: this.id,
       searchDate: date,
       tz: opts?.timezone || this.timezone
     });
 
-    return response.cartBookableTimes;
+    return response.cartBookableTimes.map(time => new CartBookableTime(time));
+  }
+
+  /**
+   * Features available to the cart.
+   */
+  async getFeatures(): Promise<CartFeatures> {
+    return undefined;
+  }
+
+  /**
+   * A list of guests added to the cart
+   * @async
+   * @category Guests
+   *
+   * */
+  async getGuests(): Promise<Array<CartGuest>> {
+    return undefined;
+  }
+
+  /**
+   * Location associated with the cart
+   */
+  async getLocation(): Promise<Location> {
+    return undefined;
+  }
+
+  /**
+   * A list of offers applied to the cart.
+   *
+   * Offers can be applied manually using `addCartOffer` and an offer code, but
+   * it's also possible for offers to be auto-applied. At this time auto-applied
+   * offers cannot be removed from the cart.
+   */
+  async getOffers(): Promise<Array<CartOffer>> {
+    return undefined;
+  }
+
+  /**
+   * All selected items pending checkout.
+   *
+   * Note that the ordering of this list is not stable, and may change depending
+   * on the current state of the cart.
+   */
+  async getSelectedItems(): Promise<Array<CartItem>> {
+    return undefined;
   }
 
   /**
@@ -661,4 +1043,4 @@ class Cart
   }
 }
 
-export { Cart };
+export { Cart, DepositType, CartGuest, CartSummary, CartItemEmailFulfillment };
