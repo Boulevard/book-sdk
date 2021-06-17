@@ -173,6 +173,15 @@ export const bookableStaffVariantsQuery = gql`
   }
 `;
 
+export const cartQuery = gql`
+  ${fragments.cart}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      ...CartProperties
+    }
+  }
+`;
+
 export const datesQuery = gql`
   query CartBookableDates(
     $id: ID!

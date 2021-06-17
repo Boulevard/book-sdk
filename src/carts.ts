@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { createCartMutation } from "./carts/graph";
+import { cartQuery, createCartMutation } from "./carts/graph";
 import { PlatformClient } from "./platformClient";
 import { Location, Scalars } from "./graph";
 import {
@@ -44,10 +44,16 @@ class Carts {
    *
    * @param {id} ID the ID of the cart
    * @protected
-   * @todo Implement
    */
-  private async get(id: Scalars["ID"]): Promise<Cart> {
-    return undefined;
+  private async get(
+    id: Scalars["ID"],
+    opts?: { timezone?: string }
+  ): Promise<Cart> {
+    const response = await this.platformClient.request(cartQuery, {
+      id
+    });
+
+    return new Cart(this.platformClient, response.cart, opts);
   }
 }
 
