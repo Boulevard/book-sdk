@@ -4,20 +4,23 @@ import { PlatformClient } from "./platformClient";
 import { Location, Scalars } from "./graph";
 import {
   Cart,
-  DepositType,
-  CartSummary,
+  CartAdvanceGratuity,
+  CartAdvanceGratuityInput,
+  CartAvailableBookableItemOption,
+  CartAvailableBookableItemStaffVariant,
+  CartBookableDate,
+  CartBookableItem,
+  CartBookableTime,
+  CartClientInformation,
+  CartClientInformationInput,
+  CartError,
+  CartGiftCardItem,
   CartGuest,
-  CartItemEmailFulfillment
+  CartItemEmailFulfillment,
+  CartItemPaymentMethod,
+  CartSummary,
+  DepositType
 } from "./cart";
-
-/** Available starting time for bookable items in a cart. */
-type CartBookableTime = {
-  /** ID of this particular time. */
-  id: Scalars["ID"];
-
-  /** Available start time for the earliest bookable item. */
-  startTime: Scalars["DateTime"];
-};
 
 class Carts {
   /**
@@ -59,10 +62,21 @@ class Carts {
 
 export {
   Cart,
-  DepositType,
-  CartSummary,
-  CartItemEmailFulfillment,
   Carts,
+  CartAdvanceGratuity,
+  CartAdvanceGratuityInput,
+  CartAvailableBookableItemOption,
+  CartAvailableBookableItemStaffVariant,
+  CartBookableDate,
+  CartBookableItem,
+  CartBookableTime,
+  CartClientInformation,
+  CartClientInformationInput,
+  CartError,
+  CartGiftCardItem,
   CartGuest,
-  CartBookableTime
+  CartItemEmailFulfillment,
+  CartItemPaymentMethod,
+  CartSummary,
+  DepositType
 };

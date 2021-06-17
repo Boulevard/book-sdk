@@ -1,25 +1,13 @@
 import { gql } from "graphql-request";
 import { fragments as staffFragments } from "../staff/graph";
+import { fragments as locationFragments } from "../locations/graph";
 
-const fragments = gql`
-  ${staffFragments}
-  fragment CartProperties on Cart {
-    advanceGratuity
-    clientInformation
-    clientMessage
-    completedAt
-    endTime
-    errors {
-      code
-      description
-      message
-    }
-    expiresAt
-    id
-    insertedAt
-    startTime
-    summary
-    updatedAt
+const availabilityFragment = gql`
+  fragment CartAvailableItemProperties on CartAvailableItem {
+    name
+    disabledDescription
+    disabled
+    description
   }
 
   fragment CartAvailableCategoryProperties on CartAvailableCategory {
@@ -28,38 +16,99 @@ const fragments = gql`
     disabled
     description
   }
-
-  fragment CartBookableStaffVariantProperties on CartBookableStaffVariant {
-    id
-    duration
-    price
-    staff {
-      ...StaffProperties
-    }
-  }
-
-  fragment CartItemEmailFulfillmentProperties on CartItemEmailFulfillment {
-    deliveryDate
-    id
-    messageFromSender
-    recipientEmail
-    recipientName
-    senderName
-  }
-
-  fragment CartGuestProperties on CartGuest {
-    email
-    firstName
-    id
-    label
-    lastName
-    number
-    phoneNumber
-  }
 `;
 
+const fragments = {
+  cart: gql`
+    ${staffFragments}
+    fragment CartProperties on Cart {
+      advanceGratuity
+      clientInformation
+      clientMessage
+      completedAt
+      endTime
+      errors {
+        code
+        description
+        message
+      }
+      expiresAt
+      id
+      insertedAt
+      startTime
+      summary
+      updatedAt
+    }
+  `,
+  availability: availabilityFragment,
+  features: gql`
+    fragment CartFeaturesProperties on CartFeatures {
+      giftCardPurchaseEnabled
+      paymentInfoRequired
+    }
+  `,
+  item: gql`
+    ${availabilityFragment}
+    fragment CartItemProperties on CartItem {
+      discountAmount
+      discountCode
+      errors {
+        code
+        description
+        message
+      }
+      id
+      item {
+        ...CartAvailableItemProperties
+      }
+      lineTotal
+      price
+      taxAmount
+    }
+  `,
+  offer: gql`
+    fragment CartOfferProperties on CartOffer {
+      id
+      name
+      code
+      applied
+    }
+  `,
+  staffVariant: gql`
+    fragment CartBookableStaffVariantProperties on CartBookableStaffVariant {
+      id
+      duration
+      price
+      staff {
+        ...StaffProperties
+      }
+    }
+  `,
+  emailFulfilment: gql`
+    fragment CartItemEmailFulfillmentProperties on CartItemEmailFulfillment {
+      deliveryDate
+      id
+      messageFromSender
+      recipientEmail
+      recipientName
+      senderName
+    }
+  `,
+  guest: gql`
+    fragment CartGuestProperties on CartGuest {
+      email
+      firstName
+      id
+      label
+      lastName
+      number
+      phoneNumber
+    }
+  `
+};
+
 export const addBookableItemMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation AddCartBookableItem($nput: AddCartSelectedBookableItemInput!) {
     addCartSelectedBookableItem(input: $input) {
       cart {
@@ -70,7 +119,7 @@ export const addBookableItemMutation = gql`
 `;
 
 export const addGiftCardItemMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation AddCartGiftCardItem($input: AddCartSelectedGiftCardItemInput!) {
     addCartSelectedGiftCardItem(input: $input) {
       cart {
@@ -81,7 +130,7 @@ export const addGiftCardItemMutation = gql`
 `;
 
 export const addPurchasableItemMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation AddCartPurchasableItem(
     $input: AddCartSelectedPurchasableItemInput!
   ) {
@@ -94,7 +143,7 @@ export const addPurchasableItemMutation = gql`
 `;
 
 export const availableCategoriesQuery = gql`
-  ${fragments}
+  ${fragments.availability}
   query Cart($id: ID!) {
     cart(id: $id) {
       availableCategories {
@@ -153,7 +202,7 @@ export const timesQuery = gql`
 `;
 
 export const checkoutCartMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation CheckoutCart($input: CheckoutCartInput!) {
     checkoutCart(input: $input) {
       cart {
@@ -164,7 +213,7 @@ export const checkoutCartMutation = gql`
 `;
 
 export const createCartMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation CreateCart($input: CreateCartInput!) {
     createCart(input: $input) {
       cart {
@@ -175,7 +224,8 @@ export const createCartMutation = gql`
 `;
 
 export const createCartGiftCardItemEmailFulfillmentMutation = gql`
-  ${fragments}
+  ${fragments.cart}
+  ${fragments.emailFulfilment}
   mutation CreateCartGiftCardItemEmailFulfillment(
     $input: CreateCartGiftCardItemEmailFulfillmentInput!
   ) {
@@ -191,7 +241,8 @@ export const createCartGiftCardItemEmailFulfillmentMutation = gql`
 `;
 
 export const createGuestMutation = gql`
-  ${fragments}
+  ${fragments.cart}
+  ${fragments.guest}
   mutation CreateGuest($input: CreateCartGuestInput!) {
     createGuest(input: $input) {
       cart {
@@ -205,7 +256,8 @@ export const createGuestMutation = gql`
 `;
 
 export const deleteCartGiftCardItemEmailFulfillmentMutation = gql`
-  ${fragments}
+  ${fragments.cart}
+  ${fragments.emailFulfilment}
   mutation DeleteCartGiftCardItemEmailFulfillment(
     $input: DeleteCartGiftCardItemEmailFulfillmentInput!
   ) {
@@ -221,7 +273,8 @@ export const deleteCartGiftCardItemEmailFulfillmentMutation = gql`
 `;
 
 export const deleteGuestMutation = gql`
-  ${fragments}
+  ${fragments.cart}
+  ${fragments.guest}
   mutation DeleteGuest($input: DeleteCartGuestInput!) {
     deleteGuest(input: $input) {
       cart {
@@ -234,8 +287,74 @@ export const deleteGuestMutation = gql`
   }
 `;
 
+export const featuresQuery = gql`
+  ${fragments.features}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      features {
+        ...CartFeaturesProperties
+      }
+    }
+  }
+`;
+
+export const guestsQuery = gql`
+  ${fragments.guest}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      guests {
+        ...CartGuestProperties
+      }
+    }
+  }
+`;
+
+export const locationQuery = gql`
+  ${locationFragments}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      location {
+        ...LocationProperties
+      }
+    }
+  }
+`;
+
+export const offersQuery = gql`
+  ${fragments.offer}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      offers {
+        ...CartOfferProperties
+      }
+    }
+  }
+`;
+
+export const removeOfferMutation = gql`
+  ${fragments.cart}
+  mutation RemoveCartOffer($input: RemoveCartOfferInput!) {
+    removeCartOffer(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
+export const removeSelectedItemMutation = gql`
+  ${fragments.cart}
+  mutation RemoveCartSelectedItem($input: RemoveCartSelectedItemInput!) {
+    removeCartSelectedItem(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
 export const reserveCartMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation ReserveCartBookableItems($input: ReserveCartBookableItemsInput!) {
     reserveCartBookableItems(input: $input) {
       cart {
@@ -245,8 +364,41 @@ export const reserveCartMutation = gql`
   }
 `;
 
+export const selectedItemsQuery = gql`
+  ${fragments.offer}
+  query Cart($id: ID!) {
+    cart(id: $id) {
+      selectedItems {
+        ...CartItemProperties
+      }
+    }
+  }
+`;
+
+export const selectPaymentMethodMutation = gql`
+  ${fragments.cart}
+  mutation SelectCartPaymentMethod($input: SelectCartPaymentMethodInput!) {
+    selectCartPaymentMethod(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
+export const takeOwnershipMutation = gql`
+  ${fragments.cart}
+  mutation TakeOwnership($input: TakeCartOwnershipInput!) {
+    takeCartOwnership(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
 export const updateCartMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation UpdateCart($input: UpdateCartInput!) {
     updateCart(input: $input) {
       cart {
@@ -256,8 +408,77 @@ export const updateCartMutation = gql`
   }
 `;
 
+export const updateCartGiftCardItemEmailFulfillmentMutation = gql`
+  ${fragments.cart}
+  ${fragments.emailFulfilment}
+  mutation UpdateCartGiftCardItemEmailFulfillment(
+    $input: UpdateCartGiftCardItemEmailFulfillmentInput!
+  ) {
+    updateCartGiftCardItemEmailFulfillment(input: $input) {
+      cart {
+        ...CartProperties
+      }
+      emailFulfillment {
+        ...CartItemEmailFulfillmentProperties
+      }
+    }
+  }
+`;
+
+export const updateGuestMutation = gql`
+  ${fragments.cart}
+  ${fragments.guest}
+  mutation UpdateGuest($input: UpdateCartGuestInput!) {
+    updateGuest(input: $input) {
+      cart {
+        ...CartProperties
+      }
+      guest {
+        ...CartGuestProperties
+      }
+    }
+  }
+`;
+
+export const updateSelectedBookableItemMutation = gql`
+  ${fragments.cart}
+  mutation UpdateCartBookableItem($nput: UpdateCartSelectedBookableItemInput!) {
+    updateCartSelectedBookableItem(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
+export const updateSelectedGiftCardItemMutation = gql`
+  ${fragments.cart}
+  mutation UpdateCartGiftCardItem(
+    $input: UpdateCartSelectedGiftCardItemInput!
+  ) {
+    updateCartSelectedGiftCardItem(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
+export const updateSelectedPurchasableItemMutation = gql`
+  ${fragments.cart}
+  mutation UpdateCartPurchasableItem(
+    $input: UpdateCartSelectedPurchasableItemInput!
+  ) {
+    updateCartSelectedPurchasableItem(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
 export const addCardPaymentMethodMutation = gql`
-  ${fragments}
+  ${fragments.cart}
   mutation AddCartCardPaymentMethod($input: AddCartCardPaymentMethodInput!) {
     addCartCardPaymentMethod(input: $input) {
       cart {

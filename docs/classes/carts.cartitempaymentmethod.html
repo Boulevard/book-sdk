@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartItemEmailFulfillment | @boulevard/book-sdk</title>
+	<title>CartItemPaymentMethod | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.cartitememailfulfillment.html">CartItemEmailFulfillment</a>
+					<a href="carts.cartitempaymentmethod.html">CartItemPaymentMethod</a>
 				</li>
 			</ul>
-			<h1>Class CartItemEmailFulfillment</h1>
+			<h1>Class CartItemPaymentMethod</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Send the item to a recipient via email.</p>
+						<p>Cart item payment method.</p>
 					</div>
 				</div>
 			</section>
@@ -79,7 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CartItemEmailFulfillment</span>
+						<span class="target">CartItemPaymentMethod</span>
 					</li>
 				</ul>
 			</section>
@@ -90,12 +90,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#deliverydate" class="tsd-kind-icon">delivery<wbr>Date</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#messagefromsender" class="tsd-kind-icon">message<wbr>From<wbr>Sender</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#recipientemail" class="tsd-kind-icon">recipient<wbr>Email</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#recipientname" class="tsd-kind-icon">recipient<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitememailfulfillment.html#sendername" class="tsd-kind-icon">sender<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitempaymentmethod.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartitempaymentmethod.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,87 +100,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="deliverydate" class="tsd-anchor"></a>
-					<h3>delivery<wbr>Date</h3>
-					<div class="tsd-signature tsd-kind-icon">delivery<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L283">cart.ts:283</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Optionally specify a delivery date for the email.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L285">cart.ts:285</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="messagefromsender" class="tsd-anchor"></a>
-					<h3>message<wbr>From<wbr>Sender</h3>
-					<div class="tsd-signature tsd-kind-icon">message<wbr>From<wbr>Sender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L288">cart.ts:288</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L310">cart.ts:310</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Optionally include a message from the sender to the recipient.</p>
+							<p>ID of the method.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="recipientemail" class="tsd-anchor"></a>
-					<h3>recipient<wbr>Email</h3>
-					<div class="tsd-signature tsd-kind-icon">recipient<wbr>Email<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L291">cart.ts:291</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L313">cart.ts:313</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The email the item should be sent to.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="recipientname" class="tsd-anchor"></a>
-					<h3>recipient<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">recipient<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L294">cart.ts:294</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The name of the person receiving the item.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="sendername" class="tsd-anchor"></a>
-					<h3>sender<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">sender<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/eb99ec6/src/cart.ts#L297">cart.ts:297</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The name of the person sending the item.</p>
+							<p>Short human-readable name.</p>
 						</div>
 					</div>
 				</section>
@@ -242,36 +183,24 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartguest.html" class="tsd-kind-icon">Cart<wbr>Guest</a>
 					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="carts.cartitememailfulfillment.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Email<wbr>Fulfillment</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartitememailfulfillment.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Email<wbr>Fulfillment</a>
+						<a href="carts.cartitempaymentmethod.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Payment<wbr>Method</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#deliverydate" class="tsd-kind-icon">delivery<wbr>Date</a>
+								<a href="carts.cartitempaymentmethod.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#messagefromsender" class="tsd-kind-icon">message<wbr>From<wbr>Sender</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#recipientemail" class="tsd-kind-icon">recipient<wbr>Email</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#recipientname" class="tsd-kind-icon">recipient<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartitememailfulfillment.html#sendername" class="tsd-kind-icon">sender<wbr>Name</a>
+								<a href="carts.cartitempaymentmethod.html#name" class="tsd-kind-icon">name</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartitempaymentmethod.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Payment<wbr>Method</a>
-					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartsummary.html" class="tsd-kind-icon">Cart<wbr>Summary</a>
 					</li>

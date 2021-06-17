@@ -14,20 +14,34 @@ import {
   timesQuery,
   reserveCartMutation,
   updateCartMutation,
-  bookableStaffVariantsQuery
+  bookableStaffVariantsQuery,
+  featuresQuery,
+  guestsQuery,
+  locationQuery,
+  offersQuery,
+  selectedItemsQuery,
+  removeOfferMutation,
+  removeSelectedItemMutation,
+  selectPaymentMethodMutation,
+  takeOwnershipMutation,
+  updateCartGiftCardItemEmailFulfillmentMutation,
+  updateGuestMutation,
+  updateSelectedBookableItemMutation,
+  updateSelectedGiftCardItemMutation,
+  updateSelectedPurchasableItemMutation
 } from "./carts/graph";
 import { PlatformClient } from "./platformClient";
 import {
   Cart as GraphCart,
   CartAvailableCategory as GraphCartAvailableCategory,
-  CartItem,
+  CartItem as GraphCartItem,
   CartBookableTime as GraphCartBookableTime,
   CartSummary as GraphCartSummary,
   CartBookableDate as GraphCartBookableDate,
   Scalars,
   CartClientInformationInput,
   CartAvailableBookableItemStaffVariant as GraphCartAvailableBookableItemStaffVariant,
-  CartOffer,
+  CartOffer as GraphCartOffer,
   CartBookableItem,
   CartItemPaymentMethod as GraphCartItemPaymentMethod,
   CartAdvanceGratuityInput,
@@ -36,12 +50,11 @@ import {
   CartAvailableBookableItemOption,
   GiftCardDesign,
   CartPurchasableItem,
-  CartFeatures,
+  CartFeatures as GraphCartFeatures,
   CartError,
   CartClientInformation,
   CartAdvanceGratuity,
-  CartAvailableItem,
-  Location,
+  CartAvailableItem as GraphCartAvailableItem,
   CartItemEmailFulfillment as GraphCartItemEmailFulfillment,
   CreateCartGuestInput,
   Maybe,
@@ -52,9 +65,23 @@ import {
   CheckoutCartInput,
   CreateCartGiftCardItemEmailFulfillmentInput,
   DeleteCartGiftCardItemEmailFulfillmentInput,
-  DeleteCartGuestInput
+  DeleteCartGuestInput,
+  CartItemError,
+  CartPriceRange,
+  RemoveCartOfferInput,
+  RemoveCartSelectedItemInput,
+  ReserveCartBookableItemsInput,
+  SelectCartPaymentMethodInput,
+  TakeCartOwnershipInput,
+  UpdateCartGiftCardItemEmailFulfillmentInput,
+  UpdateCartInput,
+  UpdateCartGuestInput,
+  UpdateCartSelectedBookableItemInput,
+  UpdateCartSelectedGiftCardItemInput,
+  UpdateCartSelectedPurchasableItemInput
 } from "./graph";
 import { Staff } from "./staff";
+import { Location } from "./locations";
 
 /** Staff variant of a bookable item. */
 class CartAvailableBookableItemStaffVariant {
@@ -115,6 +142,41 @@ class CartAvailableCategory {
   }
 }
 
+/** Abstract available item that can be checked out. */
+class CartAvailableItem {
+  /** Short optional description. */
+  description: Maybe<Scalars["String"]>;
+
+  /** Whether the item should appear disabled or hidden. */
+  disabled: Scalars["Boolean"];
+
+  /** Message detailing why `disabled` is set. Might not be available. */
+  disabledDescription?: Maybe<Scalars["String"]>;
+
+  /** ID of the item. */
+  id: Scalars["ID"];
+
+  /**
+   * Displayed price range of the item before tax.
+   *
+   * The final price may differ based on customizations made to the item before
+   * checking out. For instance, bookable items may have variants and options
+   * that can be chosen and affect the price.
+   */
+  listPriceRange: CartPriceRange;
+
+  /** Short human-readable name. */
+  name: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(item: GraphCartAvailableItem) {
+    Object.assign(this, item);
+    // TODO Handle implementations of this interface
+  }
+}
+
 /** Available starting date for bookable items in a cart. */
 class CartBookableDate {
   /**
@@ -147,6 +209,71 @@ class CartBookableTime {
    */
   constructor(time: GraphCartBookableTime) {
     Object.assign(this, time);
+  }
+}
+
+/** Features available to the cart. */
+class CartFeatures {
+  /** Whether gift cards are available to be purchased in this cart. */
+  giftCardPurchaseEnabled: Scalars["Boolean"];
+
+  /** Whether payment info is required to check out services in this cart. */
+  paymentInfoRequired: Scalars["Boolean"];
+
+  /**
+   * @internal
+   */
+  constructor(features: GraphCartFeatures) {
+    Object.assign(this, features);
+  }
+}
+
+/** Abstract item added using the `addCart...Item` mutations. */
+class CartItem {
+  /** Total discount amount on the price. */
+  discountAmount: Scalars["Money"];
+
+  /**
+   * Valid discount code that was applied, either the cart's code or one that was
+   * applied separately to the item. An invalid code results in a `null` value.
+   */
+  discountCode?: Maybe<Scalars["String"]>;
+
+  /** Current item validation errors. */
+  errors: Array<CartItemError>;
+
+  /** ID of the item. */
+  id: Scalars["ID"];
+
+  /** Original item details. */
+  item: CartAvailableItem;
+
+  /** Total for the item after discounts and taxes. */
+  lineTotal: Scalars["Money"];
+
+  /** Price before discounts and taxes. */
+  price: Scalars["Money"];
+
+  /** Total tax amount on the discounted price. */
+  taxAmount: Scalars["Money"];
+
+  constructor(private platformClient: PlatformClient, cartItem: GraphCartItem) {
+    Object.assign(this, cartItem);
+    this.item = new CartAvailableItem(cartItem.item);
+  }
+
+  /** Payment methods available for this item.
+   * @todo implement
+   */
+  async getAvailablePaymentMethods() {
+    return undefined;
+  }
+
+  /** Payment method selected for this item.
+   * @todo implement
+   */
+  async getSelectedPaymentMethod(): Promise<Maybe<CartItemPaymentMethod>> {
+    return undefined;
   }
 }
 
@@ -231,6 +358,34 @@ class CartGuest {
    */
   constructor(guest: GraphCartGuest) {
     Object.assign(this, guest);
+  }
+}
+
+/** Offer added to a cart, see the `offers` field. */
+class CartOffer {
+  /**
+   * Whether this offer is applied to any items currently in the cart.
+   *
+   * Offers that are not applicable are still valid (i.e. they exist and can be
+   * used) but there are no items in the current cart that could be affected.
+   * When applicable items are added later, the offer is applied then.
+   */
+  applied: Scalars["Boolean"];
+
+  /** Case-insensitive, uniquely identifying code. */
+  code: Scalars["String"];
+
+  /** ID of the offer. */
+  id: Scalars["ID"];
+
+  /** Human-readable name. */
+  name: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(offer: GraphCartOffer) {
+    Object.assign(this, offer);
   }
 }
 
@@ -784,7 +939,11 @@ class Cart {
    * Features available to the cart.
    */
   async getFeatures(): Promise<CartFeatures> {
-    return undefined;
+    const response = await this.platformClient.request(featuresQuery, {
+      id: this.id
+    });
+
+    return new CartFeatures(response.cart.features);
   }
 
   /**
@@ -794,14 +953,22 @@ class Cart {
    *
    * */
   async getGuests(): Promise<Array<CartGuest>> {
-    return undefined;
+    const response = await this.platformClient.request(guestsQuery, {
+      id: this.id
+    });
+
+    return response.cart.guests.map(guest => new CartGuest(guest));
   }
 
   /**
    * Location associated with the cart
    */
   async getLocation(): Promise<Location> {
-    return undefined;
+    const response = await this.platformClient.request(locationQuery, {
+      id: this.id
+    });
+
+    return new Location(this.platformClient, response.cart.location);
   }
 
   /**
@@ -812,7 +979,11 @@ class Cart {
    * offers cannot be removed from the cart.
    */
   async getOffers(): Promise<Array<CartOffer>> {
-    return undefined;
+    const response = await this.platformClient.request(offersQuery, {
+      id: this.id
+    });
+
+    return response.cart.offers.map(guest => new CartOffer(guest));
   }
 
   /**
@@ -822,7 +993,13 @@ class Cart {
    * on the current state of the cart.
    */
   async getSelectedItems(): Promise<Array<CartItem>> {
-    return undefined;
+    const response = await this.platformClient.request(selectedItemsQuery, {
+      id: this.id
+    });
+
+    return response.cart.selectedItems.map(
+      item => new CartItem(this.platformClient, item)
+    );
   }
 
   /**
@@ -833,10 +1010,18 @@ class Cart {
    * @param offer The Offer code
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async removeOffer(offer: CartOffer): Promise<Cart> {
-    return undefined;
+    const input: RemoveCartOfferInput = {
+      id: this.id,
+      offerId: offer.id
+    };
+
+    const response = await this.platformClient.request(removeOfferMutation, {
+      input
+    });
+
+    return new Cart(this.platformClient, response.removeOffer.cart);
   }
 
   /**
@@ -845,12 +1030,21 @@ class Cart {
    * @async
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async removeSelectedItem(
     item: CartBookableItem | CartGiftCardItem | CartPurchasableItem
   ): Promise<Cart> {
-    return undefined;
+    const input: RemoveCartSelectedItemInput = {
+      id: this.id,
+      itemId: item.id
+    };
+
+    const response = await this.platformClient.request(
+      removeSelectedItemMutation,
+      { input }
+    );
+
+    return new Cart(this.platformClient, response.removeSelectedItem.cart);
   }
 
   /**
@@ -861,15 +1055,17 @@ class Cart {
    * @category Bookable Items
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async reserveBookableItems(bookableTime: CartBookableTime): Promise<Cart> {
-    await this.platformClient.request(reserveCartMutation, {
+    const input: ReserveCartBookableItemsInput = {
       id: this.id,
       bookableTimeId: bookableTime.id
+    };
+    const response = await this.platformClient.request(reserveCartMutation, {
+      input
     });
 
-    return this;
+    return new Cart(this.platformClient, response.reserveCart.cart);
   }
 
   /**
@@ -883,12 +1079,20 @@ class Cart {
    * @category Checkout & Payment
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async selectPaymentMethod(
     paymentMethod: CartItemPaymentMethod
   ): Promise<Cart> {
-    return undefined;
+    const input: SelectCartPaymentMethodInput = {
+      id: this.id,
+      paymentMethodId: paymentMethod.id
+    };
+    const response = await this.platformClient.request(
+      selectPaymentMethodMutation,
+      { input }
+    );
+
+    return new Cart(this.platformClient, response.selectPaymentMethod.cart);
   }
 
   /**
@@ -903,7 +1107,14 @@ class Cart {
    * @todo Implement
    */
   async takeOwnership(): Promise<Cart> {
-    return undefined;
+    const input: TakeCartOwnershipInput = {
+      id: this.id
+    };
+    const response = await this.platformClient.request(takeOwnershipMutation, {
+      input
+    });
+
+    return new Cart(this.platformClient, response.takeCartOwnership.cart);
   }
 
   /**
@@ -920,12 +1131,15 @@ class Cart {
     clientMessage?: string;
     discountCode?: string;
   }): Promise<Cart> {
-    await this.platformClient.request(updateCartMutation, {
+    const input: UpdateCartInput = {
       id: this.id,
       ...opts
+    };
+    const response = await this.platformClient.request(updateCartMutation, {
+      input
     });
 
-    return this;
+    return new Cart(this.platformClient, response.takeCartOwnership.cart);
   }
 
   /**
@@ -938,8 +1152,6 @@ class Cart {
    * @param opts.recipient.name The name of the person receiving the item
    * @param opts.message A message to include from the sender
    * @public
-   * @todo Implement
-   * @todo Determine return type
    */
   async updateGiftCardItemEmailFulfillment(
     item: CartGiftCardItem,
@@ -949,8 +1161,30 @@ class Cart {
       recipient: { email?: Scalars["Email"]; name?: string };
       sender?: { name?: string };
     }
-  ): Promise<unknown> {
-    return undefined;
+  ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
+    const input: UpdateCartGiftCardItemEmailFulfillmentInput = {
+      id: this.id,
+      itemId: item.id,
+      deliveryDate: opts.deliveryDate,
+      messageFromSender: opts?.message,
+      recipientEmail: opts?.recipient.email,
+      recipientName: opts?.recipient.name,
+      senderName: opts?.sender?.name
+    };
+    const response = await this.platformClient.request(
+      updateCartGiftCardItemEmailFulfillmentMutation,
+      { input }
+    );
+
+    return {
+      cart: new Cart(
+        this.platformClient,
+        response.updateCartGiftCardItemEmailFulfillment.cart
+      ),
+      emailFulfillment: new CartItemEmailFulfillment(
+        response.updateCartGiftCardItemEmailFulfillment.emailFulfillment
+      )
+    };
   }
 
   /**
@@ -970,10 +1204,22 @@ class Cart {
       lastName?: string;
       phoneNumber?: Scalars["PhoneNumber"];
     }
-  ): Promise<unknown> {
-    return undefined;
-  }
+  ): Promise<{ cart: Cart; guest: CartGuest }> {
+    const input: UpdateCartGuestInput = {
+      id: this.id,
+      guestId: guest.id,
+      ...opts
+    };
 
+    const response = await this.platformClient.request(updateGuestMutation, {
+      input
+    });
+
+    return {
+      cart: new Cart(this.platformClient, response.updateGuest.cart),
+      guest: new CartGuest(response.updateGuest.guest)
+    };
+  }
   /**
    * Update a cart's selected bookable item.
    *
@@ -999,7 +1245,23 @@ class Cart {
       staffVariant?: CartAvailableBookableItemStaffVariant;
     }
   ): Promise<Cart> {
-    return undefined;
+    const input: UpdateCartSelectedBookableItemInput = {
+      id: this.id,
+      itemId: item.id,
+      ...opts
+    };
+
+    const response = await this.platformClient.request(
+      updateSelectedBookableItemMutation,
+      {
+        input
+      }
+    );
+
+    return new Cart(
+      this.platformClient,
+      response.updateSelectedBookableItem.cart
+    );
   }
 
   /**
@@ -1020,7 +1282,23 @@ class Cart {
       price?: Scalars["Money"];
     }
   ): Promise<Cart> {
-    return undefined;
+    const input: UpdateCartSelectedGiftCardItemInput = {
+      id: this.id,
+      itemId: item.id,
+      ...opts
+    };
+
+    const response = await this.platformClient.request(
+      updateSelectedGiftCardItemMutation,
+      {
+        input
+      }
+    );
+
+    return new Cart(
+      this.platformClient,
+      response.updateSelectedGiftCardItem.cart
+    );
   }
 
   /**
@@ -1039,8 +1317,42 @@ class Cart {
       discountCode?: string;
     }
   ): Promise<Cart> {
-    return undefined;
+    const input: UpdateCartSelectedPurchasableItemInput = {
+      id: this.id,
+      itemId: item.id,
+      ...opts
+    };
+
+    const response = await this.platformClient.request(
+      updateSelectedPurchasableItemMutation,
+      {
+        input
+      }
+    );
+
+    return new Cart(
+      this.platformClient,
+      response.updateSelectedPurchasableItem.cart
+    );
   }
 }
 
-export { Cart, DepositType, CartGuest, CartSummary, CartItemEmailFulfillment };
+export {
+  Cart,
+  CartAdvanceGratuity,
+  CartAdvanceGratuityInput,
+  CartAvailableBookableItemOption,
+  CartAvailableBookableItemStaffVariant,
+  CartBookableDate,
+  CartBookableItem,
+  CartBookableTime,
+  CartClientInformation,
+  CartClientInformationInput,
+  CartError,
+  CartGiftCardItem,
+  CartGuest,
+  CartItemEmailFulfillment,
+  CartItemPaymentMethod,
+  CartSummary,
+  DepositType
+};
