@@ -1,5 +1,5 @@
 import * as graph from "./carts/graph";
-import { PlatformClient } from "./platformClient";
+import { PlatformClient, PlatformTarget } from "./platformClient";
 import * as Graph from "./graph";
 import { Staff } from "./staff";
 import { Location } from "./locations";
@@ -414,13 +414,9 @@ class Cart {
   /**
    * @internal
    */
-  private paymentToken?: string;
-
-  /**
-   * @internal
-   */
   constructor(
     private platformClient: PlatformClient,
+    private platformTarget: PlatformTarget,
     cart: Graph.Cart,
     opts?: { timezone?: string }
   ) {
@@ -439,35 +435,64 @@ class Cart {
    * @public
    * @returns Promise containing the updated cart
    */
-  async addCardPaymentMethod(details: {
-    card: {
-      name: string;
-      number: string;
-      cvv: string;
-      exp_month: number;
-      exp_year: number;
-    };
-  }): Promise<Cart> {
-    // TODO: Make environment-specific
-    const response = await fetch(
-      "https://pci.staging-boulevard.app/cards/tokenize",
+  async addCardPaymentMethod(
+    details:
+      | {
+          card: {
+            name: string;
+            number: string;
+            cvv: string;
+            exp_month: number;
+            exp_year: number;
+          };
+        }
+      | { token: string },
+    opts?: { select?: boolean }
+  ): Promise<Cart> {
+    const token = await this.tokenizeCardDetails(details);
+    const response = await this.platformClient.request(
+      graph.addCardPaymentMethodMutation,
       {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(details)
+        id: this.id,
+        token,
+        select: opts?.select == false ? false : true
       }
     );
-    const { token } = await response.json();
-    await this.platformClient.request(graph.addCardPaymentMethodMutation, {
-      id: this.id,
-      token: this.paymentToken,
-      select: true
-    });
-    this.paymentToken = token;
-    return this;
+    return this.refresh(response.addCartCardPaymentMethod.cart);
+  }
+
+  private async tokenizeCardDetails(
+    details:
+      | {
+          card: {
+            name: string;
+            number: string;
+            cvv: string;
+            exp_month: number;
+            exp_year: number;
+          };
+        }
+      | { token: string }
+  ) {
+    if ("token" in details) {
+      return details.token;
+    } else {
+      const response = await fetch(
+        this.platformTarget == PlatformTarget.Sandbox
+          ? "https://pci.staging-boulevard.app/cards/tokenize"
+          : "https://pci.boulevard.app/cards/tokenize",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(details)
+        }
+      );
+      const { token } = await response.json();
+      return token;
+    }
   }
 
   /**
@@ -519,10 +544,7 @@ class Cart {
       { input }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.addCartSelectedBookableItem.cart
-    );
+    return this.refresh(response.addCartSelectedBookableItem.cart);
   }
 
   /**
@@ -549,10 +571,7 @@ class Cart {
       { input }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.addCartSelectedGiftCardItem.cart
-    );
+    return this.refresh(response.addCartSelectedGiftCardItem.cart);
   }
 
   /**
@@ -579,10 +598,7 @@ class Cart {
       { input }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.addCartSelectedPurchasableItem.cart
-    );
+    return this.refresh(response.addCartSelectedPurchasableItem.cart);
   }
 
   /**
@@ -608,7 +624,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.checkoutCart.cart);
+    return this.refresh(response.checkoutCart.cart);
   }
 
   /**
@@ -645,10 +661,7 @@ class Cart {
     );
 
     return {
-      cart: new Cart(
-        this.platformClient,
-        response.createCartGiftCardItemEmailFulfillment.cart
-      ),
+      cart: this.refresh(response.createCartGiftCardItemEmailFulfillment.cart),
       emailFulfillment: new CartItemEmailFulfillment(
         response.createCartGiftCardItemEmailFulfillment.emailFulfillment
       )
@@ -681,7 +694,7 @@ class Cart {
     );
 
     return {
-      cart: new Cart(this.platformClient, response.createGuest.cart),
+      cart: this.refresh(response.createGuest.cart),
       guest: new CartGuest(response.createGuest.guest)
     };
   }
@@ -710,10 +723,7 @@ class Cart {
       }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.deleteCartGiftCardItemEmailFulfillment.cart
-    );
+    return this.refresh(response.deleteCartGiftCardItemEmailFulfillment.cart);
   }
 
   /**
@@ -737,7 +747,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.deleteGuest.cart);
+    return this.refresh(response.deleteGuest.cart);
   }
 
   /**
@@ -962,7 +972,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.removeOffer.cart);
+    return this.refresh(response.removeOffer.cart);
   }
 
   /**
@@ -988,7 +998,7 @@ class Cart {
       { input }
     );
 
-    return new Cart(this.platformClient, response.removeSelectedItem.cart);
+    return this.refresh(response.removeSelectedItem.cart);
   }
 
   /**
@@ -1012,7 +1022,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.reserveCart.cart);
+    return this.refresh(response.reserveCart.cart);
   }
 
   /**
@@ -1039,7 +1049,7 @@ class Cart {
       { input }
     );
 
-    return new Cart(this.platformClient, response.selectPaymentMethod.cart);
+    return this.refresh(response.selectPaymentMethod.cart);
   }
 
   /**
@@ -1064,7 +1074,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.takeCartOwnership.cart);
+    return this.refresh(response.takeCartOwnership.cart);
   }
 
   /**
@@ -1092,7 +1102,7 @@ class Cart {
       }
     );
 
-    return new Cart(this.platformClient, response.takeCartOwnership.cart);
+    return this.refresh(response.takeCartOwnership.cart);
   }
 
   /**
@@ -1130,10 +1140,7 @@ class Cart {
     );
 
     return {
-      cart: new Cart(
-        this.platformClient,
-        response.updateCartGiftCardItemEmailFulfillment.cart
-      ),
+      cart: this.refresh(response.updateCartGiftCardItemEmailFulfillment.cart),
       emailFulfillment: new CartItemEmailFulfillment(
         response.updateCartGiftCardItemEmailFulfillment.emailFulfillment
       )
@@ -1172,7 +1179,7 @@ class Cart {
     );
 
     return {
-      cart: new Cart(this.platformClient, response.updateGuest.cart),
+      cart: this.refresh(response.updateGuest.cart),
       guest: new CartGuest(response.updateGuest.guest)
     };
   }
@@ -1214,10 +1221,7 @@ class Cart {
       }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.updateSelectedBookableItem.cart
-    );
+    return this.refresh(response.updateSelectedBookableItem.cart);
   }
 
   /**
@@ -1251,10 +1255,7 @@ class Cart {
       }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.updateSelectedGiftCardItem.cart
-    );
+    return this.refresh(response.updateSelectedGiftCardItem.cart);
   }
 
   /**
@@ -1286,10 +1287,11 @@ class Cart {
       }
     );
 
-    return new Cart(
-      this.platformClient,
-      response.updateSelectedPurchasableItem.cart
-    );
+    return this.refresh(response.updateSelectedPurchasableItem.cart);
+  }
+
+  private refresh(newCart) {
+    return new Cart(this.platformClient, this.platformTarget, newCart);
   }
 }
 
