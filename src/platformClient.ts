@@ -17,6 +17,9 @@ class Node<T> {
    */
   protected platformTarget: PlatformTarget = PlatformTarget.Sandbox;
 
+  /**
+   * @internal
+   */
   constructor(
     platformClient: PlatformClient,
     graphItem: T,

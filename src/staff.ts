@@ -24,6 +24,9 @@ class Staff extends Node<Graph.Staff> {
 
   updatedAt: Scalars["DateTime"];
 
+  /**
+   * @internal
+   */
   constructor(platformClient, staff) {
     super(platformClient, staff);
     this.role = new StaffRole(platformClient, staff.role);

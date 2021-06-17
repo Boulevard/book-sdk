@@ -70,6 +70,9 @@ class CartItem extends Node<Graph.CartItem> {
   /** Total tax amount on the discounted price. */
   taxAmount: Scalars["Money"];
 
+  /**
+   * @internal
+   */
   constructor(platformClient: PlatformClient, cartItem: Graph.CartItem) {
     super(platformClient, cartItem);
     this.item = new CartAvailableItem(platformClient, cartItem.item);
@@ -298,6 +301,9 @@ class CartAvailableBookableItemStaffVariant extends Node<
   /** Staff member booked. */
   staff: Staff;
 
+  /**
+   * @internal
+   */
   constructor(platformClient, variant) {
     super(platformClient, variant);
     this.staff = new Staff(platformClient, variant.staff);
@@ -318,6 +324,9 @@ class CartGiftCardItem extends CartItem {
   emailFulfillment: Maybe<CartItemEmailFulfillment>;
   giftCardDesign: Maybe<CartItemGiftCardDesign>;
 
+  /**
+   * @internal
+   */
   constructor(platformClient, item) {
     super(platformClient, item);
     this.emailFulfillment =
