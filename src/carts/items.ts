@@ -36,7 +36,6 @@ class CartAvailableItem {
    */
   constructor(item: Graph.CartAvailableItem) {
     Object.assign(this, item);
-    // TODO Handle implementations of this interface
   }
 }
 
@@ -53,7 +52,6 @@ class CartItemPaymentMethod {
    */
   constructor(method: Graph.CartItemPaymentMethod) {
     Object.assign(this, method);
-    // TODO: Handle interface implementations?
   }
 }
 

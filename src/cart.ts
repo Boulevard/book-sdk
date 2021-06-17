@@ -11,9 +11,12 @@ import { CartErrorCode } from "./graph";
 import * as Graph from "./graph";
 import { Location } from "./locations";
 import {
+  CartAvailableBookableItem,
   CartAvailableBookableItemOption,
   CartAvailableBookableItemStaffVariant,
+  CartAvailableGiftCardItem,
   CartAvailableItem,
+  CartAvailablePurchasableItem,
   CartBookableItem,
   CartGiftCardItem,
   CartItem,
@@ -41,7 +44,11 @@ class CartAvailableCategory {
    * retrieve this list again after mutations or make sure errors are handled
    * when items cannot be added.
    */
-  availableItems: Array<CartAvailableItem>;
+  availableItems: Array<
+    | CartAvailableBookableItem
+    | CartAvailableGiftCardItem
+    | CartAvailablePurchasableItem
+  >;
 
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
@@ -63,7 +70,23 @@ class CartAvailableCategory {
     category: Graph.CartAvailableCategory
   ) {
     Object.assign(this, category);
-    // TODO: Fetch and isntantiate CartAvailableItems
+    this.availableItems = category.availableItems.map(
+      (
+        item:
+          | Graph.CartAvailableBookableItem
+          | Graph.CartAvailableGiftCardItem
+          | Graph.CartAvailablePurchasableItem
+      ) => {
+        switch (item.__typename) {
+          case "CartAvailableBookableItem":
+            return new CartAvailableBookableItem(item);
+          case "CartAvailableGiftCardItem":
+            return new CartAvailableGiftCardItem(item);
+          case "CartAvailablePurchasableItem":
+            return new CartAvailablePurchasableItem(item);
+        }
+      }
+    );
   }
 }
 
@@ -807,7 +830,21 @@ class Cart {
     );
 
     return response.cart.selectedItems.map(
-      item => new CartItem(this.platformClient, item)
+      (
+        item:
+          | Graph.CartBookableItem
+          | Graph.CartGiftCardItem
+          | Graph.CartPurchasableItem
+      ) => {
+        switch (item.__typename) {
+          case "CartBookableItem":
+            return new CartBookableItem(this.platformClient, item);
+          case "CartGiftCardItem":
+            return new CartGiftCardItem(this.platformClient, item);
+          case "CartPurchasableItem":
+            return new CartPurchasableItem(this.platformClient, item);
+        }
+      }
     );
   }
 
@@ -1157,6 +1194,7 @@ export {
   Cart,
   CartAdvanceGratuity,
   CartAvailableBookableItemStaffVariant,
+  CartAvailableCategory,
   CartBookableDate,
   CartBookableTime,
   CartClientInformation,

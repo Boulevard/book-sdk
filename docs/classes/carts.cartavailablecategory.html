@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartGuest | @boulevard/book-sdk</title>
+	<title>CartAvailableCategory | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.cartguest.html">CartGuest</a>
+					<a href="carts.cartavailablecategory.html">CartAvailableCategory</a>
 				</li>
 			</ul>
-			<h1>Class CartGuest</h1>
+			<h1>Class CartAvailableCategory</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A guest that can be associated with a bookable item.</p>
+						<p>Category of items that can be checked out.</p>
 					</div>
 				</div>
 			</section>
@@ -79,7 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CartGuest</span>
+						<span class="target">CartAvailableCategory</span>
 					</li>
 				</ul>
 			</section>
@@ -90,13 +90,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#email" class="tsd-kind-icon">email</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#firstname" class="tsd-kind-icon">first<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#label" class="tsd-kind-icon">label</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#lastname" class="tsd-kind-icon">last<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#number" class="tsd-kind-icon">number</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartguest.html#phonenumber" class="tsd-kind-icon">phone<wbr>Number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablecategory.html#availableitems" class="tsd-kind-icon">available<wbr>Items</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablecategory.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablecategory.html#disabled" class="tsd-kind-icon">disabled</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablecategory.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablecategory.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,111 +103,81 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="email" class="tsd-anchor"></a>
-					<h3>email</h3>
-					<div class="tsd-signature tsd-kind-icon">email<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="availableitems" class="tsd-anchor"></a>
+					<h3>available<wbr>Items</h3>
+					<div class="tsd-signature tsd-kind-icon">available<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><a href="carts.cartavailablebookableitem.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItem</a><span class="tsd-signature-symbol"> | </span><a href="carts.cartavailablegiftcarditem.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableGiftCardItem</a><span class="tsd-signature-symbol"> | </span><a href="carts.cartavailablepurchasableitem.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailablePurchasableItem</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in carts/guests.ts:7</li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L47">cart.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Email address, if provided.</p>
+							<p>Items available to be checked out.</p>
+						</div>
+						<p>Note that this list updates as the cart changes. For instance, incompatible
+							items may be disabled after others are added to the cart. Clients should
+							retrieve this list again after mutations or make sure errors are handled
+						when items cannot be added.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="description" class="tsd-anchor"></a>
+					<h3>description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L54">cart.ts:54</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short optional description.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="firstname" class="tsd-anchor"></a>
-					<h3>first<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">first<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="disabled" class="tsd-anchor"></a>
+					<h3>disabled</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in carts/guests.ts:10</li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L57">cart.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>First name, if provided.</p>
+							<p>Whether the category should appear as disabled.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="disableddescription" class="tsd-anchor"></a>
+					<h3>disabled<wbr>Description</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<wbr>Description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in carts/guests.ts:13</li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L60">cart.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ID of the guest.</p>
+							<p>Message detailing why <code>disabled</code> is set. Might not be available.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="label" class="tsd-anchor"></a>
-					<h3>label</h3>
-					<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in carts/guests.ts:19</li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L63">cart.ts:63</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the guest if provided, otherwise a user-friendly fallback name that
-							uniquely identifies the guest.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="lastname" class="tsd-anchor"></a>
-					<h3>last<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">last<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in carts/guests.ts:22</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Last name, if provided.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="number" class="tsd-anchor"></a>
-					<h3>number</h3>
-					<div class="tsd-signature tsd-kind-icon">number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in carts/guests.ts:31</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Positive ordinal number starting at 1.</p>
-						</div>
-						<p>This is for display purposes, don&#39;t use this to uniquely identify guests.
-							Use the <code>id</code> field for that instead. Also, don&#39;t assume this scheme follows
-						any predefined ordering.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="phonenumber" class="tsd-anchor"></a>
-					<h3>phone<wbr>Number</h3>
-					<div class="tsd-signature tsd-kind-icon">phone<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in carts/guests.ts:34</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Mobile phone, if provided.</p>
+							<p>Short human-readable name.</p>
 						</div>
 					</div>
 				</section>
@@ -264,9 +232,30 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item<wbr>Staff<wbr>Variant</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablecategory.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Category</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablecategory.html#availableitems" class="tsd-kind-icon">available<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablecategory.html#description" class="tsd-kind-icon">description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablecategory.html#disabled" class="tsd-kind-icon">disabled</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablecategory.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablecategory.html#name" class="tsd-kind-icon">name</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablegiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Gift<wbr>Card<wbr>Item</a>
 					</li>
@@ -288,36 +277,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartgiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartguest.html" class="tsd-kind-icon">Cart<wbr>Guest</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#email" class="tsd-kind-icon">email</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#firstname" class="tsd-kind-icon">first<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#label" class="tsd-kind-icon">label</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#lastname" class="tsd-kind-icon">last<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#number" class="tsd-kind-icon">number</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartguest.html#phonenumber" class="tsd-kind-icon">phone<wbr>Number</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartitem.html" class="tsd-kind-icon">Cart<wbr>Item</a>
 					</li>
