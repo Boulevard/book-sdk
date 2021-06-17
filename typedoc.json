@@ -4,6 +4,7 @@
   "entryPoints": [
     "./src/blvd.ts",
     "./src/appointments.ts",
+    "./src/businesses.ts",
     "./src/carts.ts",
     "./src/clients.ts",
     "./src/locations.ts",
