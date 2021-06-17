@@ -4,10 +4,18 @@ import { fragments as locationFragments } from "../locations/graph";
 
 const availabilityFragment = gql`
   fragment CartAvailableItemProperties on CartAvailableItem {
-    name
-    disabledDescription
-    disabled
     description
+    disabled
+    disabledDescription
+    id
+    listPrice
+    listPriceRange
+    name
+
+    allowCustomAmounts
+    giftCardMax
+    giftCardMin
+    pricePresets
   }
 
   fragment CartAvailableCategoryProperties on CartAvailableCategory {
