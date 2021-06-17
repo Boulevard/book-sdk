@@ -1,12 +1,10 @@
-import { Appointment, Appointments } from "./appointments";
+import { Appointments } from "./appointments";
 import { Businesses } from "./businesses";
-import { Cart } from "./cart";
 import { Carts } from "./carts";
 import { PlatformClient, PlatformTarget } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Memberships } from "./memberships";
-import { Client } from "./client";
 
 class Blvd {
   appointments: Appointments;

@@ -25,7 +25,7 @@ import {
 import { Service } from "./services";
 import { Staff } from "./staff";
 import { Location } from "./locations";
-import { Client } from "./client";
+import { Client } from "./clients";
 import { CartBookableTime } from "./carts";
 
 type AvailableRescheduleTime = {

@@ -12,3 +12,23 @@ export const fragments = gql`
     updatedAt
   }
 `;
+
+export const clientQuery = gql`
+  ${fragments}
+  query Client {
+    client {
+      ...ClientProperties
+    }
+  }
+`;
+
+export const updateClientMutation = gql`
+  ${fragments}
+  mutation UpdateClient($input: UpdateClientInput!) {
+    updateClient(input: $input) {
+      client {
+        ...ClientProperties
+      }
+    }
+  }
+`;
