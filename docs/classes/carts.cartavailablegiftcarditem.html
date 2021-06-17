@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartSummary | @boulevard/book-sdk</title>
+	<title>CartAvailableGiftCardItem | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.cartsummary.html">CartSummary</a>
+					<a href="carts.cartavailablegiftcarditem.html">CartAvailableGiftCardItem</a>
 				</li>
 			</ul>
-			<h1>Class CartSummary</h1>
+			<h1>Class CartAvailableGiftCardItem</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Summary of the cart, including e.g. line item totals.</p>
+						<p>Gift card that can be purchased through <code>addCartSelectedGiftCardItem</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,7 +79,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CartSummary</span>
+						<a href="carts.cartavailableitem.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableItem</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">CartAvailableGiftCardItem</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -90,15 +95,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#deposit" class="tsd-kind-icon">deposit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#depositamount" class="tsd-kind-icon">deposit<wbr>Amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#discountamount" class="tsd-kind-icon">discount<wbr>Amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#gratuityamount" class="tsd-kind-icon">gratuity<wbr>Amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#paymentmethodrequired" class="tsd-kind-icon">payment<wbr>Method<wbr>Required</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#roundingamount" class="tsd-kind-icon">rounding<wbr>Amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#subtotal" class="tsd-kind-icon">subtotal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#taxamount" class="tsd-kind-icon">tax<wbr>Amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartsummary.html#total" class="tsd-kind-icon">total</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablegiftcarditem.html#allowcustomamounts" class="tsd-kind-icon">allow<wbr>Custom<wbr>Amounts</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#disabled" class="tsd-kind-icon">disabled</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablegiftcarditem.html#giftcardmax" class="tsd-kind-icon">gift<wbr>Card<wbr>Max</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablegiftcarditem.html#giftcardmin" class="tsd-kind-icon">gift<wbr>Card<wbr>Min</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#listpricerange" class="tsd-kind-icon">list<wbr>Price<wbr>Range</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablegiftcarditem.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablegiftcarditem.html#pricepresets" class="tsd-kind-icon">price<wbr>Presets</a></li>
 							</ul>
 						</section>
 					</div>
@@ -107,132 +113,161 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="deposit" class="tsd-anchor"></a>
-					<h3>deposit</h3>
-					<div class="tsd-signature tsd-kind-icon">deposit<span class="tsd-signature-symbol">:</span> <a href="../enums/carts.deposittype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">DepositType</a></div>
+					<a name="allowcustomamounts" class="tsd-anchor"></a>
+					<h3>allow<wbr>Custom<wbr>Amounts</h3>
+					<div class="tsd-signature tsd-kind-icon">allow<wbr>Custom<wbr>Amounts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L181">cart.ts:181</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="depositamount" class="tsd-anchor"></a>
-					<h3>deposit<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">deposit<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L184">cart.ts:184</a></li>
+							<li>Defined in carts/items.ts:220</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Total required deposit amount.</p>
+							<p>When true the user may enter a custom amount between the min and max price range.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="description" class="tsd-anchor"></a>
+					<h3>description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#description">description</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:11</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short optional description.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="disabled" class="tsd-anchor"></a>
+					<h3>disabled</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#disabled">disabled</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:14</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the item should appear disabled or hidden.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="disableddescription" class="tsd-anchor"></a>
+					<h3>disabled<wbr>Description</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<wbr>Description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#disableddescription">disabledDescription</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:17</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Message detailing why <code>disabled</code> is set. Might not be available.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="discountamount" class="tsd-anchor"></a>
-					<h3>discount<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">discount<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="giftcardmax" class="tsd-anchor"></a>
+					<h3>gift<wbr>Card<wbr>Max</h3>
+					<div class="tsd-signature tsd-kind-icon">gift<wbr>Card<wbr>Max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L187">cart.ts:187</a></li>
+							<li>Defined in carts/items.ts:223</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Total discount amount on the subtotal.</p>
+							<p>The maximum available price for which to purchase the gift card.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="gratuityamount" class="tsd-anchor"></a>
-					<h3>gratuity<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">gratuity<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="giftcardmin" class="tsd-anchor"></a>
+					<h3>gift<wbr>Card<wbr>Min</h3>
+					<div class="tsd-signature tsd-kind-icon">gift<wbr>Card<wbr>Min<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L190">cart.ts:190</a></li>
+							<li>Defined in carts/items.ts:226</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Total gratuity amount on the subtotal.</p>
+							<p>The minimum available price for which to purchase the gift card.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#id">id</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:20</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>ID of the item.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="listpricerange" class="tsd-anchor"></a>
+					<h3>list<wbr>Price<wbr>Range</h3>
+					<div class="tsd-signature tsd-kind-icon">list<wbr>Price<wbr>Range<span class="tsd-signature-symbol">:</span> <a href="../modules/carts.html#cartpricerange" class="tsd-signature-type" data-tsd-kind="Type alias">CartPriceRange</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#listpricerange">listPriceRange</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Displayed price range of the item before tax.</p>
+						</div>
+						<p>The final price may differ based on customizations made to the item before
+							checking out. For instance, bookable items may have variants and options
+						that can be chosen and affect the price.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#name">name</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:32</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short human-readable name.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="paymentmethodrequired" class="tsd-anchor"></a>
-					<h3>payment<wbr>Method<wbr>Required</h3>
-					<div class="tsd-signature tsd-kind-icon">payment<wbr>Method<wbr>Required<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="pricepresets" class="tsd-anchor"></a>
+					<h3>price<wbr>Presets</h3>
+					<div class="tsd-signature tsd-kind-icon">price<wbr>Presets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L193">cart.ts:193</a></li>
+							<li>Defined in carts/items.ts:229</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether a payment method is required</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="roundingamount" class="tsd-anchor"></a>
-					<h3>rounding<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">rounding<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L196">cart.ts:196</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounding amount on the discounted and taxed subtotal.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="subtotal" class="tsd-anchor"></a>
-					<h3>subtotal</h3>
-					<div class="tsd-signature tsd-kind-icon">subtotal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L199">cart.ts:199</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Subtotal before gratuity, discounts, taxes, and rounding.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="taxamount" class="tsd-anchor"></a>
-					<h3>tax<wbr>Amount</h3>
-					<div class="tsd-signature tsd-kind-icon">tax<wbr>Amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L202">cart.ts:202</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Total tax amount on the discounted subtotal.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="total" class="tsd-anchor"></a>
-					<h3>total</h3>
-					<div class="tsd-signature tsd-kind-icon">total<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L205">cart.ts:205</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Total after gratuity, discounts, taxes, and rounding.</p>
+							<p>The available preset prices for which to purchase the gift card.</p>
 						</div>
 					</div>
 				</section>
@@ -287,9 +322,45 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item<wbr>Staff<wbr>Variant</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablegiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Gift<wbr>Card<wbr>Item</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablegiftcarditem.html#allowcustomamounts" class="tsd-kind-icon">allow<wbr>Custom<wbr>Amounts</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#description" class="tsd-kind-icon">description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#disabled" class="tsd-kind-icon">disabled</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablegiftcarditem.html#giftcardmax" class="tsd-kind-icon">gift<wbr>Card<wbr>Max</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablegiftcarditem.html#giftcardmin" class="tsd-kind-icon">gift<wbr>Card<wbr>Min</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#listpricerange" class="tsd-kind-icon">list<wbr>Price<wbr>Range</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablegiftcarditem.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablegiftcarditem.html#pricepresets" class="tsd-kind-icon">price<wbr>Presets</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Item</a>
 					</li>
@@ -323,42 +394,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartpurchasableitem.html" class="tsd-kind-icon">Cart<wbr>Purchasable<wbr>Item</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartsummary.html" class="tsd-kind-icon">Cart<wbr>Summary</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#deposit" class="tsd-kind-icon">deposit</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#depositamount" class="tsd-kind-icon">deposit<wbr>Amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#discountamount" class="tsd-kind-icon">discount<wbr>Amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#gratuityamount" class="tsd-kind-icon">gratuity<wbr>Amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#paymentmethodrequired" class="tsd-kind-icon">payment<wbr>Method<wbr>Required</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#roundingamount" class="tsd-kind-icon">rounding<wbr>Amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#subtotal" class="tsd-kind-icon">subtotal</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#taxamount" class="tsd-kind-icon">tax<wbr>Amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartsummary.html#total" class="tsd-kind-icon">total</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.carts-1.html" class="tsd-kind-icon">Carts</a>
 					</li>
@@ -405,6 +443,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 			</ul>
 		</div>
 	</div>

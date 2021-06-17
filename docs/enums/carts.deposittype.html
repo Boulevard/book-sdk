@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartBookableTime | @boulevard/book-sdk</title>
+	<title>DepositType | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,74 +58,75 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.cartbookabletime.html">CartBookableTime</a>
+					<a href="carts.deposittype.html">DepositType</a>
 				</li>
 			</ul>
-			<h1>Class CartBookableTime</h1>
+			<h1>Enumeration DepositType</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Available starting time for bookable items in a cart.</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">CartBookableTime</span>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookabletime.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookabletime.html#starttime" class="tsd-kind-icon">start<wbr>Time</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.deposittype.html#fulldeposit" class="tsd-kind-icon">Full<wbr>Deposit</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.deposittype.html#nodeposit" class="tsd-kind-icon">No<wbr>Deposit</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.deposittype.html#partialdeposit" class="tsd-kind-icon">Partial<wbr>Deposit</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="fulldeposit" class="tsd-anchor"></a>
+					<h3>Full<wbr>Deposit</h3>
+					<div class="tsd-signature tsd-kind-icon">Full<wbr>Deposit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;FULL_DEPOSIT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L92">cart.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/graph.d.ts#L1339">graph.d.ts:1339</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ID of this particular time.</p>
+							<p>An amount that covers the entire cost of the service is due at the time of booking. In other words, the deposit amount is equal to the total amount</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="starttime" class="tsd-anchor"></a>
-					<h3>start<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">start<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="nodeposit" class="tsd-anchor"></a>
+					<h3>No<wbr>Deposit</h3>
+					<div class="tsd-signature tsd-kind-icon">No<wbr>Deposit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;NO_DEPOSIT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L95">cart.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/graph.d.ts#L1341">graph.d.ts:1341</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Available start time for the earliest bookable item.</p>
+							<p>There is no deposit required before the time of service. In other words, the deposit amount is zero</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="partialdeposit" class="tsd-anchor"></a>
+					<h3>Partial<wbr>Deposit</h3>
+					<div class="tsd-signature tsd-kind-icon">Partial<wbr>Deposit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;PARTIAL_DEPOSIT&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/graph.d.ts#L1343">graph.d.ts:1343</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An amount that will go towards the final total amount is due at the time of booking. In other words, the deposit amount is less than the total amount</p>
 						</div>
 					</div>
 				</section>
@@ -166,73 +167,76 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/carts.carterrorcode.html" class="tsd-kind-icon">Cart<wbr>Error<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/carts.deposittype.html" class="tsd-kind-icon">Deposit<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cart.html" class="tsd-kind-icon">Cart</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartavailablebookableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item<wbr>Staff<wbr>Variant</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartavailablegiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Gift<wbr>Card<wbr>Item</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartavailableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Item</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartavailablepurchasableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Purchasable<wbr>Item</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartbookabledate.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Date</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartbookableitem.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Item</a>
+						<a href="carts.carterrorcode.html" class="tsd-kind-icon">Cart<wbr>Error<wbr>Code</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartbookabletime.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Time</a>
+					<li class="current tsd-kind-enum tsd-parent-kind-module">
+						<a href="carts.deposittype.html" class="tsd-kind-icon">Deposit<wbr>Type</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookabletime.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="carts.deposittype.html#fulldeposit" class="tsd-kind-icon">Full<wbr>Deposit</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookabletime.html#starttime" class="tsd-kind-icon">start<wbr>Time</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="carts.deposittype.html#nodeposit" class="tsd-kind-icon">No<wbr>Deposit</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="carts.deposittype.html#partialdeposit" class="tsd-kind-icon">Partial<wbr>Deposit</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartgiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item</a>
+						<a href="../classes/carts.cart.html" class="tsd-kind-icon">Cart</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartguest.html" class="tsd-kind-icon">Cart<wbr>Guest</a>
+						<a href="../classes/carts.cartavailablebookableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartitem.html" class="tsd-kind-icon">Cart<wbr>Item</a>
+						<a href="../classes/carts.cartavailablebookableitemstaffvariant.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item<wbr>Staff<wbr>Variant</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartitememailfulfillment.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Email<wbr>Fulfillment</a>
+						<a href="../classes/carts.cartavailablegiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Gift<wbr>Card<wbr>Item</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartitempaymentmethod.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Payment<wbr>Method</a>
+						<a href="../classes/carts.cartavailableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Item</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartpurchasableitem.html" class="tsd-kind-icon">Cart<wbr>Purchasable<wbr>Item</a>
+						<a href="../classes/carts.cartavailablepurchasableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Purchasable<wbr>Item</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.cartsummary.html" class="tsd-kind-icon">Cart<wbr>Summary</a>
+						<a href="../classes/carts.cartbookabledate.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Date</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="carts.carts-1.html" class="tsd-kind-icon">Carts</a>
+						<a href="../classes/carts.cartbookableitem.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartbookabletime.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartgiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartguest.html" class="tsd-kind-icon">Cart<wbr>Guest</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartitem.html" class="tsd-kind-icon">Cart<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartitememailfulfillment.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Email<wbr>Fulfillment</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartitempaymentmethod.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Payment<wbr>Method</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartpurchasableitem.html" class="tsd-kind-icon">Cart<wbr>Purchasable<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.cartsummary.html" class="tsd-kind-icon">Cart<wbr>Summary</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/carts.carts-1.html" class="tsd-kind-icon">Carts</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/carts.html#cartadvancegratuity" class="tsd-kind-icon">Cart<wbr>Advance<wbr>Gratuity</a>
@@ -272,11 +276,10 @@
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>

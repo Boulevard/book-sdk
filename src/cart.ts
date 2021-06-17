@@ -1,31 +1,35 @@
 import * as graph from "./carts/graph";
 import { PlatformClient, PlatformTarget } from "./platformClient";
+import {
+  Scalars,
+  Maybe,
+  CartAdvanceGratuityInput,
+  CartClientInformationInput,
+  DepositType
+} from "./graph";
+import { CartErrorCode } from "./graph";
 import * as Graph from "./graph";
-import { Staff } from "./staff";
 import { Location } from "./locations";
+import {
+  CartAvailableBookableItemOption,
+  CartAvailableBookableItemStaffVariant,
+  CartAvailableItem,
+  CartBookableItem,
+  CartGiftCardItem,
+  CartItem,
+  CartItemEmailFulfillment,
+  CartItemPaymentMethod,
+  CartPurchasableItem
+} from "./carts/items";
+import { CartGuest } from "./carts/guests";
 
-/** Staff variant of a bookable item. */
-class CartAvailableBookableItemStaffVariant {
-  /** Duration of the variant in minutes. */
-  duration: Graph.Scalars["Int"];
+/** Gratuity set in advance for bookable items. */
+type CartAdvanceGratuity = {
+  fixed?: Maybe<Scalars["Money"]>;
 
-  /** ID of the variant. */
-  id: Graph.Scalars["ID"];
-
-  /** Price of the variant before discounts and taxes. */
-  price: Graph.Scalars["Money"];
-
-  /** Staff member booked. */
-  staff: Staff;
-
-  /**
-   * @internal
-   */
-  constructor(variant: Graph.CartAvailableBookableItemStaffVariant) {
-    Object.assign(this, variant);
-    this.staff = new Staff(variant.staff);
-  }
-}
+  /** Percentage gratuity amount, has to be set if `fixed` is not set. */
+  percentage?: Maybe<Scalars["Float"]>;
+};
 
 /** Category of items that can be checked out. */
 class CartAvailableCategory {
@@ -40,16 +44,16 @@ class CartAvailableCategory {
   availableItems: Array<CartAvailableItem>;
 
   /** Short optional description. */
-  description: Graph.Maybe<Graph.Scalars["String"]>;
+  description: Maybe<Scalars["String"]>;
 
   /** Whether the category should appear as disabled. */
-  disabled: Graph.Scalars["Boolean"];
+  disabled: Scalars["Boolean"];
 
   /** Message detailing why `disabled` is set. Might not be available. */
-  disabledDescription: Graph.Maybe<Graph.Scalars["String"]>;
+  disabledDescription: Maybe<Scalars["String"]>;
 
   /** Short human-readable name. */
-  name: Graph.Scalars["String"];
+  name: Scalars["String"];
 
   /**
    * @internal
@@ -63,41 +67,6 @@ class CartAvailableCategory {
   }
 }
 
-/** Abstract available item that can be checked out. */
-class CartAvailableItem {
-  /** Short optional description. */
-  description: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /** Whether the item should appear disabled or hidden. */
-  disabled: Graph.Scalars["Boolean"];
-
-  /** Message detailing why `disabled` is set. Might not be available. */
-  disabledDescription?: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /** ID of the item. */
-  id: Graph.Scalars["ID"];
-
-  /**
-   * Displayed price range of the item before tax.
-   *
-   * The final price may differ based on customizations made to the item before
-   * checking out. For instance, bookable items may have variants and options
-   * that can be chosen and affect the price.
-   */
-  listPriceRange: Graph.CartPriceRange;
-
-  /** Short human-readable name. */
-  name: Graph.Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(item: Graph.CartAvailableItem) {
-    Object.assign(this, item);
-    // TODO Handle implementations of this interface
-  }
-}
-
 /** Available starting date for bookable items in a cart. */
 class CartBookableDate {
   /**
@@ -107,7 +76,7 @@ class CartBookableDate {
    * time zone is requested using the `tz` argument. The date uses the requested
    * time zone, or the location's time zone when `tz` is null.
    */
-  date: Graph.Scalars["Date"];
+  date: Scalars["Date"];
 
   /**
    * @internal
@@ -120,10 +89,10 @@ class CartBookableDate {
 /** Available starting time for bookable items in a cart. */
 class CartBookableTime {
   /** ID of this particular time. */
-  id: Graph.Scalars["ID"];
+  id: Scalars["ID"];
 
   /** Available start time for the earliest bookable item. */
-  startTime: Graph.Scalars["DateTime"];
+  startTime: Scalars["DateTime"];
 
   /**
    * @internal
@@ -133,157 +102,49 @@ class CartBookableTime {
   }
 }
 
+/**
+ * Client information supplied when checking out as a new user or on behalf of
+ * someone else than the current user.
+ */
+type CartClientInformation = {
+  /** Email address. */
+  email?: Maybe<Scalars["Email"]>;
+
+  /** First name. */
+  firstName: Scalars["String"];
+
+  /** Last name. */
+  lastName?: Maybe<Scalars["String"]>;
+
+  /** Mobile phone number. */
+  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+};
+
+/** Cart validation error. */
+type CartError = {
+  /** Machine-readable code. */
+  code: CartErrorCode;
+
+  /** Detailed geek-readable description. */
+  description: Scalars["String"];
+
+  /** Short human-readable message. */
+  message: Scalars["String"];
+};
+
 /** Features available to the cart. */
 class CartFeatures {
   /** Whether gift cards are available to be purchased in this cart. */
-  giftCardPurchaseEnabled: Graph.Scalars["Boolean"];
+  giftCardPurchaseEnabled: Scalars["Boolean"];
 
   /** Whether payment info is required to check out services in this cart. */
-  paymentInfoRequired: Graph.Scalars["Boolean"];
+  paymentInfoRequired: Scalars["Boolean"];
 
   /**
    * @internal
    */
   constructor(features: Graph.CartFeatures) {
     Object.assign(this, features);
-  }
-}
-
-/** Abstract item added using the `addCart...Item` mutations. */
-class CartItem {
-  /** Total discount amount on the price. */
-  discountAmount: Graph.Scalars["Money"];
-
-  /**
-   * Valid discount code that was applied, either the cart's code or one that was
-   * applied separately to the item. An invalid code results in a `null` value.
-   */
-  discountCode?: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /** Current item validation errors. */
-  errors: Array<Graph.CartItemError>;
-
-  /** ID of the item. */
-  id: Graph.Scalars["ID"];
-
-  /** Original item details. */
-  item: CartAvailableItem;
-
-  /** Total for the item after discounts and taxes. */
-  lineTotal: Graph.Scalars["Money"];
-
-  /** Price before discounts and taxes. */
-  price: Graph.Scalars["Money"];
-
-  /** Total tax amount on the discounted price. */
-  taxAmount: Graph.Scalars["Money"];
-
-  constructor(
-    private platformClient: PlatformClient,
-    cartItem: Graph.CartItem
-  ) {
-    Object.assign(this, cartItem);
-    this.item = new CartAvailableItem(cartItem.item);
-  }
-
-  /** Payment methods available for this item.
-   * @todo implement
-   */
-  async getAvailablePaymentMethods() {
-    return undefined;
-  }
-
-  /** Payment method selected for this item.
-   * @todo implement
-   */
-  async getSelectedPaymentMethod(): Promise<
-    Graph.Maybe<CartItemPaymentMethod>
-  > {
-    return undefined;
-  }
-}
-
-/** Send the item to a recipient via email. */
-class CartItemEmailFulfillment {
-  /** Optionally specify a delivery date for the email. */
-  deliveryDate: Graph.Maybe<Graph.Scalars["Date"]>;
-
-  id: Graph.Scalars["ID"];
-
-  /** Optionally include a message from the sender to the recipient. */
-  messageFromSender: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /** The email the item should be sent to. */
-  recipientEmail: Graph.Scalars["Email"];
-
-  /** The name of the person receiving the item. */
-  recipientName: Graph.Scalars["String"];
-
-  /** The name of the person sending the item. */
-  senderName: Graph.Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(fulfilment: Graph.CartItemEmailFulfillment) {
-    Object.assign(this, fulfilment);
-  }
-}
-
-/** Cart item payment method. */
-class CartItemPaymentMethod {
-  /** ID of the method. */
-  id: Graph.Scalars["ID"];
-
-  /** Short human-readable name. */
-  name: Graph.Scalars["String"];
-
-  /**
-   * @internal
-   */
-  constructor(method: Graph.CartItemPaymentMethod) {
-    Object.assign(this, method);
-    // TODO: Handle interface implementations?
-  }
-}
-
-/** A guest that can be associated with a bookable item. */
-class CartGuest {
-  /** Email address, if provided. */
-  email: Graph.Maybe<Graph.Scalars["Email"]>;
-
-  /** First name, if provided. */
-  firstName: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /** ID of the guest. */
-  id: Graph.Scalars["ID"];
-
-  /**
-   * Name of the guest if provided, otherwise a user-friendly fallback name that
-   * uniquely identifies the guest.
-   */
-  label: Graph.Scalars["String"];
-
-  /** Last name, if provided. */
-  lastName: Graph.Maybe<Graph.Scalars["String"]>;
-
-  /**
-   * Positive ordinal number starting at 1.
-   *
-   * This is for display purposes, don't use this to uniquely identify guests.
-   * Use the `id` field for that instead. Also, don't assume this scheme follows
-   * any predefined ordering.
-   */
-  number: Graph.Scalars["Int"];
-
-  /** Mobile phone, if provided. */
-  phoneNumber: Graph.Maybe<Graph.Scalars["PhoneNumber"]>;
-
-  /**
-   * @internal
-   */
-  constructor(guest: Graph.CartGuest) {
-    Object.assign(this, guest);
   }
 }
 
@@ -296,16 +157,16 @@ class CartOffer {
    * used) but there are no items in the current cart that could be affected.
    * When applicable items are added later, the offer is applied then.
    */
-  applied: Graph.Scalars["Boolean"];
+  applied: Scalars["Boolean"];
 
   /** Case-insensitive, uniquely identifying code. */
-  code: Graph.Scalars["String"];
+  code: Scalars["String"];
 
   /** ID of the offer. */
-  id: Graph.Scalars["ID"];
+  id: Scalars["ID"];
 
   /** Human-readable name. */
-  name: Graph.Scalars["String"];
+  name: Scalars["String"];
 
   /**
    * @internal
@@ -317,31 +178,31 @@ class CartOffer {
 
 /** Summary of the cart, including e.g. line item totals. */
 class CartSummary {
-  deposit: Graph.DepositType;
+  deposit: DepositType;
 
   /** Total required deposit amount. */
-  depositAmount: Graph.Scalars["Money"];
+  depositAmount: Scalars["Money"];
 
   /** Total discount amount on the subtotal. */
-  discountAmount: Graph.Scalars["Money"];
+  discountAmount: Scalars["Money"];
 
   /** Total gratuity amount on the subtotal. */
-  gratuityAmount: Graph.Scalars["Money"];
+  gratuityAmount: Scalars["Money"];
 
   /** Whether a payment method is required */
-  paymentMethodRequired: Graph.Scalars["Boolean"];
+  paymentMethodRequired: Scalars["Boolean"];
 
   /** Rounding amount on the discounted and taxed subtotal. */
-  roundingAmount: Graph.Scalars["Money"];
+  roundingAmount: Scalars["Money"];
 
   /** Subtotal before gratuity, discounts, taxes, and rounding. */
-  subtotal: Graph.Scalars["Money"];
+  subtotal: Scalars["Money"];
 
   /** Total tax amount on the discounted subtotal. */
-  taxAmount: Graph.Scalars["Money"];
+  taxAmount: Scalars["Money"];
 
   /** Total after gratuity, discounts, taxes, and rounding. */
-  total: Graph.Scalars["Money"];
+  total: Scalars["Money"];
 
   /**
    * @internal
@@ -353,32 +214,32 @@ class CartSummary {
 
 class Cart {
   /** Optional gratuity defined in advance for bookable items. */
-  advanceGratuity: Graph.Maybe<Graph.CartAdvanceGratuity>;
+  advanceGratuity: Maybe<CartAdvanceGratuity>;
 
   /**
    * Optional client information supplied when checking out on behalf of someone
    * else than the current user.
    */
-  clientInformation: Graph.Maybe<Graph.CartClientInformation>;
+  clientInformation: Maybe<CartClientInformation>;
 
   /** Optional message from the client to the business. */
-  clientMessage: Graph.Maybe<Graph.Scalars["String"]>;
+  clientMessage: Maybe<Scalars["String"]>;
 
   /**
    * Timestamp of when the cart was completed.
    *
    * This field cannot be edited and once completed cannot be changed.
    */
-  completedAt: Graph.Maybe<Graph.Scalars["DateTime"]>;
+  completedAt: Maybe<Scalars["DateTime"]>;
 
   /**
    * When the cart has reserved bookable items, the end time of the latest item.
    * This value is `null` when there are no reservations.
    */
-  endTime: Graph.Maybe<Graph.Scalars["NaiveDateTime"]>;
+  endTime: Maybe<Scalars["NaiveDateTime"]>;
 
   /** Current validation errors. */
-  errors: Array<Graph.CartError>;
+  errors: Array<CartError>;
 
   /**
    * When the cart has reserved bookable items, the timestamp when reservations
@@ -386,25 +247,25 @@ class Cart {
    * value is `null` when there are no reservations and is reset into the future
    * whenever a new reservation is added.
    */
-  expiresAt: Graph.Maybe<Graph.Scalars["DateTime"]>;
+  expiresAt: Maybe<Scalars["DateTime"]>;
 
   /** The ID of an object */
-  id: Graph.Scalars["ID"];
+  id: Scalars["ID"];
 
   /** Timestamp when the cart was created. */
-  insertedAt: Graph.Scalars["DateTime"];
+  insertedAt: Scalars["DateTime"];
 
   /**
    * When the cart has reserved bookable items, the starting time of the earliest
    * item. This value is `null` when there are no reservations.
    */
-  startTime: Graph.Maybe<Graph.Scalars["NaiveDateTime"]>;
+  startTime: Maybe<Scalars["NaiveDateTime"]>;
 
   /** Summary of the cart, including e.g. line item totals. */
   summary: CartSummary;
 
   /** Timestamp when the cart was last updated. */
-  updatedAt: Graph.Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
 
   /**
    * @internal
@@ -523,11 +384,11 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async addBookableItem(
-    item: Graph.CartBookableItem,
+    item: CartBookableItem,
     opts?: {
       discountCode?: string;
       guest?: CartGuest;
-      options?: Array<Graph.CartAvailableBookableItemOption>;
+      options?: Array<CartAvailableBookableItemOption>;
       staffVariant?: CartAvailableBookableItemStaffVariant;
     }
   ): Promise<Cart> {
@@ -558,8 +419,8 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async addGiftCardItem(
-    item: Graph.CartGiftCardItem,
-    price: Graph.Scalars["Money"]
+    item: CartGiftCardItem,
+    price: Scalars["Money"]
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedGiftCardItemInput = {
       id: this.id,
@@ -585,7 +446,7 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async addPurchasableItem(
-    item: Graph.CartPurchasableItem,
+    item: CartPurchasableItem,
     opts?: { discountCode?: string }
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedPurchasableItemInput = {
@@ -640,10 +501,10 @@ class Cart {
    * @param opts.message A message to include from the sender
    */
   async createGiftCardItemEmailFulfillment(
-    item: Graph.CartGiftCardItem,
+    item: CartGiftCardItem,
     sender: string,
-    deliveryDate: Graph.Scalars["Date"],
-    recipient: { email: Graph.Scalars["Email"]; name: string },
+    deliveryDate: Scalars["Date"],
+    recipient: { email: Scalars["Email"]; name: string },
     opts?: { message?: string }
   ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
     const input: Graph.CreateCartGiftCardItemEmailFulfillmentInput = {
@@ -676,10 +537,10 @@ class Cart {
    * @public
    */
   async createGuest(opts: {
-    email?: Graph.Scalars["Email"];
-    firstName?: Graph.Scalars["String"];
-    lastName?: Graph.Scalars["String"];
-    phoneNumber?: Graph.Scalars["PhoneNumber"];
+    email?: Scalars["Email"];
+    firstName?: Scalars["String"];
+    lastName?: Scalars["String"];
+    phoneNumber?: Scalars["PhoneNumber"];
   }): Promise<{ cart: Cart; guest: CartGuest }> {
     const input: Graph.CreateCartGuestInput = {
       id: this.id,
@@ -709,7 +570,7 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async deleteGiftCardItemEmailFulfillment(
-    item: Graph.CartGiftCardItem
+    item: CartGiftCardItem
   ): Promise<Cart> {
     const input: Graph.DeleteCartGiftCardItemEmailFulfillmentInput = {
       id: this.id,
@@ -804,8 +665,8 @@ class Cart {
    * @returns Promise containing the list of Bookable Dates
    */
   async getBookableDates(opts: {
-    searchRangeLower?: Graph.Scalars["Date"];
-    searchRangeUpper?: Graph.Scalars["Date"];
+    searchRangeLower?: Scalars["Date"];
+    searchRangeUpper?: Scalars["Date"];
     timezone?: string;
   }): Promise<Array<CartBookableDate>> {
     const response = await this.platformClient.request(graph.datesQuery, {
@@ -845,7 +706,7 @@ class Cart {
    */
   async getBookableStaffVariants(
     time: CartBookableTime,
-    item: Graph.CartBookableItem
+    item: CartBookableItem
   ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
     const response = await this.platformClient.request(
       graph.bookableStaffVariantsQuery,
@@ -868,7 +729,7 @@ class Cart {
    * @returns Promise containing the list of Bookable Times
    */
   async getBookableTimes(
-    date: Graph.Scalars["Date"],
+    date: Scalars["Date"],
     opts?: { timezone?: string }
   ): Promise<Array<CartBookableTime>> {
     const response = await this.platformClient.request(graph.timesQuery, {
@@ -983,10 +844,7 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async removeSelectedItem(
-    item:
-      | Graph.CartBookableItem
-      | Graph.CartGiftCardItem
-      | Graph.CartPurchasableItem
+    item: CartBookableItem | CartGiftCardItem | CartPurchasableItem
   ): Promise<Cart> {
     const input: Graph.RemoveCartSelectedItemInput = {
       id: this.id,
@@ -1086,8 +944,8 @@ class Cart {
    * @returns Promise containing the updated cart
    */
   async update(opts: {
-    advanceGratuity?: Graph.CartAdvanceGratuityInput;
-    clientInformation?: Graph.CartClientInformationInput;
+    advanceGratuity?: CartAdvanceGratuityInput;
+    clientInformation?: CartClientInformationInput;
     clientMessage?: string;
     discountCode?: string;
   }): Promise<Cart> {
@@ -1117,11 +975,11 @@ class Cart {
    * @public
    */
   async updateGiftCardItemEmailFulfillment(
-    item: Graph.CartGiftCardItem,
+    item: CartGiftCardItem,
     opts?: {
-      deliveryDate?: Graph.Scalars["Date"];
+      deliveryDate?: Scalars["Date"];
       message?: string;
-      recipient: { email?: Graph.Scalars["Email"]; name?: string };
+      recipient: { email?: Scalars["Email"]; name?: string };
       sender?: { name?: string };
     }
   ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
@@ -1159,10 +1017,10 @@ class Cart {
   async updateGuest(
     guest: CartGuest,
     opts?: {
-      email?: Graph.Scalars["Email"];
+      email?: Scalars["Email"];
       firstName?: string;
       lastName?: string;
-      phoneNumber?: Graph.Scalars["PhoneNumber"];
+      phoneNumber?: Scalars["PhoneNumber"];
     }
   ): Promise<{ cart: Cart; guest: CartGuest }> {
     const input: Graph.UpdateCartGuestInput = {
@@ -1204,7 +1062,7 @@ class Cart {
     opts?: {
       discountCode?: string;
       guest?: CartGuest;
-      options?: Array<Graph.CartAvailableBookableItemOption>;
+      options?: Array<CartAvailableBookableItemOption>;
       staffVariant?: CartAvailableBookableItemStaffVariant;
     }
   ): Promise<Cart> {
@@ -1239,7 +1097,7 @@ class Cart {
     item: Graph.CartGiftCardItem,
     opts?: {
       design?: Graph.GiftCardDesign;
-      price?: Graph.Scalars["Money"];
+      price?: Scalars["Money"];
     }
   ): Promise<Cart> {
     const input: Graph.UpdateCartSelectedGiftCardItemInput = {
@@ -1297,11 +1155,17 @@ class Cart {
 
 export {
   Cart,
+  CartAdvanceGratuity,
   CartAvailableBookableItemStaffVariant,
   CartBookableDate,
   CartBookableTime,
-  CartGuest,
+  CartClientInformation,
+  CartError,
+  CartErrorCode,
   CartItemEmailFulfillment,
   CartItemPaymentMethod,
-  CartSummary
+  CartSummary,
+  DepositType
 };
+export * from "./carts/guests";
+export * from "./carts/items";

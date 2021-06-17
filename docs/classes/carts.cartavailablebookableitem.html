@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartBookableTime | @boulevard/book-sdk</title>
+	<title>CartAvailableBookableItem | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.cartbookabletime.html">CartBookableTime</a>
+					<a href="carts.cartavailablebookableitem.html">CartAvailableBookableItem</a>
 				</li>
 			</ul>
-			<h1>Class CartBookableTime</h1>
+			<h1>Class CartAvailableBookableItem</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Available starting time for bookable items in a cart.</p>
+						<p>Item that can be booked through <code>addCartBookableItem</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,7 +79,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CartBookableTime</span>
+						<a href="carts.cartavailableitem.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableItem</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">CartAvailableBookableItem</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -90,8 +95,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookabletime.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookabletime.html#starttime" class="tsd-kind-icon">start<wbr>Time</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#disabled" class="tsd-kind-icon">disabled</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#listpricerange" class="tsd-kind-icon">list<wbr>Price<wbr>Range</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartavailablebookableitem.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablebookableitem.html#optiongroups" class="tsd-kind-icon">option<wbr>Groups</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartavailablebookableitem.html#staffvariants" class="tsd-kind-icon">staff<wbr>Variants</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,34 +110,138 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="description" class="tsd-anchor"></a>
+					<h3>description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#description">description</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:11</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short optional description.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="disabled" class="tsd-anchor"></a>
+					<h3>disabled</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#disabled">disabled</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:14</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the item should appear disabled or hidden.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="disableddescription" class="tsd-anchor"></a>
+					<h3>disabled<wbr>Description</h3>
+					<div class="tsd-signature tsd-kind-icon">disabled<wbr>Description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#disableddescription">disabledDescription</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:17</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Message detailing why <code>disabled</code> is set. Might not be available.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L92">cart.ts:92</a></li>
+							<li>Defined in carts/items.ts:20</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ID of this particular time.</p>
+							<p>ID of the item.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="listpricerange" class="tsd-anchor"></a>
+					<h3>list<wbr>Price<wbr>Range</h3>
+					<div class="tsd-signature tsd-kind-icon">list<wbr>Price<wbr>Range<span class="tsd-signature-symbol">:</span> <a href="../modules/carts.html#cartpricerange" class="tsd-signature-type" data-tsd-kind="Type alias">CartPriceRange</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#listpricerange">listPriceRange</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Displayed price range of the item before tax.</p>
+						</div>
+						<p>The final price may differ based on customizations made to the item before
+							checking out. For instance, bookable items may have variants and options
+						that can be chosen and affect the price.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="carts.cartavailableitem.html">CartAvailableItem</a>.<a href="carts.cartavailableitem.html#name">name</a></p>
+						<ul>
+							<li>Defined in carts/items.ts:32</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short human-readable name.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="starttime" class="tsd-anchor"></a>
-					<h3>start<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">start<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="optiongroups" class="tsd-anchor"></a>
+					<h3>option<wbr>Groups</h3>
+					<div class="tsd-signature tsd-kind-icon">option<wbr>Groups<span class="tsd-signature-symbol">:</span> <a href="../modules/carts.html#cartavailablebookableitemoptiongroup" class="tsd-signature-type" data-tsd-kind="Type alias">CartAvailableBookableItemOptionGroup</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d38632f/src/cart.ts#L95">cart.ts:95</a></li>
+							<li>Defined in carts/items.ts:157</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Available start time for the earliest bookable item.</p>
+							<p>Groups of available options for modifying the booked service. These can be
+							used to modify the booked item and may affect pricing and timing.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="staffvariants" class="tsd-anchor"></a>
+					<h3>staff<wbr>Variants</h3>
+					<div class="tsd-signature tsd-kind-icon">staff<wbr>Variants<span class="tsd-signature-symbol">:</span> <a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemStaffVariant</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in carts/items.ts:166</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>List of optional staff variants that can be chosen. Variants may have
+							different pricing and timing.</p>
+						</div>
+						<p>When there’s no preference, the first one available is assigned based on the
+							selected time. The business can also enforce this, in which case this list
+						is empty.</p>
 					</div>
 				</section>
 			</section>
@@ -174,9 +289,39 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cart.html" class="tsd-kind-icon">Cart</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablebookableitem.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#description" class="tsd-kind-icon">description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#disabled" class="tsd-kind-icon">disabled</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#disableddescription" class="tsd-kind-icon">disabled<wbr>Description</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#listpricerange" class="tsd-kind-icon">list<wbr>Price<wbr>Range</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="carts.cartavailablebookableitem.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablebookableitem.html#optiongroups" class="tsd-kind-icon">option<wbr>Groups</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartavailablebookableitem.html#staffvariants" class="tsd-kind-icon">staff<wbr>Variants</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-kind-icon">Cart<wbr>Available<wbr>Bookable<wbr>Item<wbr>Staff<wbr>Variant</a>
 					</li>
@@ -195,21 +340,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartbookableitem.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Item</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartbookabletime.html" class="tsd-kind-icon">Cart<wbr>Bookable<wbr>Time</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookabletime.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookabletime.html#starttime" class="tsd-kind-icon">start<wbr>Time</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartgiftcarditem.html" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item</a>
 					</li>
@@ -277,6 +410,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 			</ul>
 		</div>
 	</div>

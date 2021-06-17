@@ -5,6 +5,7 @@ import { PlatformClient, PlatformTarget } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Memberships } from "./memberships";
+import { Maybe, Scalars } from "./graph";
 
 class Blvd {
   appointments: Appointments;
@@ -35,4 +36,4 @@ class Blvd {
   }
 }
 
-export { Blvd, PlatformTarget };
+export { Blvd, PlatformTarget, Maybe, Scalars };
