@@ -104,23 +104,23 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#discountamount" class="tsd-kind-icon">discount<wbr>Amount</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#discountcode" class="tsd-kind-icon">discount<wbr>Code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#errors" class="tsd-kind-icon">errors</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookableitem.html#guest" class="tsd-kind-icon">guest</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookableitem.html#guestid" class="tsd-kind-icon">guest<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#item" class="tsd-kind-icon">item</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#linetotal" class="tsd-kind-icon">line<wbr>Total</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#price" class="tsd-kind-icon">price</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookableitem.html#selectedoptions" class="tsd-kind-icon">selected<wbr>Options</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookableitem.html#selectedstaffvariant" class="tsd-kind-icon">selected<wbr>Staff<wbr>Variant</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookableitem.html#starttime" class="tsd-kind-icon">start<wbr>Time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#taxamount" class="tsd-kind-icon">tax<wbr>Amount</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#getavailablepaymentmethods" class="tsd-kind-icon">get<wbr>Available<wbr>Payment<wbr>Methods</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="carts.cartbookableitem.html#getguest" class="tsd-kind-icon">get<wbr>Guest</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="carts.cartbookableitem.html#getselectedoptions" class="tsd-kind-icon">get<wbr>Selected<wbr>Options</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="carts.cartbookableitem.html#getselectedpaymentmethod" class="tsd-kind-icon">get<wbr>Selected<wbr>Payment<wbr>Method</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="carts.cartbookableitem.html#getselectedstaffvariant" class="tsd-kind-icon">get<wbr>Selected<wbr>Staff<wbr>Variant</a></li>
 							</ul>
 						</section>
 					</div>
@@ -194,7 +194,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="errors" class="tsd-anchor"></a>
 					<h3>errors</h3>
-					<div class="tsd-signature tsd-kind-icon">errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CartItemError</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">errors<span class="tsd-signature-symbol">:</span> <a href="carts.cartitemerror.html" class="tsd-signature-type" data-tsd-kind="Class">CartItemError</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="carts.cartitem.html">CartItem</a>.<a href="carts.cartitem.html#errors">errors</a></p>
 						<ul>
@@ -208,28 +208,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="guest" class="tsd-anchor"></a>
-					<h3>guest</h3>
-					<div class="tsd-signature tsd-kind-icon">guest<span class="tsd-signature-symbol">:</span> <a href="carts.cartguest.html" class="tsd-signature-type" data-tsd-kind="Class">CartGuest</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L234">carts/items.ts:234</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Guest associated with this item.</p>
-						</div>
-						<p>A null value implies the default guest, i.e. the booking client.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="guestid" class="tsd-anchor"></a>
 					<h3>guest<wbr>Id</h3>
 					<div class="tsd-signature tsd-kind-icon">guest<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L243">carts/items.ts:243</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L239">carts/items.ts:239</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,47 +289,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="selectedoptions" class="tsd-anchor"></a>
-					<h3>selected<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">selected<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="carts.cartavailablebookableitemoption.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemOption</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L246">carts/items.ts:246</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Any selected options for the item.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="selectedstaffvariant" class="tsd-anchor"></a>
-					<h3>selected<wbr>Staff<wbr>Variant</h3>
-					<div class="tsd-signature tsd-kind-icon">selected<wbr>Staff<wbr>Variant<span class="tsd-signature-symbol">:</span> <a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemStaffVariant</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L258">carts/items.ts:258</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Selected staff variant for the item.</p>
-						</div>
-						<p>You can set the preferred variant when adding the item. Leaving the variant
-						unset indicates no preference.</p>
-						<p>Once a time is reserved, a variant is automatically set if none was set
-							earlier. Once the reservation expires, any automatically set value reverts
-						back to <code>null</code>.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="starttime" class="tsd-anchor"></a>
 					<h3>start<wbr>Time</h3>
 					<div class="tsd-signature tsd-kind-icon">start<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L267">carts/items.ts:267</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L248">carts/items.ts:248</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -374,7 +323,7 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getavailablepaymentmethods" class="tsd-anchor"></a>
@@ -387,7 +336,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="carts.cartitem.html">CartItem</a>.<a href="carts.cartitem.html#getavailablepaymentmethods">getAvailablePaymentMethods</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L81">carts/items.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L84">carts/items.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,6 +353,61 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getguest" class="tsd-anchor"></a>
+					<h3>get<wbr>Guest</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Guest<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartguest.html" class="tsd-signature-type" data-tsd-kind="Class">CartGuest</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L256">carts/items.ts:256</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Guest associated with this item.</p>
+								</div>
+								<p>A null value implies the default guest, i.e. the booking client.</p>
+								<dl class="tsd-comment-tags">
+									<dt>todo</dt>
+									<dd><p>implement</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartguest.html" class="tsd-signature-type" data-tsd-kind="Class">CartGuest</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getselectedoptions" class="tsd-anchor"></a>
+					<h3>get<wbr>Selected<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Selected<wbr>Options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartavailablebookableitemoption.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L263">carts/items.ts:263</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Any selected options for the item.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>todo</dt>
+									<dd><p>implement</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartavailablebookableitemoption.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getselectedpaymentmethod" class="tsd-anchor"></a>
 					<h3>get<wbr>Selected<wbr>Payment<wbr>Method</h3>
@@ -415,7 +419,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="carts.cartitem.html">CartItem</a>.<a href="carts.cartitem.html#getselectedpaymentmethod">getSelectedPaymentMethod</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L88">carts/items.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L91">carts/items.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -429,6 +433,38 @@
 								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartitempaymentmethod.html" class="tsd-signature-type" data-tsd-kind="Class">CartItemPaymentMethod</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getselectedstaffvariant" class="tsd-anchor"></a>
+					<h3>get<wbr>Selected<wbr>Staff<wbr>Variant</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Selected<wbr>Staff<wbr>Variant<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemStaffVariant</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/2540bca/src/carts/items.ts#L278">carts/items.ts:278</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Selected staff variant for the item.</p>
+								</div>
+								<p>You can set the preferred variant when adding the item. Leaving the variant
+								unset indicates no preference.</p>
+								<p>Once a time is reserved, a variant is automatically set if none was set
+									earlier. Once the reservation expires, any automatically set value reverts
+								back to <code>null</code>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>todo</dt>
+									<dd><p>implement</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="carts.cartavailablebookableitemstaffvariant.html" class="tsd-signature-type" data-tsd-kind="Class">CartAvailableBookableItemStaffVariant</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -525,9 +561,6 @@
 								<a href="carts.cartbookableitem.html#errors" class="tsd-kind-icon">errors</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookableitem.html#guest" class="tsd-kind-icon">guest</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="carts.cartbookableitem.html#guestid" class="tsd-kind-icon">guest<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -543,12 +576,6 @@
 								<a href="carts.cartbookableitem.html#price" class="tsd-kind-icon">price</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookableitem.html#selectedoptions" class="tsd-kind-icon">selected<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="carts.cartbookableitem.html#selectedstaffvariant" class="tsd-kind-icon">selected<wbr>Staff<wbr>Variant</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="carts.cartbookableitem.html#starttime" class="tsd-kind-icon">start<wbr>Time</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -557,8 +584,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="carts.cartbookableitem.html#getavailablepaymentmethods" class="tsd-kind-icon">get<wbr>Available<wbr>Payment<wbr>Methods</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="carts.cartbookableitem.html#getguest" class="tsd-kind-icon">get<wbr>Guest</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="carts.cartbookableitem.html#getselectedoptions" class="tsd-kind-icon">get<wbr>Selected<wbr>Options</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="carts.cartbookableitem.html#getselectedpaymentmethod" class="tsd-kind-icon">get<wbr>Selected<wbr>Payment<wbr>Method</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="carts.cartbookableitem.html#getselectedstaffvariant" class="tsd-kind-icon">get<wbr>Selected<wbr>Staff<wbr>Variant</a>
 							</li>
 						</ul>
 					</li>
@@ -586,6 +622,9 @@
 						<a href="carts.cartitememailfulfillment.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Email<wbr>Fulfillment</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="carts.cartitemerror.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.cartitemgiftcarddesign.html" class="tsd-kind-icon">Cart<wbr>Item<wbr>Gift<wbr>Card<wbr>Design</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
@@ -603,9 +642,6 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="carts.carts-1.html" class="tsd-kind-icon">Carts</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/carts.html#cartitemerror" class="tsd-kind-icon">Cart<wbr>Item<wbr>Error</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -616,6 +652,11 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
@@ -623,10 +664,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

@@ -705,8 +705,8 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return response.cart.cartBookableStaffVariants.map(
-      category =>
-        new CartAvailableBookableItemStaffVariant(this.platformClient, category)
+      variant =>
+        new CartAvailableBookableItemStaffVariant(this.platformClient, variant)
     );
   }
 

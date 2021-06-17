@@ -53,7 +53,7 @@ class CartItem extends Node<Graph.CartItem> {
   discountCode: Maybe<Scalars["String"]>;
 
   /** Current item validation errors. */
-  errors: Array<Graph.CartItemError>;
+  errors: Array<CartItemError>;
 
   /** ID of the item. */
   id: Scalars["ID"];
@@ -73,6 +73,9 @@ class CartItem extends Node<Graph.CartItem> {
   constructor(platformClient: PlatformClient, cartItem: Graph.CartItem) {
     super(platformClient, cartItem);
     this.item = new CartAvailableItem(platformClient, cartItem.item);
+    this.errors = cartItem.errors.map(
+      error => new CartItemError(platformClient, error)
+    );
   }
 
   /** Payment methods available for this item.
@@ -111,7 +114,7 @@ class CartItemEmailFulfillment extends Node<Graph.CartItemEmailFulfillment> {
 }
 
 /** Cart item validation error. */
-type CartItemError = {
+class CartItemError extends Node<Graph.CartItemError> {
   /** Machine-readable code. */
   code: CartItemErrorCode;
 
@@ -120,7 +123,7 @@ type CartItemError = {
 
   /** Short human-readable message. */
   message: Scalars["String"];
-};
+}
 
 /** Item that can be booked through `addCartBookableItem`. */
 class CartAvailableBookableItem extends CartAvailableItem {
@@ -227,13 +230,6 @@ class CartAvailablePurchasableItem extends CartAvailableItem {}
 /** An item that can be booked at a certain time. */
 class CartBookableItem extends CartItem {
   /**
-   * Guest associated with this item.
-   *
-   * A null value implies the default guest, i.e. the booking client.
-   */
-  guest: Maybe<CartGuest>;
-
-  /**
    * ID of the guest associated with this item.
    *
    * A null value implies the default guest, i.e. the booking client.
@@ -242,8 +238,31 @@ class CartBookableItem extends CartItem {
    */
   guestId: Maybe<Scalars["ID"]>;
 
-  /** Any selected options for the item. */
-  selectedOptions: Array<CartAvailableBookableItemOption>;
+  /**
+   * Selected starting time for the item.
+   *
+   * This value is reserved temporarily. Once the reservation expires, the value
+   * reverts to `null` and needs to be selected again. See the parent cart’s
+   * `expiresAt` field for more information.
+   */
+  startTime: Maybe<Scalars["NaiveDateTime"]>;
+
+  /**
+   * Guest associated with this item.
+   *
+   * A null value implies the default guest, i.e. the booking client.
+   * @todo implement
+   */
+  async getGuest(): Promise<Maybe<CartGuest>> {
+    return undefined;
+  }
+
+  /** Any selected options for the item.
+   * @todo implement
+   */
+  async getSelectedOptions(): Promise<Array<CartAvailableBookableItemOption>> {
+    return undefined;
+  }
 
   /**
    * Selected staff variant for the item.
@@ -254,17 +273,13 @@ class CartBookableItem extends CartItem {
    * Once a time is reserved, a variant is automatically set if none was set
    * earlier. Once the reservation expires, any automatically set value reverts
    * back to `null`.
+   * @todo implement
    */
-  selectedStaffVariant: Maybe<CartAvailableBookableItemStaffVariant>;
-
-  /**
-   * Selected starting time for the item.
-   *
-   * This value is reserved temporarily. Once the reservation expires, the value
-   * reverts to `null` and needs to be selected again. See the parent cart’s
-   * `expiresAt` field for more information.
-   */
-  startTime: Maybe<Scalars["NaiveDateTime"]>;
+  async getSelectedStaffVariant(): Promise<
+    Maybe<CartAvailableBookableItemStaffVariant>
+  > {
+    return undefined;
+  }
 }
 
 /** Staff variant of a bookable item. */
@@ -282,6 +297,11 @@ class CartAvailableBookableItemStaffVariant extends Node<
 
   /** Staff member booked. */
   staff: Staff;
+
+  constructor(platformClient, variant) {
+    super(platformClient, variant);
+    this.staff = new Staff(platformClient, variant.staff);
+  }
 }
 
 /** Specified design for a CartItemEmailFulfillment. */
@@ -297,6 +317,16 @@ class CartGiftCardItem extends CartItem {
   /** Send the gift card to a recipient via email. */
   emailFulfillment: Maybe<CartItemEmailFulfillment>;
   giftCardDesign: Maybe<CartItemGiftCardDesign>;
+
+  constructor(platformClient, item) {
+    super(platformClient, item);
+    this.emailFulfillment =
+      item.emailFulfillment &&
+      new CartItemEmailFulfillment(platformClient, item.emailFulfillment);
+    this.giftCardDesign =
+      item.giftCardDesign &&
+      new CartItemGiftCardDesign(platformClient, item.giftCardDesign);
+  }
 }
 
 /** Displayed price range of an item, before tax. */
