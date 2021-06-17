@@ -1,20 +1,32 @@
 import { PlatformClient } from "./platformClient";
-import { Client as GraphClient, Scalars, UpdateClientInput } from "./graph";
+import {
+  Client as GraphClient,
+  Maybe,
+  Scalars,
+  UpdateClientInput
+} from "./graph";
 
-class Client implements GraphClient {
+class Client {
   /** Email address */
-  email?: Scalars["Email"];
+  email: Maybe<Scalars["Email"]>;
+
   /** First name */
-  firstName?: Scalars["String"];
+  firstName: Maybe<Scalars["String"]>;
+
   /** The ID of an object */
   id: Scalars["ID"];
+
   insertedAt: Scalars["DateTime"];
+
   /** Last name */
-  lastName?: Scalars["String"];
+  lastName: Maybe<Scalars["String"]>;
+
   /** Mobile phone number */
-  mobilePhone?: Scalars["PhoneNumber"];
+  mobilePhone: Maybe<Scalars["PhoneNumber"]>;
+
   /** Full name */
-  name?: Scalars["String"];
+  name: Maybe<Scalars["String"]>;
+
   updatedAt: Scalars["DateTime"];
 
   /**

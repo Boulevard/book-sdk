@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Carts | @boulevard/book-sdk</title>
+	<title>Appointments | @boulevard/book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@boulevard/book-sdk</a>
 				</li>
 				<li>
-					<a href="../modules/blvd.html">blvd</a>
+					<a href="../modules/appointments.html">appointments</a>
 				</li>
 				<li>
-					<a href="blvd.carts.html">Carts</a>
+					<a href="appointments.appointments-1.html">Appointments</a>
 				</li>
 			</ul>
-			<h1>Class Carts</h1>
+			<h1>Class Appointments</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Carts</span>
+						<span class="target">Appointments</span>
 					</li>
 				</ul>
 			</section>
@@ -83,8 +83,8 @@
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="blvd.carts.html#create" class="tsd-kind-icon">create</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="blvd.carts.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="appointments.appointments-1.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="appointments.appointments-1.html#list" class="tsd-kind-icon">list</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,67 +93,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="create" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>location<span class="tsd-signature-symbol">: </span><a href="../modules/graph.html#location" class="tsd-signature-type" data-tsd-kind="Type alias">Location</a>, opts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>timezone<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="blvd.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/carts.ts#L21">carts.ts:21</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>async</dt>
-									<dd><p>Creates a new Cart</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>location: <a href="../modules/graph.html#location" class="tsd-signature-type" data-tsd-kind="Type alias">Location</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <span class="tsd-signature-symbol">{ </span>timezone<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> timezone<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-											<div class="tsd-comment tsd-typography">
-												<p>Optional time zone that <a href="../modules/graph.html#cartbookabledate">CartBookableDate</a> and <a href="../modules/graph.html#cartbookabletime">CartBookableTime</a> should be converted to, e.g. the client&#39;s time zone. The search range dates are also interpreted using this. When omitted, the browser timezone is used.</p>
-											</div>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="blvd.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="get" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="blvd.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="appointments.appointment.html" class="tsd-signature-type" data-tsd-kind="Class">Appointment</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/043f978/src/carts.ts#L40">carts.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/6a5fc23/src/appointments.ts#L285">appointments.ts:285</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<dl class="tsd-comment-tags">
 									<dt>async</dt>
-									<dd><p>Retrieves a cart by ID</p>
-									</dd>
-									<dt>todo</dt>
-									<dd><p>Implement</p>
-									</dd>
+									<dd></dd>
 								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -162,7 +117,38 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="blvd.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="appointments.appointment.html" class="tsd-signature-type" data-tsd-kind="Class">Appointment</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Promise containing the Appointment</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="list" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> list</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="appointments.appointment.html" class="tsd-signature-type" data-tsd-kind="Class">Appointment</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/6a5fc23/src/appointments.ts#L301">appointments.ts:301</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List appointments for the authenticated client</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>async</dt>
+									<dd></dd>
+									<dt>todo</dt>
+									<dd><p>Pagination</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="appointments.appointment.html" class="tsd-signature-type" data-tsd-kind="Class">Appointment</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Promise containing the list of Appointments</p>
 						</li>
 					</ul>
 				</section>
@@ -175,59 +161,59 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
+						<a href="../modules/appointments.html">appointments</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/blvd.html">blvd</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/graph.html">graph</a>
+						<a href="../modules/carts.html">carts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/clients.html">clients</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/locations.html">locations</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/services.html">services</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/staff.html">staff</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/blvd.platformtarget.html" class="tsd-kind-icon">Platform<wbr>Target</a>
+						<a href="../enums/appointments.appointmentstate.html" class="tsd-kind-icon">Appointment<wbr>State</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.appointment.html" class="tsd-kind-icon">Appointment</a>
+						<a href="appointments.appointment.html" class="tsd-kind-icon">Appointment</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.appointments.html" class="tsd-kind-icon">Appointments</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.blvd-1.html" class="tsd-kind-icon">Blvd</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.businesses.html" class="tsd-kind-icon">Businesses</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.cart.html" class="tsd-kind-icon">Cart</a>
+						<a href="appointments.appointmentservice.html" class="tsd-kind-icon">Appointment<wbr>Service</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.carts.html" class="tsd-kind-icon">Carts</a>
+						<a href="appointments.appointments-1.html" class="tsd-kind-icon">Appointments</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="blvd.carts.html#create" class="tsd-kind-icon">create</a>
+								<a href="appointments.appointments-1.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="blvd.carts.html#get" class="tsd-kind-icon">get</a>
+								<a href="appointments.appointments-1.html#list" class="tsd-kind-icon">list</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.client.html" class="tsd-kind-icon">Client</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/appointments.html#availablerescheduledate" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Date</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.clients.html" class="tsd-kind-icon">Clients</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.locations.html" class="tsd-kind-icon">Locations</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="blvd.memberships.html" class="tsd-kind-icon">Memberships</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/appointments.html#availablerescheduletime" class="tsd-kind-icon">Available<wbr>Reschedule<wbr>Time</a>
 					</li>
 				</ul>
 			</nav>
@@ -240,7 +226,6 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

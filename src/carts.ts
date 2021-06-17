@@ -4,6 +4,15 @@ import { PlatformClient } from "./platformClient";
 import { Location, Scalars } from "./graph";
 import { Cart } from "./cart";
 
+/** Available starting time for bookable items in a cart. */
+type CartBookableTime = {
+  /** ID of this particular time. */
+  id: Scalars["ID"];
+
+  /** Available start time for the earliest bookable item. */
+  startTime: Scalars["DateTime"];
+};
+
 class Carts {
   /**
    * @internal
@@ -42,4 +51,4 @@ class Carts {
   }
 }
 
-export { Carts };
+export { Carts, CartBookableTime };

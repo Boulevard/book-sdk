@@ -20,4 +20,4 @@ class Clients {
   }
 }
 
-export { Clients };
+export { Clients, Client };

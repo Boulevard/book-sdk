@@ -1,6 +1,14 @@
 {
   "excludePrivate": false,
   "excludeInternal": true,
-  "entryPoints": ["./src/blvd.ts", "./src/graph.d.ts"],
+  "entryPoints": [
+    "./src/blvd.ts",
+    "./src/appointments.ts",
+    "./src/carts.ts",
+    "./src/clients.ts",
+    "./src/locations.ts",
+    "./src/services.ts",
+    "./src/staff.ts"
+  ],
   "out": "docs"
 }

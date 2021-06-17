@@ -37,16 +37,4 @@ class Blvd {
   }
 }
 
-export {
-  Blvd,
-  Appointment,
-  Appointments,
-  Businesses,
-  Cart,
-  Carts,
-  Client,
-  Clients,
-  Locations,
-  Memberships,
-  PlatformTarget
-};
+export { Blvd, PlatformTarget };
