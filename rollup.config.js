@@ -10,7 +10,7 @@ export default [
       sourcemap: true,
       dir: "lib",
       format: "es",
-      name: "book-sdk"
+      name: "blvd-book"
     },
     plugins: [typescript()]
   },
