@@ -1,11 +1,14 @@
 .*
 codegen.yml
-jest.config.js
+jest.*
 rollup.config.js
 schema.json
-tsconfig.json
+tsconfig.*
 tslint.json
+typedoc.json
 
 node_modules
 scripts
 src
+docs
+index.html
