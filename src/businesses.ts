@@ -37,7 +37,7 @@ class Business extends Node<Graph.Business> {
     const response = await this.platformClient.request(businessLocationsQuery);
 
     return response.business.locations.edges.map(
-      node => new Location(this.platformClient, node)
+      ({ node }: Graph.LocationEdge) => new Location(this.platformClient, node)
     );
   }
 }
