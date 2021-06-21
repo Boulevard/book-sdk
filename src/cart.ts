@@ -1,6 +1,6 @@
 import * as graph from "./carts/graph";
 import { Node, PlatformClient, PlatformTarget } from "./platformClient";
-import {
+import type {
   Scalars,
   Maybe,
   CartAdvanceGratuityInput,
@@ -8,7 +8,7 @@ import {
   DepositType,
   CartErrorCode
 } from "./graph";
-import * as Graph from "./graph";
+import type * as Graph from "./graph";
 import { Location } from "./locations";
 import {
   CartAvailableBookableItem,

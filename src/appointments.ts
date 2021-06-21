@@ -1,7 +1,7 @@
 import { Node, PlatformClient } from "./platformClient";
-import { AppointmentCancellationReason, AppointmentState } from "./graph";
-import { Scalars, Maybe } from "./graph";
-import * as Graph from "./graph";
+import type { AppointmentCancellationReason, AppointmentState } from "./graph";
+import type { Scalars, Maybe } from "./graph";
+import type * as Graph from "./graph";
 import {
   myAppointmentsQuery,
   appointmentQuery,
