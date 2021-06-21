@@ -5,9 +5,9 @@ import {
   Maybe,
   CartAdvanceGratuityInput,
   CartClientInformationInput,
-  DepositType
+  DepositType,
+  CartErrorCode
 } from "./graph";
-import { CartErrorCode } from "./graph";
 import * as Graph from "./graph";
 import { Location } from "./locations";
 import {
@@ -15,7 +15,6 @@ import {
   CartAvailableBookableItemOption,
   CartAvailableBookableItemStaffVariant,
   CartAvailableGiftCardItem,
-  CartAvailableItem,
   CartAvailablePurchasableItem,
   CartBookableItem,
   CartGiftCardItem,
@@ -28,10 +27,10 @@ import { CartGuest } from "./carts/guests";
 
 /** Gratuity set in advance for bookable items. */
 class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
-  fixed?: Maybe<Scalars["Money"]>;
+  fixed: Maybe<Scalars["Money"]>;
 
   /** Percentage gratuity amount, has to be set if `fixed` is not set. */
-  percentage?: Maybe<Scalars["Float"]>;
+  percentage: Maybe<Scalars["Float"]>;
 }
 
 /** Category of items that can be checked out. */
