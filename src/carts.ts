@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 import { cartQuery, createCartMutation } from "./carts/graph";
 import { PlatformClient, PlatformTarget } from "./platformClient";
-import { Location, Scalars } from "./graph";
+import { CreateCartInput, Location, Scalars } from "./graph";
 import { Cart } from "./cart";
 
 class Carts {
@@ -25,8 +25,11 @@ class Carts {
     location: Location,
     opts?: { timezone?: string }
   ): Promise<Cart> {
-    const response = await this.platformClient.request(createCartMutation, {
+    const input: CreateCartInput = {
       locationId: location.id
+    };
+    const response = await this.platformClient.request(createCartMutation, {
+      input
     });
 
     return new Cart(

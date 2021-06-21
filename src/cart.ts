@@ -75,7 +75,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
           | Graph.CartAvailableBookableItem
           | Graph.CartAvailableGiftCardItem
           | Graph.CartAvailablePurchasableItem
-      ) => {
+      ) => {        
         switch (item.__typename) {
           case "CartAvailableBookableItem":
             return new CartAvailableBookableItem(this.platformClient, item);
@@ -116,16 +116,16 @@ class CartBookableTime extends Node<Graph.CartBookableTime> {
  */
 class CartClientInformation extends Node<Graph.CartClientInformation> {
   /** Email address. */
-  email?: Maybe<Scalars["Email"]>;
+  email: Maybe<Scalars["Email"]>;
 
   /** First name. */
   firstName: Scalars["String"];
 
   /** Last name. */
-  lastName?: Maybe<Scalars["String"]>;
+  lastName: Maybe<Scalars["String"]>;
 
   /** Mobile phone number. */
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  phoneNumber: Maybe<Scalars["PhoneNumber"]>;
 }
 
 /** Cart validation error. */
@@ -298,13 +298,14 @@ class Cart extends Node<Graph.Cart> {
     opts?: { select?: boolean }
   ): Promise<Cart> {
     const token = await this.tokenizeCardDetails(details);
+    const input: Graph.AddCartCardPaymentMethodInput = {
+      id: this.id,
+      token,
+      select: opts?.select == false ? false : true
+    }
     const response = await this.platformClient.request(
       graph.addCardPaymentMethodMutation,
-      {
-        id: this.id,
-        token,
-        select: opts?.select == false ? false : true
-      }
+      { input }
     );
     return this.refresh(response.addCartCardPaymentMethod.cart);
   }
@@ -614,7 +615,7 @@ class Cart extends Node<Graph.Cart> {
    */
   async getAvailableCategories(): Promise<Array<CartAvailableCategory>> {
     const response = await this.platformClient.request(
-      graph.availableCategoriesQuery
+      graph.availableCategoriesQuery, { id: this.id }
     );
 
     return response.cart.availableCategories.map(
@@ -659,8 +660,8 @@ class Cart extends Node<Graph.Cart> {
   }): Promise<Array<CartBookableDate>> {
     const response = await this.platformClient.request(graph.datesQuery, {
       id: this.id,
-      searchRangeLower: opts.searchRangeLower,
-      searchRangeUpper: opts.searchRangeUpper,
+      searchRangeLower: opts?.searchRangeLower,
+      searchRangeUpper: opts?.searchRangeUpper,
       tz: opts?.timezone || this.timezone
     });
 
@@ -720,7 +721,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the list of Bookable Times
    */
   async getBookableTimes(
-    date: Scalars["Date"],
+    {date}: CartBookableDate,
     opts?: { timezone?: string }
   ): Promise<Array<CartBookableTime>> {
     const response = await this.platformClient.request(graph.timesQuery, {
@@ -891,7 +892,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.reserveCart.cart);
+    return this.refresh(response.reserveCartBookableItems.cart);
   }
 
   /**
@@ -971,7 +972,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.takeCartOwnership.cart);
+    return this.refresh(response.updateCart.cart);
   }
 
   /**

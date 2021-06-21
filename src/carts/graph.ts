@@ -4,18 +4,18 @@ import { fragments as locationFragments } from "../locations/graph";
 
 const availabilityFragment = gql`
   fragment CartAvailableItemProperties on CartAvailableItem {
+    __typename
     description
     disabled
     disabledDescription
     id
     listPrice
-    listPriceRange
+    listPriceRange {
+      max
+      min
+      variable
+    }
     name
-
-    allowCustomAmounts
-    giftCardMax
-    giftCardMin
-    pricePresets
   }
 
   fragment CartAvailableCategoryProperties on CartAvailableCategory {
@@ -23,6 +23,9 @@ const availabilityFragment = gql`
     disabledDescription
     disabled
     description
+    availableItems {
+      ...CartAvailableItemProperties
+    }
   }
 `;
 
@@ -30,8 +33,16 @@ const fragments = {
   cart: gql`
     ${staffFragments}
     fragment CartProperties on Cart {
-      advanceGratuity
-      clientInformation
+      advanceGratuity {
+        fixed
+        percentage
+      }
+      clientInformation {
+        email
+        firstName
+        lastName
+        phoneNumber
+      }
       clientMessage
       completedAt
       endTime
@@ -44,7 +55,17 @@ const fragments = {
       id
       insertedAt
       startTime
-      summary
+      summary {
+        deposit
+        depositAmount
+        discountAmount
+        gratuityAmount
+        paymentMethodRequired
+        roundingAmount
+        subtotal
+        taxAmount
+        total
+      }
       updatedAt
     }
   `,
@@ -58,6 +79,7 @@ const fragments = {
   item: gql`
     ${availabilityFragment}
     fragment CartItemProperties on CartItem {
+      __typename
       discountAmount
       discountCode
       errors {
@@ -117,7 +139,7 @@ const fragments = {
 
 export const addBookableItemMutation = gql`
   ${fragments.cart}
-  mutation AddCartBookableItem($nput: AddCartSelectedBookableItemInput!) {
+  mutation AddCartBookableItem($input: AddCartSelectedBookableItemInput!) {
     addCartSelectedBookableItem(input: $input) {
       cart {
         ...CartProperties
@@ -383,6 +405,7 @@ export const reserveCartMutation = gql`
 
 export const selectedItemsQuery = gql`
   ${fragments.offer}
+  ${fragments.item}
   query Cart($id: ID!) {
     cart(id: $id) {
       selectedItems {
@@ -459,7 +482,9 @@ export const updateGuestMutation = gql`
 
 export const updateSelectedBookableItemMutation = gql`
   ${fragments.cart}
-  mutation UpdateCartBookableItem($nput: UpdateCartSelectedBookableItemInput!) {
+  mutation UpdateCartBookableItem(
+    $input: UpdateCartSelectedBookableItemInput!
+  ) {
     updateCartSelectedBookableItem(input: $input) {
       cart {
         ...CartProperties
