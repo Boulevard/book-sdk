@@ -10,7 +10,7 @@ export default [
       sourcemap: true,
       dir: "lib",
       format: "es",
-      name: "blvd-book"
+      name: "book-sdk"
     },
     plugins: [typescript()]
   },
@@ -20,7 +20,7 @@ export default [
       sourcemap: true,
       file: "lib/index.umd.js",
       format: "umd",
-      name: "Blvd"
+      name: "boulevard"
     },
     plugins: [nodeResolve({ browser: true }), common(), typescript()]
   }
