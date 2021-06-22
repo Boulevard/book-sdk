@@ -24,6 +24,7 @@ import {
   CartPurchasableItem
 } from "./carts/items";
 import { CartGuest } from "./carts/guests";
+import fetch from 'cross-fetch';
 
 /** Gratuity set in advance for bookable items. */
 class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
@@ -338,7 +339,7 @@ class Cart extends Node<Graph.Cart> {
           },
           body: JSON.stringify(details)
         }
-      );
+      );      
       const { token } = await response.json();
       return token;
     }
@@ -372,7 +373,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async addBookableItem(
-    item: CartBookableItem,
+    item: CartAvailableBookableItem,
     opts?: {
       discountCode?: string;
       guest?: CartGuest;
@@ -407,7 +408,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async addGiftCardItem(
-    item: CartGiftCardItem,
+    item: CartAvailableGiftCardItem,
     price: Scalars["Money"]
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedGiftCardItemInput = {
@@ -434,14 +435,14 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async addPurchasableItem(
-    item: CartPurchasableItem,
+    item: CartAvailablePurchasableItem,
     opts?: { discountCode?: string }
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedPurchasableItemInput = {
       id: this.id,
       itemId: item.id,
-      itemDiscountCode: opts?.discountCode
     };
+    
     const response = await this.platformClient.request(
       graph.addPurchasableItemMutation,
       { input }
@@ -653,7 +654,7 @@ class Cart extends Node<Graph.Cart> {
    * @public
    * @returns Promise containing the list of Bookable Dates
    */
-  async getBookableDates(opts: {
+  async getBookableDates(opts?: {
     searchRangeLower?: Scalars["Date"];
     searchRangeUpper?: Scalars["Date"];
     timezone?: string;
