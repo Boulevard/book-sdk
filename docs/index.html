@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@boulevard/book-sdk</title>
-	<meta name="description" content="Documentation for @boulevard/book-sdk">
+	<title>@boulevard/blvd-book-sdk</title>
+	<meta name="description" content="Documentation for @boulevard/blvd-book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<script async src="assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@boulevard/book-sdk</a>
+					<a href="index.html" class="title">@boulevard/blvd-book-sdk</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<h1>@boulevard/book-sdk</h1>
+			<h1>@boulevard/blvd-book-sdk</h1>
 		</div>
 	</div>
 </header>
@@ -73,22 +73,27 @@
 				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">businessId</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;312bf55a-b6c5-48f2-ab40-eef5d78277ac&quot;</span><span style="color: #000000">;</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">apiKey</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span style="color: #000000">;</span>
 </code></pre>
+				<p>Install the SDK</p>
+				<pre><code class="language-sh"><span style="color: #000000">yarn -D add @boulevard/blvd-book-sdk</span>
+</code></pre>
 				<a href="#client-side" id="client-side" style="color: inherit; text-decoration: none;">
 					<h3>Client-Side</h3>
 				</a>
 				<p>The simplest flow is the unauthenticated client API, which you can use to create an appointment for a new client:</p>
-				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Blvd</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;blvd-book&quot;</span><span style="color: #000000">;</span>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Blvd</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@boulevard/blvd-book-sdk&quot;</span><span style="color: #000000">;</span>
 
 <span style="color: #008000">// Step 1: Create a `business` object to interact with the API.</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Blvd</span><span style="color: #000000">(</span><span style="color: #001080">businessId</span><span style="color: #000000">, </span><span style="color: #001080">apiKey</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Blvd</span><span style="color: #000000">(</span><span style="color: #001080">apiKey</span><span style="color: #000000">, </span><span style="color: #001080">businessId</span><span style="color: #000000">);</span>
 
 <span style="color: #008000">// Step 2: Choose a location and start by creating a cart</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locations</span><span style="color: #000000"> = </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">locations</span><span style="color: #000000">.</span><span style="color: #795E26">list</span><span style="color: #000000">();</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cart</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">carts</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">locations</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">business</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">businesses</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locations</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">business</span><span style="color: #000000">.</span><span style="color: #795E26">getLocations</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">carts</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">locations</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]);</span>
 
 <span style="color: #008000">// Step 3: Select and add items to the card</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">item</span><span style="color: #000000"> = </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #001080">availableCategories</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">availableItems</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">];</span>
-<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">addItem</span><span style="color: #000000">(</span><span style="color: #001080">item</span><span style="color: #000000">);</span>
+<span style="color: #001080">cart</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">addBookableItem</span><span style="color: #000000">(</span><span style="color: #001080">item</span><span style="color: #000000">);</span>
 
 <span style="color: #008000">// Step 4: Find available timeslots</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">dates</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cart</span><span style="color: #000000">.</span><span style="color: #795E26">getBookableDates</span><span style="color: #000000">();</span>
@@ -110,7 +115,7 @@
 <span style="color: #000000">    </span><span style="color: #001080">number:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;4242424242424242&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">cvv:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;111&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">exp_month:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">exp_year:</span><span style="color: #000000"> </span><span style="color: #098658">2020</span>
+<span style="color: #000000">    </span><span style="color: #001080">exp_year:</span><span style="color: #000000"> </span><span style="color: #098658">2025</span>
 <span style="color: #000000">  }</span>
 <span style="color: #000000">});</span>
 
