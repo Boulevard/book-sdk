@@ -172,6 +172,17 @@ export const addPurchasableItemMutation = gql`
   }
 `;
 
+export const addToWaitlistMutation = gql`
+  ${fragments.cart}
+  mutation CartAddToWaitlist($input: CartAddToWaitlistInput!) {
+    cartAddToWaitlist(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
 export const availableCategoriesQuery = gql`
   ${fragments.availability}
   query Cart($id: ID!) {

@@ -78,17 +78,17 @@ describe("carts", () => {
 
     cart = await cart.addBookableItem(service as CartAvailableBookableItem);
     cart = await cart.addPurchasableItem(product);
-    // cart = await cart.addGiftCardItem(
-    //   giftCard as CartAvailableGiftCardItem,
-    //   10000
-    // );
+    cart = await cart.addGiftCardItem(
+      giftCard as CartAvailableGiftCardItem,
+      10000
+    );
 
     expect(cart).toBeInstanceOf(Cart);
-    // expect(cart.summary.total).toEqual(30000);
+    expect(cart.summary.total).toEqual(30000);
 
     const items = await cart.getSelectedItems();
 
-    // expect(items).toHaveLength(3);
+    expect(items).toHaveLength(3);
 
     const dates = await cart.getBookableDates();
     const date = dates[0];
@@ -120,6 +120,48 @@ describe("carts", () => {
     expect(cart).toBeInstanceOf(Cart);
     expect(cart.errors).toEqual([]);
     cart = await cart.checkout();
+  }, 10000);
+
+  test("waitlist", async () => {
+    const locations = await anon.locations.list();
+    let cart = await anon.carts.create(locations[0]);
+    const categories = await cart.getAvailableCategories();
+
+    const services = categories[0];
+    const service = services.availableItems[0];
+    cart = await cart.addBookableItem(service as CartAvailableBookableItem);
+
+    const dates = await cart.getBookableDates();
+    const date = dates[0];
+
+    const times = await cart.getBookableTimes(date);
+    const time = times[0];
+
+    cart = await cart.reserveBookableItems(time);
+
+    cart = await cart.update({
+      clientInformation: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "test@test.com"
+      }
+    });
+    cart = await cart.addCardPaymentMethod({
+      card: {
+        name: "John Doe",
+        number: "4242424242424242",
+        cvv: "111",
+        exp_month: 1,
+        exp_year: 2025
+      }
+    });
+
+    const dateFrom = new Date();
+    const dateTo = new Date();
+    dateTo.setDate(dateTo.getDate() + 7);
+    cart = await cart.addToWaitlist(dateFrom, dateTo);
+    expect(cart.errors).toEqual([]);
+    expect(cart.completedAt).toBeTruthy();
   }, 10000);
 });
 

@@ -546,6 +546,26 @@ export type CartSelectedItemArgs = {
   id: Scalars['ID'];
 };
 
+export type CartAddToWaitlistInput = {
+  /** ID of the cart. */
+  id: Scalars['ID'];
+  /** The preferred lower bound date and time of the bookable items. */
+  preferredTimeLower: Scalars['NaiveDateTime'];
+  /** The preferred upper bound date and time of the bookable items. */
+  preferredTimeUpper: Scalars['NaiveDateTime'];
+  /**
+   * Optional time zone the preferred times should be converted from, e.g. the client's
+   * time zone. If a timezone other than the default location's timezone was used when
+   * fetching bookable times, then that same timezone should be supplied in this mutation.
+   */
+  tz?: Maybe<Scalars['Tz']>;
+};
+
+export type CartAddToWaitlistPayload = {
+  __typename?: 'CartAddToWaitlistPayload';
+  cart: Cart;
+};
+
 /** Gratuity set in advance for bookable items. */
 export type CartAdvanceGratuity = {
   __typename?: 'CartAdvanceGratuity';
@@ -1552,6 +1572,14 @@ export type RootMutationType = {
    */
   cancelAppointment?: Maybe<CancelAppointmentPayload>;
   /**
+   * Creates a waitlist entry for the cart with the specified date and time ranges
+   * as the boundary for the preferred bookable time. Only selected bookable items
+   * will be included in the waitlist entry for the cart.
+   *
+   * This mutation marks the cart as completed, it can no longer be modified.
+   */
+  cartAddToWaitlist?: Maybe<CartAddToWaitlistPayload>;
+  /**
    * Completes the checkout process for the given cart.
    *
    * This mutation will first check for any errors in the cart, aborting if
@@ -1676,6 +1704,11 @@ export type RootMutationTypeAppointmentRescheduleAvailableTimesArgs = {
 
 export type RootMutationTypeCancelAppointmentArgs = {
   input: CancelAppointmentInput;
+};
+
+
+export type RootMutationTypeCartAddToWaitlistArgs = {
+  input: CartAddToWaitlistInput;
 };
 
 

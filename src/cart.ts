@@ -24,7 +24,7 @@ import {
   CartPurchasableItem
 } from "./carts/items";
 import { CartGuest } from "./carts/guests";
-import fetch from 'cross-fetch';
+import fetch from "cross-fetch";
 
 /** Gratuity set in advance for bookable items. */
 class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
@@ -76,7 +76,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
           | Graph.CartAvailableBookableItem
           | Graph.CartAvailableGiftCardItem
           | Graph.CartAvailablePurchasableItem
-      ) => {        
+      ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
             return new CartAvailableBookableItem(this.platformClient, item);
@@ -303,7 +303,7 @@ class Cart extends Node<Graph.Cart> {
       id: this.id,
       token,
       select: opts?.select == false ? false : true
-    }
+    };
     const response = await this.platformClient.request(
       graph.addCardPaymentMethodMutation,
       { input }
@@ -339,7 +339,7 @@ class Cart extends Node<Graph.Cart> {
           },
           body: JSON.stringify(details)
         }
-      );      
+      );
       const { token } = await response.json();
       return token;
     }
@@ -440,9 +440,9 @@ class Cart extends Node<Graph.Cart> {
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedPurchasableItemInput = {
       id: this.id,
-      itemId: item.id,
+      itemId: item.id
     };
-    
+
     const response = await this.platformClient.request(
       graph.addPurchasableItemMutation,
       { input }
@@ -451,6 +451,41 @@ class Cart extends Node<Graph.Cart> {
     return this.refresh(response.addCartSelectedPurchasableItem.cart);
   }
 
+  /**
+   * Creates a waitlist entry for the cart with the specified date and time ranges as the boundary for the preferred bookable time.
+   * Only selected bookable items will be included in the waitlist entry for the cart.
+   *
+   * This mutation marks the cart as completed, it can no longer be modified.
+   *
+   * @async
+   * @category Purchasable Items
+   * @param preferredTimeLower The preferred lower bound date and time of the bookable items.
+   * @param preferredTimeUpper The preferred upper bound date and time of the bookable items.
+   * @param opts.timezone Optional override for the timezone set in {@link Carts.create}
+   * @public
+   * @returns Promise containing the updated cart
+   */
+  async addToWaitlist(
+    preferredTimeLower?: Scalars["NaiveDateTime"],
+    preferredTimeUpper?: Scalars["NaiveDateTime"],
+    opts?: {
+      timezone?: string;
+    }
+  ): Promise<Cart> {
+    const input: Graph.CartAddToWaitlistInput = {
+      id: this.id,
+      preferredTimeLower,
+      preferredTimeUpper,
+      tz: opts?.timezone
+    };
+
+    const response = await this.platformClient.request(
+      graph.addToWaitlistMutation,
+      { input }
+    );
+
+    return this.refresh(response.cartAddToWaitlist.cart);
+  }
   /**
    * Completes the checkout process.
    *
@@ -616,7 +651,8 @@ class Cart extends Node<Graph.Cart> {
    */
   async getAvailableCategories(): Promise<Array<CartAvailableCategory>> {
     const response = await this.platformClient.request(
-      graph.availableCategoriesQuery, { id: this.id }
+      graph.availableCategoriesQuery,
+      { id: this.id }
     );
 
     return response.cart.availableCategories.map(
@@ -722,7 +758,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the list of Bookable Times
    */
   async getBookableTimes(
-    {date}: CartBookableDate,
+    { date }: CartBookableDate,
     opts?: { timezone?: string }
   ): Promise<Array<CartBookableTime>> {
     const response = await this.platformClient.request(graph.timesQuery, {
