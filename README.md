@@ -29,7 +29,7 @@ The simplest flow is the unauthenticated client API, which you can use to create
 import { Blvd } from "@boulevard/blvd-book-sdk";
 
 // Step 1: Create a `business` object to interact with the API.
-const client = new Blvd(businessId, apiKey);
+const client = new Blvd(apiKey, businessId);
 
 // Step 2: Choose a location and start by creating a cart
 const business = await client.businesses.get();
