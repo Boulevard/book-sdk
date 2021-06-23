@@ -311,6 +311,9 @@ class Cart extends Node<Graph.Cart> {
     return this.refresh(response.addCartCardPaymentMethod.cart);
   }
 
+  /**
+   * @internal
+   */
   private async tokenizeCardDetails(
     details:
       | {
@@ -1198,6 +1201,9 @@ class Cart extends Node<Graph.Cart> {
     return this.refresh(response.updateSelectedPurchasableItem.cart);
   }
 
+  /**
+   * @internal
+   */
   private refresh(newCart) {
     return new Cart(this.platformClient, newCart, this.platformTarget);
   }
