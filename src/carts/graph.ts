@@ -3,6 +3,36 @@ import { fragments as staffFragments } from "../staff/graph";
 import { fragments as locationFragments } from "../locations/graph";
 
 const availabilityFragment = gql`
+  ${staffFragments}
+
+  fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
+    id
+    price
+    duration
+    staff {
+      ...StaffProperties
+    }
+  }
+
+  fragment CartAvailableBookableItemOptionProperties on CartAvailableBookableItemOption {
+    description
+    durationDelta
+    id
+    name
+    priceDelta
+  }
+
+  fragment CartAvailableBookableItemOptionGroupProperties on CartAvailableBookableItemOptionGroup {
+    id
+    description
+    maxLimit
+    minLimit
+    name
+    options {
+      ...CartAvailableBookableItemOptionProperties
+    }
+  }
+
   fragment CartAvailableItemProperties on CartAvailableItem {
     __typename
     description
@@ -18,6 +48,16 @@ const availabilityFragment = gql`
     name
   }
 
+  fragment CartAvailableBookableItemProperties on CartAvailableBookableItem {
+    ...CartAvailableItemProperties
+    optionGroups {
+      ...CartAvailableBookableItemOptionGroupProperties
+    }
+    staffVariants {
+      ...CartAvailableBookableItemStaffVariantProperties
+    }
+  }
+
   fragment CartAvailableCategoryProperties on CartAvailableCategory {
     name
     disabledDescription
@@ -25,6 +65,7 @@ const availabilityFragment = gql`
     description
     availableItems {
       ...CartAvailableItemProperties
+      ...CartAvailableBookableItemProperties
     }
   }
 `;

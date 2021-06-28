@@ -131,16 +131,25 @@ class CartItemError extends Node<Graph.CartItemError> {
 /** Item that can be booked through `addCartBookableItem`. */
 class CartAvailableBookableItem extends CartAvailableItem {
   /**
+   * @internal
+   */
+  optionGroups: Array<CartAvailableBookableItemOptionGroup>;
+  /**
    * Groups of available options for modifying the booked service. These can be
    * used to modify the booked item and may affect pricing and timing.
    *
-   * @todo implement
    */
   async getOptionGroups(): Promise<
     Array<CartAvailableBookableItemOptionGroup>
   > {
-    return undefined;
+    return Promise.resolve(this.optionGroups);
   }
+
+  /**
+   * @internal
+   */
+  staffVariants: Array<CartAvailableBookableItemStaffVariant>;
+
   /**
    * List of optional staff variants that can be chosen. Variants may have
    * different pricing and timing.
@@ -152,7 +161,28 @@ class CartAvailableBookableItem extends CartAvailableItem {
   async getStaffVariants(): Promise<
     Array<CartAvailableBookableItemStaffVariant>
   > {
-    return undefined;
+    return Promise.resolve(this.staffVariants);
+  }
+
+  /**
+   * List of optional staff variants that can be chosen. Variants may have
+   * different pricing and timing.
+   *
+   * When there’s no preference, the first one available is assigned based on the
+   * selected time. The business can also enforce this, in which case this list
+   * is empty.
+   */
+
+  constructor(platformClient, item) {
+    super(platformClient, item);
+    this.optionGroups = item.optionGroups.map(
+      (g: Graph.CartAvailableBookableItemOptionGroup) =>
+        new CartAvailableBookableItemOptionGroup(platformClient, g)
+    );
+    this.staffVariants = item.optionGroups.map(
+      (v: Graph.CartAvailableBookableItemStaffVariant) =>
+        new CartAvailableBookableItemStaffVariant(platformClient, v)
+    );
   }
 }
 
@@ -163,9 +193,7 @@ class CartAvailableBookableItem extends CartAvailableItem {
  * the bookable item is added. An error is returned if the selections don’t meet
  * those requirements.
  */
-class CartAvailableBookableItemOptionGroup extends Node<
-  Graph.CartAvailableBookableItemOptionGroup
-> {
+class CartAvailableBookableItemOptionGroup extends Node<Graph.CartAvailableBookableItemOptionGroup> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -181,26 +209,27 @@ class CartAvailableBookableItemOptionGroup extends Node<
   /** Short human-readable name. */
   name: Scalars["String"];
 
-  /** List of selectable options.
-   * @todo implement
+  /**
+   * List of selectable options.
    */
-  async getOptions(): Promise<Array<CartAvailableBookableItemOption>> {
-    return undefined;
+  options: Array<CartAvailableBookableItemOption>;
+
+  constructor(platformClient, group) {
+    super(platformClient, group);
+    this.options = group.options.map(
+      (o: Graph.CartAvailableBookableItemOption) =>
+        new CartAvailableBookableItemOption(platformClient, o)
+    );
   }
 }
 
 /** Option of a bookable item that can be selected. */
-class CartAvailableBookableItemOption extends Node<
-  Graph.CartAvailableBookableItemOption
-> {
+class CartAvailableBookableItemOption extends Node<Graph.CartAvailableBookableItemOption> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
   /** Minutes added to duration when selected. */
   durationDelta: Scalars["Int"];
-
-  /** Group ID of the option. */
-  groupId: Scalars["ID"];
 
   /** ID of the option. */
   id: Scalars["ID"];
@@ -286,9 +315,7 @@ class CartBookableItem extends CartItem {
 }
 
 /** Staff variant of a bookable item. */
-class CartAvailableBookableItemStaffVariant extends Node<
-  Graph.CartAvailableBookableItemStaffVariant
-> {
+class CartAvailableBookableItemStaffVariant extends Node<Graph.CartAvailableBookableItemStaffVariant> {
   /** Duration of the variant in minutes. */
   duration: Scalars["Int"];
 
