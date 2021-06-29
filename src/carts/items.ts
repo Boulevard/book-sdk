@@ -179,7 +179,7 @@ class CartAvailableBookableItem extends CartAvailableItem {
       (g: Graph.CartAvailableBookableItemOptionGroup) =>
         new CartAvailableBookableItemOptionGroup(platformClient, g)
     );
-    this.staffVariants = item.optionGroups.map(
+    this.staffVariants = item.staffVariants.map(
       (v: Graph.CartAvailableBookableItemStaffVariant) =>
         new CartAvailableBookableItemStaffVariant(platformClient, v)
     );
