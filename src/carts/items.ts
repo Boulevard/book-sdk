@@ -79,20 +79,37 @@ class CartItem extends Node<Graph.CartItem> {
     this.errors = cartItem.errors.map(
       error => new CartItemError(platformClient, error)
     );
+    this.availablePaymentMethods = cartItem.availablePaymentMethods.map(
+      m => new CartItemPaymentMethod(platformClient, m)
+    );
+
+    this.selectedPaymentMethod = cartItem.selectedPaymentMethod
+      ? new CartItemPaymentMethod(
+          platformClient,
+          cartItem.selectedPaymentMethod
+        )
+      : null;
   }
 
-  /** Payment methods available for this item.
-   * @todo implement
+  /**
+   * @internal
    */
-  async getAvailablePaymentMethods() {
-    return undefined;
+  availablePaymentMethods: Array<CartItemPaymentMethod>;
+  /** Payment methods available for this item.
+   */
+  async getAvailablePaymentMethods(): Promise<Array<CartItemPaymentMethod>> {
+    return Promise.resolve(this.availablePaymentMethods);
   }
+
+  /**
+   * @internal
+   */
+  selectedPaymentMethod: Maybe<CartItemPaymentMethod>;
 
   /** Payment method selected for this item.
-   * @todo implement
    */
   async getSelectedPaymentMethod(): Promise<Maybe<CartItemPaymentMethod>> {
-    return undefined;
+    return Promise.resolve(this.selectedPaymentMethod);
   }
 }
 

@@ -70,6 +70,13 @@ const availabilityFragment = gql`
   }
 `;
 
+const paymentMethodFragment = gql`
+  fragment CartItemPaymentMethodProperties on CartItemPaymentMethod {
+    id
+    name
+  }
+`;
+
 const fragments = {
   cart: gql`
     ${staffFragments}
@@ -119,6 +126,7 @@ const fragments = {
   `,
   item: gql`
     ${availabilityFragment}
+    ${paymentMethodFragment}
     fragment CartItemProperties on CartItem {
       __typename
       discountAmount
@@ -135,6 +143,12 @@ const fragments = {
       lineTotal
       price
       taxAmount
+      selectedPaymentMethod {
+        ...CartItemPaymentMethodProperties
+      }
+      availablePaymentMethods {
+        ...CartItemPaymentMethodProperties
+      }
     }
   `,
   offer: gql`

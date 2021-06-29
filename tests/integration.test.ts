@@ -3,11 +3,13 @@ import { Business } from "../src/businesses";
 import {
   Cart,
   CartAvailableBookableItem,
+  CartAvailableBookableItemStaffVariant,
   CartAvailableCategory,
   CartAvailableGiftCardItem,
   CartAvailablePurchasableItem,
   CartBookableDate,
-  CartBookableTime
+  CartBookableTime,
+  CartItemPaymentMethod
 } from "../src/cart";
 import { Location } from "../src/locations";
 
@@ -56,6 +58,18 @@ describe("carts", () => {
     expect(cart).toBeInstanceOf(Cart);
   });
 
+  test("staff variants", async () => {
+    const locations = await anon.locations.list();
+    let cart = await anon.carts.create(locations[0]);
+    const categories = await cart.getAvailableCategories();
+
+    const services = categories[0];
+    const service = services.availableItems[0] as CartAvailableBookableItem;
+    const staffVariants = await service.getStaffVariants();
+    const staffVariant = staffVariants[0];
+    expect(staffVariant).toBeInstanceOf(CartAvailableBookableItemStaffVariant);
+  });
+
   test("checkout", async () => {
     const locations = await anon.locations.list();
     let cart = await anon.carts.create(locations[0]);
@@ -84,7 +98,7 @@ describe("carts", () => {
     );
 
     expect(cart).toBeInstanceOf(Cart);
-    expect(cart.summary.total).toEqual(30000);
+    expect(cart.summary.total).toEqual(25000);
 
     const items = await cart.getSelectedItems();
 
@@ -116,6 +130,15 @@ describe("carts", () => {
         exp_year: 2025
       }
     });
+
+    const selectedItems = await cart.getSelectedItems();
+    expect(selectedItems[0].selectedPaymentMethod).toBeInstanceOf(
+      CartItemPaymentMethod
+    );
+
+    expect(selectedItems[0].availablePaymentMethods[0]).toBeInstanceOf(
+      CartItemPaymentMethod
+    );
 
     expect(cart).toBeInstanceOf(Cart);
     expect(cart.errors).toEqual([]);
