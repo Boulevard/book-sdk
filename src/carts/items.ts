@@ -297,21 +297,34 @@ class CartBookableItem extends CartItem {
   startTime: Maybe<Scalars["NaiveDateTime"]>;
 
   /**
+   * @internal
+   */
+  guest: Maybe<CartGuest>;
+
+  /**
    * Guest associated with this item.
    *
    * A null value implies the default guest, i.e. the booking client.
    * @todo implement
    */
   async getGuest(): Promise<Maybe<CartGuest>> {
-    return undefined;
+    return Promise.resolve(this.guest);
   }
 
+  /**
+   * @internal
+   */ selectedOptions: Array<CartAvailableBookableItemOption>;
   /** Any selected options for the item.
    * @todo implement
    */
   async getSelectedOptions(): Promise<Array<CartAvailableBookableItemOption>> {
-    return undefined;
+    return Promise.resolve(this.selectedOptions);
   }
+
+  /**
+   * @internal
+   */
+  selectedStaffVariant: Maybe<CartAvailableBookableItemStaffVariant>;
 
   /**
    * Selected staff variant for the item.
@@ -327,7 +340,25 @@ class CartBookableItem extends CartItem {
   async getSelectedStaffVariant(): Promise<
     Maybe<CartAvailableBookableItemStaffVariant>
   > {
-    return undefined;
+    return Promise.resolve(this.selectedStaffVariant);
+  }
+
+  /**
+   * @internal
+   */
+  constructor(platformClient, item) {
+    super(platformClient, item);
+    this.guest = item.guest && new CartGuest(platformClient, item.guest);
+    this.selectedOptions = item.selectedOptions.map(
+      (o: Graph.CartAvailableBookableItemOption) =>
+        new CartAvailableBookableItemOption(platformClient, o)
+    );
+    this.selectedStaffVariant =
+      item.selectedStaffVariant &&
+      new CartAvailableBookableItemStaffVariant(
+        platformClient,
+        item.selectedStaffVariant
+      );
   }
 }
 

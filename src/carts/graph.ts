@@ -2,84 +2,8 @@ import { gql } from "graphql-request";
 import { fragments as staffFragments } from "../staff/graph";
 import { fragments as locationFragments } from "../locations/graph";
 
-const availabilityFragment = gql`
-  ${staffFragments}
-
-  fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
-    id
-    price
-    duration
-    staff {
-      ...StaffProperties
-    }
-  }
-
-  fragment CartAvailableBookableItemOptionProperties on CartAvailableBookableItemOption {
-    description
-    durationDelta
-    id
-    name
-    priceDelta
-  }
-
-  fragment CartAvailableBookableItemOptionGroupProperties on CartAvailableBookableItemOptionGroup {
-    id
-    description
-    maxLimit
-    minLimit
-    name
-    options {
-      ...CartAvailableBookableItemOptionProperties
-    }
-  }
-
-  fragment CartAvailableItemProperties on CartAvailableItem {
-    __typename
-    description
-    disabled
-    disabledDescription
-    id
-    listPrice
-    listPriceRange {
-      max
-      min
-      variable
-    }
-    name
-  }
-
-  fragment CartAvailableBookableItemProperties on CartAvailableBookableItem {
-    ...CartAvailableItemProperties
-    optionGroups {
-      ...CartAvailableBookableItemOptionGroupProperties
-    }
-    staffVariants {
-      ...CartAvailableBookableItemStaffVariantProperties
-    }
-  }
-
-  fragment CartAvailableCategoryProperties on CartAvailableCategory {
-    name
-    disabledDescription
-    disabled
-    description
-    availableItems {
-      ...CartAvailableItemProperties
-      ...CartAvailableBookableItemProperties
-    }
-  }
-`;
-
-const paymentMethodFragment = gql`
-  fragment CartItemPaymentMethodProperties on CartItemPaymentMethod {
-    id
-    name
-  }
-`;
-
 const fragments = {
   cart: gql`
-    ${staffFragments}
     fragment CartProperties on Cart {
       advanceGratuity {
         fixed
@@ -117,7 +41,71 @@ const fragments = {
       updatedAt
     }
   `,
-  availability: availabilityFragment,
+  availability: gql`
+    fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
+      id
+      price
+      duration
+      staff {
+        ...StaffProperties
+      }
+    }
+
+    fragment CartAvailableBookableItemOptionProperties on CartAvailableBookableItemOption {
+      description
+      durationDelta
+      id
+      name
+      priceDelta
+    }
+
+    fragment CartAvailableBookableItemOptionGroupProperties on CartAvailableBookableItemOptionGroup {
+      id
+      description
+      maxLimit
+      minLimit
+      name
+      options {
+        ...CartAvailableBookableItemOptionProperties
+      }
+    }
+
+    fragment CartAvailableItemProperties on CartAvailableItem {
+      __typename
+      description
+      disabled
+      disabledDescription
+      id
+      listPrice
+      listPriceRange {
+        max
+        min
+        variable
+      }
+      name
+    }
+
+    fragment CartAvailableBookableItemProperties on CartAvailableBookableItem {
+      ...CartAvailableItemProperties
+      optionGroups {
+        ...CartAvailableBookableItemOptionGroupProperties
+      }
+      staffVariants {
+        ...CartAvailableBookableItemStaffVariantProperties
+      }
+    }
+
+    fragment CartAvailableCategoryProperties on CartAvailableCategory {
+      name
+      disabledDescription
+      disabled
+      description
+      availableItems {
+        ...CartAvailableItemProperties
+        ...CartAvailableBookableItemProperties
+      }
+    }
+  `,
   features: gql`
     fragment CartFeaturesProperties on CartFeatures {
       giftCardPurchaseEnabled
@@ -125,8 +113,6 @@ const fragments = {
     }
   `,
   item: gql`
-    ${availabilityFragment}
-    ${paymentMethodFragment}
     fragment CartItemProperties on CartItem {
       __typename
       discountAmount
@@ -148,6 +134,20 @@ const fragments = {
       }
       availablePaymentMethods {
         ...CartItemPaymentMethodProperties
+      }
+    }
+    fragment CartBookableItemProperties on CartBookableItem {
+      guestId
+      startTime
+      # TODO: https://blvd.slack.com/archives/CUJHLNSE7/p1625042681139800
+      # guest {
+      #   ...CartGuestProperties
+      # }
+      selectedOptions {
+        ...CartAvailableBookableItemOptionProperties
+      }
+      selectedStaffVariant {
+        ...CartAvailableBookableItemStaffVariantProperties
       }
     }
   `,
@@ -188,6 +188,12 @@ const fragments = {
       lastName
       number
       phoneNumber
+    }
+  `,
+  paymentMethod: gql`
+    fragment CartItemPaymentMethodProperties on CartItemPaymentMethod {
+      id
+      name
     }
   `
 };
@@ -239,6 +245,7 @@ export const addToWaitlistMutation = gql`
 `;
 
 export const availableCategoriesQuery = gql`
+  ${staffFragments}
   ${fragments.availability}
   query Cart($id: ID!) {
     cart(id: $id) {
@@ -471,11 +478,16 @@ export const reserveCartMutation = gql`
 
 export const selectedItemsQuery = gql`
   ${fragments.offer}
+  ${staffFragments}
+  ${fragments.availability}
+  ${fragments.guest}
+  ${fragments.paymentMethod}
   ${fragments.item}
   query Cart($id: ID!) {
     cart(id: $id) {
       selectedItems {
         ...CartItemProperties
+        ...CartBookableItemProperties
       }
     }
   }
