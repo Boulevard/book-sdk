@@ -276,6 +276,21 @@ export const bookableStaffVariantsQuery = gql`
   }
 `;
 
+export const addCartOfferMutation = gql`
+  ${fragments.cart}
+  ${fragments.offer}
+  mutation AddCartOffer($input: AddCartOfferInput!) {
+    addCartOffer(input: $input) {
+      cart {
+        ...CartProperties
+      }
+      offer {
+        ...CartOfferProperties
+      }
+    }
+  }
+`;
+
 export const cartQuery = gql`
   ${fragments.cart}
   query Cart($id: ID!) {

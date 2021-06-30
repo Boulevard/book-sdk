@@ -349,17 +349,35 @@ class Cart extends Node<Graph.Cart> {
   }
 
   /**
-   * Add an offer to a cart
+   * Add an offer to a cart.
+   *
+   * When the offer code exists, it's possible that it's not applicable to any
+   * items in the cart, in which case the offer is accepted but pricing doesn't
+   * change. This status can be checked on each offer. When applicable items are
+   * added later, their pricing is updated then.
+   *
+   * When the offer code doesn't exist, a `CART_OFFER_CODE_INVALID` error is
+   * returned.
    *
    * @async
    * @category Offers
    * @param offerCode The offer code identifier
    * @public
-   * @todo Implement
-   * @todo Confirm return type
    */
-  async addOffer(offerCode: string): Promise<Cart> {
-    return undefined;
+  async addOffer(offerCode: string): Promise<{ cart: Cart; offer: CartOffer }> {
+    const input: Graph.AddCartOfferInput = {
+      id: this.id,
+      offerCode
+    };
+    const response = await this.platformClient.request(
+      graph.addCartOfferMutation,
+      { input }
+    );
+
+    return {
+      cart: this.refresh(response.addCartOffer.cart),
+      offer: new CartOffer(this.platformClient, response.addCartOffer.offer)
+    };
   }
 
   /**
