@@ -1110,7 +1110,10 @@ class Cart extends Node<Graph.Cart> {
     const input: Graph.UpdateCartSelectedBookableItemInput = {
       id: this.id,
       itemId: item.id,
-      ...opts
+      itemDiscountCode: opts?.discountCode,
+      itemGuestId: opts?.guest?.id,
+      itemStaffVariantId: opts?.staffVariant?.id,
+      itemOptionIds: opts?.options?.map(o => o.id)
     };
 
     const response = await this.platformClient.request(
@@ -1143,7 +1146,8 @@ class Cart extends Node<Graph.Cart> {
     const input: Graph.UpdateCartSelectedGiftCardItemInput = {
       id: this.id,
       itemId: item.id,
-      ...opts
+      itemPrice: opts?.price,
+      giftCardDesignId: opts?.design?.id
     };
 
     const response = await this.platformClient.request(
@@ -1174,7 +1178,7 @@ class Cart extends Node<Graph.Cart> {
     const input: Graph.UpdateCartSelectedPurchasableItemInput = {
       id: this.id,
       itemId: item.id,
-      ...opts
+      itemDiscountCode: opts?.discountCode
     };
 
     const response = await this.platformClient.request(
