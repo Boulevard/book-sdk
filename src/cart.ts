@@ -1101,7 +1101,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async updateSelectedBookableItem(
-    item: Graph.CartBookableItem,
+    item: CartBookableItem,
     opts?: {
       discountCode?: Maybe<string>;
       guest?: Maybe<CartGuest>;
@@ -1126,7 +1126,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.updateSelectedBookableItem.cart);
+    return this.refresh(response.updateCartSelectedBookableItem.cart);
   }
 
   /**

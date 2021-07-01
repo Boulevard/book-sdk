@@ -8,6 +8,7 @@ import {
   CartAvailableGiftCardItem,
   CartAvailablePurchasableItem,
   CartBookableDate,
+  CartBookableItem,
   CartBookableTime,
   CartItemPaymentMethod
 } from "../src/cart";
@@ -68,9 +69,16 @@ describe("carts", () => {
 
     const services = categories[0];
     const service = services.availableItems[0] as CartAvailableBookableItem;
+    cart = await cart.addBookableItem(service);
+
     const staffVariants = await service.getStaffVariants();
     const staffVariant = staffVariants[0];
+
     expect(staffVariant).toBeInstanceOf(CartAvailableBookableItemStaffVariant);
+
+    const items = await cart.getSelectedItems();
+    const item = items[0] as CartBookableItem;
+    cart = await cart.updateSelectedBookableItem(item, { staffVariant });
   });
 
   test("checkout", async () => {
