@@ -52,7 +52,7 @@ class Client extends Node<Graph.Client> {
   }
 
   /**
-   * Take ownership of a cart, linking the cart to a Boulevard account.
+   * Take ownership of a cart, linking the cart to this client's account.
    *
    * Using this mutation invalidates existing reservations.
    *
@@ -76,7 +76,7 @@ class Client extends Node<Graph.Client> {
   }
 
   /**
-   * List memberships for the authenticated client
+   * List memberships for this client
    *
    * @async
    * @returns Promise containing the list of Memberships
