@@ -41,7 +41,6 @@ class Client extends Node<Graph.Client> {
    * Update the authenticated client
    *
    * @async
-   * @protected
    * @returns Promise containing the Client
    */
   async update(input: UpdateClientInput): Promise<Client> {
@@ -80,7 +79,6 @@ class Client extends Node<Graph.Client> {
    * List memberships for the authenticated client
    *
    * @async
-   * @protected
    * @returns Promise containing the list of Memberships
    */
   async listMemberships(): Promise<Array<Membership>> {
@@ -102,7 +100,6 @@ class Clients {
    * Look up the authenticated client
    *
    * @async
-   * @protected
    * @returns Promise containing the Client
    */
   async get(auth: Authentication): Promise<Client> {
