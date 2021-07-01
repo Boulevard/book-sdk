@@ -6,6 +6,11 @@ export enum PlatformTarget {
   Live
 }
 
+/**
+ * Use an Authentication scheme to perform operations on behalf of a client.
+ * see {@link https://developers.joinblvd.com/2020-01/client-api/authentication} for details
+ * of how to generate a signed client token
+ */
 export type Authentication = {
   token: string;
 };
