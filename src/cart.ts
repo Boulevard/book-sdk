@@ -395,19 +395,20 @@ class Cart extends Node<Graph.Cart> {
   async addBookableItem(
     item: CartAvailableBookableItem,
     opts?: {
-      discountCode?: string;
-      guest?: CartGuest;
-      options?: Array<CartAvailableBookableItemOption>;
-      staffVariant?: CartAvailableBookableItemStaffVariant;
+      discountCode?: Maybe<string>;
+      guest?: Maybe<CartGuest>;
+      options?: Maybe<Array<CartAvailableBookableItemOption>>;
+      staffVariant?: Maybe<CartAvailableBookableItemStaffVariant>;
     }
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedBookableItemInput = {
       id: this.id,
       itemId: item.id,
       itemDiscountCode: opts?.discountCode,
-      itemGuestId: opts?.guest?.id,
-      itemOptionIds: opts?.options?.map(option => option.id),
-      itemStaffVariantId: opts?.staffVariant?.id
+      itemGuestId: opts?.guest == null ? null : opts.guest.id,
+      itemStaffVariantId:
+        opts?.staffVariant == null ? null : opts.staffVariant.id,
+      itemOptionIds: opts?.options == null ? null : opts.options.map(o => o.id)
     };
     const response = await this.platformClient.request(
       graph.addBookableItemMutation,
@@ -456,11 +457,12 @@ class Cart extends Node<Graph.Cart> {
    */
   async addPurchasableItem(
     item: CartAvailablePurchasableItem,
-    opts?: { discountCode?: string }
+    opts?: { discountCode?: Maybe<string> }
   ): Promise<Cart> {
     const input: Graph.AddCartSelectedPurchasableItemInput = {
       id: this.id,
-      itemId: item.id
+      itemId: item.id,
+      itemDiscountCode: opts?.discountCode
     };
 
     const response = await this.platformClient.request(
@@ -489,7 +491,7 @@ class Cart extends Node<Graph.Cart> {
     preferredTimeLower?: Scalars["NaiveDateTime"],
     preferredTimeUpper?: Scalars["NaiveDateTime"],
     opts?: {
-      timezone?: string;
+      timezone?: Maybe<string>;
     }
   ): Promise<Cart> {
     const input: Graph.CartAddToWaitlistInput = {
@@ -547,9 +549,9 @@ class Cart extends Node<Graph.Cart> {
   async createGiftCardItemEmailFulfillment(
     item: CartGiftCardItem,
     sender: string,
-    deliveryDate: Scalars["Date"],
+    deliveryDate: Maybe<Scalars["Date"]>,
     recipient: { email: Scalars["Email"]; name: string },
-    opts?: { message?: string }
+    opts?: { message?: Maybe<string> }
   ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
     const input: Graph.CreateCartGiftCardItemEmailFulfillmentInput = {
       id: this.id,
@@ -582,10 +584,10 @@ class Cart extends Node<Graph.Cart> {
    * @public
    */
   async createGuest(opts: {
-    email?: Scalars["Email"];
-    firstName?: Scalars["String"];
-    lastName?: Scalars["String"];
-    phoneNumber?: Scalars["PhoneNumber"];
+    email?: Maybe<Scalars["Email"]>;
+    firstName?: Maybe<Scalars["String"]>;
+    lastName?: Maybe<Scalars["String"]>;
+    phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
   }): Promise<{ cart: Cart; guest: CartGuest }> {
     const input: Graph.CreateCartGuestInput = {
       id: this.id,
@@ -1019,10 +1021,10 @@ class Cart extends Node<Graph.Cart> {
   async updateGiftCardItemEmailFulfillment(
     item: CartGiftCardItem,
     opts?: {
-      deliveryDate?: Scalars["Date"];
-      message?: string;
-      recipient: { email?: Scalars["Email"]; name?: string };
-      sender?: { name?: string };
+      deliveryDate?: Maybe<Scalars["Date"]>;
+      message?: Maybe<string>;
+      recipient: { email?: Maybe<Scalars["Email"]>; name?: Maybe<string> };
+      sender?: { name?: Maybe<string> };
     }
   ): Promise<{ cart: Cart; emailFulfillment: CartItemEmailFulfillment }> {
     const input: Graph.UpdateCartGiftCardItemEmailFulfillmentInput = {
@@ -1059,10 +1061,10 @@ class Cart extends Node<Graph.Cart> {
   async updateGuest(
     guest: CartGuest,
     opts?: {
-      email?: Scalars["Email"];
-      firstName?: string;
-      lastName?: string;
-      phoneNumber?: Scalars["PhoneNumber"];
+      email?: Maybe<Scalars["Email"]>;
+      firstName?: Maybe<string>;
+      lastName?: Maybe<string>;
+      phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
     }
   ): Promise<{ cart: Cart; guest: CartGuest }> {
     const input: Graph.UpdateCartGuestInput = {
@@ -1101,19 +1103,20 @@ class Cart extends Node<Graph.Cart> {
   async updateSelectedBookableItem(
     item: Graph.CartBookableItem,
     opts?: {
-      discountCode?: string;
-      guest?: CartGuest;
-      options?: Array<CartAvailableBookableItemOption>;
-      staffVariant?: CartAvailableBookableItemStaffVariant;
+      discountCode?: Maybe<string>;
+      guest?: Maybe<CartGuest>;
+      options?: Maybe<Array<CartAvailableBookableItemOption>>;
+      staffVariant?: Maybe<CartAvailableBookableItemStaffVariant>;
     }
   ): Promise<Cart> {
     const input: Graph.UpdateCartSelectedBookableItemInput = {
       id: this.id,
       itemId: item.id,
       itemDiscountCode: opts?.discountCode,
-      itemGuestId: opts?.guest?.id,
-      itemStaffVariantId: opts?.staffVariant?.id,
-      itemOptionIds: opts?.options?.map(o => o.id)
+      itemGuestId: opts?.guest == null ? null : opts.guest.id,
+      itemStaffVariantId:
+        opts?.staffVariant == null ? null : opts.staffVariant.id,
+      itemOptionIds: opts?.options == null ? null : opts.options.map(o => o.id)
     };
 
     const response = await this.platformClient.request(
@@ -1139,15 +1142,15 @@ class Cart extends Node<Graph.Cart> {
   async updateSelectedGiftCardItem(
     item: Graph.CartGiftCardItem,
     opts?: {
-      design?: Graph.GiftCardDesign;
-      price?: Scalars["Money"];
+      design?: Maybe<Graph.GiftCardDesign>;
+      price?: Maybe<Scalars["Money"]>;
     }
   ): Promise<Cart> {
     const input: Graph.UpdateCartSelectedGiftCardItemInput = {
       id: this.id,
       itemId: item.id,
       itemPrice: opts?.price,
-      giftCardDesignId: opts?.design?.id
+      giftCardDesignId: opts?.design == null ? null : opts?.design.id
     };
 
     const response = await this.platformClient.request(
@@ -1172,7 +1175,7 @@ class Cart extends Node<Graph.Cart> {
   async updateSelectedPurchasableItem(
     item: Graph.CartPurchasableItem,
     opts?: {
-      discountCode?: string;
+      discountCode?: Maybe<string>;
     }
   ): Promise<Cart> {
     const input: Graph.UpdateCartSelectedPurchasableItemInput = {
