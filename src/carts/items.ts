@@ -305,7 +305,6 @@ class CartBookableItem extends CartItem {
    * Guest associated with this item.
    *
    * A null value implies the default guest, i.e. the booking client.
-   * @todo implement
    */
   async getGuest(): Promise<Maybe<CartGuest>> {
     return Promise.resolve(this.guest);
@@ -315,7 +314,6 @@ class CartBookableItem extends CartItem {
    * @internal
    */ selectedOptions: Array<CartAvailableBookableItemOption>;
   /** Any selected options for the item.
-   * @todo implement
    */
   async getSelectedOptions(): Promise<Array<CartAvailableBookableItemOption>> {
     return Promise.resolve(this.selectedOptions);
@@ -335,7 +333,6 @@ class CartBookableItem extends CartItem {
    * Once a time is reserved, a variant is automatically set if none was set
    * earlier. Once the reservation expires, any automatically set value reverts
    * back to `null`.
-   * @todo implement
    */
   async getSelectedStaffVariant(): Promise<
     Maybe<CartAvailableBookableItemStaffVariant>

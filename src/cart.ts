@@ -266,10 +266,9 @@ class Cart extends Node<Graph.Cart> {
   constructor(
     platformClient: PlatformClient,
     cart: Graph.Cart,
-    platformTarget: PlatformTarget,
     opts?: { timezone?: string }
   ) {
-    super(platformClient, cart, platformTarget);
+    super(platformClient, cart);
     this.timezone =
       opts?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -331,9 +330,9 @@ class Cart extends Node<Graph.Cart> {
       return details.token;
     } else {
       const response = await fetch(
-        this.platformTarget == PlatformTarget.Sandbox
-          ? "https://pci.staging-boulevard.app/cards/tokenize"
-          : "https://pci.boulevard.app/cards/tokenize",
+        this.platformClient.target == PlatformTarget.Live
+          ? "https://pci.boulevard.app/cards/tokenize"
+          : "https://pci.staging-boulevard.app/cards/tokenize",
         {
           method: "POST",
           headers: {
@@ -981,31 +980,6 @@ class Cart extends Node<Graph.Cart> {
   }
 
   /**
-   * Take ownership of a cart, linking the cart to a Boulevard account.
-   *
-   * Using this mutation invalidates existing reservations.
-   *
-   * @async
-   * @category Details
-   * @protected
-   * @returns Promise containing the updated cart
-   * @todo Implement
-   */
-  async takeOwnership(): Promise<Cart> {
-    const input: Graph.TakeCartOwnershipInput = {
-      id: this.id
-    };
-    const response = await this.platformClient.request(
-      graph.takeOwnershipMutation,
-      {
-        input
-      }
-    );
-
-    return this.refresh(response.takeCartOwnership.cart);
-  }
-
-  /**
    * Update a cart. Only some fields can be updated, there are other operations available to update more fields.
    *
    * @async
@@ -1025,9 +999,7 @@ class Cart extends Node<Graph.Cart> {
     };
     const response = await this.platformClient.request(
       graph.updateCartMutation,
-      {
-        input
-      }
+      { input }
     );
 
     return this.refresh(response.updateCart.cart);
@@ -1082,7 +1054,6 @@ class Cart extends Node<Graph.Cart> {
    * @async
    * @category Guests
    * @public
-   * @todo Implement
    * @todo Determine return type
    */
   async updateGuest(
@@ -1126,7 +1097,6 @@ class Cart extends Node<Graph.Cart> {
    * @param opts.staffVariant The selected bookable item staff variant.
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async updateSelectedBookableItem(
     item: Graph.CartBookableItem,
@@ -1162,7 +1132,6 @@ class Cart extends Node<Graph.Cart> {
    * @param opts.price Price applied to the gift card item
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async updateSelectedGiftCardItem(
     item: Graph.CartGiftCardItem,
@@ -1195,7 +1164,6 @@ class Cart extends Node<Graph.Cart> {
    * @param opts.discountCode Optional discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
    * @public
    * @returns Promise containing the updated cart
-   * @todo Implement
    */
   async updateSelectedPurchasableItem(
     item: Graph.CartPurchasableItem,
@@ -1223,7 +1191,7 @@ class Cart extends Node<Graph.Cart> {
    * @internal
    */
   private refresh(newCart) {
-    return new Cart(this.platformClient, newCart, this.platformTarget);
+    return new Cart(this.platformClient, newCart);
   }
 }
 

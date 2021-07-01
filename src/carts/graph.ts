@@ -139,10 +139,9 @@ const fragments = {
     fragment CartBookableItemProperties on CartBookableItem {
       guestId
       startTime
-      # TODO: https://blvd.slack.com/archives/CUJHLNSE7/p1625042681139800
-      # guest {
-      #   ...CartGuestProperties
-      # }
+      guest {
+        ...CartGuestProperties
+      }
       selectedOptions {
         ...CartAvailableBookableItemOptionProperties
       }
@@ -524,7 +523,7 @@ export const takeOwnershipMutation = gql`
   mutation TakeOwnership($input: TakeCartOwnershipInput!) {
     takeCartOwnership(input: $input) {
       cart {
-        ...CartProperties
+        id
       }
     }
   }

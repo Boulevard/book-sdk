@@ -9,10 +9,7 @@ class Carts {
    * @internal
    * @param client
    */
-  constructor(
-    private platformClient: PlatformClient,
-    private platformTarget: PlatformTarget = PlatformTarget.Sandbox
-  ) {}
+  constructor(private platformClient: PlatformClient) {}
 
   /**
    * @async
@@ -32,12 +29,7 @@ class Carts {
       input
     });
 
-    return new Cart(
-      this.platformClient,
-      response.createCart.cart,
-      this.platformTarget,
-      opts
-    );
+    return new Cart(this.platformClient, response.createCart.cart, opts);
   }
 
   /**
@@ -52,12 +44,7 @@ class Carts {
       id
     });
 
-    return new Cart(
-      this.platformClient,
-      response.cart,
-      this.platformTarget,
-      opts
-    );
+    return new Cart(this.platformClient, response.cart, opts);
   }
 }
 

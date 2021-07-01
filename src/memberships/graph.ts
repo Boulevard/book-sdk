@@ -6,7 +6,7 @@ export const myMembershipsQuery = gql`
   ${clientFragments}
   ${serviceFragments}
   query MyMemberships {
-    locations(first: 100) {
+    myMemberships(first: 100) {
       edges {
         node {
           client {

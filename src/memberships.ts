@@ -77,26 +77,4 @@ class Membership extends Node<Graph.Membership> {
   }
 }
 
-class Memberships {
-  /**
-   * @internal
-   */
-  constructor(private platformClient: PlatformClient) {}
-
-  /**
-   * List memberships for the authenticated client
-   *
-   * @async
-   * @protected
-   * @returns Promise containing the list of Memberships
-   */
-  async list(): Promise<Array<Membership>> {
-    const response = await this.platformClient.request(myMembershipsQuery);
-    return response.locations.edges.map(
-      (edge: Graph.MembershipEdge) =>
-        new Membership(this.platformClient, edge.node)
-    );
-  }
-}
-
-export { Memberships };
+export { Membership };

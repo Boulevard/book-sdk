@@ -11,7 +11,10 @@ import {
   CartBookableTime,
   CartItemPaymentMethod
 } from "../src/cart";
+import { Client } from "../src/clients";
 import { Location } from "../src/locations";
+import { Authentication } from "../src/platformClient";
+import { createHmac } from "crypto";
 
 const businessId = "63b60ecb-6d1e-4bb6-87ad-3cb52ffe09b4";
 const apiKey = "eb053fc4-e087-48ae-bc8f-3107ff06ddcb";
@@ -190,11 +193,17 @@ describe("carts", () => {
 
 describe("clients", () => {
   test("get", async () => {
-    try {
-      await anon.clients.get();
-    } catch (err) {
-      expect(err.response.errors[0].code).toEqual("UNAUTHENTICATED");
-    }
+    const auth: Authentication = { token: generateToken() };
+
+    const client = await anon.clients.get(auth);
+    expect(client).toBeInstanceOf(Client);
+
+    await client.listMemberships();
+
+    const locations = await anon.locations.list();
+    let cart = await anon.carts.create(locations[0]);
+    cart = await client.takeCartOwnership(cart);
+    expect(cart).toBeInstanceOf(Cart);
   });
 });
 
@@ -205,3 +214,15 @@ describe("locations", () => {
     expect(locations[0]).toBeInstanceOf(Location);
   });
 });
+
+function generateToken(): string {
+  const prefix = "blvd-client-v1";
+  const timestamp = Math.round(Date.now() / 1000);
+  const clientId = "f9d25e50-c5f0-4879-ae20-026303e23405";
+
+  const payload = `${prefix}${businessId}${clientId}${timestamp}`;
+  const key = Buffer.from(process.env.API_SECRET_KEY, "base64");
+  const signature = createHmac("sha256", key).update(payload).digest("base64");
+
+  return `${signature}${payload}`;
+}

@@ -4,7 +4,6 @@ import { Carts } from "./carts";
 import { PlatformClient, PlatformTarget } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
-import { Memberships } from "./memberships";
 import { Maybe, Scalars } from "./graph";
 
 class Blvd {
@@ -13,7 +12,6 @@ class Blvd {
   carts: Carts;
   clients: Clients;
   locations: Locations;
-  memberships: Memberships;
   /**
    * Creates a new instance of the Boulevard client.
    *
@@ -32,7 +30,6 @@ class Blvd {
     this.carts = new Carts(client);
     this.clients = new Clients(client);
     this.locations = new Locations(client);
-    this.memberships = new Memberships(client);
   }
 }
 

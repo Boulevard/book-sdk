@@ -6,6 +6,10 @@ export enum PlatformTarget {
   Live
 }
 
+export type Authentication = {
+  token: string;
+};
+
 class Node<T> {
   /**
    * @internal
@@ -15,28 +19,19 @@ class Node<T> {
   /**
    * @internal
    */
-  protected platformTarget: PlatformTarget = PlatformTarget.Sandbox;
-
-  /**
-   * @internal
-   */
-  constructor(
-    platformClient: PlatformClient,
-    graphItem: T,
-    platformTarget: PlatformTarget = PlatformTarget.Sandbox
-  ) {
+  constructor(platformClient: PlatformClient, graphItem: T) {
     this.platformClient = platformClient;
-    this.platformTarget = platformTarget;
     Object.assign(this, graphItem);
   }
 }
 
 class PlatformClient {
+  private authentication?: Authentication;
   private client: GraphQLClient;
   constructor(
     private apiKey: string,
     businessID: string,
-    target?: PlatformTarget
+    public target?: PlatformTarget
   ) {
     switch (target) {
       case PlatformTarget.Sandbox:
@@ -65,8 +60,15 @@ class PlatformClient {
     return this.client.request(query, variables, this.headers());
   }
 
+  withAuthentication(auth: Authentication): PlatformClient {
+    this.authentication = auth;
+    return this;
+  }
+
   private token() {
-    return btoa(`${this.apiKey}:`);
+    return this.authentication?.token
+      ? btoa(`${this.apiKey}:${this.authentication.token}`)
+      : btoa(`${this.apiKey}:`);
   }
 
   private headers(): Record<"Authorization", string> {

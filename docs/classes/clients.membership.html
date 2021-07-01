@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Location | @boulevard/blvd-book-sdk</title>
+	<title>Membership | @boulevard/blvd-book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/blvd-book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,27 +55,34 @@
 					<a href="../modules.html">@boulevard/blvd-book-sdk</a>
 				</li>
 				<li>
-					<a href="../modules/locations.html">locations</a>
+					<a href="../modules/clients.html">clients</a>
 				</li>
 				<li>
-					<a href="locations.location.html">Location</a>
+					<a href="clients.membership.html">Membership</a>
 				</li>
 			</ul>
-			<h1>Class Location</h1>
+			<h1>Class Membership</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A client membership sold at the business.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Graph.Location</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Graph.Membership</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Location</span>
+								<span class="target">Membership</span>
 							</li>
 						</ul>
 					</li>
@@ -88,15 +95,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#avatar" class="tsd-kind-icon">avatar</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#businessname" class="tsd-kind-icon">business<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#insertedat" class="tsd-kind-icon">inserted<wbr>At</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#phonenumber" class="tsd-kind-icon">phone<wbr>Number</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#tz" class="tsd-kind-icon">tz</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="locations.location.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#clientid" class="tsd-kind-icon">client<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#endon" class="tsd-kind-icon">end<wbr>On</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#interval" class="tsd-kind-icon">interval</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#starton" class="tsd-kind-icon">start<wbr>On</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#status" class="tsd-kind-icon">status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#termnumber" class="tsd-kind-icon">term<wbr>Number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clients.membership.html#vouchers" class="tsd-kind-icon">vouchers</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,48 +113,49 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="address" class="tsd-anchor"></a>
-					<h3>address</h3>
-					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Address</span></div>
+					<a name="client" class="tsd-anchor"></a>
+					<h3>client</h3>
+					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="clients.client.html" class="tsd-signature-type" data-tsd-kind="Class">Client</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L16">locations.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L35">memberships.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The location&#39;s address</p>
+							<p>Client who owns the membership.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="avatar" class="tsd-anchor"></a>
-					<h3>avatar</h3>
-					<div class="tsd-signature tsd-kind-icon">avatar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="clientid" class="tsd-anchor"></a>
+					<h3>client<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">client<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L19">locations.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L38">memberships.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The location&#39;s logo</p>
+							<p>The id of the client who owns the membership.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="businessname" class="tsd-anchor"></a>
-					<h3>business<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">business<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="endon" class="tsd-anchor"></a>
+					<h3>end<wbr>On</h3>
+					<div class="tsd-signature tsd-kind-icon">end<wbr>On<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L22">locations.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L45">memberships.ts:45</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the business</p>
+							<p>Ending date for the membership.</p>
 						</div>
+						<p>May be NULL to indicate an indefinitely frozen membership.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
@@ -155,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L25">locations.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L48">memberships.ts:48</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,14 +174,19 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="insertedat" class="tsd-anchor"></a>
-					<h3>inserted<wbr>At</h3>
-					<div class="tsd-signature tsd-kind-icon">inserted<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="interval" class="tsd-anchor"></a>
+					<h3>interval</h3>
+					<div class="tsd-signature tsd-kind-icon">interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L27">locations.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L51">memberships.ts:51</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Duration of the membership interval (eg. 1 month).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="name" class="tsd-anchor"></a>
@@ -180,54 +194,74 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L30">locations.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L54">memberships.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The location&#39;s name</p>
+							<p>The membership name.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="phonenumber" class="tsd-anchor"></a>
-					<h3>phone<wbr>Number</h3>
-					<div class="tsd-signature tsd-kind-icon">phone<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="starton" class="tsd-anchor"></a>
+					<h3>start<wbr>On</h3>
+					<div class="tsd-signature tsd-kind-icon">start<wbr>On<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L33">locations.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L57">memberships.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The location&#39;s name</p>
+							<p>Start date of the membership.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="tz" class="tsd-anchor"></a>
-					<h3>tz</h3>
-					<div class="tsd-signature tsd-kind-icon">tz<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SubscriptionStatus</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L36">locations.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L60">memberships.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The location&#39;s timezone</p>
+							<p>Membership Status. Active, Cancelled, Past Due or Paused</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="updatedat" class="tsd-anchor"></a>
-					<h3>updated<wbr>At</h3>
-					<div class="tsd-signature tsd-kind-icon">updated<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="termnumber" class="tsd-anchor"></a>
+					<h3>term<wbr>Number</h3>
+					<div class="tsd-signature tsd-kind-icon">term<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/locations.ts#L38">locations.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L63">memberships.ts:63</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The current term number of the membership</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="vouchers" class="tsd-anchor"></a>
+					<h3>vouchers</h3>
+					<div class="tsd-signature tsd-kind-icon">vouchers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MembershipVoucher</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/39855e9/src/memberships.ts#L66">memberships.ts:66</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optional vouchers included with membership</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -249,10 +283,10 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/carts.html">carts</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/clients.html">clients</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/locations.html">locations</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -265,44 +299,56 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="clients.client.html" class="tsd-kind-icon">Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="clients.clients-1.html" class="tsd-kind-icon">Clients</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="locations.location.html" class="tsd-kind-icon">Location</a>
+						<a href="clients.membership.html" class="tsd-kind-icon">Membership</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#address" class="tsd-kind-icon">address</a>
+								<a href="clients.membership.html#client" class="tsd-kind-icon">client</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#avatar" class="tsd-kind-icon">avatar</a>
+								<a href="clients.membership.html#clientid" class="tsd-kind-icon">client<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#businessname" class="tsd-kind-icon">business<wbr>Name</a>
+								<a href="clients.membership.html#endon" class="tsd-kind-icon">end<wbr>On</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#id" class="tsd-kind-icon">id</a>
+								<a href="clients.membership.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#insertedat" class="tsd-kind-icon">inserted<wbr>At</a>
+								<a href="clients.membership.html#interval" class="tsd-kind-icon">interval</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#name" class="tsd-kind-icon">name</a>
+								<a href="clients.membership.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#phonenumber" class="tsd-kind-icon">phone<wbr>Number</a>
+								<a href="clients.membership.html#starton" class="tsd-kind-icon">start<wbr>On</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#tz" class="tsd-kind-icon">tz</a>
+								<a href="clients.membership.html#status" class="tsd-kind-icon">status</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="locations.location.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a>
+								<a href="clients.membership.html#termnumber" class="tsd-kind-icon">term<wbr>Number</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="clients.membership.html#vouchers" class="tsd-kind-icon">vouchers</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="locations.locations-1.html" class="tsd-kind-icon">Locations</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/clients.html#authentication" class="tsd-kind-icon">Authentication</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/clients.html#updateclientinput" class="tsd-kind-icon">Update<wbr>Client<wbr>Input</a>
 					</li>
 				</ul>
 			</nav>
