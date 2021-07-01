@@ -57,7 +57,6 @@ class Client extends Node<Graph.Client> {
    * Using this mutation invalidates existing reservations.
    *
    * @async
-   * @category Details
    * @returns Promise containing the updated cart
    */
   async takeCartOwnership(cart: Cart): Promise<Cart> {
