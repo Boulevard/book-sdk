@@ -602,8 +602,8 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return {
-      cart: this.refresh(response.createGuest.cart),
-      guest: new CartGuest(this.platformClient, response.createGuest.guest)
+      cart: this.refresh(response.createCartGuest.cart),
+      guest: new CartGuest(this.platformClient, response.createCartGuest.guest)
     };
   }
 
@@ -655,7 +655,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.deleteGuest.cart);
+    return this.refresh(response.deleteCartGuest.cart);
   }
 
   /**
@@ -904,7 +904,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.removeOffer.cart);
+    return this.refresh(response.removeCartOffer.cart);
   }
 
   /**
@@ -927,7 +927,7 @@ class Cart extends Node<Graph.Cart> {
       { input }
     );
 
-    return this.refresh(response.removeSelectedItem.cart);
+    return this.refresh(response.removeCartSelectedItem.cart);
   }
 
   /**
@@ -978,7 +978,7 @@ class Cart extends Node<Graph.Cart> {
       { input }
     );
 
-    return this.refresh(response.selectPaymentMethod.cart);
+    return this.refresh(response.selectCartPaymentMethod.cart);
   }
 
   /**
@@ -1081,8 +1081,8 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return {
-      cart: this.refresh(response.updateGuest.cart),
-      guest: new CartGuest(this.platformClient, response.updateGuest.guest)
+      cart: this.refresh(response.updateCartGuest.cart),
+      guest: new CartGuest(this.platformClient, response.updateCartGuest.guest)
     };
   }
   /**
@@ -1160,7 +1160,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.updateSelectedGiftCardItem.cart);
+    return this.refresh(response.updateCartSelectedGiftCardItem.cart);
   }
 
   /**
@@ -1191,7 +1191,7 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.updateSelectedPurchasableItem.cart);
+    return this.refresh(response.updateCartSelectedPurchasableItem.cart);
   }
 
   /**

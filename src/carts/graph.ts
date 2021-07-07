@@ -370,7 +370,7 @@ export const createGuestMutation = gql`
   ${fragments.cart}
   ${fragments.guest}
   mutation CreateGuest($input: CreateCartGuestInput!) {
-    createGuest(input: $input) {
+    createCartGuest(input: $input) {
       cart {
         ...CartProperties
       }
@@ -402,7 +402,7 @@ export const deleteGuestMutation = gql`
   ${fragments.cart}
   ${fragments.guest}
   mutation DeleteGuest($input: DeleteCartGuestInput!) {
-    deleteGuest(input: $input) {
+    deleteCartGuest(input: $input) {
       cart {
         ...CartProperties
       }
@@ -561,7 +561,7 @@ export const updateGuestMutation = gql`
   ${fragments.cart}
   ${fragments.guest}
   mutation UpdateGuest($input: UpdateCartGuestInput!) {
-    updateGuest(input: $input) {
+    updateCartGuest(input: $input) {
       cart {
         ...CartProperties
       }
