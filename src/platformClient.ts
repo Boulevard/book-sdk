@@ -1,6 +1,11 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
 
+const btoa = string => {
+  const buffer = Buffer.from(string.toString(), "binary");
+  return buffer.toString("base64");
+};
+
 export enum PlatformTarget {
   Sandbox,
   Live
