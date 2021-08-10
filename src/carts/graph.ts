@@ -17,6 +17,9 @@ const fragments = {
       }
       clientMessage
       completedAt
+      bookingQuestions {
+        ...CartBookingQuestionProperties
+      }
       endTime
       errors {
         code
@@ -39,6 +42,50 @@ const fragments = {
         total
       }
       updatedAt
+    }
+
+    fragment CartBookingQuestionProperties on CartBookingQuestion {
+      answer {
+        ... on CartBookingQuestionTextAnswer {
+          textValue
+        }
+        ... on CartBookingQuestionIntegerAnswer {
+          integerValue
+        }
+        ... on CartBookingQuestionBooleanAnswer {
+          booleanValue
+        }
+        ... on CartBookingQuestionFloatAnswer {
+          floatValue
+        }
+        ... on CartBookingQuestionDatetimeAnswer {
+          datetimeValue
+        }
+        ... on CartBookingQuestionSelectAnswer {
+          option {
+            ...CartBookingQuestionOptionProperties
+          }
+        }
+        ... on CartBookingQuestionMultiSelectAnswer {
+          options {
+            ...CartBookingQuestionOptionProperties
+          }
+        }
+      }
+      displayType
+      errors
+      id
+      label
+      options {
+        ...CartBookingQuestionOptionProperties
+      }
+      required
+      valueType
+    }
+
+    fragment CartBookingQuestionOptionProperties on CartBookingQuestionOption {
+      id
+      label
     }
   `,
   availability: gql`

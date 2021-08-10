@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CartErrorCode | @boulevard/blvd-book-sdk</title>
+	<title>CartBookingQuestionDisplayType | @boulevard/blvd-book-sdk</title>
 	<meta name="description" content="Documentation for @boulevard/blvd-book-sdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,23 +58,16 @@
 					<a href="../modules/carts.html">carts</a>
 				</li>
 				<li>
-					<a href="carts.carterrorcode.html">CartErrorCode</a>
+					<a href="carts.cartbookingquestiondisplaytype.html">CartBookingQuestionDisplayType</a>
 				</li>
 			</ul>
-			<h1>Enumeration CartErrorCode</h1>
+			<h1>Enumeration CartBookingQuestionDisplayType</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Machine-readable cart validation error code.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -82,12 +75,14 @@
 						<section class="tsd-index-section ">
 							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartbookingquestionanswermissing" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer<wbr>Missing</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartgiftcarditemprice" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartmissingclientinformation" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartmissingitempaymentmethod" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartmissingitemtime" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.carterrorcode.html#cartmissingitems" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Items</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#boolean" class="tsd-kind-icon">Boolean</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#datetime" class="tsd-kind-icon">Datetime</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#float" class="tsd-kind-icon">Float</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#integer" class="tsd-kind-icon">Integer</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#longtext" class="tsd-kind-icon">Long<wbr>Text</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#multiselect" class="tsd-kind-icon">Multiselect</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#select" class="tsd-kind-icon">Select</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="carts.cartbookingquestiondisplaytype.html#shorttext" class="tsd-kind-icon">Short<wbr>Text</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,130 +91,84 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Enumeration members</h2>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartbookingquestionanswermissing" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Booking<wbr>Question<wbr>Answer<wbr>Missing</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer<wbr>Missing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_BOOKING_QUESTION_ANSWER_MISSING&quot;</span></div>
+					<a name="boolean" class="tsd-anchor"></a>
+					<h3>Boolean</h3>
+					<div class="tsd-signature tsd-kind-icon">Boolean<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;BOOLEAN&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1049">graph.d.ts:1049</a></li>
+							<li>Defined in carts/bookingQuestions.ts:6</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Some of the required booking questions are not answered.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>Make sure that all required booking questions have valid answers.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartgiftcarditemprice" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_GIFT_CARD_ITEM_PRICE&quot;</span></div>
+					<a name="datetime" class="tsd-anchor"></a>
+					<h3>Datetime</h3>
+					<div class="tsd-signature tsd-kind-icon">Datetime<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;DATETIME&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1059">graph.d.ts:1059</a></li>
+							<li>Defined in carts/bookingQuestions.ts:7</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>One or more gift card items do not have a valid price.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>All gift card items in the cart must have a price in the acceptable range.
-							See cartAvailableGiftCardItem.minPrice and cartAvailableGiftCardItem.maxPrice
-						for upper and lower bound price limits.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartmissingclientinformation" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Missing<wbr>Client<wbr>Information</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_CLIENT_INFORMATION&quot;</span></div>
+					<a name="float" class="tsd-anchor"></a>
+					<h3>Float</h3>
+					<div class="tsd-signature tsd-kind-icon">Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;FLOAT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1070">graph.d.ts:1070</a></li>
+							<li>Defined in carts/bookingQuestions.ts:8</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This cart is not associated with an existing client, therefore separate
-							client information is required.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>Anonymous carts cannot be checked out. Either an existing user needs to own
-							the cart, or client information must be added using the <code>clientInformation</code>
-						field.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartmissingitempaymentmethod" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_PAYMENT_METHOD&quot;</span></div>
+					<a name="integer" class="tsd-anchor"></a>
+					<h3>Integer</h3>
+					<div class="tsd-signature tsd-kind-icon">Integer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;INTEGER&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1080">graph.d.ts:1080</a></li>
+							<li>Defined in carts/bookingQuestions.ts:9</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>One or more cart items is missing a payment method.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>All items in the cart that require payment must have a payment method set
-							before checking out. These items will each have a separate item-specific
-						validation error with the same code.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartmissingitemtime" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Missing<wbr>Item<wbr>Time</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_TIME&quot;</span></div>
+					<a name="longtext" class="tsd-anchor"></a>
+					<h3>Long<wbr>Text</h3>
+					<div class="tsd-signature tsd-kind-icon">Long<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;LONG_TEXT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1093">graph.d.ts:1093</a></li>
+							<li>Defined in carts/bookingQuestions.ts:10</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>One or more bookable items is missing a reserved time.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>All bookable items in the cart must have a reserved time before checking
-							out. These items will each have a separate item-specific validation error
-						with the same code.</p>
-						<p>Note that times are only reserved temporarily and will expire unless the
-						cart is checked out before the expiration time.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="cartmissingitems" class="tsd-anchor"></a>
-					<h3>Cart<wbr>Missing<wbr>Items</h3>
-					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEMS&quot;</span></div>
+					<a name="multiselect" class="tsd-anchor"></a>
+					<h3>Multiselect</h3>
+					<div class="tsd-signature tsd-kind-icon">Multiselect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;MULTISELECT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/9ef5896/src/graph.d.ts#L1102">graph.d.ts:1102</a></li>
+							<li>Defined in carts/bookingQuestions.ts:11</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>No cart items have been selected, at least one is required.</p>
-						</div>
-						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
-							<h2>Resolution</h2>
-						</a>
-						<p>Add one or more items to the cart before checking out, empty carts cannot be
-						checked out.</p>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="select" class="tsd-anchor"></a>
+					<h3>Select</h3>
+					<div class="tsd-signature tsd-kind-icon">Select<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;SELECT&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in carts/bookingQuestions.ts:12</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="shorttext" class="tsd-anchor"></a>
+					<h3>Short<wbr>Text</h3>
+					<div class="tsd-signature tsd-kind-icon">Short<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;SHORT_TEXT&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in carts/bookingQuestions.ts:13</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -257,39 +206,45 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="carts.cartbookingquestiondisplaytype.html" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Display<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="carts.cartbookingquestionvaluetype.html" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Value<wbr>Type</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-enum tsd-parent-kind-module">
-						<a href="carts.carterrorcode.html" class="tsd-kind-icon">Cart<wbr>Error<wbr>Code</a>
+						<a href="carts.cartbookingquestiondisplaytype.html" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Display<wbr>Type</a>
 						<ul>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartbookingquestionanswermissing" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer<wbr>Missing</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#boolean" class="tsd-kind-icon">Boolean</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartgiftcarditemprice" class="tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#datetime" class="tsd-kind-icon">Datetime</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartmissingclientinformation" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#float" class="tsd-kind-icon">Float</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartmissingitempaymentmethod" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#integer" class="tsd-kind-icon">Integer</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartmissingitemtime" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#longtext" class="tsd-kind-icon">Long<wbr>Text</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="carts.carterrorcode.html#cartmissingitems" class="tsd-kind-icon">Cart<wbr>Missing<wbr>Items</a>
+								<a href="carts.cartbookingquestiondisplaytype.html#multiselect" class="tsd-kind-icon">Multiselect</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="carts.cartbookingquestiondisplaytype.html#select" class="tsd-kind-icon">Select</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="carts.cartbookingquestiondisplaytype.html#shorttext" class="tsd-kind-icon">Short<wbr>Text</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="carts.cartbookingquestionvaluetype.html" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Value<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="carts.carterrorcode.html" class="tsd-kind-icon">Cart<wbr>Error<wbr>Code</a>
+					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
 						<a href="carts.deposittype.html" class="tsd-kind-icon">Deposit<wbr>Type</a>
 					</li>

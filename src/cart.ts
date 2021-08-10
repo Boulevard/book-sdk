@@ -10,6 +10,7 @@ import type {
 } from "./graph";
 import type * as Graph from "./graph";
 import { Location } from "./locations";
+import { CartBookingQuestion } from "./carts/bookingQuestions";
 import {
   CartAvailableBookableItem,
   CartAvailableBookableItemOption,
@@ -204,6 +205,8 @@ class Cart extends Node<Graph.Cart> {
   /** Optional gratuity defined in advance for bookable items. */
   advanceGratuity: Maybe<CartAdvanceGratuity>;
 
+  bookingQuestions: Array<CartBookingQuestion>;
+
   /**
    * Optional client information supplied when checking out on behalf of someone
    * else than the current user.
@@ -269,6 +272,10 @@ class Cart extends Node<Graph.Cart> {
     opts?: { timezone?: string }
   ) {
     super(platformClient, cart);
+    this.bookingQuestions = cart.bookingQuestions.map(
+      question => new CartBookingQuestion(platformClient, question)
+    );
+
     this.timezone =
       opts?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -1217,5 +1224,6 @@ export {
   CartSummary,
   DepositType
 };
+export * from "./carts/bookingQuestions";
 export * from "./carts/guests";
 export * from "./carts/items";
