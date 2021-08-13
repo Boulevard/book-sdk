@@ -1,6 +1,8 @@
 import type { Scalars, Maybe } from "../graph";
 import { Node, PlatformClient } from "../platformClient";
 import type * as Graph from "../graph";
+import { Cart } from "../cart";
+import * as graph from "./graph";
 
 export enum CartBookingQuestionDisplayType {
   Boolean = "BOOLEAN",
@@ -22,6 +24,27 @@ export enum CartBookingQuestionValueType {
   Select = "SELECT",
   Text = "TEXT"
 }
+
+const answerToInput = (
+  answer: CartBookingQuestionAnswer
+): Graph.CartBookingQuestionAnswerInput => {
+  if (answer instanceof CartBookingQuestionTextAnswer) {
+    return { textValue: answer.textValue };
+  } else if (answer instanceof CartBookingQuestionIntegerAnswer) {
+    return { integerValue: answer.integerValue };
+  } else if (answer instanceof CartBookingQuestionBooleanAnswer) {
+    // @ts-expect-error pending API-210
+    return { booleanValue: answer.booleanValue };
+  } else if (answer instanceof CartBookingQuestionFloatAnswer) {
+    return { floatValue: answer.floatValue };
+  } else if (answer instanceof CartBookingQuestionDatetimeAnswer) {
+    return { datetimeValue: answer.datetimeValue };
+  } else if (answer instanceof CartBookingQuestionSelectAnswer) {
+    return { optionValue: { optionId: answer.option.id } };
+  } else if (answer instanceof CartBookingQuestionMultiSelectAnswer) {
+    return { optionValues: answer.options.map(o => ({ optionId: o.id })) };
+  }
+};
 
 export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
   answer: Maybe<CartBookingQuestionAnswer>;
@@ -49,12 +72,44 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
 
   /**
    * @internal
+   * Included so that we don't have to make the `submitAnswer` call
+   * from the Cart object
+   */
+  private cartId: Scalars["ID"];
+
+  /**
+   * Answer a booking question
+   *
+   * @async
+   * @param answer The answer to the question, either a provided option, or a user input
+   * @public
+   */
+
+  async submitAnswer(answer: CartBookingQuestionAnswer): Promise<Cart> {
+    const input: Graph.CartBookingQuestionAddAnswerInput = {
+      questionId: this.id,
+      answer: answerToInput(answer),
+      id: this.cartId
+    };
+
+    const response = await this.platformClient.request(
+      graph.bookingQuestionAddAnswerMutation,
+      { input }
+    );
+
+    return new Cart(this.platformClient, response.cartBookingQuestionAddAnswer);
+  }
+
+  /**
+   * @internal
    */
   constructor(
     platformClient: PlatformClient,
-    bookingQuestion: Graph.CartBookingQuestion
+    bookingQuestion: Graph.CartBookingQuestion,
+    cartId: Scalars["ID"]
   ) {
     super(platformClient, bookingQuestion);
+    this.cartId = cartId;
     switch (bookingQuestion.answer?.__typename) {
       case "CartBookingQuestionTextAnswer":
         this.answer = new CartBookingQuestionTextAnswer(
@@ -115,13 +170,11 @@ export type CartBookingQuestionAnswer =
   | CartBookingQuestionSelectAnswer
   | CartBookingQuestionMultiSelectAnswer;
 
-
 export class CartBookingQuestionTextAnswer extends Node<
   Graph.CartBookingQuestionTextAnswer
 > {
   textValue: Scalars["String"];
 }
-
 
 export class CartBookingQuestionIntegerAnswer extends Node<
   Graph.CartBookingQuestionIntegerAnswer
@@ -129,20 +182,17 @@ export class CartBookingQuestionIntegerAnswer extends Node<
   integerValue: Scalars["Int"];
 }
 
-
 export class CartBookingQuestionBooleanAnswer extends Node<
   Graph.CartBookingQuestionBooleanAnswer
 > {
   booleanValue: Scalars["Boolean"];
 }
 
-
 export class CartBookingQuestionFloatAnswer extends Node<
   Graph.CartBookingQuestionFloatAnswer
 > {
   floatValue: Scalars["Float"];
 }
-
 
 export class CartBookingQuestionDatetimeAnswer extends Node<
   Graph.CartBookingQuestionDatetimeAnswer
@@ -189,8 +239,9 @@ export class CartBookingQuestionMultiSelectAnswer extends Node<
   }
 }
 
-
-export class CartBookingQuestionOption extends Node<Graph.CartBookingQuestionOption> {
+export class CartBookingQuestionOption extends Node<
+  Graph.CartBookingQuestionOption
+> {
   id: Scalars["ID"];
   label: Scalars["String"];
 }

@@ -668,3 +668,16 @@ export const addCardPaymentMethodMutation = gql`
     }
   }
 `;
+
+export const bookingQuestionAddAnswerMutation = gql`
+  ${fragments.cart}
+  mutation CartBookingQuestionAddAnswer(
+    $input: CartBookingQuestionAddAnswerInput!
+  ) {
+    cartBookingQuestionAddAnswer(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;

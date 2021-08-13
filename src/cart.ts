@@ -273,7 +273,7 @@ class Cart extends Node<Graph.Cart> {
   ) {
     super(platformClient, cart);
     this.bookingQuestions = cart.bookingQuestions.map(
-      question => new CartBookingQuestion(platformClient, question)
+      question => new CartBookingQuestion(platformClient, question, cart.id)
     );
 
     this.timezone =
