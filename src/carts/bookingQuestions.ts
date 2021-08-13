@@ -26,23 +26,35 @@ export enum CartBookingQuestionValueType {
 }
 
 const answerToInput = (
-  answer: CartBookingQuestionAnswer
+  valueType: CartBookingQuestionValueType,
+  answer:
+    | string
+    | number
+    | boolean
+    | CartBookingQuestionOption
+    | CartBookingQuestionOption[]
 ): Graph.CartBookingQuestionAnswerInput => {
-  if (answer instanceof CartBookingQuestionTextAnswer) {
-    return { textValue: answer.textValue };
-  } else if (answer instanceof CartBookingQuestionIntegerAnswer) {
-    return { integerValue: answer.integerValue };
-  } else if (answer instanceof CartBookingQuestionBooleanAnswer) {
-    // @ts-expect-error pending API-210
-    return { booleanValue: answer.booleanValue };
-  } else if (answer instanceof CartBookingQuestionFloatAnswer) {
-    return { floatValue: answer.floatValue };
-  } else if (answer instanceof CartBookingQuestionDatetimeAnswer) {
-    return { datetimeValue: answer.datetimeValue };
-  } else if (answer instanceof CartBookingQuestionSelectAnswer) {
-    return { optionValue: { optionId: answer.option.id } };
-  } else if (answer instanceof CartBookingQuestionMultiSelectAnswer) {
-    return { optionValues: answer.options.map(o => ({ optionId: o.id })) };
+  switch (valueType) {
+    case CartBookingQuestionValueType.Boolean:
+      // @ts-expect-error Pending API-210
+      return { booleanValue: answer };
+    case CartBookingQuestionValueType.Datetime:
+      return { datetimeValue: answer };
+    case CartBookingQuestionValueType.Float:
+      const floatValue = answer as number;
+      return { floatValue };
+    case CartBookingQuestionValueType.Integer:
+      const integerValue = answer as number;
+      return { integerValue };
+    case CartBookingQuestionValueType.Multiselect:
+      const options = answer as CartBookingQuestionOption[];
+      return { optionValues: options.map(o => ({ optionId: o.id })) };
+    case CartBookingQuestionValueType.Select:
+      const option = answer as CartBookingQuestionOption;
+      return { optionValue: { optionId: option.id } };
+    case CartBookingQuestionValueType.Text:
+      const textValue = answer as string;
+      return { textValue };
   }
 };
 
@@ -85,10 +97,16 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
    * @public
    */
 
-  async submitAnswer(answer: CartBookingQuestionAnswer): Promise<Cart> {
+  async submitAnswer(
+    answer:
+      | string
+      | number
+      | CartBookingQuestionOption
+      | CartBookingQuestionOption[]
+  ): Promise<Cart> {
     const input: Graph.CartBookingQuestionAddAnswerInput = {
       questionId: this.id,
-      answer: answerToInput(answer),
+      answer: answerToInput(this.valueType, answer),
       id: this.cartId
     };
 
