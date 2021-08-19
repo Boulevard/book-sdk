@@ -1104,6 +1104,7 @@ class Cart extends Node<Graph.Cart> {
    * @param opts.guest The guest this item is booked for. A null value indicates the cart owner, or current client. When finding available times for bookable items, it's assumed that two items having different guests can be booked simultaneously.
    * @param opts.options Selected bookable item options. Note that the selections must conform to the option group requirements, e.g. limits on the number of options. Otherwise an error is returned.
    * @param opts.staffVariant The selected bookable item staff variant.
+   * @deprecated See CartAvailableBookableItem.update instead
    * @public
    * @returns Promise containing the updated cart
    */
