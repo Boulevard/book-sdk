@@ -1,8 +1,11 @@
-import { Node, PlatformClient } from "./platformClient";
+import { Node } from "./platformClient";
 import { Maybe, Scalars } from "./graph";
 import * as Graph from "./graph";
 
 class Staff extends Node<Graph.Staff> {
+  /** A URL to the Avatar uploaded for this staff within the Boulevard Dashboard */
+  avatar: Maybe<Scalars["String"]>;
+
   /** A biography of the staff member */
   bio: Maybe<Scalars["String"]>;
 
