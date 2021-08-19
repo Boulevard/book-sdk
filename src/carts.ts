@@ -7,7 +7,6 @@ import { Cart } from "./cart";
 class Carts {
   /**
    * @internal
-   * @param client
    */
   constructor(private platformClient: PlatformClient) {}
 

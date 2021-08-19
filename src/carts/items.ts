@@ -182,14 +182,8 @@ class CartAvailableBookableItem extends CartAvailableItem {
   }
 
   /**
-   * List of optional staff variants that can be chosen. Variants may have
-   * different pricing and timing.
-   *
-   * When there’s no preference, the first one available is assigned based on the
-   * selected time. The business can also enforce this, in which case this list
-   * is empty.
+   * @internal
    */
-
   constructor(platformClient, item) {
     super(platformClient, item);
     this.optionGroups = item.optionGroups.map(
@@ -210,7 +204,9 @@ class CartAvailableBookableItem extends CartAvailableItem {
  * the bookable item is added. An error is returned if the selections don’t meet
  * those requirements.
  */
-class CartAvailableBookableItemOptionGroup extends Node<Graph.CartAvailableBookableItemOptionGroup> {
+class CartAvailableBookableItemOptionGroup extends Node<
+  Graph.CartAvailableBookableItemOptionGroup
+> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -231,6 +227,9 @@ class CartAvailableBookableItemOptionGroup extends Node<Graph.CartAvailableBooka
    */
   options: Array<CartAvailableBookableItemOption>;
 
+  /**
+   * @internal
+   */
   constructor(platformClient, group) {
     super(platformClient, group);
     this.options = group.options.map(
@@ -241,7 +240,9 @@ class CartAvailableBookableItemOptionGroup extends Node<Graph.CartAvailableBooka
 }
 
 /** Option of a bookable item that can be selected. */
-class CartAvailableBookableItemOption extends Node<Graph.CartAvailableBookableItemOption> {
+class CartAvailableBookableItemOption extends Node<
+  Graph.CartAvailableBookableItemOption
+> {
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -360,7 +361,9 @@ class CartBookableItem extends CartItem {
 }
 
 /** Staff variant of a bookable item. */
-class CartAvailableBookableItemStaffVariant extends Node<Graph.CartAvailableBookableItemStaffVariant> {
+class CartAvailableBookableItemStaffVariant extends Node<
+  Graph.CartAvailableBookableItemStaffVariant
+> {
   /** Duration of the variant in minutes. */
   duration: Scalars["Int"];
 
