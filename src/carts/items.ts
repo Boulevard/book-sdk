@@ -4,6 +4,8 @@ import * as Graph from "../graph";
 import { CartGuest } from "./guests";
 import { Node, PlatformClient } from "../platformClient";
 import { Staff } from "../staff";
+import { Cart } from "../cart";
+import * as graph from "./graph";
 
 /** Abstract available item that can be checked out. */
 class CartAvailableItem extends Node<Graph.CartAvailableItem> {
@@ -149,6 +151,13 @@ class CartItemError extends Node<Graph.CartItemError> {
 class CartAvailableBookableItem extends CartAvailableItem {
   /**
    * @internal
+   * Included so that we don't have to make the `update` call
+   * from the Cart object
+   */
+  private cartId: Scalars["ID"];
+
+  /**
+   * @internal
    */
   optionGroups: Array<CartAvailableBookableItemOptionGroup>;
   /**
@@ -160,6 +169,46 @@ class CartAvailableBookableItem extends CartAvailableItem {
     Array<CartAvailableBookableItemOptionGroup>
   > {
     return Promise.resolve(this.optionGroups);
+  }
+
+  /**
+   * Update the item.
+   *
+   * This invalidates existing reservations when the guest, staff variant, or options are updated.
+   *
+   * @async
+   * @param opts.discountCode Optional discount code applied to the item. Invalid discount codes are ignored without an error, check `discountCode` on the selected item to see if the code was valid.
+   * @param opts.guest The guest this item is booked for. A null value indicates the cart owner, or current client. When finding available times for bookable items, it's assumed that two items having different guests can be booked simultaneously.
+   * @param opts.options Selected bookable item options. Note that the selections must conform to the option group requirements, e.g. limits on the number of options. Otherwise an error is returned.
+   * @param opts.staffVariant The selected bookable item staff variant.
+   * @public
+   * @returns Promise containing the updated cart
+   */
+  async update(opts?: {
+    discountCode?: Maybe<string>;
+    guest?: Maybe<CartGuest>;
+    options?: Maybe<Array<CartAvailableBookableItemOption>>;
+    staffVariant?: Maybe<CartAvailableBookableItemStaffVariant>;
+  }): Promise<Cart> {
+    const input: Graph.UpdateCartSelectedBookableItemInput = {
+      id: this.cartId,
+      itemId: this.id,
+      itemDiscountCode: opts?.discountCode,
+      itemGuestId: opts?.guest == null ? null : opts.guest.id,
+      itemStaffVariantId:
+        opts?.staffVariant == null ? null : opts.staffVariant.id,
+      itemOptionIds: opts?.options == null ? null : opts.options.map(o => o.id)
+    };
+
+    const response = await this.platformClient.request(
+      graph.updateSelectedBookableItemMutation,
+      { input }
+    );
+
+    return new Cart(
+      this.platformClient,
+      response.updateCartSelectedBookableItem.cart
+    );
   }
 
   /**
@@ -184,8 +233,9 @@ class CartAvailableBookableItem extends CartAvailableItem {
   /**
    * @internal
    */
-  constructor(platformClient, item) {
+  constructor(platformClient, item, cartId: Scalars["ID"]) {
     super(platformClient, item);
+    this.cartId = cartId;
     this.optionGroups = item.optionGroups.map(
       (g: Graph.CartAvailableBookableItemOptionGroup) =>
         new CartAvailableBookableItemOptionGroup(platformClient, g)
