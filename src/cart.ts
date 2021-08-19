@@ -68,7 +68,8 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
    */
   constructor(
     platformClient: PlatformClient,
-    category: Graph.CartAvailableCategory
+    category: Graph.CartAvailableCategory,
+    cartId: Scalars["String"]
   ) {
     super(platformClient, category);
     this.availableItems = category.availableItems.map(
@@ -80,7 +81,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
       ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
-            return new CartAvailableBookableItem(this.platformClient, item);
+            return new CartAvailableBookableItem(this.platformClient, item, cartId);
           case "CartAvailableGiftCardItem":
             return new CartAvailableGiftCardItem(this.platformClient, item);
           case "CartAvailablePurchasableItem":
@@ -685,7 +686,7 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return response.cart.availableCategories.map(
-      category => new CartAvailableCategory(this.platformClient, category)
+      category => new CartAvailableCategory(this.platformClient, category, this.id)
     );
   }
 
