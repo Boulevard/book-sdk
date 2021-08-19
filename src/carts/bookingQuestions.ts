@@ -115,7 +115,7 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
       { input }
     );
 
-    return new Cart(this.platformClient, response.cartBookingQuestionAddAnswer);
+    return new Cart(this.platformClient, response.cartBookingQuestionAddAnswer.cart);
   }
 
   /**
