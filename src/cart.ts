@@ -69,7 +69,6 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
   constructor(
     platformClient: PlatformClient,
     category: Graph.CartAvailableCategory,
-    cartId: Scalars["String"]
   ) {
     super(platformClient, category);
     this.availableItems = category.availableItems.map(
@@ -81,7 +80,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
       ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
-            return new CartAvailableBookableItem(this.platformClient, item, cartId);
+            return new CartAvailableBookableItem(this.platformClient, item);
           case "CartAvailableGiftCardItem":
             return new CartAvailableGiftCardItem(this.platformClient, item);
           case "CartAvailablePurchasableItem":
@@ -686,7 +685,7 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return response.cart.availableCategories.map(
-      category => new CartAvailableCategory(this.platformClient, category, this.id)
+      category => new CartAvailableCategory(this.platformClient, category)
     );
   }
 
@@ -880,7 +879,7 @@ class Cart extends Node<Graph.Cart> {
       ) => {
         switch (item.__typename) {
           case "CartBookableItem":
-            return new CartBookableItem(this.platformClient, item);
+            return new CartBookableItem(this.platformClient, item, this.id);
           case "CartGiftCardItem":
             return new CartGiftCardItem(this.platformClient, item);
           case "CartPurchasableItem":
@@ -1105,7 +1104,7 @@ class Cart extends Node<Graph.Cart> {
    * @param opts.guest The guest this item is booked for. A null value indicates the cart owner, or current client. When finding available times for bookable items, it's assumed that two items having different guests can be booked simultaneously.
    * @param opts.options Selected bookable item options. Note that the selections must conform to the option group requirements, e.g. limits on the number of options. Otherwise an error is returned.
    * @param opts.staffVariant The selected bookable item staff variant.
-   * @deprecated See CartAvailableBookableItem.update instead
+   * @deprecated See {@link CartBookableItem.update} instead
    * @public
    * @returns Promise containing the updated cart
    */
