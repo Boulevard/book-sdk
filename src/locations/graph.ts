@@ -12,10 +12,12 @@ export const fragments = gql`
     avatar
     businessName
     id
+    externalId
     insertedAt
     name
     phoneNumber
     tz
+    isRemote
     updatedAt
   }
 `;

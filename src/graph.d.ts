@@ -933,6 +933,7 @@ export type CartBookingQuestionAnswer =
   | CartBookingQuestionMultiSelectAnswer;
 
 export type CartBookingQuestionAnswerInput = {
+  booleanValue?: Maybe<Scalars["Boolean"]>;
   datetimeValue?: Maybe<Scalars["DateTime"]>;
   floatValue?: Maybe<Scalars["Float"]>;
   integerValue?: Maybe<Scalars["Int"]>;
@@ -1545,9 +1546,16 @@ export type Location = Node & {
   avatar?: Maybe<Scalars["String"]>;
   /** Name of the business */
   businessName: Scalars["String"];
+  /** Location external id */
+  externalId?: Maybe<Scalars["String"]>;
   /** The ID of an object */
   id: Scalars["ID"];
   insertedAt: Scalars["DateTime"];
+  /**
+   * Indicates that the location is a remote location, and that appointments for
+   * this location are carried out remotely.
+   */
+  isRemote: Scalars["Boolean"];
   /** The location's name */
   name: Scalars["String"];
   /** The location's phone number */

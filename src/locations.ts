@@ -24,6 +24,9 @@ class Location extends Node<Graph.Location> {
   /** The ID of an object */
   id: Scalars["ID"];
 
+  /** Location external id */
+  externalId: Maybe<Scalars["String"]>;
+
   insertedAt: Scalars["DateTime"];
 
   /** The location's name */
@@ -34,6 +37,12 @@ class Location extends Node<Graph.Location> {
 
   /** The location's timezone */
   tz: Scalars["Tz"];
+
+  /**
+   * Indicates that the location is a remote location, and that appointments for
+   * this location are carried out remotely.
+   */
+  isRemote: Scalars["Boolean"];
 
   updatedAt: Scalars["DateTime"];
 
