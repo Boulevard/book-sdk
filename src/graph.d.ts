@@ -508,7 +508,7 @@ export type Cart = Node & {
   /** Timestamp when the cart was created. */
   insertedAt: Scalars["DateTime"];
   /** Location associated with the cart */
-  location: Location;
+  location?: Maybe<Location>;
   /**
    * A list of offers applied to the cart.
    *
@@ -612,6 +612,12 @@ export type CartAvailableBookableItem = CartAvailableItem & {
   listPrice: Scalars["Money"];
   /** Refer to the super type. */
   listPriceRange: CartPriceRange;
+  /**
+   * List of locations offering the selected bookable item.
+   *
+   * Location has to be chosen before checking out the cart.
+   */
+  locationVariants: Array<CartAvailableBookableItemLocationVariant>;
   /** Refer to the super type. */
   name: Scalars["String"];
   /**
@@ -638,6 +644,12 @@ export type CartAvailableBookableItem = CartAvailableItem & {
    * @deprecated Use `listPriceRange` instead.
    */
   variablePrice: Scalars["Boolean"];
+};
+
+/** Location variant of a bookable item */
+export type CartAvailableBookableItemLocationVariant = {
+  __typename?: "CartAvailableBookableItemLocationVariant";
+  location: Location;
 };
 
 /** Option of a bookable item that can be selected. */
@@ -813,7 +825,7 @@ export type CartBookableItem = CartItem & {
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount: Scalars["Money"];
+  discountAmount?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
   discountCode?: Maybe<Scalars["String"]>;
   /** Refer to the super type. */
@@ -837,9 +849,9 @@ export type CartBookableItem = CartItem & {
   /** Refer to the super type. */
   item: CartAvailableBookableItem;
   /** Refer to the super type. */
-  lineTotal: Scalars["Money"];
+  lineTotal?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
-  price: Scalars["Money"];
+  price?: Maybe<Scalars["Money"]>;
   /** Any selected options for the item. */
   selectedOptions: Array<CartAvailableBookableItemOption>;
   /** Refer to the super type. */
@@ -864,7 +876,7 @@ export type CartBookableItem = CartItem & {
    */
   startTime?: Maybe<Scalars["NaiveDateTime"]>;
   /** Refer to the super type. */
-  taxAmount: Scalars["Money"];
+  taxAmount?: Maybe<Scalars["Money"]>;
 };
 
 /** Available starting time for bookable items in a cart. */
@@ -1099,7 +1111,15 @@ export enum CartErrorCode {
    * Add one or more items to the cart before checking out, empty carts cannot be
    * checked out.
    */
-  CartMissingItems = "CART_MISSING_ITEMS"
+  CartMissingItems = "CART_MISSING_ITEMS",
+  /**
+   * A location has not been selected for a cart.
+   *
+   * ## Resolution
+   *
+   * Before checking out, select a location for a cart.
+   */
+  CartMissingLocation = "CART_MISSING_LOCATION"
 }
 
 /** Features available to the cart. */
@@ -1122,7 +1142,7 @@ export type CartGiftCardItem = CartItem & {
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount: Scalars["Money"];
+  discountAmount?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
   discountCode?: Maybe<Scalars["String"]>;
   /** Send the gift card to a recipient via email. */
@@ -1135,13 +1155,13 @@ export type CartGiftCardItem = CartItem & {
   /** Refer to the super type. */
   item: CartAvailableGiftCardItem;
   /** Refer to the super type. */
-  lineTotal: Scalars["Money"];
+  lineTotal?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
-  price: Scalars["Money"];
+  price?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  taxAmount: Scalars["Money"];
+  taxAmount?: Maybe<Scalars["Money"]>;
 };
 
 /** A guest that can be associated with a bookable item. */
@@ -1176,8 +1196,8 @@ export type CartGuest = {
 export type CartItem = {
   /** Payment methods available for this item. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
-  /** Total discount amount on the price. */
-  discountAmount: Scalars["Money"];
+  /** Total discount amount on the price. Null if location is not set yet. */
+  discountAmount?: Maybe<Scalars["Money"]>;
   /**
    * Valid discount code that was applied, either the cart's code or one that was
    * applied separately to the item. An invalid code results in a `null` value.
@@ -1189,14 +1209,14 @@ export type CartItem = {
   id: Scalars["ID"];
   /** Original item details. */
   item: CartAvailableItem;
-  /** Total for the item after discounts and taxes. */
-  lineTotal: Scalars["Money"];
-  /** Price before discounts and taxes. */
-  price: Scalars["Money"];
+  /** Total for the item after discounts and taxes. Null if location is not set yet. */
+  lineTotal?: Maybe<Scalars["Money"]>;
+  /** Price before discounts and taxes. Null if location is not set yet. */
+  price?: Maybe<Scalars["Money"]>;
   /** Payment method selected for this item. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
-  /** Total tax amount on the discounted price. */
-  taxAmount: Scalars["Money"];
+  /** Total tax amount on the discounted price. Null if location is not set yet. */
+  taxAmount?: Maybe<Scalars["Money"]>;
 };
 
 /** Cart item card payment method. */
@@ -1341,7 +1361,7 @@ export type CartPurchasableItem = CartItem & {
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount: Scalars["Money"];
+  discountAmount?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
   discountCode?: Maybe<Scalars["String"]>;
   /** Refer to the super type. */
@@ -1351,13 +1371,26 @@ export type CartPurchasableItem = CartItem & {
   /** Refer to the super type. */
   item: CartAvailablePurchasableItem;
   /** Refer to the super type. */
-  lineTotal: Scalars["Money"];
+  lineTotal?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
-  price: Scalars["Money"];
+  price?: Maybe<Scalars["Money"]>;
   /** Refer to the super type. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  taxAmount: Scalars["Money"];
+  taxAmount?: Maybe<Scalars["Money"]>;
+};
+
+export type CartSetLocationInput = {
+  /** ID of the cart */
+  id: Scalars["ID"];
+  /** ID of the location */
+  locationId: Scalars["ID"];
+};
+
+export type CartSetLocationPayload = {
+  __typename?: "CartSetLocationPayload";
+  /** Updated Cart */
+  cart: Cart;
 };
 
 /** Summary of the cart, including e.g. line item totals. */
@@ -1454,7 +1487,7 @@ export type CreateCartInput = {
   /** Optional discount code */
   discountCode?: Maybe<Scalars["String"]>;
   /** ID of the cart location */
-  locationId: Scalars["ID"];
+  locationId?: Maybe<Scalars["ID"]>;
 };
 
 export type CreateCartPayload = {
@@ -1710,6 +1743,17 @@ export type RootMutationType = {
   /** Answer a booking question */
   cartBookingQuestionAddAnswer?: Maybe<CartBookingQuestionAddAnswerPayload>;
   /**
+   * Sets a location for the cart.
+   *
+   * Alternative methods for setting a locatin is passing a locationId argument
+   * when creating a cart or when adding a first item to an existing cart.
+   *
+   * Note that the location can only be set once and cannot be changed. When
+   * a location is already present on the cart, this mutation returns a
+   * `CART_LOCATION_ALREADY_SET` error.
+   */
+  cartSetLocation?: Maybe<CartSetLocationPayload>;
+  /**
    * Completes the checkout process for the given cart.
    *
    * This mutation will first check for any errors in the cart, aborting if
@@ -1841,6 +1885,10 @@ export type RootMutationTypeCartAddToWaitlistArgs = {
 
 export type RootMutationTypeCartBookingQuestionAddAnswerArgs = {
   input: CartBookingQuestionAddAnswerInput;
+};
+
+export type RootMutationTypeCartSetLocationArgs = {
+  input: CartSetLocationInput;
 };
 
 export type RootMutationTypeCheckoutCartArgs = {
@@ -1986,6 +2034,7 @@ export type RootQueryTypeCartArgs = {
 
 export type RootQueryTypeCartBookableDatesArgs = {
   id: Scalars["ID"];
+  locationId?: Maybe<Scalars["ID"]>;
   searchRangeLower?: Maybe<Scalars["Date"]>;
   searchRangeUpper?: Maybe<Scalars["Date"]>;
   tz?: Maybe<Scalars["Tz"]>;
@@ -1995,10 +2044,12 @@ export type RootQueryTypeCartBookableStaffVariantsArgs = {
   bookableTimeId: Scalars["ID"];
   id: Scalars["ID"];
   itemId: Scalars["ID"];
+  locationId?: Maybe<Scalars["ID"]>;
 };
 
 export type RootQueryTypeCartBookableTimesArgs = {
   id: Scalars["ID"];
+  locationId?: Maybe<Scalars["ID"]>;
   searchDate: Scalars["Date"];
   tz?: Maybe<Scalars["Tz"]>;
 };

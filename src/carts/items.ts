@@ -46,7 +46,7 @@ class CartItemPaymentMethod extends Node<Graph.CartItemPaymentMethod> {
 /** Abstract item added using the `addCart...Item` mutations. */
 class CartItem extends Node<Graph.CartItem> {
   /** Total discount amount on the price. */
-  discountAmount: Scalars["Money"];
+  discountAmount: Maybe<Scalars["Money"]>;
 
   /**
    * Valid discount code that was applied, either the cart's code or one that was
@@ -64,13 +64,13 @@ class CartItem extends Node<Graph.CartItem> {
   item: CartAvailableItem;
 
   /** Total for the item after discounts and taxes. */
-  lineTotal: Scalars["Money"];
+  lineTotal: Maybe<Scalars["Money"]>;
 
   /** Price before discounts and taxes. */
-  price: Scalars["Money"];
+  price: Maybe<Scalars["Money"]>;
 
   /** Total tax amount on the discounted price. */
-  taxAmount: Scalars["Money"];
+  taxAmount: Maybe<Scalars["Money"]>;
 
   /**
    * @internal
@@ -184,6 +184,22 @@ class CartAvailableBookableItem extends CartAvailableItem {
   }
 
   /**
+   * List of locations offering the selected bookable item.
+   *
+   * Location has to be chosen before checking out the cart.
+   */
+  async getLocationVariants(): Promise<
+    Array<CartAvailableBookableItemLocationVariant>
+  > {
+    return Promise.resolve(this.locationVariants);
+  }
+
+  /**
+   * @internal
+   */
+  locationVariants: Array<CartAvailableBookableItemLocationVariant>;
+
+  /**
    * @internal
    */
   constructor(platformClient, item) {
@@ -195,6 +211,10 @@ class CartAvailableBookableItem extends CartAvailableItem {
     this.staffVariants = item.staffVariants.map(
       (v: Graph.CartAvailableBookableItemStaffVariant) =>
         new CartAvailableBookableItemStaffVariant(platformClient, v)
+    );
+    this.locationVariants = item.locationVariants.map(
+      (v: Graph.CartAvailableBookableItemLocationVariant) =>
+        new CartAvailableBookableItemLocationVariant(platformClient, v)
     );
   }
 }
@@ -432,6 +452,20 @@ class CartAvailableBookableItemStaffVariant extends Node<
   constructor(platformClient, variant) {
     super(platformClient, variant);
     this.staff = new Staff(platformClient, variant.staff);
+  }
+}
+
+/** Location variant of a bookable item */
+class CartAvailableBookableItemLocationVariant extends Node<
+  CartAvailableBookableItemLocationVariant
+> {
+  location: Location;
+
+  /**
+   * @internal
+   */
+  constructor(platformClient, group) {
+    super(platformClient, group);
   }
 }
 

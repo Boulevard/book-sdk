@@ -68,7 +68,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
    */
   constructor(
     platformClient: PlatformClient,
-    category: Graph.CartAvailableCategory,
+    category: Graph.CartAvailableCategory
   ) {
     super(platformClient, category);
     this.availableItems = category.availableItems.map(
@@ -723,11 +723,13 @@ class Cart extends Node<Graph.Cart> {
     searchRangeLower?: Scalars["Date"];
     searchRangeUpper?: Scalars["Date"];
     timezone?: string;
+    location?: Location;
   }): Promise<Array<CartBookableDate>> {
     const response = await this.platformClient.request(graph.datesQuery, {
       id: this.id,
       searchRangeLower: opts?.searchRangeLower,
       searchRangeUpper: opts?.searchRangeUpper,
+      locationId: opts?.location?.id,
       tz: opts?.timezone || this.timezone
     });
 
@@ -763,11 +765,17 @@ class Cart extends Node<Graph.Cart> {
    */
   async getBookableStaffVariants(
     time: CartBookableTime,
-    item: CartBookableItem
+    item: CartBookableItem,
+    opts?: { location?: Location }
   ): Promise<Array<CartAvailableBookableItemStaffVariant>> {
     const response = await this.platformClient.request(
       graph.bookableStaffVariantsQuery,
-      { id: this.id, itemId: item.id, bookableTimeId: time.id }
+      {
+        id: this.id,
+        itemId: item.id,
+        bookableTimeId: time.id,
+        locationId: opts?.location?.id
+      }
     );
 
     return response.cart.cartBookableStaffVariants.map(
@@ -788,11 +796,12 @@ class Cart extends Node<Graph.Cart> {
    */
   async getBookableTimes(
     { date }: CartBookableDate,
-    opts?: { timezone?: string }
+    opts?: { timezone?: string; location?: Location }
   ): Promise<Array<CartBookableTime>> {
     const response = await this.platformClient.request(graph.timesQuery, {
       id: this.id,
       searchDate: date,
+      locationId: opts?.location?.id,
       tz: opts?.timezone || this.timezone
     });
 
@@ -831,12 +840,40 @@ class Cart extends Node<Graph.Cart> {
   /**
    * Location associated with the cart
    */
-  async getLocation(): Promise<Location> {
+  async getLocation(): Promise<Location | null> {
     const response = await this.platformClient.request(graph.locationQuery, {
       id: this.id
     });
 
-    return new Location(this.platformClient, response.cart.location);
+    return response.cart.location
+      ? new Location(this.platformClient, response.cart.location)
+      : null;
+  }
+
+  /**
+   *
+   * Sets a location for the cart.
+   *
+   * Alternative methods for setting a location is passing a locationId argument
+   * when creating a cart or when adding a first item to an existing cart.
+   *
+   * Note that the location can only be set once and cannot be changed. When
+   * a location is already present on the cart, this mutation returns a
+   * `CART_LOCATION_ALREADY_SET` error.
+   */
+
+  async setLocation(location: Location): Promise<Cart> {
+    const input: Graph.CartSetLocationInput = {
+      id: this.id,
+      locationId: location.id
+    };
+
+    const response = await this.platformClient.request(
+      graph.setLocationMutation,
+      { input }
+    );
+
+    return this.refresh(response.cartSetLocation.cart);
   }
 
   /**

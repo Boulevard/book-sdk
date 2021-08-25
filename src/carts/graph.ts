@@ -98,6 +98,12 @@ const fragments = {
       }
     }
 
+    fragment CartAvailableBookableItemLocationVariantProperties on CartAvailableBookableItemLocationVariant {
+      location {
+        ...LocationProperties
+      }
+    }
+
     fragment CartAvailableBookableItemOptionProperties on CartAvailableBookableItemOption {
       description
       durationDelta
@@ -139,6 +145,9 @@ const fragments = {
       }
       staffVariants {
         ...CartAvailableBookableItemStaffVariantProperties
+      }
+      locationVariants {
+        ...CartAvailableBookableItemLocationVariantProperties
       }
     }
 
@@ -292,6 +301,7 @@ export const addToWaitlistMutation = gql`
 
 export const availableCategoriesQuery = gql`
   ${staffFragments}
+  ${locationFragments}
   ${fragments.availability}
   query Cart($id: ID!) {
     cart(id: $id) {
@@ -540,6 +550,7 @@ export const reserveCartMutation = gql`
 export const selectedItemsQuery = gql`
   ${fragments.offer}
   ${staffFragments}
+  ${locationFragments}
   ${fragments.availability}
   ${fragments.guest}
   ${fragments.paymentMethod}
@@ -675,6 +686,18 @@ export const bookingQuestionAddAnswerMutation = gql`
     $input: CartBookingQuestionAddAnswerInput!
   ) {
     cartBookingQuestionAddAnswer(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
+export const setLocationMutation = gql`
+  ${locationFragments}
+  ${fragments.cart}
+  mutation CartSetLocation($input: CartSetLocationInput!) {
+    cartSetLocation(input: $input) {
       cart {
         ...CartProperties
       }

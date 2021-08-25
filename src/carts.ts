@@ -18,11 +18,11 @@ class Carts {
    * @protected
    */
   async create(
-    location: Location,
+    location?: Location,
     opts?: { timezone?: string }
   ): Promise<Cart> {
     const input: CreateCartInput = {
-      locationId: location.id
+      locationId: location?.id
     };
     const response = await this.platformClient.request(createCartMutation, {
       input
