@@ -62,6 +62,14 @@ describe("carts", () => {
     expect(cart).toBeInstanceOf(Cart);
   });
 
+  test("create and set location", async () => {
+    const locations = await anon.locations.list();
+    const cart = await anon.carts.create();
+    expect(cart).toBeInstanceOf(Cart);
+    const locationCart = await cart.setLocation(locations[0]);
+    expect(locationCart).toBeInstanceOf(Cart);
+  });
+
   test("staff variants", async () => {
     const locations = await anon.locations.list();
     let cart = await anon.carts.create(locations[0]);
@@ -230,7 +238,9 @@ function generateToken(): string {
 
   const payload = `${prefix}${businessId}${clientId}${timestamp}`;
   const key = Buffer.from(process.env.API_SECRET_KEY, "base64");
-  const signature = createHmac("sha256", key).update(payload).digest("base64");
+  const signature = createHmac("sha256", key)
+    .update(payload)
+    .digest("base64");
 
   return `${signature}${payload}`;
 }
