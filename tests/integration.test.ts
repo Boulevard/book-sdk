@@ -3,6 +3,7 @@ import { Business } from "../src/businesses";
 import {
   Cart,
   CartAvailableBookableItem,
+  CartAvailableBookableItemLocationVariant,
   CartAvailableBookableItemStaffVariant,
   CartAvailableCategory,
   CartAvailableGiftCardItem,
@@ -66,6 +67,19 @@ describe("carts", () => {
     const locations = await anon.locations.list();
     const cart = await anon.carts.create();
     expect(cart).toBeInstanceOf(Cart);
+    let categories = await cart.getAvailableCategories();
+    const item = categories[0].availableItems[0] as CartAvailableBookableItem;
+    const staffVariants = await item.getStaffVariants();
+    const locationVariants = await item.getLocationVariants();
+
+    expect(staffVariants[0]).toBeInstanceOf(
+      CartAvailableBookableItemStaffVariant
+    );
+
+    expect(locationVariants[0]).toBeInstanceOf(
+      CartAvailableBookableItemLocationVariant
+    );
+
     const locationCart = await cart.setLocation(locations[0]);
     expect(locationCart).toBeInstanceOf(Cart);
   });

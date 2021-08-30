@@ -9,6 +9,13 @@ import * as graph from "./graph";
 
 /** Abstract available item that can be checked out. */
 class CartAvailableItem extends Node<Graph.CartAvailableItem> {
+  /**
+   * @internal
+   * Included so that we don't have to make the `update` call
+   * from the Cart object
+   */
+  protected cartId: Scalars["ID"];
+
   /** Short optional description. */
   description: Maybe<Scalars["String"]>;
 
@@ -32,6 +39,14 @@ class CartAvailableItem extends Node<Graph.CartAvailableItem> {
 
   /** Short human-readable name. */
   name: Scalars["String"];
+
+  /**
+   * @internal
+   */
+  constructor(platformClient, item, cartId: Scalars["ID"]) {
+    super(platformClient, item);
+    this.cartId = cartId;
+  }
 }
 
 /** Cart item payment method. */
@@ -75,9 +90,14 @@ class CartItem extends Node<Graph.CartItem> {
   /**
    * @internal
    */
-  constructor(platformClient: PlatformClient, cartItem: Graph.CartItem) {
+  constructor(
+    platformClient: PlatformClient,
+    cartItem: Graph.CartItem,
+    cartId: Scalars["ID"]
+  ) {
     super(platformClient, cartItem);
-    this.item = new CartAvailableItem(platformClient, cartItem.item);
+
+    this.item = new CartAvailableItem(platformClient, cartItem.item, cartId);
     this.errors = cartItem.errors.map(
       error => new CartItemError(platformClient, error)
     );
@@ -165,11 +185,6 @@ class CartAvailableBookableItem extends CartAvailableItem {
   }
 
   /**
-   * @internal
-   */
-  staffVariants: Array<CartAvailableBookableItemStaffVariant>;
-
-  /**
    * List of optional staff variants that can be chosen. Variants may have
    * different pricing and timing.
    *
@@ -180,7 +195,15 @@ class CartAvailableBookableItem extends CartAvailableItem {
   async getStaffVariants(): Promise<
     Array<CartAvailableBookableItemStaffVariant>
   > {
-    return Promise.resolve(this.staffVariants);
+    const response = await this.platformClient.request(
+      graph.availableBookableItemStaffVariantsQuery,
+      { cartId: this.cartId, id: this.id }
+    );
+
+    return response.cart.availableItem.staffVariants.map(
+      variant =>
+        new CartAvailableBookableItemStaffVariant(this.platformClient, variant)
+    );
   }
 
   /**
@@ -191,30 +214,28 @@ class CartAvailableBookableItem extends CartAvailableItem {
   async getLocationVariants(): Promise<
     Array<CartAvailableBookableItemLocationVariant>
   > {
-    return Promise.resolve(this.locationVariants);
+    const response = await this.platformClient.request(
+      graph.availableBookableItemLocationVariantsQuery,
+      { cartId: this.cartId, id: this.id }
+    );
+
+    return response.cart.availableItem.locationVariants.map(
+      variant =>
+        new CartAvailableBookableItemLocationVariant(
+          this.platformClient,
+          variant
+        )
+    );
   }
 
   /**
    * @internal
    */
-  locationVariants: Array<CartAvailableBookableItemLocationVariant>;
-
-  /**
-   * @internal
-   */
-  constructor(platformClient, item) {
-    super(platformClient, item);
+  constructor(platformClient, item, cartId) {
+    super(platformClient, item, cartId);
     this.optionGroups = item.optionGroups.map(
       (g: Graph.CartAvailableBookableItemOptionGroup) =>
         new CartAvailableBookableItemOptionGroup(platformClient, g)
-    );
-    this.staffVariants = item.staffVariants.map(
-      (v: Graph.CartAvailableBookableItemStaffVariant) =>
-        new CartAvailableBookableItemStaffVariant(platformClient, v)
-    );
-    this.locationVariants = item.locationVariants.map(
-      (v: Graph.CartAvailableBookableItemLocationVariant) =>
-        new CartAvailableBookableItemLocationVariant(platformClient, v)
     );
   }
 }
@@ -414,7 +435,7 @@ class CartBookableItem extends CartItem {
    * @internal
    */
   constructor(platformClient, item, cartId: Scalars["ID"]) {
-    super(platformClient, item);
+    super(platformClient, item, cartId);
     this.cartId = cartId;
     this.guest = item.guest && new CartGuest(platformClient, item.guest);
     this.selectedOptions = item.selectedOptions.map(
@@ -456,7 +477,7 @@ class CartAvailableBookableItemStaffVariant extends Node<
 }
 
 /** Location variant of a bookable item */
-class CartAvailableBookableItemLocationVariant extends Node<
+export class CartAvailableBookableItemLocationVariant extends Node<
   CartAvailableBookableItemLocationVariant
 > {
   location: Location;
@@ -486,8 +507,8 @@ class CartGiftCardItem extends CartItem {
   /**
    * @internal
    */
-  constructor(platformClient, item) {
-    super(platformClient, item);
+  constructor(platformClient, item, cartId) {
+    super(platformClient, item, cartId);
     this.emailFulfillment =
       item.emailFulfillment &&
       new CartItemEmailFulfillment(platformClient, item.emailFulfillment);

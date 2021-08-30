@@ -89,21 +89,6 @@ const fragments = {
     }
   `,
   availability: gql`
-    fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
-      id
-      price
-      duration
-      staff {
-        ...StaffProperties
-      }
-    }
-
-    fragment CartAvailableBookableItemLocationVariantProperties on CartAvailableBookableItemLocationVariant {
-      location {
-        ...LocationProperties
-      }
-    }
-
     fragment CartAvailableBookableItemOptionProperties on CartAvailableBookableItemOption {
       description
       durationDelta
@@ -142,12 +127,6 @@ const fragments = {
       ...CartAvailableItemProperties
       optionGroups {
         ...CartAvailableBookableItemOptionGroupProperties
-      }
-      staffVariants {
-        ...CartAvailableBookableItemStaffVariantProperties
-      }
-      locationVariants {
-        ...CartAvailableBookableItemLocationVariantProperties
       }
     }
 
@@ -300,13 +279,57 @@ export const addToWaitlistMutation = gql`
 `;
 
 export const availableCategoriesQuery = gql`
-  ${staffFragments}
-  ${locationFragments}
   ${fragments.availability}
   query Cart($id: ID!) {
     cart(id: $id) {
       availableCategories {
         ...CartAvailableCategoryProperties
+      }
+    }
+  }
+`;
+
+export const availableBookableItemLocationVariantsQuery = gql`
+  ${locationFragments}
+
+  fragment CartAvailableBookableItemLocationVariantProperties on CartAvailableBookableItemLocationVariant {
+    location {
+      ...LocationProperties
+    }
+  }
+
+  query Cart($cartId: ID!, $id: ID!) {
+    cart(id: $cartId) {
+      availableItem(id: $id) {
+        ... on CartAvailableBookableItem {
+          locationVariants {
+            ...CartAvailableBookableItemLocationVariantProperties
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const availableBookableItemStaffVariantsQuery = gql`
+  ${staffFragments}
+  fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
+    id
+    price
+    duration
+    staff {
+      ...StaffProperties
+    }
+  }
+
+  query Cart($cartId: ID!, $id: ID!) {
+    cart(id: $cartId) {
+      availableItem(id: $id) {
+        ... on CartAvailableBookableItem {
+          staffVariants {
+            ...CartAvailableBookableItemStaffVariantProperties
+          }
+        }
       }
     }
   }

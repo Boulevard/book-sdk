@@ -68,7 +68,8 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
    */
   constructor(
     platformClient: PlatformClient,
-    category: Graph.CartAvailableCategory
+    category: Graph.CartAvailableCategory, 
+    cartId
   ) {
     super(platformClient, category);
     this.availableItems = category.availableItems.map(
@@ -80,11 +81,11 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
       ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
-            return new CartAvailableBookableItem(this.platformClient, item);
+            return new CartAvailableBookableItem(this.platformClient, item, cartId);
           case "CartAvailableGiftCardItem":
-            return new CartAvailableGiftCardItem(this.platformClient, item);
+            return new CartAvailableGiftCardItem(this.platformClient, item, cartId);
           case "CartAvailablePurchasableItem":
-            return new CartAvailablePurchasableItem(this.platformClient, item);
+            return new CartAvailablePurchasableItem(this.platformClient, item, cartId);
         }
       }
     );
@@ -685,7 +686,7 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return response.cart.availableCategories.map(
-      category => new CartAvailableCategory(this.platformClient, category)
+      category => new CartAvailableCategory(this.platformClient, category, this.id)
     );
   }
 
@@ -918,9 +919,9 @@ class Cart extends Node<Graph.Cart> {
           case "CartBookableItem":
             return new CartBookableItem(this.platformClient, item, this.id);
           case "CartGiftCardItem":
-            return new CartGiftCardItem(this.platformClient, item);
+            return new CartGiftCardItem(this.platformClient, item, this.id);
           case "CartPurchasableItem":
-            return new CartPurchasableItem(this.platformClient, item);
+            return new CartPurchasableItem(this.platformClient, item, this.id);
         }
       }
     );
