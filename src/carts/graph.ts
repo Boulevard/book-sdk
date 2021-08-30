@@ -181,7 +181,12 @@ const fragments = {
         ...CartAvailableBookableItemOptionProperties
       }
       selectedStaffVariant {
-        ...CartAvailableBookableItemStaffVariantProperties
+        id
+        duration
+        price
+        staff {
+          ...StaffProperties
+        }
       }
     }
   `,
@@ -191,16 +196,6 @@ const fragments = {
       name
       code
       applied
-    }
-  `,
-  staffVariant: gql`
-    fragment CartBookableStaffVariantProperties on CartBookableStaffVariant {
-      id
-      duration
-      price
-      staff {
-        ...StaffProperties
-      }
     }
   `,
   emailFulfilment: gql`
@@ -292,18 +287,14 @@ export const availableCategoriesQuery = gql`
 export const availableBookableItemLocationVariantsQuery = gql`
   ${locationFragments}
 
-  fragment CartAvailableBookableItemLocationVariantProperties on CartAvailableBookableItemLocationVariant {
-    location {
-      ...LocationProperties
-    }
-  }
-
   query Cart($cartId: ID!, $id: ID!) {
     cart(id: $cartId) {
       availableItem(id: $id) {
         ... on CartAvailableBookableItem {
           locationVariants {
-            ...CartAvailableBookableItemLocationVariantProperties
+            location {
+              ...LocationProperties
+            }
           }
         }
       }
@@ -313,21 +304,17 @@ export const availableBookableItemLocationVariantsQuery = gql`
 
 export const availableBookableItemStaffVariantsQuery = gql`
   ${staffFragments}
-  fragment CartAvailableBookableItemStaffVariantProperties on CartAvailableBookableItemStaffVariant {
-    id
-    price
-    duration
-    staff {
-      ...StaffProperties
-    }
-  }
-
   query Cart($cartId: ID!, $id: ID!) {
     cart(id: $cartId) {
       availableItem(id: $id) {
         ... on CartAvailableBookableItem {
           staffVariants {
-            ...CartAvailableBookableItemStaffVariantProperties
+            id
+            duration
+            price
+            staff {
+              ...StaffProperties
+            }
           }
         }
       }
@@ -350,7 +337,12 @@ export const bookableStaffVariantsQuery = gql`
   ${fragments}
   query CartBookableStaffVariants($id: ID!, $itemId: ID!, bookableTimeId: ID!) {
     cartBookableStaffVariants(id: $id, itemId: $itemId, bookableTimeId: $bookableTimeId) {
-      ...CartBookableStaffVariantProperties
+      id
+      duration
+      price
+      staff {
+        ...StaffProperties
+      }
     }
   }
 `;
