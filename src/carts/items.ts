@@ -432,7 +432,11 @@ class CartBookableItem extends CartItem {
   constructor(platformClient, item, cartId: Scalars["ID"]) {
     super(platformClient, item);
     this.cartId = cartId;
-    this.item = new CartAvailableBookableItem(platformClient, item, cartId);
+    this.item = new CartAvailableBookableItem(
+      platformClient,
+      item.item,
+      cartId
+    );
     this.guest = item.guest && new CartGuest(platformClient, item.guest);
     this.selectedOptions = item.selectedOptions.map(
       (o: Graph.CartAvailableBookableItemOption) =>
@@ -508,7 +512,11 @@ class CartGiftCardItem extends CartItem {
    */
   constructor(platformClient, item, cartId) {
     super(platformClient, item);
-    this.item = new CartAvailableGiftCardItem(platformClient, item, cartId);
+    this.item = new CartAvailableGiftCardItem(
+      platformClient,
+      item.item,
+      cartId
+    );
 
     this.emailFulfillment =
       item.emailFulfillment &&
@@ -541,7 +549,11 @@ class CartPurchasableItem extends CartItem {
    */
   constructor(platformClient, item, cartId) {
     super(platformClient, item);
-    this.item = new CartAvailablePurchasableItem(platformClient, item, cartId);
+    this.item = new CartAvailablePurchasableItem(
+      platformClient,
+      item.item,
+      cartId
+    );
   }
 }
 

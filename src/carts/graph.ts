@@ -124,7 +124,6 @@ const fragments = {
     }
 
     fragment CartAvailableBookableItemProperties on CartAvailableBookableItem {
-      ...CartAvailableItemProperties
       optionGroups {
         ...CartAvailableBookableItemOptionGroupProperties
       }
@@ -160,6 +159,7 @@ const fragments = {
       id
       item {
         ...CartAvailableItemProperties
+        ...CartAvailableBookableItemProperties
       }
       lineTotal
       price
