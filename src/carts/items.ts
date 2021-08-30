@@ -75,9 +75,6 @@ class CartItem extends Node<Graph.CartItem> {
   /** ID of the item. */
   id: Scalars["ID"];
 
-  /** Original item details. */
-  item: CartAvailableItem;
-
   /** Total for the item after discounts and taxes. */
   lineTotal: Maybe<Scalars["Money"]>;
 
@@ -90,14 +87,9 @@ class CartItem extends Node<Graph.CartItem> {
   /**
    * @internal
    */
-  constructor(
-    platformClient: PlatformClient,
-    cartItem: Graph.CartItem,
-    cartId: Scalars["ID"]
-  ) {
+  constructor(platformClient: PlatformClient, cartItem: Graph.CartItem) {
     super(platformClient, cartItem);
 
-    this.item = new CartAvailableItem(platformClient, cartItem.item, cartId);
     this.errors = cartItem.errors.map(
       error => new CartItemError(platformClient, error)
     );
@@ -322,6 +314,9 @@ class CartAvailablePurchasableItem extends CartAvailableItem {}
 
 /** An item that can be booked at a certain time. */
 class CartBookableItem extends CartItem {
+  /** Original item details. */
+  item: CartAvailableBookableItem;
+
   /**
    * @internal
    * Included so that we don't have to make the `update` call
@@ -435,8 +430,9 @@ class CartBookableItem extends CartItem {
    * @internal
    */
   constructor(platformClient, item, cartId: Scalars["ID"]) {
-    super(platformClient, item, cartId);
+    super(platformClient, item);
     this.cartId = cartId;
+    this.item = new CartAvailableBookableItem(platformClient, item, cartId);
     this.guest = item.guest && new CartGuest(platformClient, item.guest);
     this.selectedOptions = item.selectedOptions.map(
       (o: Graph.CartAvailableBookableItemOption) =>
@@ -500,6 +496,9 @@ class CartItemGiftCardDesign extends Node<Graph.CartItemGiftCardDesign> {
 
 /** A gift card item that can be purchased. */
 class CartGiftCardItem extends CartItem {
+  /** Original item details. */
+  item: CartAvailableGiftCardItem;
+
   /** Send the gift card to a recipient via email. */
   emailFulfillment: Maybe<CartItemEmailFulfillment>;
   giftCardDesign: Maybe<CartItemGiftCardDesign>;
@@ -508,7 +507,9 @@ class CartGiftCardItem extends CartItem {
    * @internal
    */
   constructor(platformClient, item, cartId) {
-    super(platformClient, item, cartId);
+    super(platformClient, item);
+    this.item = new CartAvailableGiftCardItem(platformClient, item, cartId);
+
     this.emailFulfillment =
       item.emailFulfillment &&
       new CartItemEmailFulfillment(platformClient, item.emailFulfillment);
@@ -531,7 +532,18 @@ class CartPriceRange extends Node<Graph.CartPriceRange> {
 }
 
 /** An item that can be purchased. */
-class CartPurchasableItem extends CartItem {}
+class CartPurchasableItem extends CartItem {
+  /** Original item details. */
+  item: CartAvailablePurchasableItem;
+
+  /**
+   * @internal
+   */
+  constructor(platformClient, item, cartId) {
+    super(platformClient, item);
+    this.item = new CartAvailablePurchasableItem(platformClient, item, cartId);
+  }
+}
 
 export {
   CartAvailableBookableItem,
