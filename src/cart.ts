@@ -60,6 +60,8 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
   /** Message detailing why `disabled` is set. Might not be available. */
   disabledDescription: Maybe<Scalars["String"]>;
 
+  id: Scalars["ID"];
+
   /** Short human-readable name. */
   name: Scalars["String"];
 

@@ -15,6 +15,11 @@ export type Scalars = {
   Int: number;
   Float: number;
   /**
+   * Represents a set of geographical coordinates
+   *
+   */
+  Coordinates: any;
+  /**
    * The `Date` scalar type represents a timezone agnostic date, formatted as an
    * ISO8601 date string, i.e. `YYYY-MM-DD`.
    *
@@ -706,7 +711,7 @@ export type CartAvailableBookableItemStaffVariant = {
 };
 
 /** Category of items that can be checked out. */
-export type CartAvailableCategory = {
+export type CartAvailableCategory = Node & {
   __typename?: "CartAvailableCategory";
   /**
    * Items available to be checked out.
@@ -723,6 +728,8 @@ export type CartAvailableCategory = {
   disabled: Scalars["Boolean"];
   /** Message detailing why `disabled` is set. Might not be available. */
   disabledDescription?: Maybe<Scalars["String"]>;
+  /** The ID of an object */
+  id: Scalars["ID"];
   /** Short human-readable name. */
   name: Scalars["String"];
 };
@@ -1546,6 +1553,8 @@ export type Location = Node & {
   avatar?: Maybe<Scalars["String"]>;
   /** Name of the business */
   businessName: Scalars["String"];
+  /** The coordinates of the location */
+  coordinates?: Maybe<Scalars["Coordinates"]>;
   /** Location external id */
   externalId?: Maybe<Scalars["String"]>;
   /** The ID of an object */

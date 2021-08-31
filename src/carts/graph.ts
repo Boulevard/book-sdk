@@ -130,6 +130,7 @@ const fragments = {
     }
 
     fragment CartAvailableCategoryProperties on CartAvailableCategory {
+      id
       name
       disabledDescription
       disabled

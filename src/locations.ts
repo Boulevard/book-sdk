@@ -45,10 +45,8 @@ class Location extends Node<Graph.Location> {
    */
   isRemote: Scalars["Boolean"];
 
-  coordinates: Maybe<{
-    latitude: Scalars["Float"];
-    longitude: Scalars["Float"];
-  }>;
+  /** The coordinates of the location */
+  coordinates: Maybe<Scalars["Coordinates"]>;
 
   updatedAt: Scalars["DateTime"];
 

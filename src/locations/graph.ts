@@ -16,6 +16,7 @@ export const fragments = gql`
     insertedAt
     name
     phoneNumber
+    coordinates
     tz
     isRemote
     updatedAt
