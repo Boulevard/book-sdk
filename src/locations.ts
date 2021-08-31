@@ -2,6 +2,7 @@ import { Node, PlatformClient } from "./platformClient";
 import { Maybe, Scalars } from "./graph";
 import * as Graph from "./graph";
 import { getLocationsQuery } from "./locations/graph";
+import { coordinates } from "./locations/coordinates";
 
 class Address extends Node<Graph.Address> {
   city: Maybe<Scalars["String"]>;
@@ -44,6 +45,11 @@ class Location extends Node<Graph.Location> {
    */
   isRemote: Scalars["Boolean"];
 
+  coordinates: Maybe<{
+    latitude: Scalars["Float"];
+    longitude: Scalars["Float"];
+  }>;
+
   updatedAt: Scalars["DateTime"];
 
   /**
@@ -52,6 +58,7 @@ class Location extends Node<Graph.Location> {
   constructor(platformClient: PlatformClient, location: Graph.Location) {
     super(platformClient, location);
     this.address = new Address(platformClient, location.address);
+    this.coordinates = coordinates[location.id]?.coordinates || null;
   }
 }
 
