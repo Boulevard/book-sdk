@@ -6,6 +6,7 @@ import { Node, PlatformClient } from "../platformClient";
 import { Staff } from "../staff";
 import { Cart } from "../cart";
 import * as graph from "./graph";
+import { Location } from "../locations";
 
 /** Abstract available item that can be checked out. */
 class CartAvailableItem extends Node<Graph.CartAvailableItem> {
