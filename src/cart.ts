@@ -1188,7 +1188,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async updateSelectedGiftCardItem(
-    item: Graph.CartGiftCardItem,
+    item: CartGiftCardItem,
     opts?: {
       design?: Maybe<Graph.GiftCardDesign>;
       price?: Maybe<Scalars["Money"]>;
@@ -1221,7 +1221,7 @@ class Cart extends Node<Graph.Cart> {
    * @returns Promise containing the updated cart
    */
   async updateSelectedPurchasableItem(
-    item: Graph.CartPurchasableItem,
+    item: CartPurchasableItem,
     opts?: {
       discountCode?: Maybe<string>;
     }
@@ -1253,11 +1253,13 @@ class Cart extends Node<Graph.Cart> {
 export {
   Cart,
   CartAdvanceGratuity,
+  CartAdvanceGratuityInput,
   CartAvailableBookableItemStaffVariant,
   CartAvailableCategory,
   CartBookableDate,
   CartBookableTime,
   CartClientInformation,
+  CartClientInformationInput,
   CartError,
   CartErrorCode,
   CartItemEmailFulfillment,
