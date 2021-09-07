@@ -114,7 +114,6 @@ const fragments = {
       disabled
       disabledDescription
       id
-      listPrice
       listPriceRange {
         max
         min
@@ -124,6 +123,12 @@ const fragments = {
     }
 
     fragment CartAvailableBookableItemProperties on CartAvailableBookableItem {
+      listDurationRange {
+        max
+        min
+        variable
+      }
+
       optionGroups {
         ...CartAvailableBookableItemOptionGroupProperties
       }

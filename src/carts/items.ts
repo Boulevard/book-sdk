@@ -1,4 +1,4 @@
-import { Scalars, Maybe } from "../graph";
+import { Scalars, Maybe, CartDurationRange } from "../graph";
 import { CartItemErrorCode } from "../graph";
 import * as Graph from "../graph";
 import { CartGuest } from "./guests";
@@ -162,6 +162,9 @@ class CartItemError extends Node<Graph.CartItemError> {
 
 /** Item that can be booked through `addCartBookableItem`. */
 class CartAvailableBookableItem extends CartAvailableItem {
+  /** Displayed duration range of a bookable item. */
+  listDurationRange: CartDurationRange;
+
   /**
    * @internal
    */
@@ -573,6 +576,7 @@ export {
   CartItemGiftCardDesign,
   CartGiftCardItem,
   CartBookableItem,
+  CartDurationRange,
   CartPriceRange,
   CartPurchasableItem
 };
