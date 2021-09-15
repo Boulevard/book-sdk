@@ -276,9 +276,7 @@ export type AppointmentConnection = {
 
 export type AppointmentEdge = {
   __typename?: "AppointmentEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"];
-  /** The item at the end of the edge */
+  cursor?: Maybe<Scalars["String"]>;
   node?: Maybe<Appointment>;
 };
 
@@ -931,13 +929,13 @@ export type CartBookingQuestionAddAnswerPayload = {
 
 /** Current answer for the booking question. */
 export type CartBookingQuestionAnswer =
-  | CartBookingQuestionTextAnswer
-  | CartBookingQuestionIntegerAnswer
   | CartBookingQuestionBooleanAnswer
-  | CartBookingQuestionFloatAnswer
   | CartBookingQuestionDatetimeAnswer
+  | CartBookingQuestionFloatAnswer
+  | CartBookingQuestionIntegerAnswer
+  | CartBookingQuestionMultiSelectAnswer
   | CartBookingQuestionSelectAnswer
-  | CartBookingQuestionMultiSelectAnswer;
+  | CartBookingQuestionTextAnswer;
 
 export type CartBookingQuestionAnswerInput = {
   booleanValue?: Maybe<Scalars["Boolean"]>;
@@ -1019,6 +1017,8 @@ export type CartClientInformation = {
   __typename?: "CartClientInformation";
   /** Email address. */
   email?: Maybe<Scalars["Email"]>;
+  /** External ID of the client, used to integrate with external systems. */
+  externalId?: Maybe<Scalars["String"]>;
   /** First name. */
   firstName: Scalars["String"];
   /** Last name. */
@@ -1030,6 +1030,14 @@ export type CartClientInformation = {
 /** See `CartClientInformation`. */
 export type CartClientInformationInput = {
   email?: Maybe<Scalars["Email"]>;
+  /**
+   * External ID of the client, used to integrate with external systems.
+   *
+   * The value should be unique for every client. Since the validation happens
+   * at checkout, if the external ID is not unique for the new client, the value
+   * is ignored.
+   */
+  externalId?: Maybe<Scalars["String"]>;
   firstName: Scalars["String"];
   lastName?: Maybe<Scalars["String"]>;
   phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
@@ -1089,6 +1097,15 @@ export enum CartErrorCode {
    */
   CartMissingClientInformation = "CART_MISSING_CLIENT_INFORMATION",
   /**
+   * No cart items have been selected, at least one is required.
+   *
+   * ## Resolution
+   *
+   * Add one or more items to the cart before checking out, empty carts cannot be
+   * checked out.
+   */
+  CartMissingItems = "CART_MISSING_ITEMS",
+  /**
    * One or more cart items is missing a payment method.
    *
    * ## Resolution
@@ -1111,15 +1128,6 @@ export enum CartErrorCode {
    * cart is checked out before the expiration time.
    */
   CartMissingItemTime = "CART_MISSING_ITEM_TIME",
-  /**
-   * No cart items have been selected, at least one is required.
-   *
-   * ## Resolution
-   *
-   * Add one or more items to the cart before checking out, empty carts cannot be
-   * checked out.
-   */
-  CartMissingItems = "CART_MISSING_ITEMS",
   /**
    * A location has not been selected for a cart.
    *
@@ -1496,6 +1504,13 @@ export type CreateCartInput = {
   discountCode?: Maybe<Scalars["String"]>;
   /** ID of the cart location */
   locationId?: Maybe<Scalars["ID"]>;
+  /**
+   * Referral source for the appointments booked in the cart.
+   *
+   * This values is mapped to the appointments' 'referral_source' custom
+   * field values after checkout.
+   */
+  referralSource?: Maybe<Scalars["String"]>;
 };
 
 export type CreateCartPayload = {
@@ -1582,9 +1597,7 @@ export type LocationConnection = {
 
 export type LocationEdge = {
   __typename?: "LocationEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"];
-  /** The item at the end of the edge */
+  cursor?: Maybe<Scalars["String"]>;
   node?: Maybe<Location>;
 };
 
@@ -1625,9 +1638,7 @@ export type MembershipConnection = {
 
 export type MembershipEdge = {
   __typename?: "MembershipEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"];
-  /** The item at the end of the edge */
+  cursor?: Maybe<Scalars["String"]>;
   node?: Maybe<Membership>;
 };
 
@@ -1640,9 +1651,8 @@ export type MembershipVoucher = {
   services: Array<Service>;
 };
 
-/** An object with an ID */
 export type Node = {
-  /** The id of the object. */
+  /** The ID of the object. */
   id: Scalars["ID"];
 };
 
@@ -2051,6 +2061,7 @@ export type RootQueryTypeCartArgs = {
 
 export type RootQueryTypeCartBookableDatesArgs = {
   id: Scalars["ID"];
+  limit?: Maybe<Scalars["Int"]>;
   locationId?: Maybe<Scalars["ID"]>;
   searchRangeLower?: Maybe<Scalars["Date"]>;
   searchRangeUpper?: Maybe<Scalars["Date"]>;
@@ -2226,6 +2237,13 @@ export type UpdateCartInput = {
   clientMessage?: Maybe<Scalars["String"]>;
   discountCode?: Maybe<Scalars["String"]>;
   id: Scalars["ID"];
+  /**
+   * Referral source for the appointments booked in the cart.
+   *
+   * This values is mapped to the appointments' 'referral_source' custom
+   * field values after checkout.
+   */
+  referralSource?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateCartPayload = {

@@ -14,6 +14,7 @@ const fragments = {
         firstName
         lastName
         phoneNumber
+        externalId
       }
       clientMessage
       completedAt

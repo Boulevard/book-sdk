@@ -47,5 +47,5 @@ class Carts {
   }
 }
 
-export { Cart, Carts };
+export { Cart, Carts, CreateCartInput };
 export * from "./cart";

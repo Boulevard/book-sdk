@@ -6,7 +6,8 @@ import type {
   CartAdvanceGratuityInput,
   CartClientInformationInput,
   DepositType,
-  CartErrorCode
+  CartErrorCode,
+  UpdateCartInput
 } from "./graph";
 import type * as Graph from "./graph";
 import { Location } from "./locations";
@@ -131,6 +132,9 @@ class CartClientInformation extends Node<Graph.CartClientInformation> {
 
   /** Mobile phone number. */
   phoneNumber: Maybe<Scalars["PhoneNumber"]>;
+
+  /** External ID of the client, used to integrate with external systems. */
+  externalId: Maybe<Scalars["String"]>;
 }
 
 /** Cart validation error. */
@@ -1042,7 +1046,7 @@ class Cart extends Node<Graph.Cart> {
     clientMessage?: string;
     discountCode?: string;
   }): Promise<Cart> {
-    const input: Graph.UpdateCartInput = {
+    const input: UpdateCartInput = {
       id: this.id,
       ...opts
     };
@@ -1265,7 +1269,8 @@ export {
   CartItemEmailFulfillment,
   CartItemPaymentMethod,
   CartSummary,
-  DepositType
+  DepositType,
+  UpdateCartInput
 };
 export * from "./carts/bookingQuestions";
 export * from "./carts/guests";
