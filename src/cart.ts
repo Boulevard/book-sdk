@@ -71,7 +71,7 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
    */
   constructor(
     platformClient: PlatformClient,
-    category: Graph.CartAvailableCategory, 
+    category: Graph.CartAvailableCategory,
     cartId
   ) {
     super(platformClient, category);
@@ -84,11 +84,23 @@ class CartAvailableCategory extends Node<Graph.CartAvailableCategory> {
       ) => {
         switch (item.__typename) {
           case "CartAvailableBookableItem":
-            return new CartAvailableBookableItem(this.platformClient, item, cartId);
+            return new CartAvailableBookableItem(
+              this.platformClient,
+              item,
+              cartId
+            );
           case "CartAvailableGiftCardItem":
-            return new CartAvailableGiftCardItem(this.platformClient, item, cartId);
+            return new CartAvailableGiftCardItem(
+              this.platformClient,
+              item,
+              cartId
+            );
           case "CartAvailablePurchasableItem":
-            return new CartAvailablePurchasableItem(this.platformClient, item, cartId);
+            return new CartAvailablePurchasableItem(
+              this.platformClient,
+              item,
+              cartId
+            );
         }
       }
     );
@@ -692,7 +704,8 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return response.cart.availableCategories.map(
-      category => new CartAvailableCategory(this.platformClient, category, this.id)
+      category =>
+        new CartAvailableCategory(this.platformClient, category, this.id)
     );
   }
 
@@ -1037,6 +1050,7 @@ class Cart extends Node<Graph.Cart> {
    *
    * @async
    * @category Details
+   * @param referralSource Referral source for the appointments booked in the cart. This value is mapped to the appointments' 'referral_source' custom field values after checkout.
    * @public
    * @returns Promise containing the updated cart
    */
@@ -1045,6 +1059,7 @@ class Cart extends Node<Graph.Cart> {
     clientInformation?: CartClientInformationInput;
     clientMessage?: string;
     discountCode?: string;
+    referralSource?: string;
   }): Promise<Cart> {
     const input: UpdateCartInput = {
       id: this.id,
@@ -1269,8 +1284,7 @@ export {
   CartItemEmailFulfillment,
   CartItemPaymentMethod,
   CartSummary,
-  DepositType,
-  UpdateCartInput
+  DepositType
 };
 export * from "./carts/bookingQuestions";
 export * from "./carts/guests";

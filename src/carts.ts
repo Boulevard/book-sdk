@@ -15,11 +15,12 @@ class Carts {
    * Creates a new Cart
    *
    * @param opts.timezone Optional time zone that {@link CartBookableDate} and {@link CartBookableTime} should be converted to, e.g. the client's time zone. The search range dates are also interpreted using this. When omitted, the browser timezone is used.
+   * @param referralSource Referral source for the appointments booked in the cart. This value is mapped to the appointments' 'referral_source' custom field values after checkout.
    * @protected
    */
   async create(
     location?: Location,
-    opts?: { timezone?: string }
+    opts?: { timezone?: string; referralSource?: string }
   ): Promise<Cart> {
     const input: CreateCartInput = {
       locationId: location?.id
