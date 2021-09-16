@@ -384,12 +384,14 @@ export const datesQuery = gql`
     $searchRangeLower: Date
     $searchRangeUpper: Date
     $tz: Tz
+    $limit: Int
   ) {
     cartBookableDates(
       id: $id
       searchRangeLower: $searchRangeLower
       searchRangeUpper: $searchRangeUpper
       tz: $tz
+      limit: $limit
     ) {
       date
     }

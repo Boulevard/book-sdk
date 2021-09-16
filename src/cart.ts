@@ -744,13 +744,15 @@ class Cart extends Node<Graph.Cart> {
     searchRangeUpper?: Scalars["Date"];
     timezone?: string;
     location?: Location;
+    limit?: Scalars["Int"];
   }): Promise<Array<CartBookableDate>> {
     const response = await this.platformClient.request(graph.datesQuery, {
       id: this.id,
       searchRangeLower: opts?.searchRangeLower,
       searchRangeUpper: opts?.searchRangeUpper,
       locationId: opts?.location?.id,
-      tz: opts?.timezone || this.timezone
+      tz: opts?.timezone || this.timezone,
+      limit: opts?.limit
     });
 
     return response.cartBookableDates.map(
