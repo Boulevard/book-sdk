@@ -26,7 +26,7 @@ export const fragments = gql`
 export const getLocationsQuery = gql`
   ${fragments}
   query GetLocations {
-    locations(first: 100) {
+    locations(first: 200) {
       edges {
         node {
           ...LocationProperties
