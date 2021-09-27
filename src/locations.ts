@@ -8,7 +8,9 @@ class Address extends Node<Graph.Address> {
   line1: Maybe<Scalars["String"]>;
   line2: Maybe<Scalars["String"]>;
   state: Maybe<Scalars["String"]>;
+  province: Maybe<Scalars["String"]>;
   zip: Maybe<Scalars["String"]>;
+  country: Maybe<Scalars["String"]>;
 }
 
 class Location extends Node<Graph.Location> {

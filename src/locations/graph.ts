@@ -7,7 +7,9 @@ export const fragments = gql`
       line1
       line2
       state
+      province
       zip
+      country
     }
     avatar
     businessName
