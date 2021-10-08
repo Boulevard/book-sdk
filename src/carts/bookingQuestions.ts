@@ -25,6 +25,11 @@ export enum CartBookingQuestionValueType {
   Text = "TEXT"
 }
 
+export enum CartBookingQuestionSchema {
+  Client = "CLIENT",
+  Appointment = "APPOINTMENT"
+}
+
 const answerToInput = (
   valueType: CartBookingQuestionValueType,
   answer:
@@ -81,6 +86,9 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
 
   /** Accepted type for the booking question answer. */
   valueType: CartBookingQuestionValueType;
+
+  /** Indicates the type of entity that the booking question answer is mapped to. */
+  schema: Maybe<CartBookingQuestionSchema>;
 
   /**
    * @internal

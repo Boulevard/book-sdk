@@ -82,6 +82,7 @@ const fragments = {
       }
       required
       valueType
+      schema
     }
 
     fragment CartBookingQuestionOptionProperties on CartBookingQuestionOption {
