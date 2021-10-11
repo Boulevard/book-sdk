@@ -19,6 +19,9 @@ class Staff extends Node<Graph.Staff> {
   /** The last name of the staff member. */
   lastName: Scalars["String"];
 
+  /** The public display name of the staff member. Preferred over other name fields. */
+  displayName: Scalars["String"];
+
   /** The nickname of the staff member */
   nickname: Maybe<Scalars["String"]>;
 

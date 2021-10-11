@@ -7,6 +7,7 @@ export const fragments = gql`
     id
     insertedAt
     lastName
+    displayName
     nickname
     role {
       id
