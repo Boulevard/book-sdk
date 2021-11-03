@@ -76,6 +76,7 @@ const fragments = {
       displayType
       errors
       id
+      key
       label
       options {
         ...CartBookingQuestionOptionProperties

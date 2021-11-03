@@ -75,7 +75,19 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
   /** Unique ID of the question */
   id: Scalars["ID"];
 
-  /** Booking question displayed value */
+  /**
+   * Unique key of the question. Compared to the IDs (which should
+   * always be treated as opaque), this can be be interpreted by the client code.
+   * Example use cases include filtering or sorting the questions on the client
+   * side based on custom conditions.
+   *
+   * While this is non-null, this the might not have a meaningful value and
+   * currently cannot be set in the UI. Please contact the developer support if
+   * you need to use this field.
+   */
+  key: Scalars["String"];
+
+  /** Booking question displayed label */
   label: Scalars["String"];
 
   /** Options for select/multiselect booking questions */

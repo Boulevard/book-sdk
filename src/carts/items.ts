@@ -205,6 +205,12 @@ class CartAvailableBookableItem extends CartAvailableItem {
   /**
    * List of locations offering the selected bookable item.
    *
+   * This is affected by:
+   *
+   * - Staff / staff role settings set for the services in the cart
+   * - The "Bookable online" option for a specific service/location pair
+   * - The "Enable online booking" option for a location
+   *
    * Location has to be chosen before checking out the cart.
    */
   async getLocationVariants(): Promise<

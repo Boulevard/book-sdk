@@ -244,7 +244,7 @@ export type Appointment = Node & {
   location: Location;
   /** The Id of the Location where this appointment was booked. */
   locationId: Scalars["ID"];
-  /** Internal notes on the appointment */
+  /** Notes provided by the client during booking */
   notes?: Maybe<Scalars["String"]>;
   /** Start time for the appointment */
   startAt: Scalars["DateTime"];
@@ -620,6 +620,12 @@ export type CartAvailableBookableItem = CartAvailableItem & {
   /**
    * List of locations offering the selected bookable item.
    *
+   * This is affected by:
+   *
+   * - Staff / staff role settings set for the services in the cart
+   * - The "Bookable online" option for a specific service/location pair
+   * - The "Enable online booking" option for a location
+   *
    * Location has to be chosen before checking out the cart.
    */
   locationVariants: Array<CartAvailableBookableItemLocationVariant>;
@@ -906,12 +912,25 @@ export type CartBookingQuestion = {
   errors?: Maybe<Array<Scalars["String"]>>;
   /** Unique ID of the question */
   id: Scalars["ID"];
-  /** Booking question displayed value */
+  /**
+   * Unique key of the question. Compared to the IDs (which should
+   * always be treated as opaque), this can be be interpreted by the client code.
+   * Example use cases include filtering or sorting the questions on the client
+   * side based on custom conditions.
+   *
+   * While this is non-null, this the might not have a meaningful value and
+   * currently cannot be set in the UI. Please contact the developer support if
+   * you need to use this field.
+   */
+  key: Scalars["String"];
+  /** Booking question displayed label */
   label: Scalars["String"];
   /** Options for select/multiselect booking questions */
   options: Array<CartBookingQuestionOption>;
   /** Whether the answer is required to checkout */
   required: Scalars["Boolean"];
+  /** Indicates the type of entity that the booking question answer is mapped to. */
+  schema?: Maybe<CartBookingQuestionSchema>;
   /** Accepted type for the booking question answer. */
   valueType: CartBookingQuestionValueType;
 };
@@ -990,6 +1009,11 @@ export type CartBookingQuestionOption = {
   id: Scalars["ID"];
   label: Scalars["String"];
 };
+
+export enum CartBookingQuestionSchema {
+  Appointment = "APPOINTMENT",
+  Client = "CLIENT"
+}
 
 export type CartBookingQuestionSelectAnswer = {
   __typename?: "CartBookingQuestionSelectAnswer";
