@@ -1,6 +1,6 @@
 {
   "name": "@boulevard/blvd-book-sdk",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "A JS client for the Boulevard API",
   "main": "lib/blvd.js",
   "typings": "lib/blvd.js",
