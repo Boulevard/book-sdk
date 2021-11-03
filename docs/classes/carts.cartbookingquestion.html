@@ -92,6 +92,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#displaytype" class="tsd-kind-icon">display<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#errors" class="tsd-kind-icon">errors</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#key" class="tsd-kind-icon">key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#label" class="tsd-kind-icon">label</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="carts.cartbookingquestion.html#required" class="tsd-kind-icon">required</a></li>
@@ -116,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">answer<span class="tsd-signature-symbol">:</span> <a href="../modules/carts.html#cartbookingquestionanswer" class="tsd-signature-type" data-tsd-kind="Type alias">CartBookingQuestionAnswer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L67">carts/bookingQuestions.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L67">carts/bookingQuestions.ts:67</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -126,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">display<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/carts.cartbookingquestiondisplaytype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CartBookingQuestionDisplayType</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L70">carts/bookingQuestions.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L70">carts/bookingQuestions.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -141,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L73">carts/bookingQuestions.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L73">carts/bookingQuestions.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L76">carts/bookingQuestions.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L76">carts/bookingQuestions.ts:76</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -166,17 +167,38 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="key" class="tsd-anchor"></a>
+					<h3>key</h3>
+					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L88">carts/bookingQuestions.ts:88</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Unique key of the question. Compared to the IDs (which should
+								always be treated as opaque), this can be be interpreted by the client code.
+								Example use cases include filtering or sorting the questions on the client
+							side based on custom conditions.</p>
+						</div>
+						<p>While this is non-null, this the might not have a meaningful value and
+							currently cannot be set in the UI. Please contact the developer support if
+						you need to use this field.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="label" class="tsd-anchor"></a>
 					<h3>label</h3>
 					<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L79">carts/bookingQuestions.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L91">carts/bookingQuestions.ts:91</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Booking question displayed value</p>
+							<p>Booking question displayed label</p>
 						</div>
 					</div>
 				</section>
@@ -186,7 +208,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="carts.cartbookingquestionoption.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionOption</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L82">carts/bookingQuestions.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L94">carts/bookingQuestions.ts:94</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -201,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">required<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L85">carts/bookingQuestions.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L97">carts/bookingQuestions.ts:97</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,7 +238,7 @@
 					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../enums/carts.cartbookingquestionschema.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CartBookingQuestionSchema</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L91">carts/bookingQuestions.ts:91</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L103">carts/bookingQuestions.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,7 +253,7 @@
 					<div class="tsd-signature tsd-kind-icon">value<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/carts.cartbookingquestionvaluetype.html" class="tsd-signature-type" data-tsd-kind="Enumeration">CartBookingQuestionValueType</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L88">carts/bookingQuestions.ts:88</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L100">carts/bookingQuestions.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -253,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/3f83fc4/src/carts/bookingQuestions.ts#L108">carts/bookingQuestions.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/7da06ee/src/carts/bookingQuestions.ts#L120">carts/bookingQuestions.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -330,6 +352,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="carts.cartbookingquestion.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="carts.cartbookingquestion.html#key" class="tsd-kind-icon">key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="carts.cartbookingquestion.html#label" class="tsd-kind-icon">label</a>
