@@ -948,6 +948,18 @@ export type CartBookingQuestionAddAnswerPayload = {
   cart: Cart;
 };
 
+export type CartBookingQuestionClearAnswerInput = {
+  /** The ID of the cart. */
+  id: Scalars["ID"];
+  /** The ID of the booking question */
+  questionId: Scalars["ID"];
+};
+
+export type CartBookingQuestionClearAnswerPayload = {
+  __typename?: "CartBookingQuestionClearAnswerPayload";
+  cart: Cart;
+};
+
 /** Current answer for the booking question. */
 export type CartBookingQuestionAnswer =
   | CartBookingQuestionBooleanAnswer
