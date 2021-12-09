@@ -138,6 +138,20 @@ export class CartBookingQuestion extends Node<Graph.CartBookingQuestion> {
     return new Cart(this.platformClient, response.cartBookingQuestionAddAnswer.cart);
   }
 
+  async clearAnswer(): Promise<Cart> {
+    const input: Graph.CartBookingQuestionClearAnswerInput = {
+      questionId: this.id,
+      id: this.cartId
+    };
+
+    const response = await this.platformClient.request(
+      graph.bookingQuestionClearAnswerMutation,
+      { input }
+    );
+
+    return new Cart(this.platformClient, response.cartBookingQuestionClearAnswer.cart);
+  }
+
   /**
    * @internal
    */

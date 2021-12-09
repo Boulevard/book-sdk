@@ -719,6 +719,19 @@ export const bookingQuestionAddAnswerMutation = gql`
   }
 `;
 
+export const bookingQuestionClearAnswerMutation = gql`
+  ${fragments.cart}
+  mutation CartBookingQuestionClearAnswer(
+    $input: CartBookingQuestionClearnswerInput!
+  ) {
+    cartBookingQuestionClearAnswer(input: $input) {
+      cart {
+        ...CartProperties
+      }
+    }
+  }
+`;
+
 export const setLocationMutation = gql`
   ${locationFragments}
   ${fragments.cart}
