@@ -1,5 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
+import { version } from './../package.json';
 
 const btoa = string => {
   const buffer = Buffer.from(string.toString(), "binary");
@@ -81,8 +82,8 @@ class PlatformClient {
       : btoa(`${this.apiKey}:`);
   }
 
-  private headers(): Record<"Authorization", string> {
-    return { Authorization: `Basic ${this.token()}` };
+  private headers(): Record<"Authorization" | "Book-SDK-Version", string> {
+    return { Authorization: `Basic ${this.token()}`, "Book-SDK-Version": version };
   }
 }
 
