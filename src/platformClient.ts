@@ -1,6 +1,8 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
-import { version } from './../package.json';
+// import { version } from './../package.json';
+
+const version = "1.0.21"
 
 const btoa = string => {
   const buffer = Buffer.from(string.toString(), "binary");

@@ -124,9 +124,11 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#cartadvancegratuityinput" class="tsd-kind-icon">Cart<wbr>Advance<wbr>Gratuity<wbr>Input</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#cartappointment" class="tsd-kind-icon">Cart<wbr>Appointment</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#cartbookingquestionanswer" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#cartclientinformationinput" class="tsd-kind-icon">Cart<wbr>Client<wbr>Information<wbr>Input</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#cartdurationrange" class="tsd-kind-icon">Cart<wbr>Duration<wbr>Range</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#checkoutcartpayload" class="tsd-kind-icon">Checkout<wbr>Cart<wbr>Payload</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="carts.html#createcartinput" class="tsd-kind-icon">Create<wbr>Cart<wbr>Input</a></li>
 							</ul>
 						</section>
@@ -141,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Advance<wbr>Gratuity<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>fixed<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Money&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>percentage<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Float&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/152b59f/src/graph.d.ts#L590">graph.d.ts:590</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/graph.d.ts#L589">graph.d.ts:589</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,12 +164,44 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="cartappointment" class="tsd-anchor"></a>
+					<h3>Cart<wbr>Appointment</h3>
+					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Appointment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>__typename<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;CartAppointment&quot;</span><span class="tsd-signature-symbol">; </span>appointmentId<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>clientId<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>forCartOwner<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Boolean&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/cart.ts#L229">cart.ts:229</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> __typename<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;CartAppointment&quot;</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>appointment<wbr>Id<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>client<wbr>Id<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>for<wbr>Cart<wbr>Owner<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Boolean&quot;</span><span class="tsd-signature-symbol">]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Whether an appointment belongs to the cart owner.</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="cartbookingquestionanswer" class="tsd-anchor"></a>
 					<h3>Cart<wbr>Booking<wbr>Question<wbr>Answer</h3>
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer<span class="tsd-signature-symbol">:</span> <a href="../classes/carts.cartbookingquestiontextanswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionTextAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestionintegeranswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionIntegerAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestionbooleananswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionBooleanAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestionfloatanswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionFloatAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestiondatetimeanswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionDatetimeAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestionselectanswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionSelectAnswer</a><span class="tsd-signature-symbol"> | </span><a href="../classes/carts.cartbookingquestionmultiselectanswer.html" class="tsd-signature-type" data-tsd-kind="Class">CartBookingQuestionMultiSelectAnswer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/152b59f/src/carts/bookingQuestions.ts#L216">carts/bookingQuestions.ts:216</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/carts/bookingQuestions.ts#L216">carts/bookingQuestions.ts:216</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Client<wbr>Information<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>email<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Email&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>externalId<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>firstName<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>lastName<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>phoneNumber<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;PhoneNumber&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/152b59f/src/graph.d.ts#L1069">graph.d.ts:1069</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/graph.d.ts#L1079">graph.d.ts:1079</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,7 +254,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Duration<wbr>Range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>__typename<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;CartDurationRange&quot;</span><span class="tsd-signature-symbol">; </span>max<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Int&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>min<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Int&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span>variable<span class="tsd-signature-symbol">: </span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;Boolean&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/152b59f/src/graph.d.ts#L1085">graph.d.ts:1085</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/graph.d.ts#L1095">graph.d.ts:1095</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -262,12 +296,36 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="checkoutcartpayload" class="tsd-anchor"></a>
+					<h3>Checkout<wbr>Cart<wbr>Payload</h3>
+					<div class="tsd-signature tsd-kind-icon">Checkout<wbr>Cart<wbr>Payload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>__typename<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;CheckoutCartPayload&quot;</span><span class="tsd-signature-symbol">; </span>appointments<span class="tsd-signature-symbol">: </span><a href="carts.html#cartappointment" class="tsd-signature-type" data-tsd-kind="Type alias">CartAppointment</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>cart<span class="tsd-signature-symbol">: </span><a href="../classes/carts.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/cart.ts#L223">cart.ts:223</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> __typename<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;CheckoutCartPayload&quot;</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>appointments<span class="tsd-signature-symbol">: </span><a href="carts.html#cartappointment" class="tsd-signature-type" data-tsd-kind="Type alias">CartAppointment</a><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>cart<span class="tsd-signature-symbol">: </span><a href="../classes/carts.cart.html" class="tsd-signature-type" data-tsd-kind="Class">Cart</a></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="createcartinput" class="tsd-anchor"></a>
 					<h3>Create<wbr>Cart<wbr>Input</h3>
 					<div class="tsd-signature tsd-kind-icon">Create<wbr>Cart<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>advanceGratuity<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="carts.html#cartadvancegratuityinput" class="tsd-signature-type" data-tsd-kind="Type alias">CartAdvanceGratuityInput</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>clientInformation<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="carts.html#cartclientinformationinput" class="tsd-signature-type" data-tsd-kind="Type alias">CartClientInformationInput</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>clientMessage<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>discountCode<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>locationId<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;ID&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>referralSource<span class="tsd-signature-symbol">?: </span><a href="blvd.html#maybe" class="tsd-signature-type" data-tsd-kind="Type alias">Maybe</a><span class="tsd-signature-symbol">&lt;</span><a href="blvd.html#scalars" class="tsd-signature-type" data-tsd-kind="Type alias">Scalars</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;String&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/152b59f/src/graph.d.ts#L1534">graph.d.ts:1534</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d111a8e/src/graph.d.ts#L1546">graph.d.ts:1546</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -489,6 +547,9 @@
 						<a href="carts.html#cartadvancegratuityinput" class="tsd-kind-icon">Cart<wbr>Advance<wbr>Gratuity<wbr>Input</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="carts.html#cartappointment" class="tsd-kind-icon">Cart<wbr>Appointment</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="carts.html#cartbookingquestionanswer" class="tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
@@ -496,6 +557,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="carts.html#cartdurationrange" class="tsd-kind-icon">Cart<wbr>Duration<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="carts.html#checkoutcartpayload" class="tsd-kind-icon">Checkout<wbr>Cart<wbr>Payload</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="carts.html#createcartinput" class="tsd-kind-icon">Create<wbr>Cart<wbr>Input</a>
