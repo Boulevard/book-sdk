@@ -220,6 +220,20 @@ class CartSummary extends Node<Graph.CartSummary> {
   total: Scalars["Money"];
 }
 
+export type CheckoutCartPayload = {
+  __typename?: 'CheckoutCartPayload';
+  appointments: Array<CartAppointment>;
+  cart: Cart;
+};
+
+export type CartAppointment = {
+  __typename?: 'CartAppointment';
+  appointmentId: Scalars['ID'];
+  clientId: Scalars['ID'];
+  /** Whether an appointment belongs to the cart owner. */
+  forCartOwner: Scalars['Boolean'];
+};
+
 class Cart extends Node<Graph.Cart> {
   /** Optional gratuity defined in advance for bookable items. */
   advanceGratuity: Maybe<CartAdvanceGratuity>;
@@ -544,9 +558,9 @@ class Cart extends Node<Graph.Cart> {
    * @async
    * @category Checkout & Payment
    * @public
-   * @returns Promise containing the updated cart
+   * @returns Promise containing the updated cart and the appointments
    */
-  async checkout(): Promise<Cart> {
+  async checkout(): Promise<CheckoutCartPayload> {
     const input: Graph.CheckoutCartInput = {
       id: this.id
     };
@@ -557,7 +571,8 @@ class Cart extends Node<Graph.Cart> {
       }
     );
 
-    return this.refresh(response.checkoutCart.cart);
+    const cart = this.refresh(response.checkoutCart.cart);
+    return {...response.checkoutCart, cart: cart};
   }
 
   /**

@@ -1,12 +1,8 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -111,43 +107,43 @@ export type Scalars = {
 
 export type AddCartCardPaymentMethodInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Whether to automatically select this credit card as the payment method
    * for the cart, false by default.
    */
-  select?: Maybe<Scalars["Boolean"]>;
+  select?: Maybe<Scalars['Boolean']>;
   /** Credit card token obtained from the Credit Card Tokenization endpoint. */
-  token: Scalars["ID"];
+  token: Scalars['ID'];
 };
 
 export type AddCartCardPaymentMethodPayload = {
-  __typename?: "AddCartCardPaymentMethodPayload";
+  __typename?: 'AddCartCardPaymentMethodPayload';
   cart: Cart;
 };
 
 export type AddCartOfferInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The offer code identifier */
-  offerCode: Scalars["String"];
+  offerCode: Scalars['String'];
 };
 
 export type AddCartOfferPayload = {
-  __typename?: "AddCartOfferPayload";
+  __typename?: 'AddCartOfferPayload';
   cart: Cart;
   offer: CartOffer;
 };
 
 export type AddCartSelectedBookableItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Optional discount code applied to the item. Invalid discount codes are
    * ignored without an error, check `discountCode` on the selected item to see
    * if the code was valid.
    */
-  itemDiscountCode?: Maybe<Scalars["String"]>;
+  itemDiscountCode?: Maybe<Scalars['String']>;
   /**
    * Optional ID that identifies the guest this item is booked for. A null
    * value indicates the cart owner, or current client.
@@ -155,228 +151,228 @@ export type AddCartSelectedBookableItemInput = {
    * When finding available times for bookable items, it's assumed that two
    * items having different guests can be booked simultaneously.
    */
-  itemGuestId?: Maybe<Scalars["ID"]>;
+  itemGuestId?: Maybe<Scalars['ID']>;
   /** ID of the bookable item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
   /**
    * Optional IDs of selected bookable item options. Note that the selections
    * must conform to the option group requirements, e.g. limits on the number
    * of options. Otherwise an error is returned.
    */
-  itemOptionIds?: Maybe<Array<Scalars["ID"]>>;
+  itemOptionIds?: Maybe<Array<Scalars['ID']>>;
   /** Optional ID of the selected bookable item staff variant. */
-  itemStaffVariantId?: Maybe<Scalars["ID"]>;
+  itemStaffVariantId?: Maybe<Scalars['ID']>;
 };
 
 export type AddCartSelectedBookableItemPayload = {
-  __typename?: "AddCartSelectedBookableItemPayload";
+  __typename?: 'AddCartSelectedBookableItemPayload';
   cart: Cart;
 };
 
 export type AddCartSelectedGiftCardItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** ID of the gift card item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
   /**
    * Price applied to the gift card item. See cartAvailableGiftCardItem.minPrice
    * and maxPrice for limits
    */
-  itemPrice: Scalars["Money"];
+  itemPrice: Scalars['Money'];
 };
 
 export type AddCartSelectedGiftCardItemPayload = {
-  __typename?: "AddCartSelectedGiftCardItemPayload";
+  __typename?: 'AddCartSelectedGiftCardItemPayload';
   cart: Cart;
 };
 
 export type AddCartSelectedPurchasableItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Optional discount code applied to the item. Invalid discount codes are
    * ignored without an error, check `discountCode` on the selected item to see
    * if the code was valid.
    */
-  itemDiscountCode?: Maybe<Scalars["String"]>;
+  itemDiscountCode?: Maybe<Scalars['String']>;
   /** ID of the purchasable item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
 };
 
 export type AddCartSelectedPurchasableItemPayload = {
-  __typename?: "AddCartSelectedPurchasableItemPayload";
+  __typename?: 'AddCartSelectedPurchasableItemPayload';
   cart: Cart;
 };
 
 export type Address = {
-  __typename?: "Address";
-  city?: Maybe<Scalars["String"]>;
-  country?: Maybe<Scalars["String"]>;
-  line1?: Maybe<Scalars["String"]>;
-  line2?: Maybe<Scalars["String"]>;
-  province?: Maybe<Scalars["String"]>;
-  state?: Maybe<Scalars["String"]>;
-  zip?: Maybe<Scalars["String"]>;
+  __typename?: 'Address';
+  city?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  line1?: Maybe<Scalars['String']>;
+  line2?: Maybe<Scalars['String']>;
+  province?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
 };
 
 /** An Appointment */
 export type Appointment = Node & {
-  __typename?: "Appointment";
+  __typename?: 'Appointment';
   /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
   /** Information about the cancellation, if present */
   cancellation?: Maybe<AppointmentCancellation>;
   /** Boolean signifying if the appointment is cancelled or not */
-  cancelled: Scalars["Boolean"];
+  cancelled: Scalars['Boolean'];
   /** The client of the appointment */
   client: Client;
   /** The id of the client of the appointment. */
-  clientId: Scalars["ID"];
+  clientId: Scalars['ID'];
   /** When the appointment was created (in Etc/UTC) */
-  createdAt: Scalars["DateTime"];
+  createdAt: Scalars['DateTime'];
   /** The duration of the appointment */
-  duration: Scalars["Int"];
+  duration: Scalars['Int'];
   /** End time for the appointment */
-  endAt: Scalars["DateTime"];
+  endAt: Scalars['DateTime'];
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The Location where this appointment was booked. */
   location: Location;
   /** The Id of the Location where this appointment was booked. */
-  locationId: Scalars["ID"];
+  locationId: Scalars['ID'];
   /** Notes provided by the client during booking */
-  notes?: Maybe<Scalars["String"]>;
+  notes?: Maybe<Scalars['String']>;
   /** Start time for the appointment */
-  startAt: Scalars["DateTime"];
+  startAt: Scalars['DateTime'];
   /** The state of the appointment. */
   state: AppointmentState;
 };
 
 export type AppointmentCancellation = {
-  __typename?: "AppointmentCancellation";
+  __typename?: 'AppointmentCancellation';
   /** Datetime the appointment was cancelled in UTC. */
-  cancelledAt: Scalars["DateTime"];
-  notes?: Maybe<Scalars["String"]>;
+  cancelledAt: Scalars['DateTime'];
+  notes?: Maybe<Scalars['String']>;
   reason: AppointmentCancellationReason;
 };
 
 export enum AppointmentCancellationReason {
-  ClientCancel = "CLIENT_CANCEL",
-  ClientLateCancel = "CLIENT_LATE_CANCEL",
-  Merged = "MERGED",
-  Mistake = "MISTAKE",
-  NoShow = "NO_SHOW",
-  StaffCancel = "STAFF_CANCEL",
-  Voided = "VOIDED"
+  ClientCancel = 'CLIENT_CANCEL',
+  ClientLateCancel = 'CLIENT_LATE_CANCEL',
+  Merged = 'MERGED',
+  Mistake = 'MISTAKE',
+  NoShow = 'NO_SHOW',
+  StaffCancel = 'STAFF_CANCEL',
+  Voided = 'VOIDED'
 }
 
 export type AppointmentConnection = {
-  __typename?: "AppointmentConnection";
+  __typename?: 'AppointmentConnection';
   edges?: Maybe<Array<Maybe<AppointmentEdge>>>;
   pageInfo: PageInfo;
 };
 
 export type AppointmentEdge = {
-  __typename?: "AppointmentEdge";
-  cursor?: Maybe<Scalars["String"]>;
+  __typename?: 'AppointmentEdge';
+  cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Appointment>;
 };
 
 export type AppointmentRescheduleAvailableDatesInput = {
   /** The ID of the appointment that needs to be rescheduled. */
-  appointmentId: Scalars["ID"];
+  appointmentId: Scalars['ID'];
   /** The lower range (inclusive) of dates to search for appointment availability. */
-  searchRangeLower: Scalars["Date"];
+  searchRangeLower: Scalars['Date'];
   /** The upper range (inclusive) of dates to search for appointment availability. */
-  searchRangeUpper: Scalars["Date"];
+  searchRangeUpper: Scalars['Date'];
   /**
    * Optional time zone the matches should be converted to, e.g. the client's
    * time zone. The search range dates are also interpreted using this. When
    * null, the location's time zone is used.
    */
-  tz?: Maybe<Scalars["Tz"]>;
+  tz?: Maybe<Scalars['Tz']>;
 };
 
 export type AppointmentRescheduleAvailableDatesPayload = {
-  __typename?: "AppointmentRescheduleAvailableDatesPayload";
+  __typename?: 'AppointmentRescheduleAvailableDatesPayload';
   availableDates: Array<AvailableRescheduleDate>;
 };
 
 export type AppointmentRescheduleAvailableTimesInput = {
   /** The ID of the appointment that needs to be rescheduled. */
-  appointmentId: Scalars["ID"];
+  appointmentId: Scalars['ID'];
   /** The date that should be searched for available times. */
-  date: Scalars["Date"];
+  date: Scalars['Date'];
   /**
    * Optional time zone the matches should be converted to, e.g. the client's
    * time zone. When null, the location's time zone is used.
    */
-  tz?: Maybe<Scalars["Tz"]>;
+  tz?: Maybe<Scalars['Tz']>;
 };
 
 export type AppointmentRescheduleAvailableTimesPayload = {
-  __typename?: "AppointmentRescheduleAvailableTimesPayload";
+  __typename?: 'AppointmentRescheduleAvailableTimesPayload';
   availableTimes: Array<AvailableRescheduleTime>;
 };
 
 export type AppointmentRescheduleInput = {
   /** The ID of the appointment that needs to be rescheduled. */
-  appointmentId: Scalars["ID"];
+  appointmentId: Scalars['ID'];
   /**
    * The encoded data representing an available appointment slot (can be computed
    * using the appointmentRescheduleAvailableTimes mutation).
    */
-  bookableTimeId: Scalars["ID"];
+  bookableTimeId: Scalars['ID'];
   /**
    * Creates a notification for the dashboard users to let them know that the appointment has
    * been self-rescheduled by the client.
    */
-  sendNotification: Scalars["Boolean"];
+  sendNotification: Scalars['Boolean'];
 };
 
 export type AppointmentReschedulePayload = {
-  __typename?: "AppointmentReschedulePayload";
+  __typename?: 'AppointmentReschedulePayload';
   appointment: Appointment;
 };
 
 /** An AppointmentService */
 export type AppointmentService = {
-  __typename?: "AppointmentService";
+  __typename?: 'AppointmentService';
   /** Duration for the entire service (including add-ons) */
-  duration: Scalars["Int"];
+  duration: Scalars['Int'];
   /** The ISO time at which the appointment service is completely finished. */
-  endAt: Scalars["DateTime"];
+  endAt: Scalars['DateTime'];
   /** Price of the service, before any discounts or taxes are applied. */
-  price: Scalars["Money"];
+  price: Scalars['Money'];
   /** The service. */
   service: Service;
   /** The id of the service.  This may be null for time blockers. */
-  serviceId: Scalars["ID"];
+  serviceId: Scalars['ID'];
   /** The staff performing this service. */
   staff: Staff;
   /** The ID of the staff member associated with this service */
-  staffId: Scalars["ID"];
+  staffId: Scalars['ID'];
   /** A boolean indicating whether the staff was specifically requested by the client. */
-  staffRequested: Scalars["Boolean"];
+  staffRequested: Scalars['Boolean'];
   /** The ISO time at which the appointment service begins */
-  startAt: Scalars["DateTime"];
+  startAt: Scalars['DateTime'];
   /** Length of time (in minutes) from the start of the appointment until this service begins. */
-  startTimeOffset: Scalars["Int"];
+  startTimeOffset: Scalars['Int'];
   /** The total duration (in minutes) of this service */
-  totalDuration: Scalars["Int"];
+  totalDuration: Scalars['Int'];
 };
 
 export enum AppointmentState {
-  Active = "ACTIVE",
-  Arrived = "ARRIVED",
-  Booked = "BOOKED",
-  Cancelled = "CANCELLED",
-  Confirmed = "CONFIRMED",
-  Final = "FINAL"
+  Active = 'ACTIVE',
+  Arrived = 'ARRIVED',
+  Booked = 'BOOKED',
+  Cancelled = 'CANCELLED',
+  Confirmed = 'CONFIRMED',
+  Final = 'FINAL'
 }
 
 export type AvailableRescheduleDate = {
-  __typename?: "AvailableRescheduleDate";
+  __typename?: 'AvailableRescheduleDate';
   /**
    * Matched date for the booking.
    *
@@ -384,67 +380,68 @@ export type AvailableRescheduleDate = {
    * time zone is requested using the `tz` argument. The date uses the requested
    * time zone, or the location's time zone when `tz` is null.
    */
-  date: Scalars["Date"];
+  date: Scalars['Date'];
 };
 
 export type AvailableRescheduleTime = {
-  __typename?: "AvailableRescheduleTime";
-  bookableTimeId: Scalars["ID"];
+  __typename?: 'AvailableRescheduleTime';
+  bookableTimeId: Scalars['ID'];
   /** Matched start time for the booking. */
-  startTime: Scalars["DateTime"];
+  startTime: Scalars['DateTime'];
 };
 
 export type BookingQuestionOptionAnswerInput = {
-  optionId: Scalars["ID"];
+  optionId: Scalars['ID'];
 };
 
 /** The business */
 export type Business = Node & {
-  __typename?: "Business";
-  avatar?: Maybe<Scalars["String"]>;
+  __typename?: 'Business';
+  avatar?: Maybe<Scalars['String']>;
   /** The ID of an object */
-  id: Scalars["ID"];
-  insertedAt: Scalars["DateTime"];
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
   /** Locations */
   locations?: Maybe<LocationConnection>;
   /** Name of the business */
-  name: Scalars["String"];
+  name: Scalars['String'];
   onlineGiftCardSettings: OnlineGiftCardSettings;
   /** The timezone associated with the business */
-  tz: Scalars["Tz"];
-  updatedAt: Scalars["DateTime"];
+  tz: Scalars['Tz'];
+  updatedAt: Scalars['DateTime'];
   /** The business' website. This could be an empty string. */
-  website: Scalars["String"];
+  website: Scalars['String'];
 };
+
 
 /** The business */
 export type BusinessLocationsArgs = {
-  after?: Maybe<Scalars["String"]>;
-  before?: Maybe<Scalars["String"]>;
-  first?: Maybe<Scalars["Int"]>;
-  last?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 export type BusinessGiftCardDesign = {
-  __typename?: "BusinessGiftCardDesign";
+  __typename?: 'BusinessGiftCardDesign';
   design: GiftCardDesign;
-  id: Scalars["ID"];
-  selected: Scalars["Boolean"];
+  id: Scalars['ID'];
+  selected: Scalars['Boolean'];
 };
 
 export type CancelAppointmentInput = {
-  id: Scalars["ID"];
-  notes?: Maybe<Scalars["String"]>;
+  id: Scalars['ID'];
+  notes?: Maybe<Scalars['String']>;
 };
 
 export type CancelAppointmentPayload = {
-  __typename?: "CancelAppointmentPayload";
+  __typename?: 'CancelAppointmentPayload';
   appointment: Appointment;
 };
 
 /** Represents a cart flow used for booking or purchasing things. */
 export type Cart = Node & {
-  __typename?: "Cart";
+  __typename?: 'Cart';
   /** Optional gratuity defined in advance for bookable items. */
   advanceGratuity?: Maybe<CartAdvanceGratuity>;
   /**
@@ -483,18 +480,18 @@ export type Cart = Node & {
    */
   clientInformation?: Maybe<CartClientInformation>;
   /** Optional message from the client to the business. */
-  clientMessage?: Maybe<Scalars["String"]>;
+  clientMessage?: Maybe<Scalars['String']>;
   /**
    * Timestamp of when the cart was completed.
    *
    * This field cannot be edited and once completed cannot be changed.
    */
-  completedAt?: Maybe<Scalars["DateTime"]>;
+  completedAt?: Maybe<Scalars['DateTime']>;
   /**
    * When the cart has reserved bookable items, the end time of the latest item.
    * This value is `null` when there are no reservations.
    */
-  endTime?: Maybe<Scalars["NaiveDateTime"]>;
+  endTime?: Maybe<Scalars['NaiveDateTime']>;
   /** Current validation errors. */
   errors: Array<CartError>;
   /**
@@ -503,15 +500,15 @@ export type Cart = Node & {
    * value is `null` when there are no reservations and is reset into the future
    * whenever a new reservation is added.
    */
-  expiresAt?: Maybe<Scalars["DateTime"]>;
+  expiresAt?: Maybe<Scalars['DateTime']>;
   /** Features available to the cart. */
   features: CartFeatures;
   /** A list of guests added to the cart */
   guests: Array<CartGuest>;
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Timestamp when the cart was created. */
-  insertedAt: Scalars["DateTime"];
+  insertedAt: Scalars['DateTime'];
   /** Location associated with the cart */
   location?: Maybe<Location>;
   /**
@@ -535,86 +532,96 @@ export type Cart = Node & {
    * When the cart has reserved bookable items, the starting time of the earliest
    * item. This value is `null` when there are no reservations.
    */
-  startTime?: Maybe<Scalars["NaiveDateTime"]>;
+  startTime?: Maybe<Scalars['NaiveDateTime']>;
   /**
    * Selected starting time ID for the item, corresponds to the ID that was used
    * to reserve the times. This value is `null` when there are no reservations.
    */
-  startTimeId?: Maybe<Scalars["ID"]>;
+  startTimeId?: Maybe<Scalars['ID']>;
   /** Summary of the cart, including e.g. line item totals. */
   summary: CartSummary;
   /** Timestamp when the cart was last updated. */
-  updatedAt: Scalars["DateTime"];
+  updatedAt: Scalars['DateTime'];
 };
+
 
 /** Represents a cart flow used for booking or purchasing things. */
 export type CartAvailableItemArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
+
 
 /** Represents a cart flow used for booking or purchasing things. */
 export type CartSelectedItemArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type CartAddToWaitlistInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The preferred lower bound date and time of the bookable items. */
-  preferredTimeLower: Scalars["NaiveDateTime"];
+  preferredTimeLower: Scalars['NaiveDateTime'];
   /** The preferred upper bound date and time of the bookable items. */
-  preferredTimeUpper: Scalars["NaiveDateTime"];
+  preferredTimeUpper: Scalars['NaiveDateTime'];
   /**
    * Optional time zone the preferred times should be converted from, e.g. the client's
    * time zone. If a timezone other than the default location's timezone was used when
    * fetching bookable times, then that same timezone should be supplied in this mutation.
    */
-  tz?: Maybe<Scalars["Tz"]>;
+  tz?: Maybe<Scalars['Tz']>;
 };
 
 export type CartAddToWaitlistPayload = {
-  __typename?: "CartAddToWaitlistPayload";
+  __typename?: 'CartAddToWaitlistPayload';
   cart: Cart;
 };
 
 /** Gratuity set in advance for bookable items. */
 export type CartAdvanceGratuity = {
-  __typename?: "CartAdvanceGratuity";
+  __typename?: 'CartAdvanceGratuity';
   /** Fixed gratuity amount, has to be set if `percentage` is not set. */
-  fixed?: Maybe<Scalars["Money"]>;
+  fixed?: Maybe<Scalars['Money']>;
   /** Percentage gratuity amount, has to be set if `fixed` is not set. */
-  percentage?: Maybe<Scalars["Float"]>;
+  percentage?: Maybe<Scalars['Float']>;
 };
 
 /** See `CartAdvanceGratuity`. */
 export type CartAdvanceGratuityInput = {
-  fixed?: Maybe<Scalars["Money"]>;
-  percentage?: Maybe<Scalars["Float"]>;
+  fixed?: Maybe<Scalars['Money']>;
+  percentage?: Maybe<Scalars['Float']>;
+};
+
+export type CartAppointment = {
+  __typename?: 'CartAppointment';
+  appointmentId: Scalars['ID'];
+  clientId: Scalars['ID'];
+  /** Whether an appointment belongs to the cart owner. */
+  forCartOwner: Scalars['Boolean'];
 };
 
 /** Item that can be booked through `addCartBookableItem`. */
 export type CartAvailableBookableItem = CartAvailableItem & {
-  __typename?: "CartAvailableBookableItem";
+  __typename?: 'CartAvailableBookableItem';
   /** Refer to the super type. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
-  disabled: Scalars["Boolean"];
+  disabled: Scalars['Boolean'];
   /** Refer to the super type. */
-  disabledDescription?: Maybe<Scalars["String"]>;
+  disabledDescription?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Displayed client duration in minutes.
    * @deprecated Use `listDurationRange` instead.
    */
-  listDuration: Scalars["Int"];
+  listDuration: Scalars['Int'];
   /** Refer to the super type. */
   listDurationRange: CartDurationRange;
   /**
    * Refer to the super type.
    * @deprecated Use `listPriceRange` instead.
    */
-  listPrice: Scalars["Money"];
+  listPrice: Scalars['Money'];
   /** Refer to the super type. */
   listPriceRange: CartPriceRange;
   /**
@@ -630,7 +637,7 @@ export type CartAvailableBookableItem = CartAvailableItem & {
    */
   locationVariants: Array<CartAvailableBookableItemLocationVariant>;
   /** Refer to the super type. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /**
    * Groups of available options for modifying the booked service. These can be
    * used to modify the booked item and may affect pricing and timing.
@@ -649,35 +656,35 @@ export type CartAvailableBookableItem = CartAvailableItem & {
    * Whether duration varies per staff variant.
    * @deprecated Use `listDurationRange` instead.
    */
-  variableDuration: Scalars["Boolean"];
+  variableDuration: Scalars['Boolean'];
   /**
    * Whether price varies per staff variant.
    * @deprecated Use `listPriceRange` instead.
    */
-  variablePrice: Scalars["Boolean"];
+  variablePrice: Scalars['Boolean'];
 };
 
 /** Location variant of a bookable item */
 export type CartAvailableBookableItemLocationVariant = {
-  __typename?: "CartAvailableBookableItemLocationVariant";
+  __typename?: 'CartAvailableBookableItemLocationVariant';
   location: Location;
 };
 
 /** Option of a bookable item that can be selected. */
 export type CartAvailableBookableItemOption = {
-  __typename?: "CartAvailableBookableItemOption";
+  __typename?: 'CartAvailableBookableItemOption';
   /** Short optional description. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Minutes added to duration when selected. */
-  durationDelta: Scalars["Int"];
+  durationDelta: Scalars['Int'];
   /** Group ID of the option. */
-  groupId: Scalars["ID"];
+  groupId: Scalars['ID'];
   /** ID of the option. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Short human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** Amount added to price when selected. */
-  priceDelta: Scalars["Money"];
+  priceDelta: Scalars['Money'];
 };
 
 /**
@@ -688,37 +695,37 @@ export type CartAvailableBookableItemOption = {
  * those requirements.
  */
 export type CartAvailableBookableItemOptionGroup = {
-  __typename?: "CartAvailableBookableItemOptionGroup";
+  __typename?: 'CartAvailableBookableItemOptionGroup';
   /** Short optional description. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** ID of the option group. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Optional maximum number of options that can be selected. */
-  maxLimit?: Maybe<Scalars["Int"]>;
+  maxLimit?: Maybe<Scalars['Int']>;
   /** Optional minimum number of options that must be selected. */
-  minLimit?: Maybe<Scalars["Int"]>;
+  minLimit?: Maybe<Scalars['Int']>;
   /** Short human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** List of selectable options. */
   options: Array<CartAvailableBookableItemOption>;
 };
 
 /** Staff variant of a bookable item. */
 export type CartAvailableBookableItemStaffVariant = {
-  __typename?: "CartAvailableBookableItemStaffVariant";
+  __typename?: 'CartAvailableBookableItemStaffVariant';
   /** Duration of the variant in minutes. */
-  duration: Scalars["Int"];
+  duration: Scalars['Int'];
   /** ID of the variant. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Price of the variant before discounts and taxes. */
-  price: Scalars["Money"];
+  price: Scalars['Money'];
   /** Staff member booked. */
   staff: Staff;
 };
 
 /** Category of items that can be checked out. */
 export type CartAvailableCategory = Node & {
-  __typename?: "CartAvailableCategory";
+  __typename?: 'CartAvailableCategory';
   /**
    * Items available to be checked out.
    *
@@ -729,62 +736,62 @@ export type CartAvailableCategory = Node & {
    */
   availableItems: Array<CartAvailableItem>;
   /** Short optional description. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Whether the category should appear as disabled. */
-  disabled: Scalars["Boolean"];
+  disabled: Scalars['Boolean'];
   /** Message detailing why `disabled` is set. Might not be available. */
-  disabledDescription?: Maybe<Scalars["String"]>;
+  disabledDescription?: Maybe<Scalars['String']>;
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Short human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Gift card that can be purchased through `addCartSelectedGiftCardItem`. */
 export type CartAvailableGiftCardItem = CartAvailableItem & {
-  __typename?: "CartAvailableGiftCardItem";
+  __typename?: 'CartAvailableGiftCardItem';
   /** When true the user may enter a custom amount between the min and max price range. */
-  allowCustomAmounts: Scalars["Boolean"];
+  allowCustomAmounts: Scalars['Boolean'];
   /** Refer to the super type. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
-  disabled: Scalars["Boolean"];
+  disabled: Scalars['Boolean'];
   /** Refer to the super type. */
-  disabledDescription?: Maybe<Scalars["String"]>;
+  disabledDescription?: Maybe<Scalars['String']>;
   /** The maximum available price for which to purchase the gift card. */
-  giftCardMax: Scalars["Money"];
+  giftCardMax: Scalars['Money'];
   /** The minimum available price for which to purchase the gift card. */
-  giftCardMin: Scalars["Money"];
+  giftCardMin: Scalars['Money'];
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Refer to the super type.
    * @deprecated Use `listPriceRange` instead.
    */
-  listPrice: Scalars["Money"];
+  listPrice: Scalars['Money'];
   /** Refer to the super type. */
   listPriceRange: CartPriceRange;
   /** Refer to the super type. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** The available preset prices for which to purchase the gift card. */
-  pricePresets: Array<Scalars["Money"]>;
+  pricePresets: Array<Scalars['Money']>;
 };
 
 /** Abstract available item that can be checked out. */
 export type CartAvailableItem = {
   /** Short optional description. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Whether the item should appear disabled or hidden. */
-  disabled: Scalars["Boolean"];
+  disabled: Scalars['Boolean'];
   /** Message detailing why `disabled` is set. Might not be available. */
-  disabledDescription?: Maybe<Scalars["String"]>;
+  disabledDescription?: Maybe<Scalars['String']>;
   /** ID of the item. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Displayed price of the item before tax.
    * @deprecated Use `listPriceRange` instead.
    */
-  listPrice: Scalars["Money"];
+  listPrice: Scalars['Money'];
   /**
    * Displayed price range of the item before tax.
    *
@@ -794,34 +801,34 @@ export type CartAvailableItem = {
    */
   listPriceRange: CartPriceRange;
   /** Short human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Item that can be purchased through `addCartPurchasableItem`. */
 export type CartAvailablePurchasableItem = CartAvailableItem & {
-  __typename?: "CartAvailablePurchasableItem";
+  __typename?: 'CartAvailablePurchasableItem';
   /** Refer to the super type. */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
-  disabled: Scalars["Boolean"];
+  disabled: Scalars['Boolean'];
   /** Refer to the super type. */
-  disabledDescription?: Maybe<Scalars["String"]>;
+  disabledDescription?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Refer to the super type.
    * @deprecated Use `listPriceRange` instead.
    */
-  listPrice: Scalars["Money"];
+  listPrice: Scalars['Money'];
   /** Refer to the super type. */
   listPriceRange: CartPriceRange;
   /** Refer to the super type. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Available starting date for bookable items in a cart. */
 export type CartBookableDate = {
-  __typename?: "CartBookableDate";
+  __typename?: 'CartBookableDate';
   /**
    * Available date for the bookable items.
    *
@@ -829,18 +836,18 @@ export type CartBookableDate = {
    * time zone is requested using the `tz` argument. The date uses the requested
    * time zone, or the location's time zone when `tz` is null.
    */
-  date: Scalars["Date"];
+  date: Scalars['Date'];
 };
 
 /** An item that can be booked at a certain time. */
 export type CartBookableItem = CartItem & {
-  __typename?: "CartBookableItem";
+  __typename?: 'CartBookableItem';
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount?: Maybe<Scalars["Money"]>;
+  discountAmount?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  discountCode?: Maybe<Scalars["String"]>;
+  discountCode?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
   errors: Array<CartItemError>;
   /**
@@ -856,15 +863,15 @@ export type CartBookableItem = CartItem & {
    *
    * This field is more efficient than `guest` when only the ID is required.
    */
-  guestId?: Maybe<Scalars["ID"]>;
+  guestId?: Maybe<Scalars['ID']>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Refer to the super type. */
   item: CartAvailableBookableItem;
   /** Refer to the super type. */
-  lineTotal?: Maybe<Scalars["Money"]>;
+  lineTotal?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  price?: Maybe<Scalars["Money"]>;
+  price?: Maybe<Scalars['Money']>;
   /** Any selected options for the item. */
   selectedOptions: Array<CartAvailableBookableItemOption>;
   /** Refer to the super type. */
@@ -887,31 +894,31 @@ export type CartBookableItem = CartItem & {
    * reverts to `null` and needs to be selected again. See the parent cart’s
    * `expiresAt` field for more information.
    */
-  startTime?: Maybe<Scalars["NaiveDateTime"]>;
+  startTime?: Maybe<Scalars['NaiveDateTime']>;
   /** Refer to the super type. */
-  taxAmount?: Maybe<Scalars["Money"]>;
+  taxAmount?: Maybe<Scalars['Money']>;
 };
 
 /** Available starting time for bookable items in a cart. */
 export type CartBookableTime = {
-  __typename?: "CartBookableTime";
+  __typename?: 'CartBookableTime';
   /** ID of this particular time. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** @deprecated Do not use. */
-  score: Scalars["Float"];
+  score: Scalars['Float'];
   /** Available start time for the earliest bookable item. */
-  startTime: Scalars["DateTime"];
+  startTime: Scalars['DateTime'];
 };
 
 export type CartBookingQuestion = {
-  __typename?: "CartBookingQuestion";
+  __typename?: 'CartBookingQuestion';
   answer?: Maybe<CartBookingQuestionAnswer>;
   /** How the input for the booking question should be displayed. */
   displayType: CartBookingQuestionDisplayType;
   /** Validation errors for the question */
-  errors?: Maybe<Array<Scalars["String"]>>;
+  errors?: Maybe<Array<Scalars['String']>>;
   /** Unique ID of the question */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Unique key of the question. Compared to the IDs (which should
    * always be treated as opaque), this can be be interpreted by the client code.
@@ -922,13 +929,13 @@ export type CartBookingQuestion = {
    * currently cannot be set in the UI. Please contact the developer support if
    * you need to use this field.
    */
-  key: Scalars["String"];
+  key: Scalars['String'];
   /** Booking question displayed label */
-  label: Scalars["String"];
+  label: Scalars['String'];
   /** Options for select/multiselect booking questions */
   options: Array<CartBookingQuestionOption>;
   /** Whether the answer is required to checkout */
-  required: Scalars["Boolean"];
+  required: Scalars['Boolean'];
   /** Indicates the type of entity that the booking question answer is mapped to. */
   schema?: Maybe<CartBookingQuestionSchema>;
   /** Accepted type for the booking question answer. */
@@ -938,136 +945,139 @@ export type CartBookingQuestion = {
 export type CartBookingQuestionAddAnswerInput = {
   answer: CartBookingQuestionAnswerInput;
   /** The ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The ID of the booking question */
-  questionId: Scalars["ID"];
+  questionId: Scalars['ID'];
 };
 
 export type CartBookingQuestionAddAnswerPayload = {
-  __typename?: "CartBookingQuestionAddAnswerPayload";
-  cart: Cart;
-};
-
-export type CartBookingQuestionClearAnswerInput = {
-  /** The ID of the cart. */
-  id: Scalars["ID"];
-  /** The ID of the booking question */
-  questionId: Scalars["ID"];
-};
-
-export type CartBookingQuestionClearAnswerPayload = {
-  __typename?: "CartBookingQuestionClearAnswerPayload";
+  __typename?: 'CartBookingQuestionAddAnswerPayload';
   cart: Cart;
 };
 
 /** Current answer for the booking question. */
-export type CartBookingQuestionAnswer =
-  | CartBookingQuestionBooleanAnswer
-  | CartBookingQuestionDatetimeAnswer
-  | CartBookingQuestionFloatAnswer
-  | CartBookingQuestionIntegerAnswer
-  | CartBookingQuestionMultiSelectAnswer
-  | CartBookingQuestionSelectAnswer
-  | CartBookingQuestionTextAnswer;
+export type CartBookingQuestionAnswer = CartBookingQuestionBooleanAnswer | CartBookingQuestionDatetimeAnswer | CartBookingQuestionFloatAnswer | CartBookingQuestionIntegerAnswer | CartBookingQuestionMultiSelectAnswer | CartBookingQuestionSelectAnswer | CartBookingQuestionTextAnswer;
 
 export type CartBookingQuestionAnswerInput = {
-  booleanValue?: Maybe<Scalars["Boolean"]>;
-  datetimeValue?: Maybe<Scalars["DateTime"]>;
-  floatValue?: Maybe<Scalars["Float"]>;
-  integerValue?: Maybe<Scalars["Int"]>;
+  booleanValue?: Maybe<Scalars['Boolean']>;
+  datetimeValue?: Maybe<Scalars['DateTime']>;
+  floatValue?: Maybe<Scalars['Float']>;
+  integerValue?: Maybe<Scalars['Int']>;
   optionValue?: Maybe<BookingQuestionOptionAnswerInput>;
   optionValues?: Maybe<Array<BookingQuestionOptionAnswerInput>>;
-  textValue?: Maybe<Scalars["String"]>;
+  textValue?: Maybe<Scalars['String']>;
 };
 
 export type CartBookingQuestionBooleanAnswer = {
-  __typename?: "CartBookingQuestionBooleanAnswer";
-  booleanValue: Scalars["Boolean"];
+  __typename?: 'CartBookingQuestionBooleanAnswer';
+  booleanValue: Scalars['Boolean'];
+};
+
+export type CartBookingQuestionClearAnswerInput = {
+  /** The ID of the cart. */
+  id: Scalars['ID'];
+  /** The ID of the booking question */
+  questionId: Scalars['ID'];
+};
+
+export type CartBookingQuestionClearAnswerPayload = {
+  __typename?: 'CartBookingQuestionClearAnswerPayload';
+  cart: Cart;
 };
 
 export type CartBookingQuestionDatetimeAnswer = {
-  __typename?: "CartBookingQuestionDatetimeAnswer";
-  datetimeValue: Scalars["DateTime"];
+  __typename?: 'CartBookingQuestionDatetimeAnswer';
+  datetimeValue: Scalars['DateTime'];
 };
 
 export enum CartBookingQuestionDisplayType {
-  Boolean = "BOOLEAN",
-  Datetime = "DATETIME",
-  Float = "FLOAT",
-  Integer = "INTEGER",
-  LongText = "LONG_TEXT",
-  Multiselect = "MULTISELECT",
-  Select = "SELECT",
-  ShortText = "SHORT_TEXT"
+  Boolean = 'BOOLEAN',
+  Datetime = 'DATETIME',
+  Float = 'FLOAT',
+  Integer = 'INTEGER',
+  LongText = 'LONG_TEXT',
+  Multiselect = 'MULTISELECT',
+  Select = 'SELECT',
+  ShortText = 'SHORT_TEXT'
 }
 
 export type CartBookingQuestionFloatAnswer = {
-  __typename?: "CartBookingQuestionFloatAnswer";
-  floatValue: Scalars["Float"];
+  __typename?: 'CartBookingQuestionFloatAnswer';
+  floatValue: Scalars['Float'];
 };
 
 export type CartBookingQuestionIntegerAnswer = {
-  __typename?: "CartBookingQuestionIntegerAnswer";
-  integerValue: Scalars["Int"];
+  __typename?: 'CartBookingQuestionIntegerAnswer';
+  integerValue: Scalars['Int'];
 };
 
 export type CartBookingQuestionMultiSelectAnswer = {
-  __typename?: "CartBookingQuestionMultiSelectAnswer";
+  __typename?: 'CartBookingQuestionMultiSelectAnswer';
   options: Array<CartBookingQuestionOption>;
 };
 
 export type CartBookingQuestionOption = {
-  __typename?: "CartBookingQuestionOption";
-  id: Scalars["ID"];
-  label: Scalars["String"];
+  __typename?: 'CartBookingQuestionOption';
+  id: Scalars['ID'];
+  label: Scalars['String'];
 };
 
 export enum CartBookingQuestionSchema {
-  Appointment = "APPOINTMENT",
-  Client = "CLIENT"
+  Appointment = 'APPOINTMENT',
+  Client = 'CLIENT'
 }
 
 export type CartBookingQuestionSelectAnswer = {
-  __typename?: "CartBookingQuestionSelectAnswer";
+  __typename?: 'CartBookingQuestionSelectAnswer';
   option: CartBookingQuestionOption;
 };
 
 export type CartBookingQuestionTextAnswer = {
-  __typename?: "CartBookingQuestionTextAnswer";
-  textValue: Scalars["String"];
+  __typename?: 'CartBookingQuestionTextAnswer';
+  textValue: Scalars['String'];
 };
 
 export enum CartBookingQuestionValueType {
-  Boolean = "BOOLEAN",
-  Datetime = "DATETIME",
-  Float = "FLOAT",
-  Integer = "INTEGER",
-  Multiselect = "MULTISELECT",
-  Select = "SELECT",
-  Text = "TEXT"
+  Boolean = 'BOOLEAN',
+  Datetime = 'DATETIME',
+  Float = 'FLOAT',
+  Integer = 'INTEGER',
+  Multiselect = 'MULTISELECT',
+  Select = 'SELECT',
+  Text = 'TEXT'
 }
+
+export type CartClearInput = {
+  /** ID of the cart */
+  id: Scalars['ID'];
+};
+
+export type CartClearPayload = {
+  __typename?: 'CartClearPayload';
+  cart: Cart;
+};
 
 /**
  * Client information supplied when checking out as a new user or on behalf of
  * someone else than the current user.
  */
 export type CartClientInformation = {
-  __typename?: "CartClientInformation";
+  __typename?: 'CartClientInformation';
   /** Email address. */
-  email?: Maybe<Scalars["Email"]>;
+  email?: Maybe<Scalars['Email']>;
   /** External ID of the client, used to integrate with external systems. */
-  externalId?: Maybe<Scalars["String"]>;
+  externalId?: Maybe<Scalars['String']>;
   /** First name. */
-  firstName: Scalars["String"];
+  firstName: Scalars['String'];
   /** Last name. */
-  lastName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars['String']>;
   /** Mobile phone number. */
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
 /** See `CartClientInformation`. */
 export type CartClientInformationInput = {
-  email?: Maybe<Scalars["Email"]>;
+  email?: Maybe<Scalars['Email']>;
   /**
    * External ID of the client, used to integrate with external systems.
    *
@@ -1075,32 +1085,32 @@ export type CartClientInformationInput = {
    * at checkout, if the external ID is not unique for the new client, the value
    * is ignored.
    */
-  externalId?: Maybe<Scalars["String"]>;
-  firstName: Scalars["String"];
-  lastName?: Maybe<Scalars["String"]>;
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  externalId?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
 /** Displayed duration range of a bookable item. */
 export type CartDurationRange = {
-  __typename?: "CartDurationRange";
+  __typename?: 'CartDurationRange';
   /** Maximum duration in minutes. */
-  max: Scalars["Int"];
+  max: Scalars['Int'];
   /** Minimum duration in minutes. */
-  min: Scalars["Int"];
+  min: Scalars['Int'];
   /** Whether the duration is variable, i.e. the minimum and maximum differ. */
-  variable: Scalars["Boolean"];
+  variable: Scalars['Boolean'];
 };
 
 /** Cart validation error. */
 export type CartError = {
-  __typename?: "CartError";
+  __typename?: 'CartError';
   /** Machine-readable code. */
   code: CartErrorCode;
   /** Detailed geek-readable description. */
-  description: Scalars["String"];
+  description: Scalars['String'];
   /** Short human-readable message. */
-  message: Scalars["String"];
+  message: Scalars['String'];
 };
 
 /** Machine-readable cart validation error code. */
@@ -1112,7 +1122,7 @@ export enum CartErrorCode {
    *
    * Make sure that all required booking questions have valid answers.
    */
-  CartBookingQuestionAnswerMissing = "CART_BOOKING_QUESTION_ANSWER_MISSING",
+  CartBookingQuestionAnswerMissing = 'CART_BOOKING_QUESTION_ANSWER_MISSING',
   /**
    * One or more gift card items do not have a valid price.
    *
@@ -1122,7 +1132,7 @@ export enum CartErrorCode {
    * See cartAvailableGiftCardItem.minPrice and cartAvailableGiftCardItem.maxPrice
    * for upper and lower bound price limits.
    */
-  CartGiftCardItemPrice = "CART_GIFT_CARD_ITEM_PRICE",
+  CartGiftCardItemPrice = 'CART_GIFT_CARD_ITEM_PRICE',
   /**
    * This cart is not associated with an existing client, therefore separate
    * client information is required.
@@ -1133,7 +1143,7 @@ export enum CartErrorCode {
    * the cart, or client information must be added using the `clientInformation`
    * field.
    */
-  CartMissingClientInformation = "CART_MISSING_CLIENT_INFORMATION",
+  CartMissingClientInformation = 'CART_MISSING_CLIENT_INFORMATION',
   /**
    * No cart items have been selected, at least one is required.
    *
@@ -1142,7 +1152,7 @@ export enum CartErrorCode {
    * Add one or more items to the cart before checking out, empty carts cannot be
    * checked out.
    */
-  CartMissingItems = "CART_MISSING_ITEMS",
+  CartMissingItems = 'CART_MISSING_ITEMS',
   /**
    * One or more cart items is missing a payment method.
    *
@@ -1152,7 +1162,7 @@ export enum CartErrorCode {
    * before checking out. These items will each have a separate item-specific
    * validation error with the same code.
    */
-  CartMissingItemPaymentMethod = "CART_MISSING_ITEM_PAYMENT_METHOD",
+  CartMissingItemPaymentMethod = 'CART_MISSING_ITEM_PAYMENT_METHOD',
   /**
    * One or more bookable items is missing a reserved time.
    *
@@ -1165,7 +1175,7 @@ export enum CartErrorCode {
    * Note that times are only reserved temporarily and will expire unless the
    * cart is checked out before the expiration time.
    */
-  CartMissingItemTime = "CART_MISSING_ITEM_TIME",
+  CartMissingItemTime = 'CART_MISSING_ITEM_TIME',
   /**
    * A location has not been selected for a cart.
    *
@@ -1173,67 +1183,67 @@ export enum CartErrorCode {
    *
    * Before checking out, select a location for a cart.
    */
-  CartMissingLocation = "CART_MISSING_LOCATION"
+  CartMissingLocation = 'CART_MISSING_LOCATION'
 }
 
 /** Features available to the cart. */
 export type CartFeatures = {
-  __typename?: "CartFeatures";
+  __typename?: 'CartFeatures';
   /**
    * Whether the booking questions feature is enabled. It also enables
    * the `CART_BOOKING_QUESTION_ANSWER_MISSING` error on the Cart.
    */
-  bookingQuestionsEnabled: Scalars["Boolean"];
+  bookingQuestionsEnabled: Scalars['Boolean'];
   /** Whether gift cards are available to be purchased in this cart. */
-  giftCardPurchaseEnabled: Scalars["Boolean"];
+  giftCardPurchaseEnabled: Scalars['Boolean'];
   /** Whether payment info is required to check out services in this cart. */
-  paymentInfoRequired: Scalars["Boolean"];
+  paymentInfoRequired: Scalars['Boolean'];
 };
 
 /** A gift card item that can be purchased. */
 export type CartGiftCardItem = CartItem & {
-  __typename?: "CartGiftCardItem";
+  __typename?: 'CartGiftCardItem';
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount?: Maybe<Scalars["Money"]>;
+  discountAmount?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  discountCode?: Maybe<Scalars["String"]>;
+  discountCode?: Maybe<Scalars['String']>;
   /** Send the gift card to a recipient via email. */
   emailFulfillment?: Maybe<CartItemEmailFulfillment>;
   /** Refer to the super type. */
   errors: Array<CartItemError>;
   giftCardDesign?: Maybe<CartItemGiftCardDesign>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Refer to the super type. */
   item: CartAvailableGiftCardItem;
   /** Refer to the super type. */
-  lineTotal?: Maybe<Scalars["Money"]>;
+  lineTotal?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  price?: Maybe<Scalars["Money"]>;
+  price?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  taxAmount?: Maybe<Scalars["Money"]>;
+  taxAmount?: Maybe<Scalars['Money']>;
 };
 
 /** A guest that can be associated with a bookable item. */
 export type CartGuest = {
-  __typename?: "CartGuest";
+  __typename?: 'CartGuest';
   /** Email address, if provided. */
-  email?: Maybe<Scalars["Email"]>;
+  email?: Maybe<Scalars['Email']>;
   /** First name, if provided. */
-  firstName?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars['String']>;
   /** ID of the guest. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Name of the guest if provided, otherwise a user-friendly fallback name that
    * uniquely identifies the guest.
    */
-  label: Scalars["String"];
+  label: Scalars['String'];
   /** Last name, if provided. */
-  lastName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars['String']>;
   /**
    * Positive ordinal number starting at 1.
    *
@@ -1241,9 +1251,9 @@ export type CartGuest = {
    * Use the `id` field for that instead. Also, don't assume this scheme follows
    * any predefined ordering.
    */
-  number: Scalars["Int"];
+  number: Scalars['Int'];
   /** Mobile phone, if provided. */
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
 /** Abstract item added using the `addCart...Item` mutations. */
@@ -1251,74 +1261,74 @@ export type CartItem = {
   /** Payment methods available for this item. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Total discount amount on the price. Null if location is not set yet. */
-  discountAmount?: Maybe<Scalars["Money"]>;
+  discountAmount?: Maybe<Scalars['Money']>;
   /**
    * Valid discount code that was applied, either the cart's code or one that was
    * applied separately to the item. An invalid code results in a `null` value.
    */
-  discountCode?: Maybe<Scalars["String"]>;
+  discountCode?: Maybe<Scalars['String']>;
   /** Current item validation errors. */
   errors: Array<CartItemError>;
   /** ID of the item. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Original item details. */
   item: CartAvailableItem;
   /** Total for the item after discounts and taxes. Null if location is not set yet. */
-  lineTotal?: Maybe<Scalars["Money"]>;
+  lineTotal?: Maybe<Scalars['Money']>;
   /** Price before discounts and taxes. Null if location is not set yet. */
-  price?: Maybe<Scalars["Money"]>;
+  price?: Maybe<Scalars['Money']>;
   /** Payment method selected for this item. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
   /** Total tax amount on the discounted price. Null if location is not set yet. */
-  taxAmount?: Maybe<Scalars["Money"]>;
+  taxAmount?: Maybe<Scalars['Money']>;
 };
 
 /** Cart item card payment method. */
 export type CartItemCardPaymentMethod = CartItemPaymentMethod & {
-  __typename?: "CartItemCardPaymentMethod";
+  __typename?: 'CartItemCardPaymentMethod';
   /** Brand name of the associated card. */
-  cardBrand: Scalars["String"];
+  cardBrand: Scalars['String'];
   /** Expiration month of the associated card. */
-  cardExpMonth: Scalars["Int"];
+  cardExpMonth: Scalars['Int'];
   /** Expiration year of the associated card. */
-  cardExpYear: Scalars["Int"];
+  cardExpYear: Scalars['Int'];
   /** Holder name of the associated card, might be `null`. */
-  cardHolder?: Maybe<Scalars["String"]>;
+  cardHolder?: Maybe<Scalars['String']>;
   /** Whether the associated card is the default card. */
-  cardIsDefault: Scalars["Boolean"];
+  cardIsDefault: Scalars['Boolean'];
   /** Last four digits of the card number. */
-  cardLast4: Scalars["String"];
+  cardLast4: Scalars['String'];
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Refer to the super type. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Send the item to a recipient via email. */
 export type CartItemEmailFulfillment = {
-  __typename?: "CartItemEmailFulfillment";
+  __typename?: 'CartItemEmailFulfillment';
   /** Optionally specify a delivery date for the email. */
-  deliveryDate?: Maybe<Scalars["Date"]>;
-  id: Scalars["ID"];
+  deliveryDate?: Maybe<Scalars['Date']>;
+  id: Scalars['ID'];
   /** Optionally include a message from the sender to the recipient. */
-  messageFromSender?: Maybe<Scalars["String"]>;
+  messageFromSender?: Maybe<Scalars['String']>;
   /** The email the item should be sent to. */
-  recipientEmail: Scalars["Email"];
+  recipientEmail: Scalars['Email'];
   /** The name of the person receiving the item. */
-  recipientName: Scalars["String"];
+  recipientName: Scalars['String'];
   /** The name of the person sending the item. */
-  senderName: Scalars["String"];
+  senderName: Scalars['String'];
 };
 
 /** Cart item validation error. */
 export type CartItemError = {
-  __typename?: "CartItemError";
+  __typename?: 'CartItemError';
   /** Machine-readable code. */
   code: CartItemErrorCode;
   /** Detailed geek-readable description. */
-  description: Scalars["String"];
+  description: Scalars['String'];
   /** Short human-readable message. */
-  message: Scalars["String"];
+  message: Scalars['String'];
 };
 
 /** Machine-readable cart item validation error code. */
@@ -1331,7 +1341,7 @@ export enum CartItemErrorCode {
    * All items in the cart that require payment must have a payment method set
    * before checking out.
    */
-  CartMissingItemPaymentMethod = "CART_MISSING_ITEM_PAYMENT_METHOD",
+  CartMissingItemPaymentMethod = 'CART_MISSING_ITEM_PAYMENT_METHOD',
   /**
    * This bookable item is missing a reserved time.
    *
@@ -1341,47 +1351,47 @@ export enum CartItemErrorCode {
    * out. Note that times are only reserved temporarily and will expire unless
    * the cart is checked out before the expiration time.
    */
-  CartMissingItemTime = "CART_MISSING_ITEM_TIME"
+  CartMissingItemTime = 'CART_MISSING_ITEM_TIME'
 }
 
 /** Specified design for a CartItemEmailFulfillment. */
 export type CartItemGiftCardDesign = {
-  __typename?: "CartItemGiftCardDesign";
-  backgroundColor?: Maybe<Scalars["String"]>;
-  foregroundText?: Maybe<Scalars["String"]>;
-  id: Scalars["ID"];
-  image?: Maybe<Scalars["String"]>;
+  __typename?: 'CartItemGiftCardDesign';
+  backgroundColor?: Maybe<Scalars['String']>;
+  foregroundText?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  image?: Maybe<Scalars['String']>;
 };
 
 /** Cart item payment method. */
 export type CartItemPaymentMethod = {
   /** ID of the method. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Short human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Cart item voucher payment method. */
 export type CartItemVoucherPaymentMethod = CartItemPaymentMethod & {
-  __typename?: "CartItemVoucherPaymentMethod";
+  __typename?: 'CartItemVoucherPaymentMethod';
   /** Number of vouchers available, always at least one. */
-  availableCount: Scalars["Int"];
+  availableCount: Scalars['Int'];
   /**
    * Last date when the voucher is valid, or `null` if valid forever.
    *
    * Note that when there are multiple vouchers available with different
    * expiration dates, this is the earliest date when a voucher expires.
    */
-  expiresOn?: Maybe<Scalars["Date"]>;
+  expiresOn?: Maybe<Scalars['Date']>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Refer to the super type. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Offer added to a cart, see the `offers` field. */
 export type CartOffer = {
-  __typename?: "CartOffer";
+  __typename?: 'CartOffer';
   /**
    * Whether this offer is applied to any items currently in the cart.
    *
@@ -1389,144 +1399,146 @@ export type CartOffer = {
    * used) but there are no items in the current cart that could be affected.
    * When applicable items are added later, the offer is applied then.
    */
-  applied: Scalars["Boolean"];
+  applied: Scalars['Boolean'];
   /** Case-insensitive, uniquely identifying code. */
-  code: Scalars["String"];
+  code: Scalars['String'];
   /** ID of the offer. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Human-readable name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Displayed price range of an item, before tax. */
 export type CartPriceRange = {
-  __typename?: "CartPriceRange";
+  __typename?: 'CartPriceRange';
   /** Maximum price. */
-  max: Scalars["Money"];
+  max: Scalars['Money'];
   /** Minimum price. */
-  min: Scalars["Money"];
+  min: Scalars['Money'];
   /** Whether the price is variable, i.e. the minimum and maximum differ. */
-  variable: Scalars["Boolean"];
+  variable: Scalars['Boolean'];
 };
 
 /** An item that can be purchased. */
 export type CartPurchasableItem = CartItem & {
-  __typename?: "CartPurchasableItem";
+  __typename?: 'CartPurchasableItem';
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  discountAmount?: Maybe<Scalars["Money"]>;
+  discountAmount?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  discountCode?: Maybe<Scalars["String"]>;
+  discountCode?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
   errors: Array<CartItemError>;
   /** Refer to the super type. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Refer to the super type. */
   item: CartAvailablePurchasableItem;
   /** Refer to the super type. */
-  lineTotal?: Maybe<Scalars["Money"]>;
+  lineTotal?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
-  price?: Maybe<Scalars["Money"]>;
+  price?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
   selectedPaymentMethod?: Maybe<CartItemPaymentMethod>;
   /** Refer to the super type. */
-  taxAmount?: Maybe<Scalars["Money"]>;
+  taxAmount?: Maybe<Scalars['Money']>;
 };
 
 export type CartSetLocationInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** ID of the location */
-  locationId: Scalars["ID"];
+  locationId: Scalars['ID'];
 };
 
 export type CartSetLocationPayload = {
-  __typename?: "CartSetLocationPayload";
+  __typename?: 'CartSetLocationPayload';
   /** Updated Cart */
   cart: Cart;
 };
 
 /** Summary of the cart, including e.g. line item totals. */
 export type CartSummary = {
-  __typename?: "CartSummary";
+  __typename?: 'CartSummary';
   deposit: DepositType;
   /** Total required deposit amount. */
-  depositAmount: Scalars["Money"];
+  depositAmount: Scalars['Money'];
   /** Total discount amount on the subtotal. */
-  discountAmount: Scalars["Money"];
+  discountAmount: Scalars['Money'];
   /** Total gratuity amount on the subtotal. */
-  gratuityAmount: Scalars["Money"];
+  gratuityAmount: Scalars['Money'];
   /** Whether a payment method is required */
-  paymentMethodRequired: Scalars["Boolean"];
+  paymentMethodRequired: Scalars['Boolean'];
   /** Rounding amount on the discounted and taxed subtotal. */
-  roundingAmount: Scalars["Money"];
+  roundingAmount: Scalars['Money'];
   /** Subtotal before gratuity, discounts, taxes, and rounding. */
-  subtotal: Scalars["Money"];
+  subtotal: Scalars['Money'];
   /** Total tax amount on the discounted subtotal. */
-  taxAmount: Scalars["Money"];
+  taxAmount: Scalars['Money'];
   /** Total after gratuity, discounts, taxes, and rounding. */
-  total: Scalars["Money"];
+  total: Scalars['Money'];
 };
 
 export type CheckoutCartInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type CheckoutCartPayload = {
-  __typename?: "CheckoutCartPayload";
+  __typename?: 'CheckoutCartPayload';
+  appointments: Array<CartAppointment>;
   cart: Cart;
 };
 
 /** A Client */
 export type Client = Node & {
-  __typename?: "Client";
+  __typename?: 'Client';
   /** Email address */
-  email?: Maybe<Scalars["Email"]>;
+  email?: Maybe<Scalars['Email']>;
   /** First name */
-  firstName?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars['String']>;
   /** The ID of an object */
-  id: Scalars["ID"];
-  insertedAt: Scalars["DateTime"];
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
   /** Last name */
-  lastName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars['String']>;
   /** Mobile phone number */
-  mobilePhone?: Maybe<Scalars["PhoneNumber"]>;
+  mobilePhone?: Maybe<Scalars['PhoneNumber']>;
   /** Full name */
-  name?: Maybe<Scalars["String"]>;
-  updatedAt: Scalars["DateTime"];
+  name?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
 };
+
 
 /** See `CartItemEmailFulfillment`. */
 export type CreateCartGiftCardItemEmailFulfillmentInput = {
-  deliveryDate?: Maybe<Scalars["Date"]>;
+  deliveryDate?: Maybe<Scalars['Date']>;
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The id of the CartGiftCardItem. */
-  itemId: Scalars["ID"];
-  messageFromSender?: Maybe<Scalars["String"]>;
-  recipientEmail: Scalars["Email"];
-  recipientName: Scalars["String"];
-  senderName: Scalars["String"];
+  itemId: Scalars['ID'];
+  messageFromSender?: Maybe<Scalars['String']>;
+  recipientEmail: Scalars['Email'];
+  recipientName: Scalars['String'];
+  senderName: Scalars['String'];
 };
 
 export type CreateCartGiftCardItemEmailFulfillmentPayload = {
-  __typename?: "CreateCartGiftCardItemEmailFulfillmentPayload";
+  __typename?: 'CreateCartGiftCardItemEmailFulfillmentPayload';
   cart: Cart;
   emailFulfillment: CartItemEmailFulfillment;
 };
 
 export type CreateCartGuestInput = {
-  email?: Maybe<Scalars["Email"]>;
-  firstName?: Maybe<Scalars["String"]>;
-  id: Scalars["ID"];
-  lastName?: Maybe<Scalars["String"]>;
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  email?: Maybe<Scalars['Email']>;
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
 export type CreateCartGuestPayload = {
-  __typename?: "CreateCartGuestPayload";
+  __typename?: 'CreateCartGuestPayload';
   cart: Cart;
   guest: CartGuest;
 };
@@ -1537,222 +1549,230 @@ export type CreateCartInput = {
   /** Optional client information */
   clientInformation?: Maybe<CartClientInformationInput>;
   /** Optional message or note from the client to the business */
-  clientMessage?: Maybe<Scalars["String"]>;
+  clientMessage?: Maybe<Scalars['String']>;
   /** Optional discount code */
-  discountCode?: Maybe<Scalars["String"]>;
+  discountCode?: Maybe<Scalars['String']>;
   /** ID of the cart location */
-  locationId?: Maybe<Scalars["ID"]>;
+  locationId?: Maybe<Scalars['ID']>;
   /**
    * Referral source for the appointments booked in the cart.
    *
    * This values is mapped to the appointments' 'referral_source' custom
    * field values after checkout.
    */
-  referralSource?: Maybe<Scalars["String"]>;
+  referralSource?: Maybe<Scalars['String']>;
 };
 
 export type CreateCartPayload = {
-  __typename?: "CreateCartPayload";
+  __typename?: 'CreateCartPayload';
   cart: Cart;
 };
 
+
+
 export type DeleteCartGiftCardItemEmailFulfillmentInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The id of the CartGiftCardItem. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
 };
 
 export type DeleteCartGiftCardItemEmailFulfillmentPayload = {
-  __typename?: "DeleteCartGiftCardItemEmailFulfillmentPayload";
+  __typename?: 'DeleteCartGiftCardItemEmailFulfillmentPayload';
   cart: Cart;
 };
 
 export type DeleteCartGuestInput = {
-  guestId: Scalars["ID"];
-  id: Scalars["ID"];
+  guestId: Scalars['ID'];
+  id: Scalars['ID'];
 };
 
 export type DeleteCartGuestPayload = {
-  __typename?: "DeleteCartGuestPayload";
+  __typename?: 'DeleteCartGuestPayload';
   cart: Cart;
 };
 
 export enum DepositType {
   /** An amount that covers the entire cost of the service is due at the time of booking. In other words, the deposit amount is equal to the total amount */
-  FullDeposit = "FULL_DEPOSIT",
+  FullDeposit = 'FULL_DEPOSIT',
   /** There is no deposit required before the time of service. In other words, the deposit amount is zero */
-  NoDeposit = "NO_DEPOSIT",
+  NoDeposit = 'NO_DEPOSIT',
   /** An amount that will go towards the final total amount is due at the time of booking. In other words, the deposit amount is less than the total amount */
-  PartialDeposit = "PARTIAL_DEPOSIT"
+  PartialDeposit = 'PARTIAL_DEPOSIT'
 }
 
+
+
 export type GiftCardDesign = {
-  __typename?: "GiftCardDesign";
-  backgroundColor?: Maybe<Scalars["String"]>;
-  foregroundText?: Maybe<Scalars["String"]>;
-  id: Scalars["ID"];
-  image?: Maybe<Scalars["String"]>;
-  name: Scalars["String"];
-  preset: Scalars["Boolean"];
+  __typename?: 'GiftCardDesign';
+  backgroundColor?: Maybe<Scalars['String']>;
+  foregroundText?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  image?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  preset: Scalars['Boolean'];
 };
 
 /** Location */
 export type Location = Node & {
-  __typename?: "Location";
+  __typename?: 'Location';
   /** The location's address */
   address: Address;
   /** URL to an image related to the location */
-  avatar?: Maybe<Scalars["String"]>;
+  avatar?: Maybe<Scalars['String']>;
   /** Name of the business */
-  businessName: Scalars["String"];
+  businessName: Scalars['String'];
   /** The coordinates of the location */
-  coordinates?: Maybe<Scalars["Coordinates"]>;
+  coordinates?: Maybe<Scalars['Coordinates']>;
   /** Location external id */
-  externalId?: Maybe<Scalars["String"]>;
+  externalId?: Maybe<Scalars['String']>;
   /** The ID of an object */
-  id: Scalars["ID"];
-  insertedAt: Scalars["DateTime"];
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
   /**
    * Indicates that the location is a remote location, and that appointments for
    * this location are carried out remotely.
    */
-  isRemote: Scalars["Boolean"];
+  isRemote: Scalars['Boolean'];
   /** The location's name */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** The location's phone number */
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
   /** The location's timezone */
-  tz: Scalars["Tz"];
-  updatedAt: Scalars["DateTime"];
+  tz: Scalars['Tz'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type LocationConnection = {
-  __typename?: "LocationConnection";
+  __typename?: 'LocationConnection';
   edges?: Maybe<Array<Maybe<LocationEdge>>>;
   pageInfo: PageInfo;
 };
 
 export type LocationEdge = {
-  __typename?: "LocationEdge";
-  cursor?: Maybe<Scalars["String"]>;
+  __typename?: 'LocationEdge';
+  cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Location>;
 };
 
 /** A client membership sold at the business. */
 export type Membership = Node & {
-  __typename?: "Membership";
+  __typename?: 'Membership';
   /** Client who owns the membership. */
   client: Client;
   /** The id of the client who owns the membership. */
-  clientId: Scalars["ID"];
+  clientId: Scalars['ID'];
   /**
    * Ending date for the membership.
    *
    * May be NULL to indicate an indefinitely frozen membership.
    */
-  endOn?: Maybe<Scalars["Date"]>;
+  endOn?: Maybe<Scalars['Date']>;
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Duration of the membership interval (eg. 1 month). */
-  interval: Scalars["DurationInterval"];
+  interval: Scalars['DurationInterval'];
   /** The membership name. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** Start date of the membership. */
-  startOn: Scalars["Date"];
+  startOn: Scalars['Date'];
   /** Membership Status. Active, Cancelled, Past Due or Paused */
   status: SubscriptionStatus;
   /** The current term number of the membership */
-  termNumber: Scalars["Int"];
+  termNumber: Scalars['Int'];
   /** Optional vouchers included with membership */
   vouchers: Array<MembershipVoucher>;
 };
 
 export type MembershipConnection = {
-  __typename?: "MembershipConnection";
+  __typename?: 'MembershipConnection';
   edges?: Maybe<Array<Maybe<MembershipEdge>>>;
   pageInfo: PageInfo;
 };
 
 export type MembershipEdge = {
-  __typename?: "MembershipEdge";
-  cursor?: Maybe<Scalars["String"]>;
+  __typename?: 'MembershipEdge';
+  cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Membership>;
 };
 
 /** A membership service voucher */
 export type MembershipVoucher = {
-  __typename?: "MembershipVoucher";
+  __typename?: 'MembershipVoucher';
   /** Number of vouchers included */
-  quantity: Scalars["Int"];
+  quantity: Scalars['Int'];
   service: Service;
   services: Array<Service>;
 };
 
+
+
 export type Node = {
   /** The ID of the object. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type OnlineGiftCardSettings = {
-  __typename?: "OnlineGiftCardSettings";
+  __typename?: 'OnlineGiftCardSettings';
   giftCardDesigns: Array<BusinessGiftCardDesign>;
   /** ID of the location that will be alloted gift card sales */
-  designatedLocationId?: Maybe<Scalars["ID"]>;
+  designatedLocationId?: Maybe<Scalars['ID']>;
   /** Message displayed on the gift card microsite */
-  websiteMessage?: Maybe<Scalars["String"]>;
+  websiteMessage?: Maybe<Scalars['String']>;
 };
 
 export type PageInfo = {
-  __typename?: "PageInfo";
+  __typename?: 'PageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars["String"]>;
+  endCursor?: Maybe<Scalars['String']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars["Boolean"];
+  hasNextPage: Scalars['Boolean'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars["String"]>;
+  startCursor?: Maybe<Scalars['String']>;
 };
+
+
 
 export type RemoveCartOfferInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The offer code identifier */
-  offerId: Scalars["String"];
+  offerId: Scalars['String'];
 };
 
 export type RemoveCartOfferPayload = {
-  __typename?: "RemoveCartOfferPayload";
+  __typename?: 'RemoveCartOfferPayload';
   cart: Cart;
 };
 
 export type RemoveCartSelectedItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** ID of the selected item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
 };
 
 export type RemoveCartSelectedItemPayload = {
-  __typename?: "RemoveCartSelectedItemPayload";
+  __typename?: 'RemoveCartSelectedItemPayload';
   cart: Cart;
 };
 
 export type ReserveCartBookableItemsInput = {
   /** ID of the bookable time. */
-  bookableTimeId: Scalars["ID"];
+  bookableTimeId: Scalars['ID'];
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type ReserveCartBookableItemsPayload = {
-  __typename?: "ReserveCartBookableItemsPayload";
+  __typename?: 'ReserveCartBookableItemsPayload';
   cart: Cart;
 };
 
 export type RootMutationType = {
-  __typename?: "RootMutationType";
+  __typename?: 'RootMutationType';
   /**
    * Add a credit card payment method to a cart.
    *
@@ -1784,13 +1804,9 @@ export type RootMutationType = {
   /** Reschedule the provided appointment to a new date and time. */
   appointmentReschedule?: Maybe<AppointmentReschedulePayload>;
   /** Get the available dates for the provided appointment. */
-  appointmentRescheduleAvailableDates?: Maybe<
-    AppointmentRescheduleAvailableDatesPayload
-  >;
+  appointmentRescheduleAvailableDates?: Maybe<AppointmentRescheduleAvailableDatesPayload>;
   /** Get the available appointment times on a particular date for the provided appointment. */
-  appointmentRescheduleAvailableTimes?: Maybe<
-    AppointmentRescheduleAvailableTimesPayload
-  >;
+  appointmentRescheduleAvailableTimes?: Maybe<AppointmentRescheduleAvailableTimesPayload>;
   /**
    * Cancel an Appointment.
    *
@@ -1807,6 +1823,13 @@ export type RootMutationType = {
   cartAddToWaitlist?: Maybe<CartAddToWaitlistPayload>;
   /** Answer a booking question */
   cartBookingQuestionAddAnswer?: Maybe<CartBookingQuestionAddAnswerPayload>;
+  /** Clear the answer for a booking question */
+  cartBookingQuestionClearAnswer?: Maybe<CartBookingQuestionClearAnswerPayload>;
+  /**
+   * Removes all the bookable items, purchasable items, and gift cards from the
+   * cart.
+   */
+  cartClear?: Maybe<CartClearPayload>;
   /**
    * Sets a location for the cart.
    *
@@ -1834,15 +1857,11 @@ export type RootMutationType = {
    * Create an email fulfillment for a gift card item. A digital copy of the gift
    * card will be sent to the recipient after the order is completed.
    */
-  createCartGiftCardItemEmailFulfillment?: Maybe<
-    CreateCartGiftCardItemEmailFulfillmentPayload
-  >;
+  createCartGiftCardItemEmailFulfillment?: Maybe<CreateCartGiftCardItemEmailFulfillmentPayload>;
   /** Add a guest to a cart. */
   createCartGuest?: Maybe<CreateCartGuestPayload>;
   /** Delete a gift card item email fulfillment. */
-  deleteCartGiftCardItemEmailFulfillment?: Maybe<
-    DeleteCartGiftCardItemEmailFulfillmentPayload
-  >;
+  deleteCartGiftCardItemEmailFulfillment?: Maybe<DeleteCartGiftCardItemEmailFulfillmentPayload>;
   /**
    * Delete a cart's guest.
    *
@@ -1886,9 +1905,7 @@ export type RootMutationType = {
   /** Update a pending cart */
   updateCart?: Maybe<UpdateCartPayload>;
   /** Update a gift card item email fulfillment. */
-  updateCartGiftCardItemEmailFulfillment?: Maybe<
-    UpdateCartGiftCardItemEmailFulfillmentPayload
-  >;
+  updateCartGiftCardItemEmailFulfillment?: Maybe<UpdateCartGiftCardItemEmailFulfillmentPayload>;
   /** Update a cart's guest. */
   updateCartGuest?: Maybe<UpdateCartGuestPayload>;
   /**
@@ -1901,135 +1918,173 @@ export type RootMutationType = {
   /** Update a cart's selected gift card item. */
   updateCartSelectedGiftCardItem?: Maybe<UpdateCartSelectedGiftCardItemPayload>;
   /** Update a cart's selected purchasable item. */
-  updateCartSelectedPurchasableItem?: Maybe<
-    UpdateCartSelectedPurchasableItemPayload
-  >;
+  updateCartSelectedPurchasableItem?: Maybe<UpdateCartSelectedPurchasableItemPayload>;
   /** Update the authenticated client */
   updateClient?: Maybe<UpdateClientPayload>;
 };
+
 
 export type RootMutationTypeAddCartCardPaymentMethodArgs = {
   input: AddCartCardPaymentMethodInput;
 };
 
+
 export type RootMutationTypeAddCartOfferArgs = {
   input: AddCartOfferInput;
 };
+
 
 export type RootMutationTypeAddCartSelectedBookableItemArgs = {
   input: AddCartSelectedBookableItemInput;
 };
 
+
 export type RootMutationTypeAddCartSelectedGiftCardItemArgs = {
   input: AddCartSelectedGiftCardItemInput;
 };
+
 
 export type RootMutationTypeAddCartSelectedPurchasableItemArgs = {
   input: AddCartSelectedPurchasableItemInput;
 };
 
+
 export type RootMutationTypeAppointmentRescheduleArgs = {
   input: AppointmentRescheduleInput;
 };
+
 
 export type RootMutationTypeAppointmentRescheduleAvailableDatesArgs = {
   input: AppointmentRescheduleAvailableDatesInput;
 };
 
+
 export type RootMutationTypeAppointmentRescheduleAvailableTimesArgs = {
   input: AppointmentRescheduleAvailableTimesInput;
 };
+
 
 export type RootMutationTypeCancelAppointmentArgs = {
   input: CancelAppointmentInput;
 };
 
+
 export type RootMutationTypeCartAddToWaitlistArgs = {
   input: CartAddToWaitlistInput;
 };
+
 
 export type RootMutationTypeCartBookingQuestionAddAnswerArgs = {
   input: CartBookingQuestionAddAnswerInput;
 };
 
+
+export type RootMutationTypeCartBookingQuestionClearAnswerArgs = {
+  input: CartBookingQuestionClearAnswerInput;
+};
+
+
+export type RootMutationTypeCartClearArgs = {
+  input: CartClearInput;
+};
+
+
 export type RootMutationTypeCartSetLocationArgs = {
   input: CartSetLocationInput;
 };
+
 
 export type RootMutationTypeCheckoutCartArgs = {
   input: CheckoutCartInput;
 };
 
+
 export type RootMutationTypeCreateCartArgs = {
   input: CreateCartInput;
 };
+
 
 export type RootMutationTypeCreateCartGiftCardItemEmailFulfillmentArgs = {
   input: CreateCartGiftCardItemEmailFulfillmentInput;
 };
 
+
 export type RootMutationTypeCreateCartGuestArgs = {
   input: CreateCartGuestInput;
 };
+
 
 export type RootMutationTypeDeleteCartGiftCardItemEmailFulfillmentArgs = {
   input: DeleteCartGiftCardItemEmailFulfillmentInput;
 };
 
+
 export type RootMutationTypeDeleteCartGuestArgs = {
   input: DeleteCartGuestInput;
 };
+
 
 export type RootMutationTypeRemoveCartOfferArgs = {
   input: RemoveCartOfferInput;
 };
 
+
 export type RootMutationTypeRemoveCartSelectedItemArgs = {
   input: RemoveCartSelectedItemInput;
 };
+
 
 export type RootMutationTypeReserveCartBookableItemsArgs = {
   input: ReserveCartBookableItemsInput;
 };
 
+
 export type RootMutationTypeSelectCartPaymentMethodArgs = {
   input: SelectCartPaymentMethodInput;
 };
+
 
 export type RootMutationTypeTakeCartOwnershipArgs = {
   input: TakeCartOwnershipInput;
 };
 
+
 export type RootMutationTypeUpdateCartArgs = {
   input: UpdateCartInput;
 };
+
 
 export type RootMutationTypeUpdateCartGiftCardItemEmailFulfillmentArgs = {
   input: UpdateCartGiftCardItemEmailFulfillmentInput;
 };
 
+
 export type RootMutationTypeUpdateCartGuestArgs = {
   input: UpdateCartGuestInput;
 };
+
 
 export type RootMutationTypeUpdateCartSelectedBookableItemArgs = {
   input: UpdateCartSelectedBookableItemInput;
 };
 
+
 export type RootMutationTypeUpdateCartSelectedGiftCardItemArgs = {
   input: UpdateCartSelectedGiftCardItemInput;
 };
 
+
 export type RootMutationTypeUpdateCartSelectedPurchasableItemArgs = {
   input: UpdateCartSelectedPurchasableItemInput;
 };
+
 
 export type RootMutationTypeUpdateClientArgs = {
   input: UpdateClientInput;
 };
 
 export type RootQueryType = {
-  __typename?: "RootQueryType";
+  __typename?: 'RootQueryType';
   appointment?: Maybe<Appointment>;
   /** Look up the currently authenticated business */
   business?: Maybe<Business>;
@@ -2060,9 +2115,7 @@ export type RootQueryType = {
    * existing reservations are invalidated and the times must be reserved again
    * using `reserveCartBookableItems`.
    */
-  cartBookableStaffVariants?: Maybe<
-    Array<CartAvailableBookableItemStaffVariant>
-  >;
+  cartBookableStaffVariants?: Maybe<Array<CartAvailableBookableItemStaffVariant>>;
   /**
    * Retrieves available times for all bookable cart items, given a date that
    * was retrieved earlier using `cartBookableDates`.
@@ -2089,178 +2142,188 @@ export type RootQueryType = {
   node?: Maybe<Node>;
 };
 
+
 export type RootQueryTypeAppointmentArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
+
 
 export type RootQueryTypeCartArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
+
 
 export type RootQueryTypeCartBookableDatesArgs = {
-  id: Scalars["ID"];
-  limit?: Maybe<Scalars["Int"]>;
-  locationId?: Maybe<Scalars["ID"]>;
-  searchRangeLower?: Maybe<Scalars["Date"]>;
-  searchRangeUpper?: Maybe<Scalars["Date"]>;
-  tz?: Maybe<Scalars["Tz"]>;
+  id: Scalars['ID'];
+  limit?: Maybe<Scalars['Int']>;
+  locationId?: Maybe<Scalars['ID']>;
+  searchRangeLower?: Maybe<Scalars['Date']>;
+  searchRangeUpper?: Maybe<Scalars['Date']>;
+  tz?: Maybe<Scalars['Tz']>;
 };
+
 
 export type RootQueryTypeCartBookableStaffVariantsArgs = {
-  bookableTimeId: Scalars["ID"];
-  id: Scalars["ID"];
-  itemId: Scalars["ID"];
-  locationId?: Maybe<Scalars["ID"]>;
+  bookableTimeId: Scalars['ID'];
+  id: Scalars['ID'];
+  itemId: Scalars['ID'];
+  locationId?: Maybe<Scalars['ID']>;
 };
+
 
 export type RootQueryTypeCartBookableTimesArgs = {
-  id: Scalars["ID"];
-  locationId?: Maybe<Scalars["ID"]>;
-  searchDate: Scalars["Date"];
-  tz?: Maybe<Scalars["Tz"]>;
+  id: Scalars['ID'];
+  locationId?: Maybe<Scalars['ID']>;
+  searchDate: Scalars['Date'];
+  tz?: Maybe<Scalars['Tz']>;
 };
+
 
 export type RootQueryTypeLocationsArgs = {
-  after?: Maybe<Scalars["String"]>;
-  before?: Maybe<Scalars["String"]>;
-  first?: Maybe<Scalars["Int"]>;
-  last?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
+
 
 export type RootQueryTypeMyAppointmentsArgs = {
-  after?: Maybe<Scalars["String"]>;
-  before?: Maybe<Scalars["String"]>;
-  first?: Maybe<Scalars["Int"]>;
-  last?: Maybe<Scalars["Int"]>;
-  query?: Maybe<Scalars["QueryString"]>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  query?: Maybe<Scalars['QueryString']>;
 };
+
 
 export type RootQueryTypeMyMembershipsArgs = {
-  after?: Maybe<Scalars["String"]>;
-  before?: Maybe<Scalars["String"]>;
-  first?: Maybe<Scalars["Int"]>;
-  last?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
+
 export type RootQueryTypeNodeArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type SelectCartPaymentMethodInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** ID of the selected payment method. */
-  paymentMethodId: Scalars["ID"];
+  paymentMethodId: Scalars['ID'];
 };
 
 export type SelectCartPaymentMethodPayload = {
-  __typename?: "SelectCartPaymentMethodPayload";
+  __typename?: 'SelectCartPaymentMethodPayload';
   cart: Cart;
 };
 
 /** A Service */
 export type Service = Node & {
-  __typename?: "Service";
+  __typename?: 'Service';
   /** Service Category */
   category: ServiceCategory;
   /** Service Category Id */
-  categoryId: Scalars["ID"];
+  categoryId: Scalars['ID'];
   /** Description */
-  description?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars['String']>;
   /** External Id */
-  externalId?: Maybe<Scalars["String"]>;
+  externalId?: Maybe<Scalars['String']>;
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Name */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** A ServiceCategory */
 export type ServiceCategory = {
-  __typename?: "ServiceCategory";
+  __typename?: 'ServiceCategory';
   /** Name */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 /** Staff */
 export type Staff = Node & {
-  __typename?: "Staff";
+  __typename?: 'Staff';
   /** A URL to the Avatar uploaded for this staff within the Boulevard Dashboard */
-  avatar?: Maybe<Scalars["String"]>;
+  avatar?: Maybe<Scalars['String']>;
   /** A biography of the staff member */
-  bio?: Maybe<Scalars["String"]>;
+  bio?: Maybe<Scalars['String']>;
   /** The public display name of the staff member. Preferred over other name fields. */
-  displayName: Scalars["String"];
+  displayName: Scalars['String'];
   /** The first name of the staff member. Consider using the display name instead. */
-  firstName: Scalars["String"];
+  firstName: Scalars['String'];
   /** The ID of an object */
-  id: Scalars["ID"];
-  insertedAt: Scalars["DateTime"];
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
   /** The last name of the staff member. Consider using the display name instead. */
-  lastName: Scalars["String"];
+  lastName: Scalars['String'];
   /** The nickname of the staff member. Consider using the display name instead. */
-  nickname?: Maybe<Scalars["String"]>;
+  nickname?: Maybe<Scalars['String']>;
   /** The role the staff member holds at the business */
   role: StaffRole;
-  updatedAt: Scalars["DateTime"];
+  updatedAt: Scalars['DateTime'];
 };
 
 /** Staff Role */
 export type StaffRole = Node & {
-  __typename?: "StaffRole";
+  __typename?: 'StaffRole';
   /** The ID of an object */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** Name of the role */
-  name: Scalars["String"];
+  name: Scalars['String'];
 };
 
 export enum SubscriptionStatus {
-  Active = "ACTIVE",
-  Cancelled = "CANCELLED",
-  PastDue = "PAST_DUE",
-  Paused = "PAUSED"
+  Active = 'ACTIVE',
+  Cancelled = 'CANCELLED',
+  PastDue = 'PAST_DUE',
+  Paused = 'PAUSED'
 }
 
 export type TakeCartOwnershipInput = {
   /** ID of the cart */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type TakeCartOwnershipPayload = {
-  __typename?: "TakeCartOwnershipPayload";
+  __typename?: 'TakeCartOwnershipPayload';
   cart: Cart;
 };
 
+
 /** See `CartItemEmailFulfillment`. */
 export type UpdateCartGiftCardItemEmailFulfillmentInput = {
-  deliveryDate?: Maybe<Scalars["Date"]>;
+  deliveryDate?: Maybe<Scalars['Date']>;
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** The id of the CartGiftCardItem. */
-  itemId: Scalars["ID"];
-  messageFromSender?: Maybe<Scalars["String"]>;
-  recipientEmail?: Maybe<Scalars["Email"]>;
-  recipientName?: Maybe<Scalars["String"]>;
-  senderName?: Maybe<Scalars["String"]>;
+  itemId: Scalars['ID'];
+  messageFromSender?: Maybe<Scalars['String']>;
+  recipientEmail?: Maybe<Scalars['Email']>;
+  recipientName?: Maybe<Scalars['String']>;
+  senderName?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCartGiftCardItemEmailFulfillmentPayload = {
-  __typename?: "UpdateCartGiftCardItemEmailFulfillmentPayload";
+  __typename?: 'UpdateCartGiftCardItemEmailFulfillmentPayload';
   cart: Cart;
   emailFulfillment: CartItemEmailFulfillment;
 };
 
 export type UpdateCartGuestInput = {
-  email?: Maybe<Scalars["Email"]>;
-  firstName?: Maybe<Scalars["String"]>;
-  guestId: Scalars["ID"];
-  id: Scalars["ID"];
-  lastName?: Maybe<Scalars["String"]>;
-  phoneNumber?: Maybe<Scalars["PhoneNumber"]>;
+  email?: Maybe<Scalars['Email']>;
+  firstName?: Maybe<Scalars['String']>;
+  guestId: Scalars['ID'];
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
 export type UpdateCartGuestPayload = {
-  __typename?: "UpdateCartGuestPayload";
+  __typename?: 'UpdateCartGuestPayload';
   cart: Cart;
   guest: CartGuest;
 };
@@ -2272,32 +2335,32 @@ export type UpdateCartGuestPayload = {
 export type UpdateCartInput = {
   advanceGratuity?: Maybe<CartAdvanceGratuityInput>;
   clientInformation?: Maybe<CartClientInformationInput>;
-  clientMessage?: Maybe<Scalars["String"]>;
-  discountCode?: Maybe<Scalars["String"]>;
-  id: Scalars["ID"];
+  clientMessage?: Maybe<Scalars['String']>;
+  discountCode?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
   /**
    * Referral source for the appointments booked in the cart.
    *
    * This values is mapped to the appointments' 'referral_source' custom
    * field values after checkout.
    */
-  referralSource?: Maybe<Scalars["String"]>;
+  referralSource?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCartPayload = {
-  __typename?: "UpdateCartPayload";
+  __typename?: 'UpdateCartPayload';
   cart: Cart;
 };
 
 export type UpdateCartSelectedBookableItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Optional discount code applied to the item. Invalid discount codes are
    * ignored without an error, check `discountCode` on the selected item to see
    * if the code was valid.
    */
-  itemDiscountCode?: Maybe<Scalars["String"]>;
+  itemDiscountCode?: Maybe<Scalars['String']>;
   /**
    * Optional ID that identifies the guest this item is booked for. A null
    * value indicates the cart owner, or current client.
@@ -2305,70 +2368,70 @@ export type UpdateCartSelectedBookableItemInput = {
    * When finding available times for bookable items, it's assumed that two
    * items having different guests can be booked simultaneously.
    */
-  itemGuestId?: Maybe<Scalars["ID"]>;
+  itemGuestId?: Maybe<Scalars['ID']>;
   /** ID of the selected bookable item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
   /**
    * Optional IDs of selected bookable item options. Note that the selections
    * must conform to the option group requirements, e.g. limits on the number
    * of options. Otherwise an error is returned.
    */
-  itemOptionIds?: Maybe<Array<Scalars["ID"]>>;
+  itemOptionIds?: Maybe<Array<Scalars['ID']>>;
   /** Optional ID of the selected bookable item staff variant. */
-  itemStaffVariantId?: Maybe<Scalars["ID"]>;
+  itemStaffVariantId?: Maybe<Scalars['ID']>;
 };
 
 export type UpdateCartSelectedBookableItemPayload = {
-  __typename?: "UpdateCartSelectedBookableItemPayload";
+  __typename?: 'UpdateCartSelectedBookableItemPayload';
   cart: Cart;
 };
 
 export type UpdateCartSelectedGiftCardItemInput = {
   /** ID of a valid CartItemGiftCardDesign */
-  giftCardDesignId?: Maybe<Scalars["ID"]>;
+  giftCardDesignId?: Maybe<Scalars['ID']>;
   /** ID of the cart or token. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /** ID of the CartGiftCardItem. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
   /**
    * Price applied to the gift card item. See cartAvailableGiftCardItem.minPrice
    * and maxPrice for limits
    */
-  itemPrice?: Maybe<Scalars["Money"]>;
+  itemPrice?: Maybe<Scalars['Money']>;
 };
 
 export type UpdateCartSelectedGiftCardItemPayload = {
-  __typename?: "UpdateCartSelectedGiftCardItemPayload";
+  __typename?: 'UpdateCartSelectedGiftCardItemPayload';
   cart: Cart;
 };
 
 export type UpdateCartSelectedPurchasableItemInput = {
   /** ID of the cart. */
-  id: Scalars["ID"];
+  id: Scalars['ID'];
   /**
    * Optional discount code applied to the item. Invalid discount codes are
    * ignored without an error, check `discountCode` on the selected item to see
    * if the code was valid.
    */
-  itemDiscountCode?: Maybe<Scalars["String"]>;
+  itemDiscountCode?: Maybe<Scalars['String']>;
   /** ID of the selected purchasable item. */
-  itemId: Scalars["ID"];
+  itemId: Scalars['ID'];
 };
 
 export type UpdateCartSelectedPurchasableItemPayload = {
-  __typename?: "UpdateCartSelectedPurchasableItemPayload";
+  __typename?: 'UpdateCartSelectedPurchasableItemPayload';
   cart: Cart;
 };
 
 export type UpdateClientInput = {
-  dob?: Maybe<Scalars["Date"]>;
-  email?: Maybe<Scalars["Email"]>;
-  firstName?: Maybe<Scalars["String"]>;
-  lastName?: Maybe<Scalars["String"]>;
-  mobilePhone?: Maybe<Scalars["PhoneNumber"]>;
+  dob?: Maybe<Scalars['Date']>;
+  email?: Maybe<Scalars['Email']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  mobilePhone?: Maybe<Scalars['PhoneNumber']>;
 };
 
 export type UpdateClientPayload = {
-  __typename?: "UpdateClientPayload";
+  __typename?: 'UpdateClientPayload';
   client?: Maybe<Client>;
 };
