@@ -417,6 +417,11 @@ export const checkoutCartMutation = gql`
       cart {
         ...CartProperties
       }
+      appointments {
+        appointmentId
+        clientId
+        forCartOwner
+      }
     }
   }
 `;
