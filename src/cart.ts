@@ -1279,6 +1279,28 @@ class Cart extends Node<Graph.Cart> {
   }
 
   /**
+   * Adds tags to the appointment booked within a cart.
+   *
+   * @async
+   * @category Appointments
+   * @public
+   * @returns A map with a Boolean `success` key or an error if one of the tags doesn't exist.
+   */
+  async addAppointmentTags(appointmentId: string, tagIds: string[]): Promise<Map<string, Boolean>> {
+    const input: Graph.AppointmentAddTagsInput = {
+      cartId: this.id,
+      id: appointmentId,
+      tagIds: tagIds
+    }
+
+    const response = await this.platformClient.request(
+      graph.appointmentAddTagsMutation, { input }
+    );
+
+    return response;
+  }
+
+  /**
    * @internal
    */
   private refresh(newCart) {

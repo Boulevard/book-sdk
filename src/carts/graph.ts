@@ -700,6 +700,14 @@ export const updateSelectedPurchasableItemMutation = gql`
   }
 `;
 
+export const appointmentAddTagsMutation = gql`
+  mutation AppointmentAddTags($input: AppointmentAddTagsInput!) {
+    appointmentAddTags(input: $input) {
+      success
+    }
+  }
+`
+
 export const addCardPaymentMethodMutation = gql`
   ${fragments.cart}
   mutation AddCartCardPaymentMethod($input: AddCartCardPaymentMethodInput!) {

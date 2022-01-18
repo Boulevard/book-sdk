@@ -248,6 +248,17 @@ export type Appointment = Node & {
   state: AppointmentState;
 };
 
+export type AppointmentAddTagsInput = {
+  cartId: Scalars['ID'];
+  id: Scalars['ID'];
+  tagIds: Array<Scalars['ID']>;
+};
+
+export type AppointmentAddTagsPayload = {
+  __typename?: 'AppointmentAddTagsPayload';
+  success: Scalars['Boolean'];
+};
+
 export type AppointmentCancellation = {
   __typename?: 'AppointmentCancellation';
   /** Datetime the appointment was cancelled in UTC. */
@@ -1801,6 +1812,23 @@ export type RootMutationType = {
   addCartSelectedGiftCardItem?: Maybe<AddCartSelectedGiftCardItemPayload>;
   /** Add a purchasable item to a cart. */
   addCartSelectedPurchasableItem?: Maybe<AddCartSelectedPurchasableItemPayload>;
+  /**
+   * Adds tags to an appointment.
+   *
+   * Note that:
+   *
+   * - The appointment has to come from a cart checked out by the client code.
+   * - The operation is idempotent - adding an existing tag to an appointment is
+   * a successful no-op.
+   * - If any of the tag ids is incorrect, the entire operation is rolled back
+   * and an error is returned.
+   *
+   * To make sure tags are secure and do not leak out via the client code, we
+   * only allow adding tags using their ID, not the name. When building custom
+   * booking flow, the recommended approach is to embed the tag ID in the code
+   * during the build phase.
+   */
+  appointmentAddTags?: Maybe<AppointmentAddTagsPayload>;
   /** Reschedule the provided appointment to a new date and time. */
   appointmentReschedule?: Maybe<AppointmentReschedulePayload>;
   /** Get the available dates for the provided appointment. */
@@ -1946,6 +1974,11 @@ export type RootMutationTypeAddCartSelectedGiftCardItemArgs = {
 
 export type RootMutationTypeAddCartSelectedPurchasableItemArgs = {
   input: AddCartSelectedPurchasableItemInput;
+};
+
+
+export type RootMutationTypeAppointmentAddTagsArgs = {
+  input: AppointmentAddTagsInput;
 };
 
 
