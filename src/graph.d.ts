@@ -103,6 +103,11 @@ export type Scalars = {
    *
    */
   Tz: any;
+  /**
+   * Represents an absolute URL as defined by RFC3986
+   *
+   */
+  Url: any;
 };
 
 export type AddCartCardPaymentMethodInput = {
@@ -220,6 +225,8 @@ export type Appointment = Node & {
   __typename?: 'Appointment';
   /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
+  /** Links to allow direct addition of the appointment to different calendar platforms */
+  calendarLinks: CalendarLinks;
   /** Information about the cancellation, if present */
   cancellation?: Maybe<AppointmentCancellation>;
   /** Boolean signifying if the appointment is cancelled or not */
@@ -438,6 +445,20 @@ export type BusinessGiftCardDesign = {
   design: GiftCardDesign;
   id: Scalars['ID'];
   selected: Scalars['Boolean'];
+};
+
+export type CalendarLinks = {
+  __typename?: 'CalendarLinks';
+  /** A deep link to add the appointment directly to Google Calendar */
+  googleCalendar: Scalars['Url'];
+  /** A downloadable ICS file to use for native calendar applications */
+  icsDownload: Scalars['Url'];
+  /** A deep link to add the appointment directly to Microsoft Office 365 */
+  microsoftOffice: Scalars['Url'];
+  /** A deep link to add the appointment directly to Microsoft Outlook Online */
+  microsoftOutlook: Scalars['Url'];
+  /** A deep link to add the appointment directly to Yahoo Calendar */
+  yahooCalendar: Scalars['Url'];
 };
 
 export type CancelAppointmentInput = {
@@ -2468,3 +2489,4 @@ export type UpdateClientPayload = {
   __typename?: 'UpdateClientPayload';
   client?: Maybe<Client>;
 };
+

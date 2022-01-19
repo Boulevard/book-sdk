@@ -31,6 +31,13 @@ const fragments = gql`
     endAt
     createdAt
     notes
+    calendarLinks {
+      icsDownload
+      googleCalendar
+      microsoftOffice
+      microsoftOutlook
+      yahooCalendar
+    }
     cancellation {
       cancelledAt
       notes

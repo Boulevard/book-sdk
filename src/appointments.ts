@@ -1,5 +1,5 @@
 import { Node, PlatformClient } from "./platformClient";
-import type { AppointmentCancellationReason, AppointmentState } from "./graph";
+import type { AppointmentCancellationReason, AppointmentState, CalendarLinks } from "./graph";
 import type { Scalars, Maybe } from "./graph";
 import type * as Graph from "./graph";
 import {
@@ -63,6 +63,9 @@ class AppointmentService extends Node<Graph.AppointmentService> {
 
   /** The total duration (in minutes) of this service */
   totalDuration: Scalars["Int"];
+
+  /** Calendar links for the appointment */
+  calendarLinks: CalendarLinks;
 
   /**
    * @internal
