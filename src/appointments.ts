@@ -64,9 +64,6 @@ class AppointmentService extends Node<Graph.AppointmentService> {
   /** The total duration (in minutes) of this service */
   totalDuration: Scalars["Int"];
 
-  /** Calendar links for the appointment */
-  calendarLinks: CalendarLinks;
-
   /**
    * @internal
    */
@@ -117,6 +114,9 @@ class Appointment extends Node<Graph.Appointment> {
 
   /** The state of the appointment. */
   state: AppointmentState;
+
+  /** Calendar links for the appointment */
+  calendarLinks: CalendarLinks;
 
   /**
    * @internal
@@ -315,5 +315,6 @@ export {
   AppointmentService,
   AppointmentState,
   AvailableRescheduleTime,
-  AvailableRescheduleDate
+  AvailableRescheduleDate,
+  CalendarLinks
 };
