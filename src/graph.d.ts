@@ -2198,6 +2198,7 @@ export type RootQueryType = {
 
 
 export type RootQueryTypeAppointmentArgs = {
+  cartId?: Maybe<Scalars['ID']>;
   id: Scalars['ID'];
 };
 
@@ -2229,6 +2230,7 @@ export type RootQueryTypeCartBookableTimesArgs = {
   id: Scalars['ID'];
   locationId?: Maybe<Scalars['ID']>;
   searchDate: Scalars['Date'];
+  staffVariantIds?: Maybe<Array<Scalars['ID']>>;
   tz?: Maybe<Scalars['Tz']>;
 };
 

@@ -277,6 +277,11 @@ class Appointments {
   constructor(private platformClient: PlatformClient) {}
 
   /**
+   * Fetches the appointment by the ID.
+   * 
+   * Note that only the appointment's client can see the appointment, so 
+   * this function requires an authenticated API access. For unauthenticated access,
+   * see the getFromCart function.
    * @async
    * @param {id} ID the ID of the appointment
    * @protected
@@ -285,6 +290,23 @@ class Appointments {
   async get(id: Scalars["ID"]): Promise<Appointment> {
     const response = await this.platformClient.request(appointmentQuery, {
       id
+    });
+
+    return new Appointment(this.platformClient, response.appointment);
+  }
+
+  /**
+   * Fetches the appointment by using the appointment ID and the cart ID.
+   * @async
+   * @param {id} ID the ID of the appointment
+   * @param {cartId} ID the ID of the cart the appointment was booked with 
+   * @protected
+   * @returns Promise containing the Appointment
+   */
+  async getFromCart(id: Scalars["ID"], cartId: Scalars["ID"]): Promise<Appointment> {
+    const response = await this.platformClient.request(appointmentQuery, {
+      id,
+      cartId
     });
 
     return new Appointment(this.platformClient, response.appointment);
