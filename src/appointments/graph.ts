@@ -24,6 +24,7 @@ const fragments = gql`
   }
 
   fragment AppointmentProperties on Appointment {
+    id
     duration
     cancelled
     state
@@ -31,6 +32,9 @@ const fragments = gql`
     endAt
     createdAt
     notes
+    appointmentServices {
+      ...AppointmentServiceProperties
+    }
     calendarLinks {
       icsDownload
       googleCalendar
