@@ -48,8 +48,8 @@ const fragments = gql`
 
 export const appointmentQuery = gql`
   ${fragments}
-  query Appointment($id: ID!) {
-    appointment(id: $id) {
+  query Appointment($id: ID!, $cartId: ID) {
+    appointment(id: $id, cartId: $cartId) {
       ...AppointmentProperties
     }
   }
