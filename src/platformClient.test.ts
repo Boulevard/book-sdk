@@ -15,6 +15,7 @@ describe("testing api", () => {
       {
         body: '{"query":""}',
         headers: {
+          "Book-SDK-Version": "1.0.21",
           Authorization:
             "Basic MTk3ZjNlYWMtZjkwZC00MmIzLTgwZWQtZTNhNjgyODg2NDdiOg==",
           "Content-Type": "application/json"
@@ -38,7 +39,8 @@ describe("testing api", () => {
         headers: {
           Authorization:
             "Basic YTcyMjdhZDAtOTA0Mi00ZThkLTkzNDktMzMyYWI2NTQ0MDI3Og==",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Book-SDK-Version": "1.0.21"
         },
         method: "POST"
       }
@@ -62,6 +64,7 @@ describe("testing api", () => {
       {
         body: '{"query":""}',
         headers: {
+          "Book-SDK-Version": "1.0.21",
           Authorization:
             "Basic MjY1ZTUzNjUtYjc0Mi00MDlmLTk4ZWYtZDg5MGIzZWZkZTcwOg==",
           "Content-Type": "application/json"

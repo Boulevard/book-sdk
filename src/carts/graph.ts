@@ -706,7 +706,7 @@ export const appointmentAddTagsMutation = gql`
       success
     }
   }
-`
+`;
 
 export const addCardPaymentMethodMutation = gql`
   ${fragments.cart}
