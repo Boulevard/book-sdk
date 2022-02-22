@@ -27,6 +27,7 @@ import {
 } from "./carts/items";
 import { CartGuest } from "./carts/guests";
 import fetch from "cross-fetch";
+import * as Sdk from "./graph";
 
 /** Gratuity set in advance for bookable items. */
 class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
@@ -326,14 +327,14 @@ class Cart extends Node<Graph.Cart> {
   async addCardPaymentMethod(
     details:
       | {
-          card: {
-            name: string;
-            number: string;
-            cvv: string;
-            exp_month: number;
-            exp_year: number;
-          };
-        }
+        card: {
+          name: string;
+          number: string;
+          cvv: string;
+          exp_month: number;
+          exp_year: number;
+        };
+      }
       | { token: string },
     opts?: { select?: boolean }
   ): Promise<Cart> {
@@ -356,14 +357,14 @@ class Cart extends Node<Graph.Cart> {
   private async tokenizeCardDetails(
     details:
       | {
-          card: {
-            name: string;
-            number: string;
-            cvv: string;
-            exp_month: number;
-            exp_year: number;
-          };
-        }
+        card: {
+          name: string;
+          number: string;
+          cvv: string;
+          exp_month: number;
+          exp_year: number;
+        };
+      }
       | { token: string }
   ) {
     if ("token" in details) {
@@ -548,6 +549,70 @@ class Cart extends Node<Graph.Cart> {
 
     return this.refresh(response.cartAddToWaitlist.cart);
   }
+
+  /**
+   * Sends an authorization code to the user via SMS. 
+   * See authorizeCartOwnership({codeId, codeValue}) for next step.
+   *
+   * @async
+   * @param mobilePhone The mobile phone number that the client has on their account
+   * @public
+   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
+   */
+  async sendClientAuthorizationCodeViaSms(mobilePhone: string): Promise<string> {
+    const input: Graph.SendClientAuthorizationCodeViaSmsInput = {
+      mobilePhone: mobilePhone
+    };
+
+    const {
+      sendClientAuthorizationCodeViaSms: { clientAuthorizationCodeId }
+    } = await this.platformClient.sdk().sendClientAuthorizationCodeViaSms({ input });
+
+    return clientAuthorizationCodeId;
+  }
+
+  /**
+   * Sends an authorization code to the user via email. 
+   * See authorizeCartOwnership({codeId, codeValue}) for next step.
+   *
+   * @async
+   * @param email The email address that the client has on their account
+   * @public
+   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
+   */
+  async sendClientAuthorizationCodeViaEmail(email: string): Promise<string> {
+    const input: Graph.SendClientAuthorizationCodeViaEmailInput = {
+      email: email
+    };
+
+    const {
+      sendClientAuthorizationCodeViaEmail: { clientAuthorizationCodeId }
+    } = await this.platformClient.sdk().sendClientAuthorizationCodeViaEmail({ input });
+
+    return clientAuthorizationCodeId;
+  }
+
+  /**
+   * Sends an authorization code to the user via email. 
+   * See authorizeCartOwnership({codeId, codeValue}) for next step.
+   *
+   * @async
+   * @param email The email address that the client has on their account
+   * @public
+   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
+   */
+  async authorizeCartOwnership(codeId: string, codeValue: number) {
+    const input: Graph.AuthorizeCartOwnershipInput = {
+      cartId: this.id,
+      clientAuthorizationCodeId: codeId,
+      clientAuthorizationCodeValue: codeValue
+    }
+
+    const { authorizeCartOwnership: { wasAuthorized } } = await this.platformClient.sdk().authorizeCartOwnership({ input });
+
+    return wasAuthorized;
+  }
+
   /**
    * Completes the checkout process.
    *
@@ -572,7 +637,7 @@ class Cart extends Node<Graph.Cart> {
     );
 
     const cart = this.refresh(response.checkoutCart.cart);
-    return {...response.checkoutCart, cart: cart};
+    return { ...response.checkoutCart, cart: cart };
   }
 
   /**

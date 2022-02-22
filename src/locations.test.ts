@@ -15,7 +15,7 @@ describe("testing api", () => {
     expect(fetch).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
-        body: expect.stringContaining("locations(first: 100)")
+        body: expect.stringContaining("locations(first: 200)")
       })
     );
   });

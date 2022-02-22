@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -388,6 +390,20 @@ export enum AppointmentState {
   Confirmed = 'CONFIRMED',
   Final = 'FINAL'
 }
+
+export type AuthorizeCartOwnershipInput = {
+  /** Id of cart to take ownership of */
+  cartId: Scalars['String'];
+  /** Id of the authorization code */
+  clientAuthorizationCodeId: Scalars['String'];
+  /** The code that the client received in their email/SMS */
+  clientAuthorizationCodeValue: Scalars['Int'];
+};
+
+export type AuthorizeCartOwnershipPayload = {
+  __typename?: 'AuthorizeCartOwnershipPayload';
+  wasAuthorized: Scalars['Boolean'];
+};
 
 export type AvailableRescheduleDate = {
   __typename?: 'AvailableRescheduleDate';
@@ -1856,6 +1872,8 @@ export type RootMutationType = {
   appointmentRescheduleAvailableDates?: Maybe<AppointmentRescheduleAvailableDatesPayload>;
   /** Get the available appointment times on a particular date for the provided appointment. */
   appointmentRescheduleAvailableTimes?: Maybe<AppointmentRescheduleAvailableTimesPayload>;
+  /** Take ownership of the cart using a client authorization code that's been sent via SMS or email */
+  authorizeCartOwnership?: Maybe<AuthorizeCartOwnershipPayload>;
   /**
    * Cancel an Appointment.
    *
@@ -1942,6 +1960,10 @@ export type RootMutationType = {
    * scenarios.
    */
   selectCartPaymentMethod?: Maybe<SelectCartPaymentMethodPayload>;
+  /** Send an authorization code via email that allows the client to take ownership of the cart */
+  sendClientAuthorizationCodeViaEmail?: Maybe<SendClientAuthorizationCodeViaEmailPayload>;
+  /** Send an authorization code via SMS that allows the client to take ownership of the cart */
+  sendClientAuthorizationCodeViaSms?: Maybe<SendClientAuthorizationCodeViaSmsPayload>;
   /**
    * Take ownership of a cart, linking the cart
    * to a Boulevard account.
@@ -2015,6 +2037,11 @@ export type RootMutationTypeAppointmentRescheduleAvailableDatesArgs = {
 
 export type RootMutationTypeAppointmentRescheduleAvailableTimesArgs = {
   input: AppointmentRescheduleAvailableTimesInput;
+};
+
+
+export type RootMutationTypeAuthorizeCartOwnershipArgs = {
+  input: AuthorizeCartOwnershipInput;
 };
 
 
@@ -2095,6 +2122,16 @@ export type RootMutationTypeReserveCartBookableItemsArgs = {
 
 export type RootMutationTypeSelectCartPaymentMethodArgs = {
   input: SelectCartPaymentMethodInput;
+};
+
+
+export type RootMutationTypeSendClientAuthorizationCodeViaEmailArgs = {
+  input: SendClientAuthorizationCodeViaEmailInput;
+};
+
+
+export type RootMutationTypeSendClientAuthorizationCodeViaSmsArgs = {
+  input: SendClientAuthorizationCodeViaSmsInput;
 };
 
 
@@ -2274,6 +2311,26 @@ export type SelectCartPaymentMethodInput = {
 export type SelectCartPaymentMethodPayload = {
   __typename?: 'SelectCartPaymentMethodPayload';
   cart: Cart;
+};
+
+export type SendClientAuthorizationCodeViaEmailInput = {
+  /** Email to send the authorization code to */
+  email: Scalars['String'];
+};
+
+export type SendClientAuthorizationCodeViaEmailPayload = {
+  __typename?: 'SendClientAuthorizationCodeViaEmailPayload';
+  clientAuthorizationCodeId: Scalars['String'];
+};
+
+export type SendClientAuthorizationCodeViaSmsInput = {
+  /** Mobile phone number to send the authorization code to */
+  mobilePhone: Scalars['String'];
+};
+
+export type SendClientAuthorizationCodeViaSmsPayload = {
+  __typename?: 'SendClientAuthorizationCodeViaSmsPayload';
+  clientAuthorizationCodeId: Scalars['String'];
 };
 
 /** A Service */
@@ -2492,3 +2549,47 @@ export type UpdateClientPayload = {
   client?: Maybe<Client>;
 };
 
+
+export type SendClientAuthorizationCodeViaSmsMutationVariables = Exact<{
+  input: SendClientAuthorizationCodeViaSmsInput;
+}>;
+
+
+export type SendClientAuthorizationCodeViaSmsMutation = (
+  { __typename?: 'RootMutationType' }
+  & { sendClientAuthorizationCodeViaSms?: Maybe<(
+    { __typename?: 'SendClientAuthorizationCodeViaSmsPayload' }
+    & Pick<SendClientAuthorizationCodeViaSmsPayload, 'clientAuthorizationCodeId'>
+  )> }
+);
+
+
+export const SendClientAuthorizationCodeViaSms = gql`
+    mutation SendClientAuthorizationCodeViaSms($input: SendClientAuthorizationCodeViaSmsInput!) {
+  sendClientAuthorizationCodeViaSms(input: $input) {
+    clientAuthorizationCodeId
+  }
+}
+    `;
+
+export const SendClientAuthorizationCodeViaSmsDocument = gql`
+    mutation SendClientAuthorizationCodeViaSms($input: SendClientAuthorizationCodeViaSmsInput!) {
+  sendClientAuthorizationCodeViaSms(input: $input) {
+    clientAuthorizationCodeId
+  }
+}
+    `;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    SendClientAuthorizationCodeViaSms(variables: SendClientAuthorizationCodeViaSmsMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SendClientAuthorizationCodeViaSmsMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SendClientAuthorizationCodeViaSmsMutation>(SendClientAuthorizationCodeViaSmsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'SendClientAuthorizationCodeViaSms');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

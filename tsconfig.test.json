@@ -1,4 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "files": ["jest.setup.d.ts"]
+  "files": ["jest.setup.d.ts"],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
+  }
 }

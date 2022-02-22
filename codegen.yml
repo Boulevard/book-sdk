@@ -1,8 +1,13 @@
 overwrite: true
 schema: "./schema.json"
+documents: "src/**/*.graphql"
 generates:
-  src/graph.d.ts:
+  src/graph.ts:
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-document-nodes"
+      - "typescript-graphql-request"
+      - typescript-mock-data:
+          scalars:
+            Date: date

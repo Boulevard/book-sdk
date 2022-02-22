@@ -67,3 +67,19 @@ await cart.addCardPaymentMethod({
 
 await cart.checkout();
 ```
+
+
+## Development
+
+### Deployment
+
+Note, unless you're a Boulevard employee you'll need to open a PR and seek approval for your changes to be included in a release.
+
+You'll first need to ask to be added to the Boulevard organisation at npmjs.com. Once you have been added run the following commands:
+
+```
+yarn build && yarn publish
+yarn run typedoc
+```
+
+Then Commit and push (inc tags).
