@@ -1,21 +1,21 @@
-mutation sendClientAuthorizationCodeViaSms(
-  $input: SendClientAuthorizationCodeViaSmsInput!
-) {
-  sendClientAuthorizationCodeViaSms(input: $input) {
-    clientAuthorizationCodeId
+mutation sendCartOwnershipCodeBySms($input: SendCartOwnershipCodeBySmsInput!) {
+  sendCartOwnershipCodeBySms(input: $input) {
+    cartOwnershipCodeId
   }
 }
 
-mutation sendClientAuthorizationCodeViaEmail(
-  $input: SendClientAuthorizationCodeViaEmailInput!
+mutation sendCartOwnershipCodeByEmail(
+  $input: SendCartOwnershipCodeByEmailInput!
 ) {
-  sendClientAuthorizationCodeViaEmail(input: $input) {
-    clientAuthorizationCodeId
+  sendCartOwnershipCodeByEmail(input: $input) {
+    cartOwnershipCodeId
   }
 }
 
-mutation authorizeCartOwnership($input: AuthorizeCartOwnershipInput!) {
-  authorizeCartOwnership(input: $input) {
-    wasAuthorized
+mutation takeCartOwnershipByCode($input: TakeCartOwnershipByCodeInput!) {
+  takeCartOwnershipByCode(input: $input) {
+    cart {
+      id
+    }
   }
 }

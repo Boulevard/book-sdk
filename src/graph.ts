@@ -391,20 +391,6 @@ export enum AppointmentState {
   Final = 'FINAL'
 }
 
-export type AuthorizeCartOwnershipInput = {
-  /** Id of cart to take ownership of */
-  cartId: Scalars['String'];
-  /** Id of the authorization code */
-  clientAuthorizationCodeId: Scalars['String'];
-  /** The code that the client received in their email/SMS */
-  clientAuthorizationCodeValue: Scalars['Int'];
-};
-
-export type AuthorizeCartOwnershipPayload = {
-  __typename?: 'AuthorizeCartOwnershipPayload';
-  wasAuthorized: Scalars['Boolean'];
-};
-
 export type AvailableRescheduleDate = {
   __typename?: 'AvailableRescheduleDate';
   /**
@@ -1872,8 +1858,6 @@ export type RootMutationType = {
   appointmentRescheduleAvailableDates?: Maybe<AppointmentRescheduleAvailableDatesPayload>;
   /** Get the available appointment times on a particular date for the provided appointment. */
   appointmentRescheduleAvailableTimes?: Maybe<AppointmentRescheduleAvailableTimesPayload>;
-  /** Take ownership of the cart using a client authorization code that's been sent via SMS or email */
-  authorizeCartOwnership?: Maybe<AuthorizeCartOwnershipPayload>;
   /**
    * Cancel an Appointment.
    *
@@ -1960,10 +1944,10 @@ export type RootMutationType = {
    * scenarios.
    */
   selectCartPaymentMethod?: Maybe<SelectCartPaymentMethodPayload>;
-  /** Send an authorization code via email that allows the client to take ownership of the cart */
-  sendClientAuthorizationCodeViaEmail?: Maybe<SendClientAuthorizationCodeViaEmailPayload>;
-  /** Send an authorization code via SMS that allows the client to take ownership of the cart */
-  sendClientAuthorizationCodeViaSms?: Maybe<SendClientAuthorizationCodeViaSmsPayload>;
+  /** Send an ownership code via email that allows the client to take ownership of the cart */
+  sendCartOwnershipCodeByEmail?: Maybe<SendCartOwnershipCodeByEmailPayload>;
+  /** Send an ownership code via SMS that allows the client to take ownership of the cart */
+  sendCartOwnershipCodeBySms?: Maybe<SendCartOwnershipCodeBySmsPayload>;
   /**
    * Take ownership of a cart, linking the cart
    * to a Boulevard account.
@@ -1973,6 +1957,8 @@ export type RootMutationType = {
    * Using this mutation invalidates existing reservations.
    */
   takeCartOwnership?: Maybe<TakeCartOwnershipPayload>;
+  /** Take ownership of the cart using a client authorization code that's been sent via SMS or email */
+  takeCartOwnershipByCode?: Maybe<TakeCartOwnershipByCodePayload>;
   /** Update a pending cart */
   updateCart?: Maybe<UpdateCartPayload>;
   /** Update a gift card item email fulfillment. */
@@ -2037,11 +2023,6 @@ export type RootMutationTypeAppointmentRescheduleAvailableDatesArgs = {
 
 export type RootMutationTypeAppointmentRescheduleAvailableTimesArgs = {
   input: AppointmentRescheduleAvailableTimesInput;
-};
-
-
-export type RootMutationTypeAuthorizeCartOwnershipArgs = {
-  input: AuthorizeCartOwnershipInput;
 };
 
 
@@ -2125,18 +2106,23 @@ export type RootMutationTypeSelectCartPaymentMethodArgs = {
 };
 
 
-export type RootMutationTypeSendClientAuthorizationCodeViaEmailArgs = {
-  input: SendClientAuthorizationCodeViaEmailInput;
+export type RootMutationTypeSendCartOwnershipCodeByEmailArgs = {
+  input: SendCartOwnershipCodeByEmailInput;
 };
 
 
-export type RootMutationTypeSendClientAuthorizationCodeViaSmsArgs = {
-  input: SendClientAuthorizationCodeViaSmsInput;
+export type RootMutationTypeSendCartOwnershipCodeBySmsArgs = {
+  input: SendCartOwnershipCodeBySmsInput;
 };
 
 
 export type RootMutationTypeTakeCartOwnershipArgs = {
   input: TakeCartOwnershipInput;
+};
+
+
+export type RootMutationTypeTakeCartOwnershipByCodeArgs = {
+  input: TakeCartOwnershipByCodeInput;
 };
 
 
@@ -2313,24 +2299,24 @@ export type SelectCartPaymentMethodPayload = {
   cart: Cart;
 };
 
-export type SendClientAuthorizationCodeViaEmailInput = {
-  /** Email to send the authorization code to */
+export type SendCartOwnershipCodeByEmailInput = {
+  /** Email to send the ownership code to */
   email: Scalars['String'];
 };
 
-export type SendClientAuthorizationCodeViaEmailPayload = {
-  __typename?: 'SendClientAuthorizationCodeViaEmailPayload';
-  clientAuthorizationCodeId: Scalars['String'];
+export type SendCartOwnershipCodeByEmailPayload = {
+  __typename?: 'SendCartOwnershipCodeByEmailPayload';
+  cartOwnershipCodeId: Scalars['String'];
 };
 
-export type SendClientAuthorizationCodeViaSmsInput = {
-  /** Mobile phone number to send the authorization code to */
+export type SendCartOwnershipCodeBySmsInput = {
+  /** Mobile phone number to send the ownership code to */
   mobilePhone: Scalars['String'];
 };
 
-export type SendClientAuthorizationCodeViaSmsPayload = {
-  __typename?: 'SendClientAuthorizationCodeViaSmsPayload';
-  clientAuthorizationCodeId: Scalars['String'];
+export type SendCartOwnershipCodeBySmsPayload = {
+  __typename?: 'SendCartOwnershipCodeBySmsPayload';
+  cartOwnershipCodeId: Scalars['String'];
 };
 
 /** A Service */
@@ -2395,6 +2381,20 @@ export enum SubscriptionStatus {
   PastDue = 'PAST_DUE',
   Paused = 'PAUSED'
 }
+
+export type TakeCartOwnershipByCodeInput = {
+  /** Id of cart to take ownership of */
+  cartId: Scalars['String'];
+  /** Id of the authorization code */
+  cartOwnershipCodeId: Scalars['String'];
+  /** The code that the client received in their email/SMS */
+  cartOwnershipCodeValue: Scalars['Int'];
+};
+
+export type TakeCartOwnershipByCodePayload = {
+  __typename?: 'TakeCartOwnershipByCodePayload';
+  cart: Cart;
+};
 
 export type TakeCartOwnershipInput = {
   /** ID of the cart */
@@ -2550,86 +2550,93 @@ export type UpdateClientPayload = {
 };
 
 
-export type SendClientAuthorizationCodeViaSmsMutationVariables = Exact<{
-  input: SendClientAuthorizationCodeViaSmsInput;
+export type SendCartOwnershipCodeBySmsMutationVariables = Exact<{
+  input: SendCartOwnershipCodeBySmsInput;
 }>;
 
 
-export type SendClientAuthorizationCodeViaSmsMutation = (
+export type SendCartOwnershipCodeBySmsMutation = (
   { __typename?: 'RootMutationType' }
-  & { sendClientAuthorizationCodeViaSms?: Maybe<(
-    { __typename?: 'SendClientAuthorizationCodeViaSmsPayload' }
-    & Pick<SendClientAuthorizationCodeViaSmsPayload, 'clientAuthorizationCodeId'>
+  & { sendCartOwnershipCodeBySms?: Maybe<(
+    { __typename?: 'SendCartOwnershipCodeBySmsPayload' }
+    & Pick<SendCartOwnershipCodeBySmsPayload, 'cartOwnershipCodeId'>
   )> }
 );
 
-export type SendClientAuthorizationCodeViaEmailMutationVariables = Exact<{
-  input: SendClientAuthorizationCodeViaEmailInput;
+export type SendCartOwnershipCodeByEmailMutationVariables = Exact<{
+  input: SendCartOwnershipCodeByEmailInput;
 }>;
 
 
-export type SendClientAuthorizationCodeViaEmailMutation = (
+export type SendCartOwnershipCodeByEmailMutation = (
   { __typename?: 'RootMutationType' }
-  & { sendClientAuthorizationCodeViaEmail?: Maybe<(
-    { __typename?: 'SendClientAuthorizationCodeViaEmailPayload' }
-    & Pick<SendClientAuthorizationCodeViaEmailPayload, 'clientAuthorizationCodeId'>
+  & { sendCartOwnershipCodeByEmail?: Maybe<(
+    { __typename?: 'SendCartOwnershipCodeByEmailPayload' }
+    & Pick<SendCartOwnershipCodeByEmailPayload, 'cartOwnershipCodeId'>
   )> }
 );
 
-export type AuthorizeCartOwnershipMutationVariables = Exact<{
-  input: AuthorizeCartOwnershipInput;
+export type TakeCartOwnershipByCodeMutationVariables = Exact<{
+  input: TakeCartOwnershipByCodeInput;
 }>;
 
 
-export type AuthorizeCartOwnershipMutation = (
+export type TakeCartOwnershipByCodeMutation = (
   { __typename?: 'RootMutationType' }
-  & { authorizeCartOwnership?: Maybe<(
-    { __typename?: 'AuthorizeCartOwnershipPayload' }
-    & Pick<AuthorizeCartOwnershipPayload, 'wasAuthorized'>
+  & { takeCartOwnershipByCode?: Maybe<(
+    { __typename?: 'TakeCartOwnershipByCodePayload' }
+    & { cart: (
+      { __typename?: 'Cart' }
+      & Pick<Cart, 'id'>
+    ) }
   )> }
 );
 
 
-export const SendClientAuthorizationCodeViaSms = gql`
-    mutation sendClientAuthorizationCodeViaSms($input: SendClientAuthorizationCodeViaSmsInput!) {
-  sendClientAuthorizationCodeViaSms(input: $input) {
-    clientAuthorizationCodeId
+export const SendCartOwnershipCodeBySms = gql`
+    mutation sendCartOwnershipCodeBySms($input: SendCartOwnershipCodeBySmsInput!) {
+  sendCartOwnershipCodeBySms(input: $input) {
+    cartOwnershipCodeId
   }
 }
     `;
-export const SendClientAuthorizationCodeViaEmail = gql`
-    mutation sendClientAuthorizationCodeViaEmail($input: SendClientAuthorizationCodeViaEmailInput!) {
-  sendClientAuthorizationCodeViaEmail(input: $input) {
-    clientAuthorizationCodeId
+export const SendCartOwnershipCodeByEmail = gql`
+    mutation sendCartOwnershipCodeByEmail($input: SendCartOwnershipCodeByEmailInput!) {
+  sendCartOwnershipCodeByEmail(input: $input) {
+    cartOwnershipCodeId
   }
 }
     `;
-export const AuthorizeCartOwnership = gql`
-    mutation authorizeCartOwnership($input: AuthorizeCartOwnershipInput!) {
-  authorizeCartOwnership(input: $input) {
-    wasAuthorized
+export const TakeCartOwnershipByCode = gql`
+    mutation takeCartOwnershipByCode($input: TakeCartOwnershipByCodeInput!) {
+  takeCartOwnershipByCode(input: $input) {
+    cart {
+      id
+    }
   }
 }
     `;
 
-export const SendClientAuthorizationCodeViaSmsDocument = gql`
-    mutation sendClientAuthorizationCodeViaSms($input: SendClientAuthorizationCodeViaSmsInput!) {
-  sendClientAuthorizationCodeViaSms(input: $input) {
-    clientAuthorizationCodeId
+export const SendCartOwnershipCodeBySmsDocument = gql`
+    mutation sendCartOwnershipCodeBySms($input: SendCartOwnershipCodeBySmsInput!) {
+  sendCartOwnershipCodeBySms(input: $input) {
+    cartOwnershipCodeId
   }
 }
     `;
-export const SendClientAuthorizationCodeViaEmailDocument = gql`
-    mutation sendClientAuthorizationCodeViaEmail($input: SendClientAuthorizationCodeViaEmailInput!) {
-  sendClientAuthorizationCodeViaEmail(input: $input) {
-    clientAuthorizationCodeId
+export const SendCartOwnershipCodeByEmailDocument = gql`
+    mutation sendCartOwnershipCodeByEmail($input: SendCartOwnershipCodeByEmailInput!) {
+  sendCartOwnershipCodeByEmail(input: $input) {
+    cartOwnershipCodeId
   }
 }
     `;
-export const AuthorizeCartOwnershipDocument = gql`
-    mutation authorizeCartOwnership($input: AuthorizeCartOwnershipInput!) {
-  authorizeCartOwnership(input: $input) {
-    wasAuthorized
+export const TakeCartOwnershipByCodeDocument = gql`
+    mutation takeCartOwnershipByCode($input: TakeCartOwnershipByCodeInput!) {
+  takeCartOwnershipByCode(input: $input) {
+    cart {
+      id
+    }
   }
 }
     `;
@@ -2641,14 +2648,14 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    sendClientAuthorizationCodeViaSms(variables: SendClientAuthorizationCodeViaSmsMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SendClientAuthorizationCodeViaSmsMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SendClientAuthorizationCodeViaSmsMutation>(SendClientAuthorizationCodeViaSmsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sendClientAuthorizationCodeViaSms');
+    sendCartOwnershipCodeBySms(variables: SendCartOwnershipCodeBySmsMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SendCartOwnershipCodeBySmsMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SendCartOwnershipCodeBySmsMutation>(SendCartOwnershipCodeBySmsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sendCartOwnershipCodeBySms');
     },
-    sendClientAuthorizationCodeViaEmail(variables: SendClientAuthorizationCodeViaEmailMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SendClientAuthorizationCodeViaEmailMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SendClientAuthorizationCodeViaEmailMutation>(SendClientAuthorizationCodeViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sendClientAuthorizationCodeViaEmail');
+    sendCartOwnershipCodeByEmail(variables: SendCartOwnershipCodeByEmailMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SendCartOwnershipCodeByEmailMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SendCartOwnershipCodeByEmailMutation>(SendCartOwnershipCodeByEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sendCartOwnershipCodeByEmail');
     },
-    authorizeCartOwnership(variables: AuthorizeCartOwnershipMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AuthorizeCartOwnershipMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AuthorizeCartOwnershipMutation>(AuthorizeCartOwnershipDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authorizeCartOwnership');
+    takeCartOwnershipByCode(variables: TakeCartOwnershipByCodeMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<TakeCartOwnershipByCodeMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<TakeCartOwnershipByCodeMutation>(TakeCartOwnershipByCodeDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'takeCartOwnershipByCode');
     }
   };
 }
@@ -2851,20 +2858,6 @@ export const anAppointmentService = (overrides?: Partial<AppointmentService>): A
         startAt: overrides && overrides.hasOwnProperty('startAt') ? overrides.startAt! : 'magni',
         startTimeOffset: overrides && overrides.hasOwnProperty('startTimeOffset') ? overrides.startTimeOffset! : 2448,
         totalDuration: overrides && overrides.hasOwnProperty('totalDuration') ? overrides.totalDuration! : 7950,
-    };
-};
-
-export const anAuthorizeCartOwnershipInput = (overrides?: Partial<AuthorizeCartOwnershipInput>): AuthorizeCartOwnershipInput => {
-    return {
-        cartId: overrides && overrides.hasOwnProperty('cartId') ? overrides.cartId! : 'exercitationem',
-        clientAuthorizationCodeId: overrides && overrides.hasOwnProperty('clientAuthorizationCodeId') ? overrides.clientAuthorizationCodeId! : 'beatae',
-        clientAuthorizationCodeValue: overrides && overrides.hasOwnProperty('clientAuthorizationCodeValue') ? overrides.clientAuthorizationCodeValue! : 6821,
-    };
-};
-
-export const anAuthorizeCartOwnershipPayload = (overrides?: Partial<AuthorizeCartOwnershipPayload>): AuthorizeCartOwnershipPayload => {
-    return {
-        wasAuthorized: overrides && overrides.hasOwnProperty('wasAuthorized') ? overrides.wasAuthorized! : true,
     };
 };
 
@@ -3714,7 +3707,6 @@ export const aRootMutationType = (overrides?: Partial<RootMutationType>): RootMu
         appointmentReschedule: overrides && overrides.hasOwnProperty('appointmentReschedule') ? overrides.appointmentReschedule! : anAppointmentReschedulePayload(),
         appointmentRescheduleAvailableDates: overrides && overrides.hasOwnProperty('appointmentRescheduleAvailableDates') ? overrides.appointmentRescheduleAvailableDates! : anAppointmentRescheduleAvailableDatesPayload(),
         appointmentRescheduleAvailableTimes: overrides && overrides.hasOwnProperty('appointmentRescheduleAvailableTimes') ? overrides.appointmentRescheduleAvailableTimes! : anAppointmentRescheduleAvailableTimesPayload(),
-        authorizeCartOwnership: overrides && overrides.hasOwnProperty('authorizeCartOwnership') ? overrides.authorizeCartOwnership! : anAuthorizeCartOwnershipPayload(),
         cancelAppointment: overrides && overrides.hasOwnProperty('cancelAppointment') ? overrides.cancelAppointment! : aCancelAppointmentPayload(),
         cartAddToWaitlist: overrides && overrides.hasOwnProperty('cartAddToWaitlist') ? overrides.cartAddToWaitlist! : aCartAddToWaitlistPayload(),
         cartBookingQuestionAddAnswer: overrides && overrides.hasOwnProperty('cartBookingQuestionAddAnswer') ? overrides.cartBookingQuestionAddAnswer! : aCartBookingQuestionAddAnswerPayload(),
@@ -3731,9 +3723,10 @@ export const aRootMutationType = (overrides?: Partial<RootMutationType>): RootMu
         removeCartSelectedItem: overrides && overrides.hasOwnProperty('removeCartSelectedItem') ? overrides.removeCartSelectedItem! : aRemoveCartSelectedItemPayload(),
         reserveCartBookableItems: overrides && overrides.hasOwnProperty('reserveCartBookableItems') ? overrides.reserveCartBookableItems! : aReserveCartBookableItemsPayload(),
         selectCartPaymentMethod: overrides && overrides.hasOwnProperty('selectCartPaymentMethod') ? overrides.selectCartPaymentMethod! : aSelectCartPaymentMethodPayload(),
-        sendClientAuthorizationCodeViaEmail: overrides && overrides.hasOwnProperty('sendClientAuthorizationCodeViaEmail') ? overrides.sendClientAuthorizationCodeViaEmail! : aSendClientAuthorizationCodeViaEmailPayload(),
-        sendClientAuthorizationCodeViaSms: overrides && overrides.hasOwnProperty('sendClientAuthorizationCodeViaSms') ? overrides.sendClientAuthorizationCodeViaSms! : aSendClientAuthorizationCodeViaSmsPayload(),
+        sendCartOwnershipCodeByEmail: overrides && overrides.hasOwnProperty('sendCartOwnershipCodeByEmail') ? overrides.sendCartOwnershipCodeByEmail! : aSendCartOwnershipCodeByEmailPayload(),
+        sendCartOwnershipCodeBySms: overrides && overrides.hasOwnProperty('sendCartOwnershipCodeBySms') ? overrides.sendCartOwnershipCodeBySms! : aSendCartOwnershipCodeBySmsPayload(),
         takeCartOwnership: overrides && overrides.hasOwnProperty('takeCartOwnership') ? overrides.takeCartOwnership! : aTakeCartOwnershipPayload(),
+        takeCartOwnershipByCode: overrides && overrides.hasOwnProperty('takeCartOwnershipByCode') ? overrides.takeCartOwnershipByCode! : aTakeCartOwnershipByCodePayload(),
         updateCart: overrides && overrides.hasOwnProperty('updateCart') ? overrides.updateCart! : anUpdateCartPayload(),
         updateCartGiftCardItemEmailFulfillment: overrides && overrides.hasOwnProperty('updateCartGiftCardItemEmailFulfillment') ? overrides.updateCartGiftCardItemEmailFulfillment! : anUpdateCartGiftCardItemEmailFulfillmentPayload(),
         updateCartGuest: overrides && overrides.hasOwnProperty('updateCartGuest') ? overrides.updateCartGuest! : anUpdateCartGuestPayload(),
@@ -3773,27 +3766,27 @@ export const aSelectCartPaymentMethodPayload = (overrides?: Partial<SelectCartPa
     };
 };
 
-export const aSendClientAuthorizationCodeViaEmailInput = (overrides?: Partial<SendClientAuthorizationCodeViaEmailInput>): SendClientAuthorizationCodeViaEmailInput => {
+export const aSendCartOwnershipCodeByEmailInput = (overrides?: Partial<SendCartOwnershipCodeByEmailInput>): SendCartOwnershipCodeByEmailInput => {
     return {
-        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : 'dolorem',
+        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : 'et',
     };
 };
 
-export const aSendClientAuthorizationCodeViaEmailPayload = (overrides?: Partial<SendClientAuthorizationCodeViaEmailPayload>): SendClientAuthorizationCodeViaEmailPayload => {
+export const aSendCartOwnershipCodeByEmailPayload = (overrides?: Partial<SendCartOwnershipCodeByEmailPayload>): SendCartOwnershipCodeByEmailPayload => {
     return {
-        clientAuthorizationCodeId: overrides && overrides.hasOwnProperty('clientAuthorizationCodeId') ? overrides.clientAuthorizationCodeId! : 'est',
+        cartOwnershipCodeId: overrides && overrides.hasOwnProperty('cartOwnershipCodeId') ? overrides.cartOwnershipCodeId! : 'ex',
     };
 };
 
-export const aSendClientAuthorizationCodeViaSmsInput = (overrides?: Partial<SendClientAuthorizationCodeViaSmsInput>): SendClientAuthorizationCodeViaSmsInput => {
+export const aSendCartOwnershipCodeBySmsInput = (overrides?: Partial<SendCartOwnershipCodeBySmsInput>): SendCartOwnershipCodeBySmsInput => {
     return {
-        mobilePhone: overrides && overrides.hasOwnProperty('mobilePhone') ? overrides.mobilePhone! : 'magni',
+        mobilePhone: overrides && overrides.hasOwnProperty('mobilePhone') ? overrides.mobilePhone! : 'eveniet',
     };
 };
 
-export const aSendClientAuthorizationCodeViaSmsPayload = (overrides?: Partial<SendClientAuthorizationCodeViaSmsPayload>): SendClientAuthorizationCodeViaSmsPayload => {
+export const aSendCartOwnershipCodeBySmsPayload = (overrides?: Partial<SendCartOwnershipCodeBySmsPayload>): SendCartOwnershipCodeBySmsPayload => {
     return {
-        clientAuthorizationCodeId: overrides && overrides.hasOwnProperty('clientAuthorizationCodeId') ? overrides.clientAuthorizationCodeId! : 'autem',
+        cartOwnershipCodeId: overrides && overrides.hasOwnProperty('cartOwnershipCodeId') ? overrides.cartOwnershipCodeId! : 'et',
     };
 };
 
@@ -3833,6 +3826,20 @@ export const aStaffRole = (overrides?: Partial<StaffRole>): StaffRole => {
     return {
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'c88906d2-2ada-4a17-a562-e32531579e4f',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'nemo',
+    };
+};
+
+export const aTakeCartOwnershipByCodeInput = (overrides?: Partial<TakeCartOwnershipByCodeInput>): TakeCartOwnershipByCodeInput => {
+    return {
+        cartId: overrides && overrides.hasOwnProperty('cartId') ? overrides.cartId! : 'est',
+        cartOwnershipCodeId: overrides && overrides.hasOwnProperty('cartOwnershipCodeId') ? overrides.cartOwnershipCodeId! : 'distinctio',
+        cartOwnershipCodeValue: overrides && overrides.hasOwnProperty('cartOwnershipCodeValue') ? overrides.cartOwnershipCodeValue! : 8421,
+    };
+};
+
+export const aTakeCartOwnershipByCodePayload = (overrides?: Partial<TakeCartOwnershipByCodePayload>): TakeCartOwnershipByCodePayload => {
+    return {
+        cart: overrides && overrides.hasOwnProperty('cart') ? overrides.cart! : aCart(),
     };
 };
 
