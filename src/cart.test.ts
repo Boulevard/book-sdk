@@ -2,79 +2,75 @@ import { Cart } from "./cart";
 import { aCart } from "./graph";
 import { createMockPlatformClient } from "../tests/helpers";
 import {
-  aAuthorizeCartOwnershipMutation,
-  aSendClientAuthorizationCodeViaEmailMutation,
-  aSendClientAuthorizationCodeViaSmsMutation
+  aSendCartOwnershipCodeByEmailMutation,
+  aSendCartOwnershipCodeBySmsMutation,
+  aTakeCartOwnershipByCodeMutation
 } from "../tests/factories";
 
-test("sendClientAuthorizationCodeViaSms", async () => {
-  const client = createMockPlatformClient();
+test("sendCartOwnershipCodeBySms", async () => {
+  const platformClient = createMockPlatformClient();
   const gqlCart = aCart();
   const codeId = "2dd9eaad-7092-4b63-88ae-d1d0053d29db";
   const mobilePhone = "+16789 9384323";
 
-  client.sdk().sendClientAuthorizationCodeViaSms = jest.fn(({ input }) =>
-    Promise.resolve(aSendClientAuthorizationCodeViaSmsMutation(codeId))
+  platformClient.sdk().sendCartOwnershipCodeBySms = jest.fn(({ input }) =>
+    Promise.resolve(aSendCartOwnershipCodeBySmsMutation(codeId))
   );
 
-  const cart = new Cart(client, gqlCart);
-  const receivedCodeId: string = await cart.sendClientAuthorizationCodeViaSms(
-    mobilePhone
-  );
+  const cart = new Cart(platformClient, gqlCart);
+  const receivedCodeId: string = await cart.sendOwnershipCodeBySms(mobilePhone);
 
   expect(receivedCodeId).toEqual(codeId);
 
-  expect(client.sdk().sendClientAuthorizationCodeViaSms).toHaveBeenCalledWith({
+  expect(platformClient.sdk().sendCartOwnershipCodeBySms).toHaveBeenCalledWith({
     input: { mobilePhone }
   });
 });
 
-test("sendClientAuthorizationCodeViaEmail", async () => {
+test("sendCartOwnershipCodeByEmail", async () => {
   const client = createMockPlatformClient();
   const gqlCart = aCart();
   const codeId = "2dd9eaad-7092-4b63-88ae-d1d0053d29db";
   const email = "jim@bob.com";
 
-  client.sdk().sendClientAuthorizationCodeViaEmail = jest.fn(({ input }) =>
-    Promise.resolve(aSendClientAuthorizationCodeViaEmailMutation(codeId))
+  client.sdk().sendCartOwnershipCodeByEmail = jest.fn(({ input }) =>
+    Promise.resolve(aSendCartOwnershipCodeByEmailMutation(codeId))
   );
 
   const cart = new Cart(client, gqlCart);
-  const receivedCodeId: string = await cart.sendClientAuthorizationCodeViaEmail(
-    email
-  );
+  const receivedCodeId: string = await cart.sendOwnershipCodeByEmail(email);
 
   expect(receivedCodeId).toEqual(codeId);
 
-  expect(
-    client.sdk().sendClientAuthorizationCodeViaEmail
-  ).toHaveBeenCalledWith({ input: { email } });
+  expect(client.sdk().sendCartOwnershipCodeByEmail).toHaveBeenCalledWith({
+    input: { email }
+  });
 });
 
-test("authorizeCartOwnership", async () => {
-  const client = createMockPlatformClient();
+test("takeCartOwnershipByCode", async () => {
+  const platformClient = createMockPlatformClient();
   const gqlCart = aCart();
   const codeId = "2dd9eaad-7092-4b63-88ae-d1d0053d29db";
   const codeValue = 12345;
-  const wasAuthorized = true;
 
-  client.sdk().authorizeCartOwnership = jest.fn(({ input }) =>
-    Promise.resolve(aAuthorizeCartOwnershipMutation(wasAuthorized))
+  platformClient.request = jest.fn(_ => {
+    return Promise.resolve({ cart: gqlCart });
+  });
+
+  platformClient.sdk().takeCartOwnershipByCode = jest.fn(({ input }) =>
+    Promise.resolve(aTakeCartOwnershipByCodeMutation(gqlCart.id))
   );
 
-  const cart = new Cart(client, gqlCart);
-  const receivedWasAuthorized: boolean = await cart.authorizeCartOwnership(
-    codeId,
-    codeValue
-  );
+  const cart = new Cart(platformClient, gqlCart);
+  const updatedCart = await cart.takeOwnershipByCode(codeId, codeValue);
 
-  expect(wasAuthorized).toEqual(receivedWasAuthorized);
+  expect(updatedCart.clientInformation);
 
-  expect(client.sdk().authorizeCartOwnership).toHaveBeenCalledWith({
+  expect(platformClient.sdk().takeCartOwnershipByCode).toHaveBeenCalledWith({
     input: {
       cartId: cart.id,
-      clientAuthorizationCodeId: codeId,
-      clientAuthorizationCodeValue: codeValue
+      cartOwnershipCodeId: codeId,
+      cartOwnershipCodeValue: codeValue
     }
   });
 });

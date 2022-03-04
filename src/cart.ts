@@ -28,6 +28,7 @@ import {
 import { CartGuest } from "./carts/guests";
 import fetch from "cross-fetch";
 import * as Sdk from "./graph";
+import { Carts } from "./carts";
 
 /** Gratuity set in advance for bookable items. */
 class CartAdvanceGratuity extends Node<Graph.CartAdvanceGratuity> {
@@ -548,69 +549,6 @@ class Cart extends Node<Graph.Cart> {
     );
 
     return this.refresh(response.cartAddToWaitlist.cart);
-  }
-
-  /**
-   * Sends an authorization code to the user via SMS. 
-   * See authorizeCartOwnership({codeId, codeValue}) for next step.
-   *
-   * @async
-   * @param mobilePhone The mobile phone number that the client has on their account
-   * @public
-   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
-   */
-  async sendClientAuthorizationCodeViaSms(mobilePhone: string): Promise<string> {
-    const input: Graph.SendClientAuthorizationCodeViaSmsInput = {
-      mobilePhone: mobilePhone
-    };
-
-    const {
-      sendClientAuthorizationCodeViaSms: { clientAuthorizationCodeId }
-    } = await this.platformClient.sdk().sendClientAuthorizationCodeViaSms({ input });
-
-    return clientAuthorizationCodeId;
-  }
-
-  /**
-   * Sends an authorization code to the user via email. 
-   * See authorizeCartOwnership({codeId, codeValue}) for next step.
-   *
-   * @async
-   * @param email The email address that the client has on their account
-   * @public
-   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
-   */
-  async sendClientAuthorizationCodeViaEmail(email: string): Promise<string> {
-    const input: Graph.SendClientAuthorizationCodeViaEmailInput = {
-      email: email
-    };
-
-    const {
-      sendClientAuthorizationCodeViaEmail: { clientAuthorizationCodeId }
-    } = await this.platformClient.sdk().sendClientAuthorizationCodeViaEmail({ input });
-
-    return clientAuthorizationCodeId;
-  }
-
-  /**
-   * Sends an authorization code to the user via email. 
-   * See authorizeCartOwnership({codeId, codeValue}) for next step.
-   *
-   * @async
-   * @param email The email address that the client has on their account
-   * @public
-   * @returns The authorization codeId - see authorizeCartOwnership(codeId, codeValue)
-   */
-  async authorizeCartOwnership(codeId: string, codeValue: number) {
-    const input: Graph.AuthorizeCartOwnershipInput = {
-      cartId: this.id,
-      clientAuthorizationCodeId: codeId,
-      clientAuthorizationCodeValue: codeValue
-    }
-
-    const { authorizeCartOwnership: { wasAuthorized } } = await this.platformClient.sdk().authorizeCartOwnership({ input });
-
-    return wasAuthorized;
   }
 
   /**
@@ -1370,6 +1308,76 @@ class Cart extends Node<Graph.Cart> {
    */
   private refresh(newCart) {
     return new Cart(this.platformClient, newCart);
+  }
+
+  /**
+   * Sends a cart ownership code to the user via SMS.
+   * See takeOwnershipByCode({cartId, codeId, codeValue}) for next step.
+   *
+   * @async
+   * @param mobilePhone The mobile phone number that the client has on their account
+   * @public
+   * @returns The cart ownership codeId - see takeOwnershipByCode({cartId, codeId, codeValue})
+   */
+  async sendOwnershipCodeBySms(mobilePhone: string): Promise<string> {
+    const input: Graph.SendCartOwnershipCodeBySmsInput = {
+      mobilePhone: mobilePhone
+    };
+
+    const {
+      sendCartOwnershipCodeBySms: { cartOwnershipCodeId }
+    } = await this.platformClient.sdk().sendCartOwnershipCodeBySms({ input });
+
+    return cartOwnershipCodeId;
+  }
+
+  /**
+   * Sends an cart ownership code to the user via email.
+   * See takeOwnershipByCode({cartId, codeId, codeValue}) for next step.
+   *
+   * @async
+   * @param email The email address that the client has on their account
+   * @public
+   * @returns The cart ownership codeId - see takeOwnershipByCode({cartId, codeId, codeValue})
+   */
+  async sendOwnershipCodeByEmail(email: string): Promise<string> {
+    const input: Graph.SendCartOwnershipCodeByEmailInput = {
+      email: email
+    };
+
+    const {
+      sendCartOwnershipCodeByEmail: { cartOwnershipCodeId }
+    } = await this.platformClient.sdk().sendCartOwnershipCodeByEmail({ input });
+
+    return cartOwnershipCodeId;
+  }
+
+  /**
+   * Take ownership of a cart, linking the client to this cart.
+   *
+   * @async
+   * @param codeId The ownership code id returned by sendOwnershipCodeByEmail/sendOwnershipCodeBySms
+   * @param codeValue The ownership code value from the email/SMS
+   * @public
+   * @returns The updated cart
+   */
+  async takeOwnershipByCode(
+    codeId: string,
+    codeValue: number
+  ): Promise<Cart> {
+    const input: Graph.TakeCartOwnershipByCodeInput = {
+      cartId: this.id,
+      cartOwnershipCodeId: codeId,
+      cartOwnershipCodeValue: codeValue
+    };
+
+    const {
+      takeCartOwnershipByCode: {
+        cart: { id: receivedCartId }
+      }
+    } = await this.platformClient.sdk().takeCartOwnershipByCode({ input });
+
+    return await new Carts(this.platformClient).get(receivedCartId);
   }
 }
 

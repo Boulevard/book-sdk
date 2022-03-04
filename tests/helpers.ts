@@ -1,11 +1,4 @@
-import {
-  aSendClientAuthorizationCodeViaSmsInput,
-  aSendClientAuthorizationCodeViaSmsPayload,
-  SendClientAuthorizationCodeViaEmailMutation,
-  Sdk,
-  SendClientAuthorizationCodeViaSmsMutation,
-  aCart
-} from "../src/graph";
+import { Sdk } from "../src/graph";
 import { createMock } from "ts-auto-mock";
 import { PlatformClient } from "../src/platformClient";
 

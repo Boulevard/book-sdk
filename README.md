@@ -71,6 +71,19 @@ await cart.checkout();
 
 ## Development
 
+### Refresh Sched bindings
+This will fetch the graphql schema from Sched and generate the typescript bindings and mocks.
+
+```
+npm run gen
+```
+
+### Run tests
+
+```
+npm test
+```
+
 ### Deployment
 
 Note, unless you're a Boulevard employee you'll need to open a PR and seek approval for your changes to be included in a release.

@@ -1,35 +1,38 @@
 import {
-  AuthorizeCartOwnershipMutation,
-  SendClientAuthorizationCodeViaEmailMutation,
-  SendClientAuthorizationCodeViaSmsMutation
+  TakeCartOwnershipByCodeMutation,
+  SendCartOwnershipCodeByEmailMutation,
+  SendCartOwnershipCodeBySmsMutation,
+  Cart
 } from "../src/graph";
 
-export const aSendClientAuthorizationCodeViaEmailMutation = (
-  codeId: string
-): SendClientAuthorizationCodeViaEmailMutation => ({
+export const aSendCartOwnershipCodeByEmailMutation = (
+  cartOwnershipCodeId: string
+): SendCartOwnershipCodeByEmailMutation => ({
   __typename: "RootMutationType",
-  sendClientAuthorizationCodeViaEmail: {
-    __typename: "SendClientAuthorizationCodeViaEmailPayload",
-    clientAuthorizationCodeId: codeId
+  sendCartOwnershipCodeByEmail: {
+    __typename: "SendCartOwnershipCodeByEmailPayload",
+    cartOwnershipCodeId: cartOwnershipCodeId
   }
 });
 
-export const aSendClientAuthorizationCodeViaSmsMutation = (
-  codeId: string
-): SendClientAuthorizationCodeViaSmsMutation => ({
+export const aSendCartOwnershipCodeBySmsMutation = (
+  cartOwnershipCodeId: string
+): SendCartOwnershipCodeBySmsMutation => ({
   __typename: "RootMutationType",
-  sendClientAuthorizationCodeViaSms: {
-    __typename: "SendClientAuthorizationCodeViaSmsPayload",
-    clientAuthorizationCodeId: codeId
+  sendCartOwnershipCodeBySms: {
+    __typename: "SendCartOwnershipCodeBySmsPayload",
+    cartOwnershipCodeId: cartOwnershipCodeId
   }
 });
 
-export const aAuthorizeCartOwnershipMutation = (
-  wasAuthorized: boolean
-): AuthorizeCartOwnershipMutation => ({
+export const aTakeCartOwnershipByCodeMutation = (
+  cartId: string
+): TakeCartOwnershipByCodeMutation => ({
   __typename: "RootMutationType",
-  authorizeCartOwnership: {
-    __typename: "AuthorizeCartOwnershipPayload",
-    wasAuthorized
+  takeCartOwnershipByCode: {
+    __typename: "TakeCartOwnershipByCodePayload",
+    cart: {
+      id: cartId
+    }
   }
 });
