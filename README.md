@@ -1,6 +1,6 @@
 # Blvd Book SDK
 
-Boulevard is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses.
+[Boulevard](https://joinblvd.com) is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses.
 
 Use this SDK to create your own custom booking experiences for Boulevard.
 
@@ -8,7 +8,7 @@ Use this SDK to create your own custom booking experiences for Boulevard.
 
 ### Setup
 
-Head over to the [Boulevard Developer Portal](https://developers.joinblvd.com/getting-started/introduction) to get set up with a sandbox account and API application. You'll need your business ID and and API key to use this package:
+Head over to the [Boulevard Developer Portal](https://developers.joinblvd.com/getting-started/introduction) to get set up with a sandbox account and API application. You'll need your business ID and and API key to use this package.
 
 ```js
 const businessId = "312bf55a-b6c5-48f2-ab40-eef5d78277ac";
@@ -18,7 +18,11 @@ const apiKey = "00000000-0000-0000-0000-000000000000";
 Install the SDK
 
 ```sh
-yarn -D add @boulevard/blvd-book-sdk
+npm --save install @boulevard/blvd-book-sdk
+```
+
+```sh
+yarn add @boulevard/blvd-book-sdk
 ```
 
 ### Client-Side
@@ -68,6 +72,11 @@ await cart.addCardPaymentMethod({
 await cart.checkout();
 ```
 
+## Documentation
+
+Package documentation is available [here](https://boulevard.github.io/book-sdk/index.html).
+
+To see available API operations browse the methods tied to class definitions. [Example - Cart operations](https://boulevard.github.io/book-sdk/classes/carts.cart.html)
 
 ## Development
 
@@ -78,10 +87,30 @@ This will fetch the graphql schema from Sched and generate the typescript bindin
 npm run gen
 ```
 
+```
+yarn run gen
+```
+
 ### Run tests
+
+To be able to run tests you need `ts-node` installed globaly 
+
+```
+npm -g install ts-node
+```
+
+```
+yarn global add ts-node
+```
+
+Then you can run the tests.
 
 ```
 npm test
+```
+
+```
+yarn test
 ```
 
 ### Deployment
