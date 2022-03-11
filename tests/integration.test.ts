@@ -19,7 +19,7 @@ import { Authentication } from "../src/platformClient";
 import { createHmac } from "crypto";
 
 const businessId = "63b60ecb-6d1e-4bb6-87ad-3cb52ffe09b4";
-const apiKey = "eb053fc4-e087-48ae-bc8f-3107ff06ddcb";
+const apiKey = process.env.SANDBOX_API_KEY;
 const anon = new Blvd(apiKey, businessId);
 
 describe("appointments", () => {
