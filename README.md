@@ -1,8 +1,37 @@
-# Blvd Book SDK
+[![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.org)
+[![GitHub license](https://img.shields.io/github/license/Boulevard/book-sdk)](https://github.com/Boulevard/book-sdk/blob/master/LICENSE.md)
+[![GitHub release](https://img.shields.io/github/release/Boulevard/book-sdk)](https://github.com/Boulevard/book-sdk/releases/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Boulevard/book-sdk/compare)
 
-[Boulevard](https://joinblvd.com) is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses.
+<div align="center">
+  <h2 align="center">Boulevard Book Software Development Kit</h2>
 
-Use this SDK to create your own custom booking experiences for Boulevard.
+  <p align="center">
+    <a href="https://github.com/Boulevard/book-sdk/issues">Report a Bug</a>
+    ·
+    <a href="https://github.com/Boulevard/book-sdk/issues">Request a Feature</a>
+  </p>
+</div>
+
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#documentation">Documentation</a></li>
+    <li><a href="#development">Development</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#issues">Issues</a></li>
+  </ol>
+</details>
+
+<hr />
+
+## About the project
+
+[Boulevard](https://joinblvd.com) is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses. 
+
+With this software development kit (SDK) you can create your own custom booking experiences for your business using Boulevard.
 
 ## Getting Started
 
@@ -125,3 +154,10 @@ yarn run typedoc
 ```
 
 Then Commit and push (inc tags).
+
+## Contributing
+Pull requests are welcome. See the [contribution guidelines](https://github.com/Boulevard/book-sdk/blob/master/CONTRIBUTING.md) for more information.
+
+## Issues
+
+If you encounter any problems while trying to run the starter kit please create an issue.
