@@ -1,10 +1,14 @@
 {
   "name": "@boulevard/blvd-book-sdk",
-  "version": "1.0.30",
+  "version": "1.0.32",
   "description": "A JS client for the Boulevard API",
   "main": "lib/blvd.js",
   "typings": "lib/blvd.js",
   "type": "module",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
+  
   "scripts": {
     "build": "yarn run clean && yarn run rollup -c rollup.config.js",
     "clean": "rm -rf lib*",
