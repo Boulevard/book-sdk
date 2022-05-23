@@ -374,7 +374,7 @@ class Cart extends Node<Graph.Cart> {
       const response = await fetch(
         this.platformClient.target == PlatformTarget.Live
           ? "https://pci.boulevard.app/cards/tokenize"
-          : "https://pci.staging-boulevard.app/cards/tokenize",
+          : "https://vault-sandbox.joinblvd.com/cards/tokenize",
         {
           method: "POST",
           headers: {

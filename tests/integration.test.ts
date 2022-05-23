@@ -13,9 +13,7 @@ import {
   CartBookableTime,
   CartItemPaymentMethod
 } from "../src/cart";
-import { Client } from "../src/clients";
 import { Location } from "../src/locations";
-import { Authentication } from "../src/platformClient";
 import { createHmac } from "crypto";
 
 const businessId = "63b60ecb-6d1e-4bb6-87ad-3cb52ffe09b4";
