@@ -5,9 +5,6 @@
   "main": "lib/blvd.js",
   "typings": "lib/blvd.js",
   "type": "module",
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
-  },
   
   "scripts": {
     "build": "yarn run clean && yarn run rollup -c rollup.config.js",
