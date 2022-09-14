@@ -85,6 +85,9 @@ class CartItem extends Node<Graph.CartItem> {
   /** Total tax amount on the discounted price. */
   taxAmount: Maybe<Scalars["Money"]>;
 
+  /** Addons available for that item. */
+  addons: Array<CartAvailableItem>;
+
   /**
    * @internal
    */

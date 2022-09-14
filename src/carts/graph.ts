@@ -179,6 +179,9 @@ const fragments = {
       availablePaymentMethods {
         ...CartItemPaymentMethodProperties
       }
+      addons {
+        ...CartAvailableItemProperties
+      }
     }
     fragment CartBookableItemProperties on CartBookableItem {
       guestId
