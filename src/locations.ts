@@ -51,6 +51,8 @@ class Location extends Node<Graph.Location> {
     longitude: Scalars["Float"];
   }>;
 
+  social: Graph.LocationSocialAccounts;
+
   updatedAt: Scalars["DateTime"];
 
   /**

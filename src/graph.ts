@@ -12,27 +12,21 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /**
-   * Represents a set of geographical coordinates
-   *
-   */
+  /** Represents a set of geographical coordinates */
   Coordinates: any;
   /**
    * The `Date` scalar type represents a timezone agnostic date, formatted as an
    * ISO8601 date string, i.e. `YYYY-MM-DD`.
-   *
    */
   Date: any;
   /**
    * The `DateTime` scalar type represents a datetime formatted as an ISO8601
    * string.
-   *
    */
   DateTime: any;
   /**
    * The `Interval` scalar type represents a time interval, formatted as an
    * ISO8601 duration string.
-   *
    */
   DurationInterval: any;
   /**
@@ -40,7 +34,6 @@ export type Scalars = {
    *
    * See <https://tools.ietf.org/html/rfc5322#section-3.4.1> for more details and
    * <https://tools.ietf.org/html/rfc3696#section-3> for an informational summary.
-   *
    */
   Email: any;
   /**
@@ -51,19 +44,16 @@ export type Scalars = {
    * For more information, see the ISO 4217 standard.
    *
    * The applicable currency is specified separately.
-   *
    */
   Money: any;
   /**
    * The `NaiveDateTime` scalar type represents a datetime formatted as an ISO 8601
    * string, without an associated time zone.
-   *
    */
   NaiveDateTime: any;
   /**
    * The PhoneNumber scalar type represents a phone number formatted following the E.164
    * internationally recognized standard.
-   *
    */
   PhoneNumber: any;
   /**
@@ -96,19 +86,14 @@ export type Scalars = {
    * Create precedence by surrounding comparisons with parenthesis.
    *
    * Note: Strings and field names are case sensitive.
-   *
    */
   QueryString: any;
   /**
    * Represents a time zone as a tz database (a.k.a. tzdata, IANA, Olson) time zone
    * name. See <https://en.wikipedia.org/wiki/Tz_database> for more information.
-   *
    */
   Tz: any;
-  /**
-   * Represents an absolute URL as defined by RFC3986
-   *
-   */
+  /** Represents an absolute URL as defined by RFC3986 */
   Url: any;
 };
 
@@ -225,6 +210,16 @@ export type Address = {
 /** An Appointment */
 export type Appointment = Node & {
   __typename?: 'Appointment';
+  /**
+   * Service options chosen with this appointment service and their true values,
+   * which may be changed from the option definition default values.
+   *
+   * The `AppointmentServiceOption` type doesn’t expose associated nodes; this
+   * is intentional and avoids duplicating data when querying grouped options.
+   * You should query the option groups through the `service` node instead and
+   * group the options based on IDs.
+   */
+  appointmentServiceOptions: Array<AppointmentServiceOption>;
   /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
   /** Links to allow direct addition of the appointment to different calendar platforms */
@@ -382,6 +377,27 @@ export type AppointmentService = {
   totalDuration: Scalars['Int'];
 };
 
+/** An AppointmentServiceOption */
+export type AppointmentServiceOption = Node & {
+  __typename?: 'AppointmentServiceOption';
+  /** ID of the AppointmentService that this object relates to. */
+  appointmentServiceId: Scalars['ID'];
+  /** Minutes added to duration when selected. */
+  durationDelta: Scalars['Int'];
+  /** Minutes added to finish when selected. */
+  finishDurationDelta: Scalars['Int'];
+  /** The ID of an object */
+  id: Scalars['ID'];
+  /** Minutes added to the post service client time. */
+  postClientDurationDelta: Scalars['Int'];
+  /** Minutes added to the post service staff time. */
+  postStaffDurationDelta: Scalars['Int'];
+  /** Amount added to price when selected. */
+  priceDelta: Scalars['Int'];
+  /** ID of the ServiceOption that this object relates to. */
+  serviceOptionId: Scalars['ID'];
+};
+
 export enum AppointmentState {
   Active = 'ACTIVE',
   Arrived = 'ARRIVED',
@@ -408,6 +424,14 @@ export type AvailableRescheduleTime = {
   bookableTimeId: Scalars['ID'];
   /** Matched start time for the booking. */
   startTime: Scalars['DateTime'];
+};
+
+export type BaseBookableItem = {
+  __typename?: 'BaseBookableItem';
+  /** The ID of the base bookable item */
+  itemId: Scalars['ID'];
+  /** Whether the current item has to use the same staff as the base item */
+  sameStaffVariantRequired: Scalars['Boolean'];
 };
 
 export type BookingQuestionOptionAnswerInput = {
@@ -876,8 +900,12 @@ export type CartBookableDate = {
 /** An item that can be booked at a certain time. */
 export type CartBookableItem = CartItem & {
   __typename?: 'CartBookableItem';
+  /** Any add-on services available for the selected service */
+  addons: Array<CartAvailableItem>;
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
+  /** The information about a base bookable item for a add-on item */
+  baseBookableItem?: Maybe<BaseBookableItem>;
   /** Refer to the super type. */
   discountAmount?: Maybe<Scalars['Money']>;
   /** Refer to the super type. */
@@ -1232,11 +1260,15 @@ export type CartFeatures = {
   giftCardPurchaseEnabled: Scalars['Boolean'];
   /** Whether payment info is required to check out services in this cart. */
   paymentInfoRequired: Scalars['Boolean'];
+  /** Whether service add-ons are enabled for this cart. */
+  serviceAddonsEnabled: Scalars['Boolean'];
 };
 
 /** A gift card item that can be purchased. */
 export type CartGiftCardItem = CartItem & {
   __typename?: 'CartGiftCardItem';
+  /** Refer to the super type. */
+  addons: Array<CartAvailableItem>;
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
@@ -1292,6 +1324,8 @@ export type CartGuest = {
 
 /** Abstract item added using the `addCart...Item` mutations. */
 export type CartItem = {
+  /** Any service add-ons related to the base service/item */
+  addons: Array<CartAvailableItem>;
   /** Payment methods available for this item. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Total discount amount on the price. Null if location is not set yet. */
@@ -1456,6 +1490,8 @@ export type CartPriceRange = {
 /** An item that can be purchased. */
 export type CartPurchasableItem = CartItem & {
   __typename?: 'CartPurchasableItem';
+  /** Refer to the super type. */
+  addons: Array<CartAvailableItem>;
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
@@ -1672,9 +1708,13 @@ export type Location = Node & {
   name: Scalars['String'];
   /** The location's phone number */
   phoneNumber?: Maybe<Scalars['PhoneNumber']>;
+  /** Social account links */
+  social: LocationSocialAccounts;
   /** The location's timezone */
   tz: Scalars['Tz'];
   updatedAt: Scalars['DateTime'];
+  /** The location's website */
+  website?: Maybe<Scalars['Url']>;
 };
 
 export type LocationConnection = {
@@ -1687,6 +1727,17 @@ export type LocationEdge = {
   __typename?: 'LocationEdge';
   cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Location>;
+};
+
+export type LocationSocialAccounts = {
+  __typename?: 'LocationSocialAccounts';
+  facebook?: Maybe<Scalars['String']>;
+  google?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  pinterest?: Maybe<Scalars['String']>;
+  twitter?: Maybe<Scalars['String']>;
+  yelp?: Maybe<Scalars['String']>;
+  youtube?: Maybe<Scalars['String']>;
 };
 
 /** A client membership sold at the business. */
@@ -1791,6 +1842,19 @@ export type RemoveCartSelectedItemInput = {
 export type RemoveCartSelectedItemPayload = {
   __typename?: 'RemoveCartSelectedItemPayload';
   cart: Cart;
+};
+
+export type RequestCodeInput = {
+  /** Method used for sending the code. Can be either sms or email */
+  method: Scalars['String'];
+  /** Phone number or email address depending on the method selected */
+  value: Scalars['String'];
+};
+
+export type RequestCodePayload = {
+  __typename?: 'RequestCodePayload';
+  /** Request id used along with the code for the login. */
+  requestId: Scalars['String'];
 };
 
 export type ReserveCartBookableItemsInput = {
@@ -1928,6 +1992,15 @@ export type RootMutationType = {
    * removed is a bookable item.
    */
   removeCartSelectedItem?: Maybe<RemoveCartSelectedItemPayload>;
+  /**
+   * Request code that will be sent through specified communication method. Currently supported:
+   * SMS or email. Codes have an expiration date and are used for authorized login for the client.
+   * Should there not be any account associated with email/phone number code will be sent regardless
+   * as a starter for registration flow.
+   *
+   * Subsequent code requests for the same phone number/email will be ignored for 1 minute.
+   */
+  requestCode?: Maybe<RequestCodePayload>;
   /**
    * Reserve one starting time for bookable cart items, i.e. all bookable items
    * are to be performed starting at this time. Note that this call may fail if
@@ -2093,6 +2166,11 @@ export type RootMutationTypeRemoveCartOfferArgs = {
 
 export type RootMutationTypeRemoveCartSelectedItemArgs = {
   input: RemoveCartSelectedItemInput;
+};
+
+
+export type RootMutationTypeRequestCodeArgs = {
+  input: RequestCodeInput;
 };
 
 
@@ -2339,6 +2417,15 @@ export type Service = Node & {
 /** A ServiceCategory */
 export type ServiceCategory = {
   __typename?: 'ServiceCategory';
+  /** Name */
+  name: Scalars['String'];
+};
+
+/** A ServiceOption */
+export type ServiceOption = Node & {
+  __typename?: 'ServiceOption';
+  /** The ID of an object */
+  id: Scalars['ID'];
   /** Name */
   name: Scalars['String'];
 };
@@ -2748,6 +2835,7 @@ export const anAddress = (overrides?: Partial<Address>): Address => {
 
 export const anAppointment = (overrides?: Partial<Appointment>): Appointment => {
     return {
+        appointmentServiceOptions: overrides && overrides.hasOwnProperty('appointmentServiceOptions') ? overrides.appointmentServiceOptions! : [anAppointmentServiceOption()],
         appointmentServices: overrides && overrides.hasOwnProperty('appointmentServices') ? overrides.appointmentServices! : [anAppointmentService()],
         calendarLinks: overrides && overrides.hasOwnProperty('calendarLinks') ? overrides.calendarLinks! : aCalendarLinks(),
         cancellation: overrides && overrides.hasOwnProperty('cancellation') ? overrides.cancellation! : anAppointmentCancellation(),
@@ -2861,6 +2949,19 @@ export const anAppointmentService = (overrides?: Partial<AppointmentService>): A
     };
 };
 
+export const anAppointmentServiceOption = (overrides?: Partial<AppointmentServiceOption>): AppointmentServiceOption => {
+    return {
+        appointmentServiceId: overrides && overrides.hasOwnProperty('appointmentServiceId') ? overrides.appointmentServiceId! : 'd5320ef6-6e9f-49f5-9c58-5cfbb0239f6a',
+        durationDelta: overrides && overrides.hasOwnProperty('durationDelta') ? overrides.durationDelta! : 9240,
+        finishDurationDelta: overrides && overrides.hasOwnProperty('finishDurationDelta') ? overrides.finishDurationDelta! : 231,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '2c298b23-9b8d-44b9-bee7-1fadb8638f66',
+        postClientDurationDelta: overrides && overrides.hasOwnProperty('postClientDurationDelta') ? overrides.postClientDurationDelta! : 4994,
+        postStaffDurationDelta: overrides && overrides.hasOwnProperty('postStaffDurationDelta') ? overrides.postStaffDurationDelta! : 5931,
+        priceDelta: overrides && overrides.hasOwnProperty('priceDelta') ? overrides.priceDelta! : 6007,
+        serviceOptionId: overrides && overrides.hasOwnProperty('serviceOptionId') ? overrides.serviceOptionId! : '00a015e9-d6e4-4398-976a-36224e1ac6cd',
+    };
+};
+
 export const anAvailableRescheduleDate = (overrides?: Partial<AvailableRescheduleDate>): AvailableRescheduleDate => {
     return {
         date: overrides && overrides.hasOwnProperty('date') ? overrides.date! : '1973-06-11',
@@ -2871,6 +2972,13 @@ export const anAvailableRescheduleTime = (overrides?: Partial<AvailableReschedul
     return {
         bookableTimeId: overrides && overrides.hasOwnProperty('bookableTimeId') ? overrides.bookableTimeId! : '61d361f7-0cff-48a4-9a45-0b51b581adb7',
         startTime: overrides && overrides.hasOwnProperty('startTime') ? overrides.startTime! : 'animi',
+    };
+};
+
+export const aBaseBookableItem = (overrides?: Partial<BaseBookableItem>): BaseBookableItem => {
+    return {
+        itemId: overrides && overrides.hasOwnProperty('itemId') ? overrides.itemId! : 'c7553a7c-a94d-4cbe-aa9b-f4f9df43c485',
+        sameStaffVariantRequired: overrides && overrides.hasOwnProperty('sameStaffVariantRequired') ? overrides.sameStaffVariantRequired! : false,
     };
 };
 
@@ -3105,7 +3213,9 @@ export const aCartBookableDate = (overrides?: Partial<CartBookableDate>): CartBo
 
 export const aCartBookableItem = (overrides?: Partial<CartBookableItem>): CartBookableItem => {
     return {
+        addons: overrides && overrides.hasOwnProperty('addons') ? overrides.addons! : [aCartAvailableItem()],
         availablePaymentMethods: overrides && overrides.hasOwnProperty('availablePaymentMethods') ? overrides.availablePaymentMethods! : [aCartItemPaymentMethod()],
+        baseBookableItem: overrides && overrides.hasOwnProperty('baseBookableItem') ? overrides.baseBookableItem! : aBaseBookableItem(),
         discountAmount: overrides && overrides.hasOwnProperty('discountAmount') ? overrides.discountAmount! : 'nulla',
         discountCode: overrides && overrides.hasOwnProperty('discountCode') ? overrides.discountCode! : 'nam',
         errors: overrides && overrides.hasOwnProperty('errors') ? overrides.errors! : [aCartItemError()],
@@ -3287,11 +3397,13 @@ export const aCartFeatures = (overrides?: Partial<CartFeatures>): CartFeatures =
         bookingQuestionsEnabled: overrides && overrides.hasOwnProperty('bookingQuestionsEnabled') ? overrides.bookingQuestionsEnabled! : true,
         giftCardPurchaseEnabled: overrides && overrides.hasOwnProperty('giftCardPurchaseEnabled') ? overrides.giftCardPurchaseEnabled! : true,
         paymentInfoRequired: overrides && overrides.hasOwnProperty('paymentInfoRequired') ? overrides.paymentInfoRequired! : false,
+        serviceAddonsEnabled: overrides && overrides.hasOwnProperty('serviceAddonsEnabled') ? overrides.serviceAddonsEnabled! : false,
     };
 };
 
 export const aCartGiftCardItem = (overrides?: Partial<CartGiftCardItem>): CartGiftCardItem => {
     return {
+        addons: overrides && overrides.hasOwnProperty('addons') ? overrides.addons! : [aCartAvailableItem()],
         availablePaymentMethods: overrides && overrides.hasOwnProperty('availablePaymentMethods') ? overrides.availablePaymentMethods! : [aCartItemPaymentMethod()],
         discountAmount: overrides && overrides.hasOwnProperty('discountAmount') ? overrides.discountAmount! : 'excepturi',
         discountCode: overrides && overrides.hasOwnProperty('discountCode') ? overrides.discountCode! : 'nemo',
@@ -3321,6 +3433,7 @@ export const aCartGuest = (overrides?: Partial<CartGuest>): CartGuest => {
 
 export const aCartItem = (overrides?: Partial<CartItem>): CartItem => {
     return {
+        addons: overrides && overrides.hasOwnProperty('addons') ? overrides.addons! : [aCartAvailableItem()],
         availablePaymentMethods: overrides && overrides.hasOwnProperty('availablePaymentMethods') ? overrides.availablePaymentMethods! : [aCartItemPaymentMethod()],
         discountAmount: overrides && overrides.hasOwnProperty('discountAmount') ? overrides.discountAmount! : 'adipisci',
         discountCode: overrides && overrides.hasOwnProperty('discountCode') ? overrides.discountCode! : 'ea',
@@ -3410,6 +3523,7 @@ export const aCartPriceRange = (overrides?: Partial<CartPriceRange>): CartPriceR
 
 export const aCartPurchasableItem = (overrides?: Partial<CartPurchasableItem>): CartPurchasableItem => {
     return {
+        addons: overrides && overrides.hasOwnProperty('addons') ? overrides.addons! : [aCartAvailableItem()],
         availablePaymentMethods: overrides && overrides.hasOwnProperty('availablePaymentMethods') ? overrides.availablePaymentMethods! : [aCartItemPaymentMethod()],
         discountAmount: overrides && overrides.hasOwnProperty('discountAmount') ? overrides.discountAmount! : 'id',
         discountCode: overrides && overrides.hasOwnProperty('discountCode') ? overrides.discountCode! : 'odio',
@@ -3578,8 +3692,10 @@ export const aLocation = (overrides?: Partial<Location>): Location => {
         isRemote: overrides && overrides.hasOwnProperty('isRemote') ? overrides.isRemote! : true,
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'optio',
         phoneNumber: overrides && overrides.hasOwnProperty('phoneNumber') ? overrides.phoneNumber! : 'et',
+        social: overrides && overrides.hasOwnProperty('social') ? overrides.social! : aLocationSocialAccounts(),
         tz: overrides && overrides.hasOwnProperty('tz') ? overrides.tz! : 'consectetur',
         updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'culpa',
+        website: overrides && overrides.hasOwnProperty('website') ? overrides.website! : 'id',
     };
 };
 
@@ -3594,6 +3710,18 @@ export const aLocationEdge = (overrides?: Partial<LocationEdge>): LocationEdge =
     return {
         cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : 'illum',
         node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : aLocation(),
+    };
+};
+
+export const aLocationSocialAccounts = (overrides?: Partial<LocationSocialAccounts>): LocationSocialAccounts => {
+    return {
+        facebook: overrides && overrides.hasOwnProperty('facebook') ? overrides.facebook! : 'laudantium',
+        google: overrides && overrides.hasOwnProperty('google') ? overrides.google! : 'aut',
+        instagram: overrides && overrides.hasOwnProperty('instagram') ? overrides.instagram! : 'eveniet',
+        pinterest: overrides && overrides.hasOwnProperty('pinterest') ? overrides.pinterest! : 'omnis',
+        twitter: overrides && overrides.hasOwnProperty('twitter') ? overrides.twitter! : 'aut',
+        yelp: overrides && overrides.hasOwnProperty('yelp') ? overrides.yelp! : 'recusandae',
+        youtube: overrides && overrides.hasOwnProperty('youtube') ? overrides.youtube! : 'soluta',
     };
 };
 
@@ -3683,6 +3811,19 @@ export const aRemoveCartSelectedItemPayload = (overrides?: Partial<RemoveCartSel
     };
 };
 
+export const aRequestCodeInput = (overrides?: Partial<RequestCodeInput>): RequestCodeInput => {
+    return {
+        method: overrides && overrides.hasOwnProperty('method') ? overrides.method! : 'ducimus',
+        value: overrides && overrides.hasOwnProperty('value') ? overrides.value! : 'deleniti',
+    };
+};
+
+export const aRequestCodePayload = (overrides?: Partial<RequestCodePayload>): RequestCodePayload => {
+    return {
+        requestId: overrides && overrides.hasOwnProperty('requestId') ? overrides.requestId! : 'quia',
+    };
+};
+
 export const aReserveCartBookableItemsInput = (overrides?: Partial<ReserveCartBookableItemsInput>): ReserveCartBookableItemsInput => {
     return {
         bookableTimeId: overrides && overrides.hasOwnProperty('bookableTimeId') ? overrides.bookableTimeId! : 'b487e0e3-3bd3-4086-b742-d4dd05c07e58',
@@ -3721,6 +3862,7 @@ export const aRootMutationType = (overrides?: Partial<RootMutationType>): RootMu
         deleteCartGuest: overrides && overrides.hasOwnProperty('deleteCartGuest') ? overrides.deleteCartGuest! : aDeleteCartGuestPayload(),
         removeCartOffer: overrides && overrides.hasOwnProperty('removeCartOffer') ? overrides.removeCartOffer! : aRemoveCartOfferPayload(),
         removeCartSelectedItem: overrides && overrides.hasOwnProperty('removeCartSelectedItem') ? overrides.removeCartSelectedItem! : aRemoveCartSelectedItemPayload(),
+        requestCode: overrides && overrides.hasOwnProperty('requestCode') ? overrides.requestCode! : aRequestCodePayload(),
         reserveCartBookableItems: overrides && overrides.hasOwnProperty('reserveCartBookableItems') ? overrides.reserveCartBookableItems! : aReserveCartBookableItemsPayload(),
         selectCartPaymentMethod: overrides && overrides.hasOwnProperty('selectCartPaymentMethod') ? overrides.selectCartPaymentMethod! : aSelectCartPaymentMethodPayload(),
         sendCartOwnershipCodeByEmail: overrides && overrides.hasOwnProperty('sendCartOwnershipCodeByEmail') ? overrides.sendCartOwnershipCodeByEmail! : aSendCartOwnershipCodeByEmailPayload(),
@@ -3804,6 +3946,13 @@ export const aService = (overrides?: Partial<Service>): Service => {
 export const aServiceCategory = (overrides?: Partial<ServiceCategory>): ServiceCategory => {
     return {
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'praesentium',
+    };
+};
+
+export const aServiceOption = (overrides?: Partial<ServiceOption>): ServiceOption => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9b954ffe-61d4-4141-9609-be016441d917',
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'perspiciatis',
     };
 };
 
