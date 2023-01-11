@@ -21,7 +21,6 @@ const fragments = gql`
     startAt
     startTimeOffset
     totalDuration
-    baseAppointmentServiceId
   }
 
   fragment AppointmentProperties on Appointment {
