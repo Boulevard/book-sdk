@@ -20,7 +20,7 @@ const fragments = gql`
     staffRequested
     startAt
     startTimeOffset
-    totalDuration
+    totalDuration2
   }
 
   fragment AppointmentProperties on Appointment {
