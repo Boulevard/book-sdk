@@ -17,7 +17,7 @@ import { Location } from "../src/locations";
 import { createHmac } from "crypto";
 
 const businessId = "63b60ecb-6d1e-4bb6-87ad-3cb52ffe09b4";
-const apiKey = process.env.SANDBOX_API_KEY;
+const apiKey = process.env.SANDBOX_API_KEY!;
 const anon = new Blvd(apiKey, businessId);
 
 describe("appointments", () => {
