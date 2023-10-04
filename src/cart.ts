@@ -334,7 +334,7 @@ class Cart extends Node<Graph.Cart> {
           cvv: string;
           exp_month: number;
           exp_year: number;
-          address_postal_code?: string;
+          address_postal_code: string;
         };
       }
       | { token: string },
