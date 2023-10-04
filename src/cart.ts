@@ -326,14 +326,15 @@ class Cart extends Node<Graph.Cart> {
   async addCardPaymentMethod(
     details:
       | {
-          card: {
-            name: string;
-            number: string;
-            cvv: string;
-            exp_month: number;
-            exp_year: number;
-          };
-        }
+        card: {
+          name: string;
+          number: string;
+          cvv: string;
+          exp_month: number;
+          exp_year: number;
+          address_postal_code: string;
+        };
+      }
       | { token: string },
     opts?: { select?: boolean }
   ): Promise<Cart> {
