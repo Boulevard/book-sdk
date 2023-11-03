@@ -11,6 +11,9 @@ export const fragments = gql`
       zip
       country
     }
+    allowOnlineBooking
+    allowOnlineRescheduling
+    arrivalInstructions
     avatar
     businessName
     id
