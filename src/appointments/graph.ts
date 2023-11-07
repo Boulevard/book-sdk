@@ -25,8 +25,14 @@ const fragments = gql`
 
   fragment AppointmentProperties on Appointment {
     id
+    cancellable
+    clientDuration
+    confirmable
     duration
     cancelled
+    isGroup
+    isRecurring
+    reschedulable
     state
     startAt
     endAt
