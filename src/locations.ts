@@ -17,6 +17,15 @@ class Location extends Node<Graph.Location> {
   /** The location's address */
   address: Graph.Address;
 
+  /** Whether or not the location allows booking online */
+  allowOnlineBooking: Scalars["Boolean"];
+
+  /** Whether or not the location allows rescheduling online */
+  allowOnlineRescheduling: Scalars["Boolean"];
+
+  /** The location's arrival instructions */
+  arrivalInstructions: Scalars["String"];
+
   /** The location's logo */
   avatar: Maybe<Scalars["String"]>;
 
