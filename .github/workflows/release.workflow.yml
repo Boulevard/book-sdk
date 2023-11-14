@@ -13,11 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
       - run: npm test
         env:
           SANDBOX_API_KEY: ${{ secrets.SANDBOX_API_KEY }}
