@@ -94,7 +94,8 @@ await cart.addCardPaymentMethod({
     number: "4242424242424242",
     cvv: "111",
     exp_month: 1,
-    exp_year: 2025
+    exp_year: 2025,
+    address_postal_code: "90210"
   }
 });
 
