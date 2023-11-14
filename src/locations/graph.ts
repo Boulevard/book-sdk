@@ -11,6 +11,7 @@ export const fragments = gql`
       zip
       country
     }
+    arrivalInstructions
     avatar
     businessName
     id

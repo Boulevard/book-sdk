@@ -207,6 +207,17 @@ export type Address = {
   zip?: Maybe<Scalars['String']>;
 };
 
+export type AddressInput = {
+  city?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  line1?: Maybe<Scalars['String']>;
+  line2?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  province?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
+};
+
 /** An Appointment */
 export type Appointment = Node & {
   __typename?: 'Appointment';
@@ -224,32 +235,61 @@ export type Appointment = Node & {
   appointmentServices: Array<AppointmentService>;
   /** Links to allow direct addition of the appointment to different calendar platforms */
   calendarLinks: CalendarLinks;
+  /** Whether or not the client can cancel this appointment */
+  cancellable: Scalars['Boolean'];
   /** Information about the cancellation, if present */
   cancellation?: Maybe<AppointmentCancellation>;
   /** Boolean signifying if the appointment is cancelled or not */
   cancelled: Scalars['Boolean'];
   /** The client of the appointment */
   client: Client;
+  /** The duration of the appointment for the client */
+  clientDuration: Scalars['Int'];
   /** The id of the client of the appointment. */
   clientId: Scalars['ID'];
+  /** Whether or not the client can confirm this appointment at this time */
+  confirmable: Scalars['Boolean'];
   /** When the appointment was created (in Etc/UTC) */
   createdAt: Scalars['DateTime'];
-  /** The duration of the appointment */
+  /** A collection of approved payment methods for the appointment. */
+  creditCards?: Maybe<Array<CreditCard>>;
+  /** Forms added to this appointment */
+  customForms: Array<CustomForm>;
+  /**
+   * The duration of the appointment
+   * @deprecated Use `clientDuration` instead.
+   */
   duration: Scalars['Int'];
   /** End time for the appointment */
   endAt: Scalars['DateTime'];
   /** The ID of an object */
   id: Scalars['ID'];
+  /** Whether or not the appointment is a group appointment */
+  isGroup: Scalars['Boolean'];
+  /** Whether or not the appointment is recurring */
+  isRecurring: Scalars['Boolean'];
   /** The Location where this appointment was booked. */
   location: Location;
   /** The Id of the Location where this appointment was booked. */
   locationId: Scalars['ID'];
+  /** Non reschedulable reason for this appointment will return null if it's reschedulable */
+  nonReschedulableReason?: Maybe<AppointmentNonReschedulableReason>;
   /** Notes provided by the client during booking */
   notes?: Maybe<Scalars['String']>;
+  /** Custom forms templates which should be filled out */
+  pendingFormTemplates: Array<CustomFormTemplate>;
+  /** Whether or not the client can reschedule this appointment */
+  reschedulable: Scalars['Boolean'];
   /** Start time for the appointment */
   startAt: Scalars['DateTime'];
   /** The state of the appointment. */
   state: AppointmentState;
+};
+
+
+/** An Appointment */
+export type AppointmentPendingFormTemplatesArgs = {
+  format?: Maybe<FormPresentationFormat>;
 };
 
 export type AppointmentAddTagsInput = {
@@ -292,6 +332,14 @@ export type AppointmentEdge = {
   cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Appointment>;
 };
+
+export enum AppointmentNonReschedulableReason {
+  CancelledAppointment = 'CANCELLED_APPOINTMENT',
+  GroupAppointment = 'GROUP_APPOINTMENT',
+  OnlineBookingNotAllowed = 'ONLINE_BOOKING_NOT_ALLOWED',
+  OutsideCancellationWindow = 'OUTSIDE_CANCELLATION_WINDOW',
+  ServiceNotBookable = 'SERVICE_NOT_BOOKABLE'
+}
 
 export type AppointmentRescheduleAvailableDatesInput = {
   /** The ID of the appointment that needs to be rescheduled. */
@@ -398,6 +446,20 @@ export type AppointmentServiceOption = Node & {
   serviceOptionId: Scalars['ID'];
 };
 
+export type AppointmentSort = {
+  direction?: Maybe<AppointmentSortDirection>;
+  field?: Maybe<AppointmentSortField>;
+};
+
+export enum AppointmentSortDirection {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
+
+export enum AppointmentSortField {
+  StartAt = 'START_AT'
+}
+
 export enum AppointmentState {
   Active = 'ACTIVE',
   Arrived = 'ARRIVED',
@@ -406,6 +468,16 @@ export enum AppointmentState {
   Confirmed = 'CONFIRMED',
   Final = 'FINAL'
 }
+
+export type AuthMethod = {
+  __typename?: 'AuthMethod';
+  /** Auth method id */
+  id: Scalars['String'];
+  /** Auth method name */
+  label: Scalars['String'];
+  /** Auth method value */
+  value: Scalars['String'];
+};
 
 export type AvailableRescheduleDate = {
   __typename?: 'AvailableRescheduleDate';
@@ -441,15 +513,26 @@ export type BookingQuestionOptionAnswerInput = {
 /** The business */
 export type Business = Node & {
   __typename?: 'Business';
+  /** A setting to let a business decide if a person with multiple client profiles can log in to one of their profiles */
+  allowLoginWithMultipleClients?: Maybe<Scalars['Boolean']>;
+  /** The business logo */
   avatar?: Maybe<Scalars['String']>;
+  /** An optional URL to use to direct customers to a business's custom booking flow */
+  customBookingUrl?: Maybe<Scalars['String']>;
   /** The ID of an object */
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   /** Locations */
   locations?: Maybe<LocationConnection>;
+  /** Flag for whether or not referral sources are managed by location */
+  manageReferralSourcesByLocation?: Maybe<Scalars['Boolean']>;
   /** Name of the business */
   name: Scalars['String'];
   onlineGiftCardSettings: OnlineGiftCardSettings;
+  /** The business's phone number. This could be an empty string. */
+  phoneNumber: Scalars['String'];
+  /** Client referral sources */
+  referralSources: Array<ReferralSource>;
   /** The timezone associated with the business */
   tz: Scalars['Tz'];
   updatedAt: Scalars['DateTime'];
@@ -464,6 +547,12 @@ export type BusinessLocationsArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+
+/** The business */
+export type BusinessReferralSourcesArgs = {
+  categoryId?: Maybe<Scalars['ID']>;
 };
 
 export type BusinessGiftCardDesign = {
@@ -496,6 +585,15 @@ export type CancelAppointmentPayload = {
   __typename?: 'CancelAppointmentPayload';
   appointment: Appointment;
 };
+
+export enum CardBrand {
+  Amex = 'AMEX',
+  DinersClub = 'DINERS_CLUB',
+  Discover = 'DISCOVER',
+  Jcb = 'JCB',
+  Mastercard = 'MASTERCARD',
+  Visa = 'VISA'
+}
 
 /** Represents a cart flow used for booking or purchasing things. */
 export type Cart = Node & {
@@ -553,10 +651,16 @@ export type Cart = Node & {
   /** Current validation errors. */
   errors: Array<CartError>;
   /**
-   * When the cart has reserved bookable items, the timestamp when reservations
-   * (e.g. service time selections) expire and need to be selected again. This
-   * value is `null` when there are no reservations and is reset into the future
-   * whenever a new reservation is added.
+   * When the cart has reserved bookable items, e.g. services with selected
+   * times, this is the timestamp when those reservations expire and must be
+   * renewed.
+   *
+   * This field is initially `null` when there are no reservations, and it's
+   * reset into the future when reservations are created or renewed.
+   *
+   * When reservations expire, the `CART_MISSING_ITEM_TIME` error is returned,
+   * and this timestamp will be in the past. To renew the reservations, call the
+   * `reserveCartBookableItems` mutation again.
    */
   expiresAt?: Maybe<Scalars['DateTime']>;
   /** Features available to the cart. */
@@ -692,6 +796,8 @@ export type CartAvailableBookableItem = CartAvailableItem & {
    * - The "Enable online booking" option for a location
    *
    * Location has to be chosen before checking out the cart.
+   *
+   * Allows to be queried with an optional staffId to only return locations where the bookable item can be provided by selected staff.
    */
   locationVariants: Array<CartAvailableBookableItemLocationVariant>;
   /** Refer to the super type. */
@@ -720,6 +826,12 @@ export type CartAvailableBookableItem = CartAvailableItem & {
    * @deprecated Use `listPriceRange` instead.
    */
   variablePrice: Scalars['Boolean'];
+};
+
+
+/** Item that can be booked through `addCartBookableItem`. */
+export type CartAvailableBookableItemLocationVariantsArgs = {
+  staffId?: Maybe<Scalars['ID']>;
 };
 
 /** Location variant of a bookable item */
@@ -900,7 +1012,12 @@ export type CartBookableDate = {
 /** An item that can be booked at a certain time. */
 export type CartBookableItem = CartItem & {
   __typename?: 'CartBookableItem';
-  /** Any add-on services available for the selected service */
+  /**
+   * Any add-on services available for the selected service.
+   *
+   * Note that if the location is not selected for the cart, the addons list will
+   * be empty. Please select a location first to see the addons.
+   */
   addons: Array<CartAvailableItem>;
   /** Refer to the super type. */
   availablePaymentMethods: Array<CartItemPaymentMethod>;
@@ -908,7 +1025,10 @@ export type CartBookableItem = CartItem & {
   baseBookableItem?: Maybe<BaseBookableItem>;
   /** Refer to the super type. */
   discountAmount?: Maybe<Scalars['Money']>;
-  /** Refer to the super type. */
+  /**
+   * Refer to the super type.
+   * @deprecated Use `offers` on the cart instead.
+   */
   discountCode?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
   errors: Array<CartItemError>;
@@ -952,9 +1072,9 @@ export type CartBookableItem = CartItem & {
   /**
    * Selected starting time for the item.
    *
-   * This value is reserved temporarily. Once the reservation expires, the value
-   * reverts to `null` and needs to be selected again. See the parent cart’s
-   * `expiresAt` field for more information.
+   * This start time is reserved temporarily. Once the reservation expires, the
+   * start time must be reserved again. See the parent cart’s `expiresAt` field
+   * for more information.
    */
   startTime?: Maybe<Scalars['NaiveDateTime']>;
   /** Refer to the super type. */
@@ -1120,20 +1240,25 @@ export type CartClearPayload = {
 };
 
 /**
- * Client information supplied when checking out as a new user or on behalf of
- * someone else than the current user.
+ * Client information supplied through either `createCart` or `updateCart`.
+ *
+ * Client information is _required_ when checking out an anonymous cart, i.e.
+ * when checking out without authenticating as a client.
+ *
+ * Client information may also be submitted piecemeal by calling `updateCart`
+ * multiple times, as long as required information is present before checkout.
  */
 export type CartClientInformation = {
   __typename?: 'CartClientInformation';
-  /** Email address. */
+  /** Optional email address. */
   email?: Maybe<Scalars['Email']>;
-  /** External ID of the client, used to integrate with external systems. */
+  /** Optional external ID of the client, used to integrate with external systems. */
   externalId?: Maybe<Scalars['String']>;
-  /** First name. */
-  firstName: Scalars['String'];
-  /** Last name. */
+  /** Required first name. */
+  firstName?: Maybe<Scalars['String']>;
+  /** Optional last name. */
   lastName?: Maybe<Scalars['String']>;
-  /** Mobile phone number. */
+  /** Optional mobile phone number. */
   phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
 
@@ -1148,7 +1273,7 @@ export type CartClientInformationInput = {
    * is ignored.
    */
   externalId?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['PhoneNumber']>;
 };
@@ -1201,9 +1326,14 @@ export enum CartErrorCode {
    *
    * ## Resolution
    *
-   * Anonymous carts cannot be checked out. Either an existing user needs to own
-   * the cart, or client information must be added using the `clientInformation`
-   * field.
+   * Anonymous carts cannot be checked out. Either an authenticated user needs to
+   * take ownership of the cart using the `takeCartOwnership` mutation, or client
+   * information must be added using the `clientInformation` field. The following
+   * fields are required before checkout:
+   *
+   * - `firstName`
+   *
+   * Other fields are recommended.
    */
   CartMissingClientInformation = 'CART_MISSING_CLIENT_INFORMATION',
   /**
@@ -1273,7 +1403,10 @@ export type CartGiftCardItem = CartItem & {
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
   discountAmount?: Maybe<Scalars['Money']>;
-  /** Refer to the super type. */
+  /**
+   * Refer to the super type.
+   * @deprecated Use `offers` on the cart instead.
+   */
   discountCode?: Maybe<Scalars['String']>;
   /** Send the gift card to a recipient via email. */
   emailFulfillment?: Maybe<CartItemEmailFulfillment>;
@@ -1333,6 +1466,7 @@ export type CartItem = {
   /**
    * Valid discount code that was applied, either the cart's code or one that was
    * applied separately to the item. An invalid code results in a `null` value.
+   * @deprecated Use `offers` on the cart instead.
    */
   discountCode?: Maybe<Scalars['String']>;
   /** Current item validation errors. */
@@ -1445,6 +1579,13 @@ export type CartItemVoucherPaymentMethod = CartItemPaymentMethod & {
   /** Number of vouchers available, always at least one. */
   availableCount: Scalars['Int'];
   /**
+   * Available voucher IDs, always at least one.
+   *
+   * This field can be useful to identify specific vouchers when a single voucher
+   * can be applied to multiple services.
+   */
+  availableVoucherIds: Array<Scalars['ID']>;
+  /**
    * Last date when the voucher is valid, or `null` if valid forever.
    *
    * Note that when there are multiple vouchers available with different
@@ -1496,7 +1637,10 @@ export type CartPurchasableItem = CartItem & {
   availablePaymentMethods: Array<CartItemPaymentMethod>;
   /** Refer to the super type. */
   discountAmount?: Maybe<Scalars['Money']>;
-  /** Refer to the super type. */
+  /**
+   * Refer to the super type.
+   * @deprecated Use `offers` on the cart instead.
+   */
   discountCode?: Maybe<Scalars['String']>;
   /** Refer to the super type. */
   errors: Array<CartItemError>;
@@ -1563,6 +1707,8 @@ export type CheckoutCartPayload = {
 /** A Client */
 export type Client = Node & {
   __typename?: 'Client';
+  /** Communication preferences */
+  communicationSubscriptions: Array<CommunicationSubscription>;
   /** Email address */
   email?: Maybe<Scalars['Email']>;
   /** First name */
@@ -1576,7 +1722,67 @@ export type Client = Node & {
   mobilePhone?: Maybe<Scalars['PhoneNumber']>;
   /** Full name */
   name?: Maybe<Scalars['String']>;
+  /** Pronoun */
+  pronoun?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
+};
+
+export type ClientNote = {
+  __typename?: 'ClientNote';
+  /** ID */
+  id: Scalars['ID'];
+  /** When the note was originally created */
+  insertedAt: Scalars['NaiveDateTime'];
+  /** The body (text) of the note. */
+  text: Scalars['String'];
+  type: NoteType;
+  /** When the note was last updated */
+  updatedAt: Scalars['NaiveDateTime'];
+};
+
+export enum CommunicationChannel {
+  Email = 'EMAIL',
+  Sms = 'SMS'
+}
+
+export type CommunicationChannelPreference = {
+  __typename?: 'CommunicationChannelPreference';
+  /** The communication channel through which communications are received */
+  communicationChannel: CommunicationChannel;
+  /** Indicates whether communications can be sent to the given communication channel */
+  enabled: Scalars['Boolean'];
+};
+
+export enum CommunicationKey {
+  AppointmentReminder = 'APPOINTMENT_REMINDER',
+  Marketing = 'MARKETING'
+}
+
+export type CommunicationSubscription = {
+  __typename?: 'CommunicationSubscription';
+  /** Communication preferences for a given communication subscription */
+  communicationChannelPreferences: Array<CommunicationChannelPreference>;
+  /** Describes the type of communications the subscription relates to */
+  description: Scalars['String'];
+  /** Identifying key of a communication subscription */
+  key: CommunicationKey;
+  /** Human readable title of a communication subscription */
+  title: Scalars['String'];
+};
+
+export type CommunicationSubscriptionInput = {
+  channel: CommunicationChannel;
+  enabled: Scalars['Boolean'];
+  key: CommunicationKey;
+};
+
+export type ConfirmAppointmentInput = {
+  id: Scalars['ID'];
+};
+
+export type ConfirmAppointmentPayload = {
+  __typename?: 'ConfirmAppointmentPayload';
+  appointment: Appointment;
 };
 
 
@@ -1638,6 +1844,517 @@ export type CreateCartPayload = {
   cart: Cart;
 };
 
+export type CreateClientNoteInput = {
+  /** The body (text) of the note. */
+  text: Scalars['String'];
+  type: NoteType;
+};
+
+export type CreateClientNotePayload = {
+  __typename?: 'CreateClientNotePayload';
+  clientNote?: Maybe<ClientNote>;
+};
+
+export type CreateCreditCardInput = {
+  /** A friendly nickname associated with the card */
+  nickname?: Maybe<Scalars['String']>;
+  /** A token obtained from Vault */
+  vaultToken: Scalars['String'];
+};
+
+export type CreateCreditCardResult = {
+  __typename?: 'CreateCreditCardResult';
+  creditCard?: Maybe<CreditCard>;
+};
+
+export type CreateCustomFormInput = {
+  answers?: Maybe<Array<CustomFormAnswer>>;
+  appointmentId: Scalars['ID'];
+  offline?: Maybe<Scalars['Boolean']>;
+  submit?: Maybe<Scalars['Boolean']>;
+  submittedAt?: Maybe<Scalars['DateTime']>;
+  versionId: Scalars['ID'];
+};
+
+/** A credit card */
+export type CreditCard = {
+  __typename?: 'CreditCard';
+  /** The brand of the card */
+  brand: CardBrand;
+  /** The M formatted exp month of the card without leading zeros for single-digit months. */
+  expMonth: Scalars['Int'];
+  /** The YYYY formatted exp year of the card */
+  expYear: Scalars['Int'];
+  /** The ID of the credit card */
+  id: Scalars['ID'];
+  /** Whether the card is expired or not */
+  isExpired: Scalars['Boolean'];
+  /** The last4 digits of the card number */
+  last4: Scalars['String'];
+};
+
+export type CreditCardConnection = {
+  __typename?: 'CreditCardConnection';
+  edges?: Maybe<Array<Maybe<CreditCardEdge>>>;
+  pageInfo: PageInfo;
+};
+
+export type CreditCardEdge = {
+  __typename?: 'CreditCardEdge';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<CreditCard>;
+};
+
+export type CustomForm = Node & {
+  __typename?: 'CustomForm';
+  /** ID of the appointment the form relates to */
+  appointmentId?: Maybe<Scalars['ID']>;
+  /** ID of a client who submitted out the form */
+  clientId?: Maybe<Scalars['ID']>;
+  components: Array<CustomFormComponent>;
+  formTemplate: FormTemplate;
+  /** The ID of an object */
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  notStarted: Scalars['Boolean'];
+  submittedAt?: Maybe<Scalars['DateTime']>;
+  version: CustomFormVersion;
+};
+
+export type CustomFormAnswer = {
+  checkboxAnswer?: Maybe<Array<Scalars['ID']>>;
+  dateAnswer?: Maybe<Scalars['String']>;
+  dropdownAnswer?: Maybe<Array<Scalars['ID']>>;
+  id: Scalars['ID'];
+  imageAnswer?: Maybe<CustomFormImageAnswer>;
+  otherAnswer?: Maybe<Scalars['String']>;
+  radioAnswer?: Maybe<Scalars['ID']>;
+  selectAnswer?: Maybe<Array<Scalars['ID']>>;
+  signatureAnswer?: Maybe<CustomFormSignatureAnswer>;
+  textAnswer?: Maybe<Scalars['String']>;
+  textareaAnswer?: Maybe<Scalars['String']>;
+};
+
+export type CustomFormComponent = {
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentCheckbox = CustomFormComponent & {
+  __typename?: 'CustomFormComponentCheckbox';
+  checkboxAnswer?: Maybe<Array<Scalars['ID']>>;
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  values: Array<FormComponentCheckboxValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentCheckboxV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentCheckboxV2';
+  checkboxAnswer?: Maybe<Array<Scalars['ID']>>;
+  enableOther: Scalars['Boolean'];
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  otherAnswer?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  values: Array<FormComponentV2CheckboxValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentDate = CustomFormComponent & {
+  __typename?: 'CustomFormComponentDate';
+  dateAnswer?: Maybe<Scalars['String']>;
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentDateV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentDateV2';
+  autoPopulate: Scalars['Boolean'];
+  connectedField?: Maybe<Scalars['String']>;
+  connectedSource?: Maybe<Scalars['String']>;
+  dateAnswer?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentDividerV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentDividerV2';
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentDropdownV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentDropdownV2';
+  autoPopulate: Scalars['Boolean'];
+  connectedField?: Maybe<Scalars['String']>;
+  connectedSource?: Maybe<Scalars['String']>;
+  dropdownAnswer?: Maybe<Array<Scalars['ID']>>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  manageReferralSourcesByLocation: Scalars['Boolean'];
+  multiple: Scalars['Boolean'];
+  required: Scalars['Boolean'];
+  values: Array<FormComponentCheckboxValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentH1 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentH1';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentH2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentH2';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentImageAnswer = {
+  __typename?: 'CustomFormComponentImageAnswer';
+  annotatedImageUrl?: Maybe<Scalars['String']>;
+  canvasDataUrl?: Maybe<Scalars['String']>;
+  customFormImageId?: Maybe<Scalars['ID']>;
+  sourceImageUrl?: Maybe<Scalars['String']>;
+};
+
+export type CustomFormComponentImageUploaderV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentImageUploaderV2';
+  enableImageMarkup: Scalars['Boolean'];
+  /** @deprecated This field has been deprecated, use imageAnswer instead */
+  fileUpload: CustomFormComponentSignatureUpload;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  imageAnswer: CustomFormComponentImageAnswer;
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentImageV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentImageV2';
+  enableImageMarkup: Scalars['Boolean'];
+  fileUploadId?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  imageAnswer: CustomFormComponentImageAnswer;
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  src: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentLogo = CustomFormComponent & {
+  __typename?: 'CustomFormComponentLogo';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  markdownContent: Scalars['String'];
+  markdownHtml: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentLogoV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentLogoV2';
+  fileUploadId?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  src: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentMarkdown = CustomFormComponent & {
+  __typename?: 'CustomFormComponentMarkdown';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  markdownContent: Scalars['String'];
+  markdownHtml: Scalars['String'];
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentMultipleChoiceV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentMultipleChoiceV2';
+  autoPopulate: Scalars['Boolean'];
+  connectedField?: Maybe<Scalars['String']>;
+  connectedSource?: Maybe<Scalars['String']>;
+  enableOther: Scalars['Boolean'];
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  otherAnswer?: Maybe<Scalars['String']>;
+  radioAnswer?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  values: Array<FormComponentV2CheckboxValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentRadio = CustomFormComponent & {
+  __typename?: 'CustomFormComponentRadio';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  radioAnswer?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  values: Array<CustomFormComponentRadioValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentRadioValue = {
+  __typename?: 'CustomFormComponentRadioValue';
+  id: Scalars['String'];
+  label: Scalars['String'];
+};
+
+export type CustomFormComponentSelect = CustomFormComponent & {
+  __typename?: 'CustomFormComponentSelect';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  selectAnswer?: Maybe<Array<Maybe<Scalars['String']>>>;
+  selectMultiple: Scalars['Boolean'];
+  values: Array<CustomFormComponentSelectValue>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentSelectValue = {
+  __typename?: 'CustomFormComponentSelectValue';
+  id: Scalars['String'];
+  label: Scalars['String'];
+};
+
+export type CustomFormComponentSignature = CustomFormComponent & {
+  __typename?: 'CustomFormComponentSignature';
+  enableWet?: Maybe<Scalars['Boolean']>;
+  fileUpload: CustomFormComponentSignatureUpload;
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label: Scalars['String'];
+  required: Scalars['Boolean'];
+  signatureAnswer: CustomFormComponentSignatureAnswer;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentSignatureAnswer = {
+  __typename?: 'CustomFormComponentSignatureAnswer';
+  fileUploadId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type CustomFormComponentSignatureUpload = {
+  __typename?: 'CustomFormComponentSignatureUpload';
+  id: Scalars['ID'];
+  signedPutUrl: Scalars['String'];
+};
+
+export type CustomFormComponentSignatureV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentSignatureV2';
+  enableWetV2?: Maybe<Scalars['Boolean']>;
+  fileUpload: CustomFormComponentSignatureUpload;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  signatureAnswer: CustomFormComponentSignatureAnswer;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentText = CustomFormComponent & {
+  __typename?: 'CustomFormComponentText';
+  floatWidth?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label: Scalars['String'];
+  placeholder?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  textAnswer?: Maybe<Scalars['String']>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentTextInputV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentTextInputV2';
+  autoPopulate: Scalars['Boolean'];
+  connectedField?: Maybe<Scalars['String']>;
+  connectedSource?: Maybe<Scalars['String']>;
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label?: Maybe<Scalars['String']>;
+  longResponse: Scalars['Boolean'];
+  placeholder?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  textAnswer?: Maybe<Scalars['String']>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentTextV2 = CustomFormComponent & {
+  __typename?: 'CustomFormComponentTextV2';
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  value?: Maybe<Scalars['String']>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormComponentTextarea = CustomFormComponent & {
+  __typename?: 'CustomFormComponentTextarea';
+  h: Scalars['Int'];
+  id: Scalars['ID'];
+  kind: FormComponentKind;
+  label: Scalars['String'];
+  placeholder?: Maybe<Scalars['String']>;
+  required: Scalars['Boolean'];
+  textAnswer?: Maybe<Scalars['String']>;
+  textareaAnswer?: Maybe<Scalars['String']>;
+  w: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
+};
+
+export type CustomFormImageAnswer = {
+  customFormImageId?: Maybe<Scalars['ID']>;
+};
+
+export type CustomFormSignatureAnswer = {
+  fileUploadId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type CustomFormTemplate = {
+  __typename?: 'CustomFormTemplate';
+  /** @deprecated Use `status` instead */
+  active: Scalars['Boolean'];
+  components: Array<CustomFormComponent>;
+  createdByStaff?: Maybe<Staff>;
+  currentVersion: CustomFormVersion;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  internal: Scalars['Boolean'];
+  name: Scalars['String'];
+  requestDuringBooking: Scalars['Boolean'];
+  requestDuringCheckin: Scalars['Boolean'];
+  requestDuringReminder: Scalars['Boolean'];
+  requestSameDay: Scalars['Boolean'];
+  resource: FormResourceType;
+  sortOrder: Scalars['Float'];
+  status: Scalars['String'];
+  templateLocations: Array<Maybe<CustomFormTemplateLocation>>;
+  templateServices: Array<Maybe<CustomFormTemplateService>>;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type CustomFormTemplateLocation = {
+  __typename?: 'CustomFormTemplateLocation';
+  id: Scalars['ID'];
+  location: Location;
+  template: CustomFormTemplate;
+};
+
+export type CustomFormTemplateService = {
+  __typename?: 'CustomFormTemplateService';
+  id: Scalars['ID'];
+  service: Service;
+  template: CustomFormTemplate;
+};
+
+export type CustomFormVersion = {
+  __typename?: 'CustomFormVersion';
+  components: Array<CustomFormComponent>;
+  id: Scalars['ID'];
+  template: CustomFormTemplate;
+  templatingVersion: Scalars['Int'];
+};
+
 
 
 export type DeleteCartGiftCardItemEmailFulfillmentInput = {
@@ -1673,6 +2390,67 @@ export enum DepositType {
 
 
 
+export type FormComponentCheckboxValue = {
+  __typename?: 'FormComponentCheckboxValue';
+  id: Scalars['ID'];
+  label: Scalars['String'];
+};
+
+export enum FormComponentKind {
+  Checkbox = 'CHECKBOX',
+  CheckboxV2 = 'CHECKBOX_V2',
+  Date = 'DATE',
+  DateV2 = 'DATE_V2',
+  DividerV2 = 'DIVIDER_V2',
+  DropdownV2 = 'DROPDOWN_V2',
+  H1 = 'H1',
+  H2 = 'H2',
+  ImageUploaderV2 = 'IMAGE_UPLOADER_V2',
+  ImageV2 = 'IMAGE_V2',
+  Logo = 'LOGO',
+  LogoV2 = 'LOGO_V2',
+  Markdown = 'MARKDOWN',
+  MultipleChoiceV2 = 'MULTIPLE_CHOICE_V2',
+  Radio = 'RADIO',
+  Select = 'SELECT',
+  Signature = 'SIGNATURE',
+  SignatureV2 = 'SIGNATURE_V2',
+  Text = 'TEXT',
+  TextInputV2 = 'TEXT_INPUT_V2',
+  TextV2 = 'TEXT_V2',
+  Textarea = 'TEXTAREA'
+}
+
+export type FormComponentV2CheckboxValue = {
+  __typename?: 'FormComponentV2CheckboxValue';
+  id: Scalars['ID'];
+  label?: Maybe<Scalars['String']>;
+};
+
+export enum FormPresentationFormat {
+  /** All relevant forms */
+  Any = 'ANY',
+  /** Booking widget during booking */
+  Booking = 'BOOKING',
+  /** Display this form in the Reception app during check-in */
+  Checkin = 'CHECKIN',
+  /** A reminder to complete the form before their appointment */
+  Reminder = 'REMINDER'
+}
+
+export enum FormResourceType {
+  Appointment = 'APPOINTMENT',
+  Client = 'CLIENT'
+}
+
+export type FormTemplate = {
+  __typename?: 'FormTemplate';
+  /** Form template ID */
+  id: Scalars['ID'];
+  /** Form template name */
+  name: Scalars['String'];
+};
+
 export type GiftCardDesign = {
   __typename?: 'GiftCardDesign';
   backgroundColor?: Maybe<Scalars['String']>;
@@ -1688,14 +2466,28 @@ export type Location = Node & {
   __typename?: 'Location';
   /** The location's address */
   address: Address;
+  /** Whether or not the location allows booking online */
+  allowOnlineBooking: Scalars['Boolean'];
+  /** Whether or not the location allows rescheduling online */
+  allowOnlineRescheduling: Scalars['Boolean'];
+  /** The location's arrival instructions */
+  arrivalInstructions: Scalars['String'];
   /** URL to an image related to the location */
   avatar?: Maybe<Scalars['String']>;
   /** Name of the business */
   businessName: Scalars['String'];
+  /** The location's contact email */
+  contactEmail?: Maybe<Scalars['Email']>;
   /** The coordinates of the location */
   coordinates?: Maybe<Scalars['Coordinates']>;
   /** Location external id */
   externalId?: Maybe<Scalars['String']>;
+  /**
+   * Stores the location's daily business hours and whether the location is
+   * open or closed on a specific day of the week. This is an array of 7 elements
+   * for each day of the week, beginning with Sunday.
+   */
+  hours?: Maybe<Array<Maybe<LocationDays>>>;
   /** The ID of an object */
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
@@ -1723,10 +2515,34 @@ export type LocationConnection = {
   pageInfo: PageInfo;
 };
 
+/**
+ * Represents each day of the week of the location's hours. Open is a boolean
+ * indicating if the location is open on that day. Start and finish are the exact times
+ * the location opens and closes on that day.
+ */
+export type LocationDays = {
+  __typename?: 'LocationDays';
+  finish?: Maybe<LocationHours>;
+  open?: Maybe<Scalars['Boolean']>;
+  start?: Maybe<LocationHours>;
+};
+
 export type LocationEdge = {
   __typename?: 'LocationEdge';
   cursor?: Maybe<Scalars['String']>;
   node?: Maybe<Location>;
+};
+
+/**
+ * Used for the open (start) and close (finish) time of the location's hours.
+ * Hour stores the hour and minute stores the minutes. For example, 2:30PM would be
+ * saved as { hour: 14, minute: 30 }.
+ */
+export type LocationHours = {
+  __typename?: 'LocationHours';
+  /** Only integers in the range 0..23 are valid */
+  hour?: Maybe<Scalars['Int']>;
+  minute?: Maybe<Scalars['Int']>;
 };
 
 export type LocationSocialAccounts = {
@@ -1747,6 +2563,10 @@ export type Membership = Node & {
   client: Client;
   /** The id of the client who owns the membership. */
   clientId: Scalars['ID'];
+  /** The credit card that will be charged for the membership. */
+  creditCard?: Maybe<CreditCard>;
+  /** Has the membership current billing failed */
+  currentBillingError: Scalars['Boolean'];
   /**
    * Ending date for the membership.
    *
@@ -1765,6 +2585,8 @@ export type Membership = Node & {
   status: SubscriptionStatus;
   /** The current term number of the membership */
   termNumber: Scalars['Int'];
+  /** How much the membership costs per interval. */
+  unitPrice: Scalars['Money'];
   /** Optional vouchers included with membership */
   vouchers: Array<MembershipVoucher>;
 };
@@ -1781,11 +2603,33 @@ export type MembershipEdge = {
   node?: Maybe<Membership>;
 };
 
+export type MembershipPaymentMethodUpdateAndRenewInput = {
+  id: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+export type MembershipPaymentMethodUpdateAndRenewPayload = {
+  __typename?: 'MembershipPaymentMethodUpdateAndRenewPayload';
+  membership?: Maybe<Membership>;
+  newCardWasChargedForRenewal?: Maybe<Scalars['Boolean']>;
+};
+
+export type MembershipPaymentMethodUpdateInput = {
+  id: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+export type MembershipPaymentMethodUpdatePayload = {
+  __typename?: 'MembershipPaymentMethodUpdatePayload';
+  membership?: Maybe<Membership>;
+};
+
 /** A membership service voucher */
 export type MembershipVoucher = {
   __typename?: 'MembershipVoucher';
   /** Number of vouchers included */
   quantity: Scalars['Int'];
+  /** @deprecated Use services to fetch the list of services from a membership voucher. */
   service: Service;
   services: Array<Service>;
 };
@@ -1796,6 +2640,15 @@ export type Node = {
   /** The ID of the object. */
   id: Scalars['ID'];
 };
+
+export enum NoteType {
+  /** Note with allergy information */
+  Allergy = 'ALLERGY',
+  /** Standard note */
+  Default = 'DEFAULT',
+  /** Note with medical information */
+  Medication = 'MEDICATION'
+}
 
 export type OnlineGiftCardSettings = {
   __typename?: 'OnlineGiftCardSettings';
@@ -1820,6 +2673,31 @@ export type PageInfo = {
 
 
 
+export type ReferralInput = {
+  additionalInfo?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  referralSourceId?: Maybe<Scalars['ID']>;
+  referrerClientId?: Maybe<Scalars['ID']>;
+};
+
+export type ReferralSource = {
+  __typename?: 'ReferralSource';
+  /** If the referral source is active or has been soft deleted */
+  active: Scalars['Boolean'];
+  /** Whether or not this referral source has been enabled for all locations */
+  allLocations: Scalars['Boolean'];
+  /** ID */
+  id: Scalars['ID'];
+  /** When the referral source was created */
+  insertedAt: Scalars['DateTime'];
+  /** Location ID of location that owns the referral source.  If null, owned by the business */
+  locationId?: Maybe<Scalars['ID']>;
+  /** Locations that have access to the referral source, but cannot necessarily edit the referral source */
+  locations: Array<Location>;
+  /** Name of the source of the referral */
+  name: Scalars['String'];
+};
+
 export type RemoveCartOfferInput = {
   /** ID of the cart */
   id: Scalars['ID'];
@@ -1842,6 +2720,11 @@ export type RemoveCartSelectedItemInput = {
 export type RemoveCartSelectedItemPayload = {
   __typename?: 'RemoveCartSelectedItemPayload';
   cart: Cart;
+};
+
+export type RemoveCustomFormImageResult = {
+  __typename?: 'RemoveCustomFormImageResult';
+  id: Scalars['ID'];
 };
 
 export type RequestCodeInput = {
@@ -1925,7 +2808,7 @@ export type RootMutationType = {
   /**
    * Cancel an Appointment.
    *
-   * Cancelling an Appointment automatically updates it's state to `cancelled`
+   * Cancelling an Appointment automatically updates its state to `cancelled`
    */
   cancelAppointment?: Maybe<CancelAppointmentPayload>;
   /**
@@ -1966,6 +2849,8 @@ export type RootMutationType = {
    * cart as completed.
    */
   checkoutCart?: Maybe<CheckoutCartPayload>;
+  /** Confirm an appointment. Updates its state to `confirmed`. */
+  confirmAppointment?: Maybe<ConfirmAppointmentPayload>;
   /** Create a pending cart for the current client */
   createCart?: Maybe<CreateCartPayload>;
   /**
@@ -1975,6 +2860,12 @@ export type RootMutationType = {
   createCartGiftCardItemEmailFulfillment?: Maybe<CreateCartGiftCardItemEmailFulfillmentPayload>;
   /** Add a guest to a cart. */
   createCartGuest?: Maybe<CreateCartGuestPayload>;
+  /** Create client note for the authenticated client */
+  createClientNote?: Maybe<CreateClientNotePayload>;
+  /** Attach a credit card to a client. */
+  createCreditCard?: Maybe<CreateCreditCardResult>;
+  /** Create a custom form from a custom form template version */
+  createCustomForm: CustomForm;
   /** Delete a gift card item email fulfillment. */
   deleteCartGiftCardItemEmailFulfillment?: Maybe<DeleteCartGiftCardItemEmailFulfillmentPayload>;
   /**
@@ -1983,6 +2874,13 @@ export type RootMutationType = {
    * Using this mutation invalidates existing reservations.
    */
   deleteCartGuest?: Maybe<DeleteCartGuestPayload>;
+  /** Update the payment method for a membership */
+  membershipPaymentMethodUpdate?: Maybe<MembershipPaymentMethodUpdatePayload>;
+  /**
+   * Update the payment method for a membership and renew it. Note that this
+   * will charge the new card immediately if the membership is past due.
+   */
+  membershipPaymentMethodUpdateAndRenew?: Maybe<MembershipPaymentMethodUpdateAndRenewPayload>;
   /** Remove an offer from the cart. */
   removeCartOffer?: Maybe<RemoveCartOfferPayload>;
   /**
@@ -1992,6 +2890,8 @@ export type RootMutationType = {
    * removed is a bookable item.
    */
   removeCartSelectedItem?: Maybe<RemoveCartSelectedItemPayload>;
+  /** Removes a custom form image */
+  removeCustomFormImage: RemoveCustomFormImageResult;
   /**
    * Request code that will be sent through specified communication method. Currently supported:
    * SMS or email. Codes have an expiration date and are used for authorized login for the client.
@@ -2021,6 +2921,8 @@ export type RootMutationType = {
   sendCartOwnershipCodeByEmail?: Maybe<SendCartOwnershipCodeByEmailPayload>;
   /** Send an ownership code via SMS that allows the client to take ownership of the cart */
   sendCartOwnershipCodeBySms?: Maybe<SendCartOwnershipCodeBySmsPayload>;
+  /** Starts a client image upload */
+  startCustomFormImageUpload: StartCustomFormImageUploadResult;
   /**
    * Take ownership of a cart, linking the cart
    * to a Boulevard account.
@@ -2032,6 +2934,8 @@ export type RootMutationType = {
   takeCartOwnership?: Maybe<TakeCartOwnershipPayload>;
   /** Take ownership of the cart using a client authorization code that's been sent via SMS or email */
   takeCartOwnershipByCode?: Maybe<TakeCartOwnershipByCodePayload>;
+  unstableClientPasswordlessAuthRequestCode?: Maybe<UnstableClientPasswordlessAuthRequestCodePayload>;
+  unstableClientPasswordlessAuthSignIn?: Maybe<UnstableClientPasswordlessAuthSignInPayload>;
   /** Update a pending cart */
   updateCart?: Maybe<UpdateCartPayload>;
   /** Update a gift card item email fulfillment. */
@@ -2049,8 +2953,16 @@ export type RootMutationType = {
   updateCartSelectedGiftCardItem?: Maybe<UpdateCartSelectedGiftCardItemPayload>;
   /** Update a cart's selected purchasable item. */
   updateCartSelectedPurchasableItem?: Maybe<UpdateCartSelectedPurchasableItemPayload>;
-  /** Update the authenticated client */
+  /**
+   * Update the authenticated client
+   * @deprecated Deprecated, use updateClientInfo instead.
+   */
   updateClient?: Maybe<UpdateClientPayload>;
+  /** Update the authenticated client information */
+  updateClientInfo?: Maybe<UpdateClientInfoPayload>;
+  updateCommunicationSubscriptions?: Maybe<UpdateCommunicationSubscriptionsPayload>;
+  /** Update a custom form from a custom form template version */
+  updateCustomForm: CustomForm;
 };
 
 
@@ -2134,6 +3046,11 @@ export type RootMutationTypeCheckoutCartArgs = {
 };
 
 
+export type RootMutationTypeConfirmAppointmentArgs = {
+  input: ConfirmAppointmentInput;
+};
+
+
 export type RootMutationTypeCreateCartArgs = {
   input: CreateCartInput;
 };
@@ -2149,6 +3066,21 @@ export type RootMutationTypeCreateCartGuestArgs = {
 };
 
 
+export type RootMutationTypeCreateClientNoteArgs = {
+  input: CreateClientNoteInput;
+};
+
+
+export type RootMutationTypeCreateCreditCardArgs = {
+  card: CreateCreditCardInput;
+};
+
+
+export type RootMutationTypeCreateCustomFormArgs = {
+  form: CreateCustomFormInput;
+};
+
+
 export type RootMutationTypeDeleteCartGiftCardItemEmailFulfillmentArgs = {
   input: DeleteCartGiftCardItemEmailFulfillmentInput;
 };
@@ -2159,6 +3091,16 @@ export type RootMutationTypeDeleteCartGuestArgs = {
 };
 
 
+export type RootMutationTypeMembershipPaymentMethodUpdateArgs = {
+  input: MembershipPaymentMethodUpdateInput;
+};
+
+
+export type RootMutationTypeMembershipPaymentMethodUpdateAndRenewArgs = {
+  input: MembershipPaymentMethodUpdateAndRenewInput;
+};
+
+
 export type RootMutationTypeRemoveCartOfferArgs = {
   input: RemoveCartOfferInput;
 };
@@ -2166,6 +3108,11 @@ export type RootMutationTypeRemoveCartOfferArgs = {
 
 export type RootMutationTypeRemoveCartSelectedItemArgs = {
   input: RemoveCartSelectedItemInput;
+};
+
+
+export type RootMutationTypeRemoveCustomFormImageArgs = {
+  customFormImageId: Scalars['ID'];
 };
 
 
@@ -2194,6 +3141,11 @@ export type RootMutationTypeSendCartOwnershipCodeBySmsArgs = {
 };
 
 
+export type RootMutationTypeStartCustomFormImageUploadArgs = {
+  input: StartCustomFormImageUploadInput;
+};
+
+
 export type RootMutationTypeTakeCartOwnershipArgs = {
   input: TakeCartOwnershipInput;
 };
@@ -2201,6 +3153,16 @@ export type RootMutationTypeTakeCartOwnershipArgs = {
 
 export type RootMutationTypeTakeCartOwnershipByCodeArgs = {
   input: TakeCartOwnershipByCodeInput;
+};
+
+
+export type RootMutationTypeUnstableClientPasswordlessAuthRequestCodeArgs = {
+  input: UnstableClientPasswordlessAuthRequestCodeInput;
+};
+
+
+export type RootMutationTypeUnstableClientPasswordlessAuthSignInArgs = {
+  input: UnstableClientPasswordlessAuthSignInInput;
 };
 
 
@@ -2238,6 +3200,21 @@ export type RootMutationTypeUpdateClientArgs = {
   input: UpdateClientInput;
 };
 
+
+export type RootMutationTypeUpdateClientInfoArgs = {
+  input: UpdateClientInfoInput;
+};
+
+
+export type RootMutationTypeUpdateCommunicationSubscriptionsArgs = {
+  input: UpdateCommunicationSubscriptionsInput;
+};
+
+
+export type RootMutationTypeUpdateCustomFormArgs = {
+  form: UpdateCustomFormInput;
+};
+
 export type RootQueryType = {
   __typename?: 'RootQueryType';
   appointment?: Maybe<Appointment>;
@@ -2248,9 +3225,11 @@ export type RootQueryType = {
   /**
    * Retrieves available dates for all bookable cart items.
    *
-   * Note that the search range will be clamped to the location's minimum and
-   * maximum booking lead times. Additionally, If the range is longer than a week,
-   * only the first week of matches is returned.
+   * The search range may be arbitrarily large, but the number of available dates
+   * returned is limited by the `limit` argument, which defaults to 31.
+   *
+   * Note that the search range is always clamped to the location's minimum and
+   * maximum booking lead times.
    */
   cartBookableDates?: Maybe<Array<CartBookableDate>>;
   /**
@@ -2278,8 +3257,12 @@ export type RootQueryType = {
   cartBookableTimes?: Maybe<Array<CartBookableTime>>;
   /** Look up the authenticated client */
   client?: Maybe<Client>;
+  customForm: CustomForm;
+  customFormTemplate?: Maybe<CustomFormTemplate>;
   /** List locations for the business */
   locations?: Maybe<LocationConnection>;
+  /** Get a membership by ID */
+  membership?: Maybe<Membership>;
   /**
    * List appointments for the authenticated client.
    *
@@ -2291,10 +3274,14 @@ export type RootQueryType = {
    * * startAt: DateTime
    */
   myAppointments?: Maybe<AppointmentConnection>;
+  /** List credit cards for the authenticated client. */
+  myCreditCards?: Maybe<CreditCardConnection>;
   /** List memberships for the authenticated client. */
   myMemberships?: Maybe<MembershipConnection>;
-  /** Look up a Node by it's Global ID */
+  /** Look up a Node by its Global ID */
   node?: Maybe<Node>;
+  /** Client auth methods and their IDs */
+  unstableClientPasswordlessAuthMethods: Array<AuthMethod>;
 };
 
 
@@ -2315,6 +3302,7 @@ export type RootQueryTypeCartBookableDatesArgs = {
   locationId?: Maybe<Scalars['ID']>;
   searchRangeLower?: Maybe<Scalars['Date']>;
   searchRangeUpper?: Maybe<Scalars['Date']>;
+  staffVariantIds?: Maybe<Array<Scalars['ID']>>;
   tz?: Maybe<Scalars['Tz']>;
 };
 
@@ -2336,11 +3324,26 @@ export type RootQueryTypeCartBookableTimesArgs = {
 };
 
 
+export type RootQueryTypeCustomFormArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeCustomFormTemplateArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type RootQueryTypeLocationsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+
+export type RootQueryTypeMembershipArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -2350,6 +3353,15 @@ export type RootQueryTypeMyAppointmentsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   query?: Maybe<Scalars['QueryString']>;
+  sort?: Maybe<AppointmentSort>;
+};
+
+
+export type RootQueryTypeMyCreditCardsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 
@@ -2363,6 +3375,11 @@ export type RootQueryTypeMyMembershipsArgs = {
 
 export type RootQueryTypeNodeArgs = {
   id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeUnstableClientPasswordlessAuthMethodsArgs = {
+  clientId: Scalars['ID'];
 };
 
 export type SelectCartPaymentMethodInput = {
@@ -2462,6 +3479,17 @@ export type StaffRole = Node & {
   name: Scalars['String'];
 };
 
+export type StartCustomFormImageUploadInput = {
+  filename: Scalars['String'];
+  locationId: Scalars['ID'];
+};
+
+export type StartCustomFormImageUploadResult = {
+  __typename?: 'StartCustomFormImageUploadResult';
+  customFormImageId: Scalars['ID'];
+  signedPutUrl: Scalars['String'];
+};
+
 export enum SubscriptionStatus {
   Active = 'ACTIVE',
   Cancelled = 'CANCELLED',
@@ -2493,6 +3521,32 @@ export type TakeCartOwnershipPayload = {
   cart: Cart;
 };
 
+
+export type UnstableClientPasswordlessAuthRequestCodeInput = {
+  /** ID of the auth method to use */
+  methodId: Scalars['String'];
+};
+
+export type UnstableClientPasswordlessAuthRequestCodePayload = {
+  __typename?: 'UnstableClientPasswordlessAuthRequestCodePayload';
+  /** Request id used along with the code for the login. */
+  requestId: Scalars['String'];
+};
+
+export type UnstableClientPasswordlessAuthSignInInput = {
+  /** 6 digit auth code */
+  code: Scalars['Int'];
+  /** Request id used along with the code for the login. */
+  requestId: Scalars['String'];
+};
+
+export type UnstableClientPasswordlessAuthSignInPayload = {
+  __typename?: 'UnstableClientPasswordlessAuthSignInPayload';
+  /** The client data */
+  client: Client;
+  /** Token for authenticated client API access */
+  token: Scalars['String'];
+};
 
 /** See `CartItemEmailFulfillment`. */
 export type UpdateCartGiftCardItemEmailFulfillmentInput = {
@@ -2623,17 +3677,52 @@ export type UpdateCartSelectedPurchasableItemPayload = {
   cart: Cart;
 };
 
+export type UpdateClientInfoInput = {
+  address?: Maybe<AddressInput>;
+  dob?: Maybe<Scalars['Date']>;
+  emergencyContactName?: Maybe<Scalars['String']>;
+  emergencyContactPhone?: Maybe<Scalars['String']>;
+  emergencyContactRelationship?: Maybe<Scalars['String']>;
+  pronoun?: Maybe<Scalars['String']>;
+  referral?: Maybe<ReferralInput>;
+};
+
+export type UpdateClientInfoPayload = {
+  __typename?: 'UpdateClientInfoPayload';
+  client?: Maybe<Client>;
+};
+
 export type UpdateClientInput = {
   dob?: Maybe<Scalars['Date']>;
   email?: Maybe<Scalars['Email']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   mobilePhone?: Maybe<Scalars['PhoneNumber']>;
+  pronoun?: Maybe<Scalars['String']>;
 };
 
 export type UpdateClientPayload = {
   __typename?: 'UpdateClientPayload';
   client?: Maybe<Client>;
+};
+
+export type UpdateCommunicationSubscriptionsInput = {
+  communicationSubscriptions: Array<CommunicationSubscriptionInput>;
+};
+
+export type UpdateCommunicationSubscriptionsPayload = {
+  __typename?: 'UpdateCommunicationSubscriptionsPayload';
+  communicationSubscriptions: Array<CommunicationSubscription>;
+  success: Scalars['Boolean'];
+};
+
+export type UpdateCustomFormInput = {
+  answers?: Maybe<Array<CustomFormAnswer>>;
+  id: Scalars['ID'];
+  offline?: Maybe<Scalars['Boolean']>;
+  submit?: Maybe<Scalars['Boolean']>;
+  submittedAt?: Maybe<Scalars['DateTime']>;
+  void?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2833,22 +3922,45 @@ export const anAddress = (overrides?: Partial<Address>): Address => {
     };
 };
 
+export const anAddressInput = (overrides?: Partial<AddressInput>): AddressInput => {
+    return {
+        city: overrides && overrides.hasOwnProperty('city') ? overrides.city! : 'adipisci',
+        country: overrides && overrides.hasOwnProperty('country') ? overrides.country! : 'autem',
+        line1: overrides && overrides.hasOwnProperty('line1') ? overrides.line1! : 'porro',
+        line2: overrides && overrides.hasOwnProperty('line2') ? overrides.line2! : 'exercitationem',
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'fuga',
+        province: overrides && overrides.hasOwnProperty('province') ? overrides.province! : 'beatae',
+        state: overrides && overrides.hasOwnProperty('state') ? overrides.state! : 'alias',
+        zip: overrides && overrides.hasOwnProperty('zip') ? overrides.zip! : 'molestiae',
+    };
+};
+
 export const anAppointment = (overrides?: Partial<Appointment>): Appointment => {
     return {
         appointmentServiceOptions: overrides && overrides.hasOwnProperty('appointmentServiceOptions') ? overrides.appointmentServiceOptions! : [anAppointmentServiceOption()],
         appointmentServices: overrides && overrides.hasOwnProperty('appointmentServices') ? overrides.appointmentServices! : [anAppointmentService()],
         calendarLinks: overrides && overrides.hasOwnProperty('calendarLinks') ? overrides.calendarLinks! : aCalendarLinks(),
+        cancellable: overrides && overrides.hasOwnProperty('cancellable') ? overrides.cancellable! : true,
         cancellation: overrides && overrides.hasOwnProperty('cancellation') ? overrides.cancellation! : anAppointmentCancellation(),
         cancelled: overrides && overrides.hasOwnProperty('cancelled') ? overrides.cancelled! : true,
         client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
+        clientDuration: overrides && overrides.hasOwnProperty('clientDuration') ? overrides.clientDuration! : 9520,
         clientId: overrides && overrides.hasOwnProperty('clientId') ? overrides.clientId! : 'd1e8b066-c7b5-4c7b-a148-0b819fd27b2f',
+        confirmable: overrides && overrides.hasOwnProperty('confirmable') ? overrides.confirmable! : false,
         createdAt: overrides && overrides.hasOwnProperty('createdAt') ? overrides.createdAt! : 'ea',
+        creditCards: overrides && overrides.hasOwnProperty('creditCards') ? overrides.creditCards! : [aCreditCard()],
+        customForms: overrides && overrides.hasOwnProperty('customForms') ? overrides.customForms! : [aCustomForm()],
         duration: overrides && overrides.hasOwnProperty('duration') ? overrides.duration! : 2893,
         endAt: overrides && overrides.hasOwnProperty('endAt') ? overrides.endAt! : 'rem',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '746c73a0-8eae-47e7-a1b2-bcf2b2a0994f',
+        isGroup: overrides && overrides.hasOwnProperty('isGroup') ? overrides.isGroup! : false,
+        isRecurring: overrides && overrides.hasOwnProperty('isRecurring') ? overrides.isRecurring! : false,
         location: overrides && overrides.hasOwnProperty('location') ? overrides.location! : aLocation(),
         locationId: overrides && overrides.hasOwnProperty('locationId') ? overrides.locationId! : '4d2d5ed1-5d55-4a9c-b05e-2cf090b04005',
+        nonReschedulableReason: overrides && overrides.hasOwnProperty('nonReschedulableReason') ? overrides.nonReschedulableReason! : AppointmentNonReschedulableReason.CancelledAppointment,
         notes: overrides && overrides.hasOwnProperty('notes') ? overrides.notes! : 'deleniti',
+        pendingFormTemplates: overrides && overrides.hasOwnProperty('pendingFormTemplates') ? overrides.pendingFormTemplates! : [aCustomFormTemplate()],
+        reschedulable: overrides && overrides.hasOwnProperty('reschedulable') ? overrides.reschedulable! : true,
         startAt: overrides && overrides.hasOwnProperty('startAt') ? overrides.startAt! : 'ut',
         state: overrides && overrides.hasOwnProperty('state') ? overrides.state! : AppointmentState.Active,
     };
@@ -2962,6 +4074,21 @@ export const anAppointmentServiceOption = (overrides?: Partial<AppointmentServic
     };
 };
 
+export const anAppointmentSort = (overrides?: Partial<AppointmentSort>): AppointmentSort => {
+    return {
+        direction: overrides && overrides.hasOwnProperty('direction') ? overrides.direction! : AppointmentSortDirection.Asc,
+        field: overrides && overrides.hasOwnProperty('field') ? overrides.field! : AppointmentSortField.StartAt,
+    };
+};
+
+export const anAuthMethod = (overrides?: Partial<AuthMethod>): AuthMethod => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'quia',
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'ea',
+        value: overrides && overrides.hasOwnProperty('value') ? overrides.value! : 'temporibus',
+    };
+};
+
 export const anAvailableRescheduleDate = (overrides?: Partial<AvailableRescheduleDate>): AvailableRescheduleDate => {
     return {
         date: overrides && overrides.hasOwnProperty('date') ? overrides.date! : '1973-06-11',
@@ -2990,12 +4117,17 @@ export const aBookingQuestionOptionAnswerInput = (overrides?: Partial<BookingQue
 
 export const aBusiness = (overrides?: Partial<Business>): Business => {
     return {
+        allowLoginWithMultipleClients: overrides && overrides.hasOwnProperty('allowLoginWithMultipleClients') ? overrides.allowLoginWithMultipleClients! : false,
         avatar: overrides && overrides.hasOwnProperty('avatar') ? overrides.avatar! : 'quod',
+        customBookingUrl: overrides && overrides.hasOwnProperty('customBookingUrl') ? overrides.customBookingUrl! : 'ut',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'a2f7ba36-84f2-49e7-a518-ec0b59b44903',
         insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'qui',
         locations: overrides && overrides.hasOwnProperty('locations') ? overrides.locations! : aLocationConnection(),
+        manageReferralSourcesByLocation: overrides && overrides.hasOwnProperty('manageReferralSourcesByLocation') ? overrides.manageReferralSourcesByLocation! : true,
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'cumque',
         onlineGiftCardSettings: overrides && overrides.hasOwnProperty('onlineGiftCardSettings') ? overrides.onlineGiftCardSettings! : anOnlineGiftCardSettings(),
+        phoneNumber: overrides && overrides.hasOwnProperty('phoneNumber') ? overrides.phoneNumber! : 'qui',
+        referralSources: overrides && overrides.hasOwnProperty('referralSources') ? overrides.referralSources! : [aReferralSource()],
         tz: overrides && overrides.hasOwnProperty('tz') ? overrides.tz! : 'nisi',
         updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'ducimus',
         website: overrides && overrides.hasOwnProperty('website') ? overrides.website! : 'molestias',
@@ -3207,7 +4339,7 @@ export const aCartAvailablePurchasableItem = (overrides?: Partial<CartAvailableP
 
 export const aCartBookableDate = (overrides?: Partial<CartBookableDate>): CartBookableDate => {
     return {
-        date: overrides && overrides.hasOwnProperty('date') ? overrides.date! : '1976-12-26',
+        date: overrides && overrides.hasOwnProperty('date') ? overrides.date! : '1976-12-25',
     };
 };
 
@@ -3462,7 +4594,7 @@ export const aCartItemCardPaymentMethod = (overrides?: Partial<CartItemCardPayme
 
 export const aCartItemEmailFulfillment = (overrides?: Partial<CartItemEmailFulfillment>): CartItemEmailFulfillment => {
     return {
-        deliveryDate: overrides && overrides.hasOwnProperty('deliveryDate') ? overrides.deliveryDate! : '1991-05-15',
+        deliveryDate: overrides && overrides.hasOwnProperty('deliveryDate') ? overrides.deliveryDate! : '1991-05-14',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '485d1fc1-e2eb-4708-a3b5-db85cb8c61ff',
         messageFromSender: overrides && overrides.hasOwnProperty('messageFromSender') ? overrides.messageFromSender! : 'perspiciatis',
         recipientEmail: overrides && overrides.hasOwnProperty('recipientEmail') ? overrides.recipientEmail! : 'vel',
@@ -3498,6 +4630,7 @@ export const aCartItemPaymentMethod = (overrides?: Partial<CartItemPaymentMethod
 export const aCartItemVoucherPaymentMethod = (overrides?: Partial<CartItemVoucherPaymentMethod>): CartItemVoucherPaymentMethod => {
     return {
         availableCount: overrides && overrides.hasOwnProperty('availableCount') ? overrides.availableCount! : 9164,
+        availableVoucherIds: overrides && overrides.hasOwnProperty('availableVoucherIds') ? overrides.availableVoucherIds! : ['a237ac53-0dfd-4134-9796-b552f9d54002'],
         expiresOn: overrides && overrides.hasOwnProperty('expiresOn') ? overrides.expiresOn! : '2014-04-13',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '0db55573-7ecd-4d87-9b88-5ac430da015a',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'qui',
@@ -3579,6 +4712,7 @@ export const aCheckoutCartPayload = (overrides?: Partial<CheckoutCartPayload>): 
 
 export const aClient = (overrides?: Partial<Client>): Client => {
     return {
+        communicationSubscriptions: overrides && overrides.hasOwnProperty('communicationSubscriptions') ? overrides.communicationSubscriptions! : [aCommunicationSubscription()],
         email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : 'molestias',
         firstName: overrides && overrides.hasOwnProperty('firstName') ? overrides.firstName! : 'eaque',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'c884717e-580f-4651-a68e-705d18cd7f0e',
@@ -3586,7 +4720,54 @@ export const aClient = (overrides?: Partial<Client>): Client => {
         lastName: overrides && overrides.hasOwnProperty('lastName') ? overrides.lastName! : 'perspiciatis',
         mobilePhone: overrides && overrides.hasOwnProperty('mobilePhone') ? overrides.mobilePhone! : 'rerum',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'nihil',
+        pronoun: overrides && overrides.hasOwnProperty('pronoun') ? overrides.pronoun! : 'sit',
         updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'ut',
+    };
+};
+
+export const aClientNote = (overrides?: Partial<ClientNote>): ClientNote => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'd45fa612-40b6-40fd-ab8f-40576cc7ede1',
+        insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'natus',
+        text: overrides && overrides.hasOwnProperty('text') ? overrides.text! : 'incidunt',
+        type: overrides && overrides.hasOwnProperty('type') ? overrides.type! : NoteType.Allergy,
+        updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'doloribus',
+    };
+};
+
+export const aCommunicationChannelPreference = (overrides?: Partial<CommunicationChannelPreference>): CommunicationChannelPreference => {
+    return {
+        communicationChannel: overrides && overrides.hasOwnProperty('communicationChannel') ? overrides.communicationChannel! : CommunicationChannel.Email,
+        enabled: overrides && overrides.hasOwnProperty('enabled') ? overrides.enabled! : true,
+    };
+};
+
+export const aCommunicationSubscription = (overrides?: Partial<CommunicationSubscription>): CommunicationSubscription => {
+    return {
+        communicationChannelPreferences: overrides && overrides.hasOwnProperty('communicationChannelPreferences') ? overrides.communicationChannelPreferences! : [aCommunicationChannelPreference()],
+        description: overrides && overrides.hasOwnProperty('description') ? overrides.description! : 'dolorum',
+        key: overrides && overrides.hasOwnProperty('key') ? overrides.key! : CommunicationKey.AppointmentReminder,
+        title: overrides && overrides.hasOwnProperty('title') ? overrides.title! : 'dolores',
+    };
+};
+
+export const aCommunicationSubscriptionInput = (overrides?: Partial<CommunicationSubscriptionInput>): CommunicationSubscriptionInput => {
+    return {
+        channel: overrides && overrides.hasOwnProperty('channel') ? overrides.channel! : CommunicationChannel.Email,
+        enabled: overrides && overrides.hasOwnProperty('enabled') ? overrides.enabled! : false,
+        key: overrides && overrides.hasOwnProperty('key') ? overrides.key! : CommunicationKey.AppointmentReminder,
+    };
+};
+
+export const aConfirmAppointmentInput = (overrides?: Partial<ConfirmAppointmentInput>): ConfirmAppointmentInput => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '384c3c41-c7aa-424b-8a45-6fa9a8d6923f',
+    };
+};
+
+export const aConfirmAppointmentPayload = (overrides?: Partial<ConfirmAppointmentPayload>): ConfirmAppointmentPayload => {
+    return {
+        appointment: overrides && overrides.hasOwnProperty('appointment') ? overrides.appointment! : anAppointment(),
     };
 };
 
@@ -3643,6 +4824,553 @@ export const aCreateCartPayload = (overrides?: Partial<CreateCartPayload>): Crea
     };
 };
 
+export const aCreateClientNoteInput = (overrides?: Partial<CreateClientNoteInput>): CreateClientNoteInput => {
+    return {
+        text: overrides && overrides.hasOwnProperty('text') ? overrides.text! : 'ut',
+        type: overrides && overrides.hasOwnProperty('type') ? overrides.type! : NoteType.Allergy,
+    };
+};
+
+export const aCreateClientNotePayload = (overrides?: Partial<CreateClientNotePayload>): CreateClientNotePayload => {
+    return {
+        clientNote: overrides && overrides.hasOwnProperty('clientNote') ? overrides.clientNote! : aClientNote(),
+    };
+};
+
+export const aCreateCreditCardInput = (overrides?: Partial<CreateCreditCardInput>): CreateCreditCardInput => {
+    return {
+        nickname: overrides && overrides.hasOwnProperty('nickname') ? overrides.nickname! : 'saepe',
+        vaultToken: overrides && overrides.hasOwnProperty('vaultToken') ? overrides.vaultToken! : 'enim',
+    };
+};
+
+export const aCreateCreditCardResult = (overrides?: Partial<CreateCreditCardResult>): CreateCreditCardResult => {
+    return {
+        creditCard: overrides && overrides.hasOwnProperty('creditCard') ? overrides.creditCard! : aCreditCard(),
+    };
+};
+
+export const aCreateCustomFormInput = (overrides?: Partial<CreateCustomFormInput>): CreateCustomFormInput => {
+    return {
+        answers: overrides && overrides.hasOwnProperty('answers') ? overrides.answers! : [aCustomFormAnswer()],
+        appointmentId: overrides && overrides.hasOwnProperty('appointmentId') ? overrides.appointmentId! : 'ce074b34-4542-479e-a282-9349074546b7',
+        offline: overrides && overrides.hasOwnProperty('offline') ? overrides.offline! : false,
+        submit: overrides && overrides.hasOwnProperty('submit') ? overrides.submit! : false,
+        submittedAt: overrides && overrides.hasOwnProperty('submittedAt') ? overrides.submittedAt! : 'voluptatibus',
+        versionId: overrides && overrides.hasOwnProperty('versionId') ? overrides.versionId! : '2f93a17f-e77c-45cd-8bee-83c8de19ebb0',
+    };
+};
+
+export const aCreditCard = (overrides?: Partial<CreditCard>): CreditCard => {
+    return {
+        brand: overrides && overrides.hasOwnProperty('brand') ? overrides.brand! : CardBrand.Amex,
+        expMonth: overrides && overrides.hasOwnProperty('expMonth') ? overrides.expMonth! : 4649,
+        expYear: overrides && overrides.hasOwnProperty('expYear') ? overrides.expYear! : 6696,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'a760a67f-55cf-493e-b870-36139c4bfbf6',
+        isExpired: overrides && overrides.hasOwnProperty('isExpired') ? overrides.isExpired! : false,
+        last4: overrides && overrides.hasOwnProperty('last4') ? overrides.last4! : 'illo',
+    };
+};
+
+export const aCreditCardConnection = (overrides?: Partial<CreditCardConnection>): CreditCardConnection => {
+    return {
+        edges: overrides && overrides.hasOwnProperty('edges') ? overrides.edges! : [aCreditCardEdge()],
+        pageInfo: overrides && overrides.hasOwnProperty('pageInfo') ? overrides.pageInfo! : aPageInfo(),
+    };
+};
+
+export const aCreditCardEdge = (overrides?: Partial<CreditCardEdge>): CreditCardEdge => {
+    return {
+        cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : 'sapiente',
+        node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : aCreditCard(),
+    };
+};
+
+export const aCustomForm = (overrides?: Partial<CustomForm>): CustomForm => {
+    return {
+        appointmentId: overrides && overrides.hasOwnProperty('appointmentId') ? overrides.appointmentId! : 'c470891b-6dd5-4d45-a480-a1d455776ab0',
+        clientId: overrides && overrides.hasOwnProperty('clientId') ? overrides.clientId! : '76f2e697-7dc2-4cde-aa1f-2c7d9f144b2a',
+        components: overrides && overrides.hasOwnProperty('components') ? overrides.components! : [aCustomFormComponent()],
+        formTemplate: overrides && overrides.hasOwnProperty('formTemplate') ? overrides.formTemplate! : aFormTemplate(),
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '329cf99e-2a1f-45d1-9960-ebb1fd5d85f2',
+        insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'accusantium',
+        notStarted: overrides && overrides.hasOwnProperty('notStarted') ? overrides.notStarted! : false,
+        submittedAt: overrides && overrides.hasOwnProperty('submittedAt') ? overrides.submittedAt! : 'sed',
+        version: overrides && overrides.hasOwnProperty('version') ? overrides.version! : aCustomFormVersion(),
+    };
+};
+
+export const aCustomFormAnswer = (overrides?: Partial<CustomFormAnswer>): CustomFormAnswer => {
+    return {
+        checkboxAnswer: overrides && overrides.hasOwnProperty('checkboxAnswer') ? overrides.checkboxAnswer! : ['04c3d97d-8cb0-4f2e-8424-c324878f2dbb'],
+        dateAnswer: overrides && overrides.hasOwnProperty('dateAnswer') ? overrides.dateAnswer! : 'et',
+        dropdownAnswer: overrides && overrides.hasOwnProperty('dropdownAnswer') ? overrides.dropdownAnswer! : ['a8e1a8af-24e7-448f-bf9f-17fb4bfa252b'],
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '5bf42edc-2ab3-4d31-bf46-cb693c8f157f',
+        imageAnswer: overrides && overrides.hasOwnProperty('imageAnswer') ? overrides.imageAnswer! : aCustomFormImageAnswer(),
+        otherAnswer: overrides && overrides.hasOwnProperty('otherAnswer') ? overrides.otherAnswer! : 'quia',
+        radioAnswer: overrides && overrides.hasOwnProperty('radioAnswer') ? overrides.radioAnswer! : '02781678-1b8b-446b-aae2-0eee94cb948e',
+        selectAnswer: overrides && overrides.hasOwnProperty('selectAnswer') ? overrides.selectAnswer! : ['002623a1-6adc-48f5-8c93-88cced4228ac'],
+        signatureAnswer: overrides && overrides.hasOwnProperty('signatureAnswer') ? overrides.signatureAnswer! : aCustomFormSignatureAnswer(),
+        textAnswer: overrides && overrides.hasOwnProperty('textAnswer') ? overrides.textAnswer! : 'voluptates',
+        textareaAnswer: overrides && overrides.hasOwnProperty('textareaAnswer') ? overrides.textareaAnswer! : 'reprehenderit',
+    };
+};
+
+export const aCustomFormComponent = (overrides?: Partial<CustomFormComponent>): CustomFormComponent => {
+    return {
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 4290,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '03f34f15-43b6-403d-9c52-e87be5c45a12',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 9848,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 1554,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 4104,
+    };
+};
+
+export const aCustomFormComponentCheckbox = (overrides?: Partial<CustomFormComponentCheckbox>): CustomFormComponentCheckbox => {
+    return {
+        checkboxAnswer: overrides && overrides.hasOwnProperty('checkboxAnswer') ? overrides.checkboxAnswer! : ['6e144661-e646-4ca9-8480-bf3371cb3907'],
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'quia',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 4286,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '65d8e03c-acd0-44b2-ba9a-d3d57c1f17a0',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'quo',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aFormComponentCheckboxValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 3823,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5870,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9645,
+    };
+};
+
+export const aCustomFormComponentCheckboxV2 = (overrides?: Partial<CustomFormComponentCheckboxV2>): CustomFormComponentCheckboxV2 => {
+    return {
+        checkboxAnswer: overrides && overrides.hasOwnProperty('checkboxAnswer') ? overrides.checkboxAnswer! : ['168e03b2-6e1e-4c2a-a40a-3b9654fab969'],
+        enableOther: overrides && overrides.hasOwnProperty('enableOther') ? overrides.enableOther! : false,
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 9752,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'efda677f-01cd-4fc1-94eb-13a56a742aa8',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'debitis',
+        otherAnswer: overrides && overrides.hasOwnProperty('otherAnswer') ? overrides.otherAnswer! : 'nam',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aFormComponentV2CheckboxValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7096,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 6208,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9663,
+    };
+};
+
+export const aCustomFormComponentDate = (overrides?: Partial<CustomFormComponentDate>): CustomFormComponentDate => {
+    return {
+        dateAnswer: overrides && overrides.hasOwnProperty('dateAnswer') ? overrides.dateAnswer! : 'facere',
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'consequatur',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 3150,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '8e304ba9-55b4-41f4-8006-d617ef8832fc',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'sunt',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7133,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 1838,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 4109,
+    };
+};
+
+export const aCustomFormComponentDateV2 = (overrides?: Partial<CustomFormComponentDateV2>): CustomFormComponentDateV2 => {
+    return {
+        autoPopulate: overrides && overrides.hasOwnProperty('autoPopulate') ? overrides.autoPopulate! : false,
+        connectedField: overrides && overrides.hasOwnProperty('connectedField') ? overrides.connectedField! : 'dolor',
+        connectedSource: overrides && overrides.hasOwnProperty('connectedSource') ? overrides.connectedSource! : 'cum',
+        dateAnswer: overrides && overrides.hasOwnProperty('dateAnswer') ? overrides.dateAnswer! : 'illo',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 8248,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '58c6819e-e4a9-434d-8878-cb394bc65fbb',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'doloremque',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 3810,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5624,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9486,
+    };
+};
+
+export const aCustomFormComponentDividerV2 = (overrides?: Partial<CustomFormComponentDividerV2>): CustomFormComponentDividerV2 => {
+    return {
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 545,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '4b5cd4ca-3e21-4ff3-b3c6-b9f8053372d3',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7908,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 2170,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 7159,
+    };
+};
+
+export const aCustomFormComponentDropdownV2 = (overrides?: Partial<CustomFormComponentDropdownV2>): CustomFormComponentDropdownV2 => {
+    return {
+        autoPopulate: overrides && overrides.hasOwnProperty('autoPopulate') ? overrides.autoPopulate! : true,
+        connectedField: overrides && overrides.hasOwnProperty('connectedField') ? overrides.connectedField! : 'maiores',
+        connectedSource: overrides && overrides.hasOwnProperty('connectedSource') ? overrides.connectedSource! : 'dolorum',
+        dropdownAnswer: overrides && overrides.hasOwnProperty('dropdownAnswer') ? overrides.dropdownAnswer! : ['848214cf-2921-4c9a-b043-6e986edc93fb'],
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 5751,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9fc56df1-bbae-41f6-b28f-c1dcd64b2518',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'blanditiis',
+        manageReferralSourcesByLocation: overrides && overrides.hasOwnProperty('manageReferralSourcesByLocation') ? overrides.manageReferralSourcesByLocation! : false,
+        multiple: overrides && overrides.hasOwnProperty('multiple') ? overrides.multiple! : true,
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aFormComponentCheckboxValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 560,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 3888,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 1027,
+    };
+};
+
+export const aCustomFormComponentH1 = (overrides?: Partial<CustomFormComponentH1>): CustomFormComponentH1 => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'expedita',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 6410,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'e922b85f-0cd6-47d2-8295-e65628360413',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'consequatur',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 6817,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 6546,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 3525,
+    };
+};
+
+export const aCustomFormComponentH2 = (overrides?: Partial<CustomFormComponentH2>): CustomFormComponentH2 => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'deleniti',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 9697,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '6fbebef8-9306-4bfd-b380-03f79f879b00',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'officiis',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 2957,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 817,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6115,
+    };
+};
+
+export const aCustomFormComponentImageAnswer = (overrides?: Partial<CustomFormComponentImageAnswer>): CustomFormComponentImageAnswer => {
+    return {
+        annotatedImageUrl: overrides && overrides.hasOwnProperty('annotatedImageUrl') ? overrides.annotatedImageUrl! : 'unde',
+        canvasDataUrl: overrides && overrides.hasOwnProperty('canvasDataUrl') ? overrides.canvasDataUrl! : 'adipisci',
+        customFormImageId: overrides && overrides.hasOwnProperty('customFormImageId') ? overrides.customFormImageId! : '5aff1281-8e69-4f6d-b704-198069e86ee4',
+        sourceImageUrl: overrides && overrides.hasOwnProperty('sourceImageUrl') ? overrides.sourceImageUrl! : 'sint',
+    };
+};
+
+export const aCustomFormComponentImageUploaderV2 = (overrides?: Partial<CustomFormComponentImageUploaderV2>): CustomFormComponentImageUploaderV2 => {
+    return {
+        enableImageMarkup: overrides && overrides.hasOwnProperty('enableImageMarkup') ? overrides.enableImageMarkup! : false,
+        fileUpload: overrides && overrides.hasOwnProperty('fileUpload') ? overrides.fileUpload! : aCustomFormComponentSignatureUpload(),
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 3519,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '4c392cba-46bf-4894-b9ee-fe123d13cc57',
+        imageAnswer: overrides && overrides.hasOwnProperty('imageAnswer') ? overrides.imageAnswer! : aCustomFormComponentImageAnswer(),
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'et',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7318,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 3810,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9545,
+    };
+};
+
+export const aCustomFormComponentImageV2 = (overrides?: Partial<CustomFormComponentImageV2>): CustomFormComponentImageV2 => {
+    return {
+        enableImageMarkup: overrides && overrides.hasOwnProperty('enableImageMarkup') ? overrides.enableImageMarkup! : false,
+        fileUploadId: overrides && overrides.hasOwnProperty('fileUploadId') ? overrides.fileUploadId! : 'tenetur',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 6055,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '47245256-45dd-4610-aac7-a6c2dffaba65',
+        imageAnswer: overrides && overrides.hasOwnProperty('imageAnswer') ? overrides.imageAnswer! : aCustomFormComponentImageAnswer(),
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'dolorem',
+        src: overrides && overrides.hasOwnProperty('src') ? overrides.src! : 'quidem',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 8508,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5389,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6179,
+    };
+};
+
+export const aCustomFormComponentLogo = (overrides?: Partial<CustomFormComponentLogo>): CustomFormComponentLogo => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'nesciunt',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 6571,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '3191facc-5461-4b9f-84f9-9bc23dac2a39',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        markdownContent: overrides && overrides.hasOwnProperty('markdownContent') ? overrides.markdownContent! : 'ea',
+        markdownHtml: overrides && overrides.hasOwnProperty('markdownHtml') ? overrides.markdownHtml! : 'consequatur',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 6825,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5065,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 7744,
+    };
+};
+
+export const aCustomFormComponentLogoV2 = (overrides?: Partial<CustomFormComponentLogoV2>): CustomFormComponentLogoV2 => {
+    return {
+        fileUploadId: overrides && overrides.hasOwnProperty('fileUploadId') ? overrides.fileUploadId! : 'nobis',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 4140,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '87b4d798-0b7a-4816-8960-c6871c1a8b10',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        src: overrides && overrides.hasOwnProperty('src') ? overrides.src! : 'incidunt',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7931,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 3512,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 7369,
+    };
+};
+
+export const aCustomFormComponentMarkdown = (overrides?: Partial<CustomFormComponentMarkdown>): CustomFormComponentMarkdown => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'et',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 8600,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'fcd0b3e9-7f91-4254-af7e-e3118b4aabcc',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        markdownContent: overrides && overrides.hasOwnProperty('markdownContent') ? overrides.markdownContent! : 'sit',
+        markdownHtml: overrides && overrides.hasOwnProperty('markdownHtml') ? overrides.markdownHtml! : 'quibusdam',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 8024,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 767,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6321,
+    };
+};
+
+export const aCustomFormComponentMultipleChoiceV2 = (overrides?: Partial<CustomFormComponentMultipleChoiceV2>): CustomFormComponentMultipleChoiceV2 => {
+    return {
+        autoPopulate: overrides && overrides.hasOwnProperty('autoPopulate') ? overrides.autoPopulate! : false,
+        connectedField: overrides && overrides.hasOwnProperty('connectedField') ? overrides.connectedField! : 'totam',
+        connectedSource: overrides && overrides.hasOwnProperty('connectedSource') ? overrides.connectedSource! : 'recusandae',
+        enableOther: overrides && overrides.hasOwnProperty('enableOther') ? overrides.enableOther! : false,
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 8661,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'cdc851f3-1af4-4c86-b8a8-b9fd87cd5a35',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'est',
+        otherAnswer: overrides && overrides.hasOwnProperty('otherAnswer') ? overrides.otherAnswer! : 'quibusdam',
+        radioAnswer: overrides && overrides.hasOwnProperty('radioAnswer') ? overrides.radioAnswer! : 'inventore',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aFormComponentV2CheckboxValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 5570,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5712,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 3741,
+    };
+};
+
+export const aCustomFormComponentRadio = (overrides?: Partial<CustomFormComponentRadio>): CustomFormComponentRadio => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'est',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 2747,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9ec19d31-9bbb-4450-b1c6-da9b4fef0d24',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'sapiente',
+        radioAnswer: overrides && overrides.hasOwnProperty('radioAnswer') ? overrides.radioAnswer! : 'veniam',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aCustomFormComponentRadioValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 288,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 8306,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6539,
+    };
+};
+
+export const aCustomFormComponentRadioValue = (overrides?: Partial<CustomFormComponentRadioValue>): CustomFormComponentRadioValue => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'cumque',
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'fugit',
+    };
+};
+
+export const aCustomFormComponentSelect = (overrides?: Partial<CustomFormComponentSelect>): CustomFormComponentSelect => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'voluptatem',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 2418,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'f5d0aa7f-288f-4947-9b00-87554be14a3e',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'enim',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        selectAnswer: overrides && overrides.hasOwnProperty('selectAnswer') ? overrides.selectAnswer! : ['porro'],
+        selectMultiple: overrides && overrides.hasOwnProperty('selectMultiple') ? overrides.selectMultiple! : true,
+        values: overrides && overrides.hasOwnProperty('values') ? overrides.values! : [aCustomFormComponentSelectValue()],
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 1412,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 5014,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 8963,
+    };
+};
+
+export const aCustomFormComponentSelectValue = (overrides?: Partial<CustomFormComponentSelectValue>): CustomFormComponentSelectValue => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'qui',
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'similique',
+    };
+};
+
+export const aCustomFormComponentSignature = (overrides?: Partial<CustomFormComponentSignature>): CustomFormComponentSignature => {
+    return {
+        enableWet: overrides && overrides.hasOwnProperty('enableWet') ? overrides.enableWet! : false,
+        fileUpload: overrides && overrides.hasOwnProperty('fileUpload') ? overrides.fileUpload! : aCustomFormComponentSignatureUpload(),
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'et',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 341,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '8b7f765d-a0ac-4069-af45-04dc447aadfc',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'labore',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        signatureAnswer: overrides && overrides.hasOwnProperty('signatureAnswer') ? overrides.signatureAnswer! : aCustomFormComponentSignatureAnswer(),
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 1435,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 2057,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9001,
+    };
+};
+
+export const aCustomFormComponentSignatureAnswer = (overrides?: Partial<CustomFormComponentSignatureAnswer>): CustomFormComponentSignatureAnswer => {
+    return {
+        fileUploadId: overrides && overrides.hasOwnProperty('fileUploadId') ? overrides.fileUploadId! : '75d7e9d9-2dbb-4efc-922d-12cc3bf98c29',
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'assumenda',
+        url: overrides && overrides.hasOwnProperty('url') ? overrides.url! : 'eius',
+    };
+};
+
+export const aCustomFormComponentSignatureUpload = (overrides?: Partial<CustomFormComponentSignatureUpload>): CustomFormComponentSignatureUpload => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9ef0b671-68a4-4fd3-8e96-529b47d9127a',
+        signedPutUrl: overrides && overrides.hasOwnProperty('signedPutUrl') ? overrides.signedPutUrl! : 'ut',
+    };
+};
+
+export const aCustomFormComponentSignatureV2 = (overrides?: Partial<CustomFormComponentSignatureV2>): CustomFormComponentSignatureV2 => {
+    return {
+        enableWetV2: overrides && overrides.hasOwnProperty('enableWetV2') ? overrides.enableWetV2! : true,
+        fileUpload: overrides && overrides.hasOwnProperty('fileUpload') ? overrides.fileUpload! : aCustomFormComponentSignatureUpload(),
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 3418,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '8fefa92b-0ff0-4efe-9b92-0ef3add9a078',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'nulla',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        signatureAnswer: overrides && overrides.hasOwnProperty('signatureAnswer') ? overrides.signatureAnswer! : aCustomFormComponentSignatureAnswer(),
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 9695,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 2151,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6352,
+    };
+};
+
+export const aCustomFormComponentText = (overrides?: Partial<CustomFormComponentText>): CustomFormComponentText => {
+    return {
+        floatWidth: overrides && overrides.hasOwnProperty('floatWidth') ? overrides.floatWidth! : 'repudiandae',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 2348,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9b6989a5-dd91-4322-a852-68e5dc0e4c56',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'illo',
+        placeholder: overrides && overrides.hasOwnProperty('placeholder') ? overrides.placeholder! : 'magni',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        textAnswer: overrides && overrides.hasOwnProperty('textAnswer') ? overrides.textAnswer! : 'consectetur',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7109,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 6817,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9850,
+    };
+};
+
+export const aCustomFormComponentTextInputV2 = (overrides?: Partial<CustomFormComponentTextInputV2>): CustomFormComponentTextInputV2 => {
+    return {
+        autoPopulate: overrides && overrides.hasOwnProperty('autoPopulate') ? overrides.autoPopulate! : true,
+        connectedField: overrides && overrides.hasOwnProperty('connectedField') ? overrides.connectedField! : 'voluptatem',
+        connectedSource: overrides && overrides.hasOwnProperty('connectedSource') ? overrides.connectedSource! : 'debitis',
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 8868,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'fb0ded07-1b48-4e0c-9970-ead30be16e3e',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'quis',
+        longResponse: overrides && overrides.hasOwnProperty('longResponse') ? overrides.longResponse! : true,
+        placeholder: overrides && overrides.hasOwnProperty('placeholder') ? overrides.placeholder! : 'qui',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : true,
+        textAnswer: overrides && overrides.hasOwnProperty('textAnswer') ? overrides.textAnswer! : 'consequuntur',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 590,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 7612,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 2300,
+    };
+};
+
+export const aCustomFormComponentTextV2 = (overrides?: Partial<CustomFormComponentTextV2>): CustomFormComponentTextV2 => {
+    return {
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 9525,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '8994fa92-f6c9-4d93-8634-57548479a655',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        value: overrides && overrides.hasOwnProperty('value') ? overrides.value! : 'cupiditate',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 7090,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 1499,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 9548,
+    };
+};
+
+export const aCustomFormComponentTextarea = (overrides?: Partial<CustomFormComponentTextarea>): CustomFormComponentTextarea => {
+    return {
+        h: overrides && overrides.hasOwnProperty('h') ? overrides.h! : 7625,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'ec292a84-2609-42d6-89a1-58e6e6a598f6',
+        kind: overrides && overrides.hasOwnProperty('kind') ? overrides.kind! : FormComponentKind.Checkbox,
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'aut',
+        placeholder: overrides && overrides.hasOwnProperty('placeholder') ? overrides.placeholder! : 'sint',
+        required: overrides && overrides.hasOwnProperty('required') ? overrides.required! : false,
+        textAnswer: overrides && overrides.hasOwnProperty('textAnswer') ? overrides.textAnswer! : 'enim',
+        textareaAnswer: overrides && overrides.hasOwnProperty('textareaAnswer') ? overrides.textareaAnswer! : 'aut',
+        w: overrides && overrides.hasOwnProperty('w') ? overrides.w! : 8570,
+        x: overrides && overrides.hasOwnProperty('x') ? overrides.x! : 8433,
+        y: overrides && overrides.hasOwnProperty('y') ? overrides.y! : 6361,
+    };
+};
+
+export const aCustomFormImageAnswer = (overrides?: Partial<CustomFormImageAnswer>): CustomFormImageAnswer => {
+    return {
+        customFormImageId: overrides && overrides.hasOwnProperty('customFormImageId') ? overrides.customFormImageId! : '51e71e0e-8b8e-4c72-8520-885bd7c6b549',
+    };
+};
+
+export const aCustomFormSignatureAnswer = (overrides?: Partial<CustomFormSignatureAnswer>): CustomFormSignatureAnswer => {
+    return {
+        fileUploadId: overrides && overrides.hasOwnProperty('fileUploadId') ? overrides.fileUploadId! : '27b21f4a-eb6f-40f9-97a9-cc43895db38b',
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'est',
+    };
+};
+
+export const aCustomFormTemplate = (overrides?: Partial<CustomFormTemplate>): CustomFormTemplate => {
+    return {
+        active: overrides && overrides.hasOwnProperty('active') ? overrides.active! : true,
+        components: overrides && overrides.hasOwnProperty('components') ? overrides.components! : [aCustomFormComponent()],
+        createdByStaff: overrides && overrides.hasOwnProperty('createdByStaff') ? overrides.createdByStaff! : aStaff(),
+        currentVersion: overrides && overrides.hasOwnProperty('currentVersion') ? overrides.currentVersion! : aCustomFormVersion(),
+        description: overrides && overrides.hasOwnProperty('description') ? overrides.description! : 'error',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '787caa0d-2a92-4417-b32e-fe56462b5621',
+        insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'quisquam',
+        internal: overrides && overrides.hasOwnProperty('internal') ? overrides.internal! : true,
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'a',
+        requestDuringBooking: overrides && overrides.hasOwnProperty('requestDuringBooking') ? overrides.requestDuringBooking! : true,
+        requestDuringCheckin: overrides && overrides.hasOwnProperty('requestDuringCheckin') ? overrides.requestDuringCheckin! : true,
+        requestDuringReminder: overrides && overrides.hasOwnProperty('requestDuringReminder') ? overrides.requestDuringReminder! : true,
+        requestSameDay: overrides && overrides.hasOwnProperty('requestSameDay') ? overrides.requestSameDay! : false,
+        resource: overrides && overrides.hasOwnProperty('resource') ? overrides.resource! : FormResourceType.Appointment,
+        sortOrder: overrides && overrides.hasOwnProperty('sortOrder') ? overrides.sortOrder! : 0.11,
+        status: overrides && overrides.hasOwnProperty('status') ? overrides.status! : 'sed',
+        templateLocations: overrides && overrides.hasOwnProperty('templateLocations') ? overrides.templateLocations! : [aCustomFormTemplateLocation()],
+        templateServices: overrides && overrides.hasOwnProperty('templateServices') ? overrides.templateServices! : [aCustomFormTemplateService()],
+        updatedAt: overrides && overrides.hasOwnProperty('updatedAt') ? overrides.updatedAt! : 'temporibus',
+    };
+};
+
+export const aCustomFormTemplateLocation = (overrides?: Partial<CustomFormTemplateLocation>): CustomFormTemplateLocation => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '0774308d-ffd8-4e2a-acef-784cf6323bbc',
+        location: overrides && overrides.hasOwnProperty('location') ? overrides.location! : aLocation(),
+        template: overrides && overrides.hasOwnProperty('template') ? overrides.template! : aCustomFormTemplate(),
+    };
+};
+
+export const aCustomFormTemplateService = (overrides?: Partial<CustomFormTemplateService>): CustomFormTemplateService => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '59ed2d68-5aa7-41b4-b177-8c7d56fe135d',
+        service: overrides && overrides.hasOwnProperty('service') ? overrides.service! : aService(),
+        template: overrides && overrides.hasOwnProperty('template') ? overrides.template! : aCustomFormTemplate(),
+    };
+};
+
+export const aCustomFormVersion = (overrides?: Partial<CustomFormVersion>): CustomFormVersion => {
+    return {
+        components: overrides && overrides.hasOwnProperty('components') ? overrides.components! : [aCustomFormComponent()],
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '333ccd5d-150d-45fd-8c67-52f9ba789225',
+        template: overrides && overrides.hasOwnProperty('template') ? overrides.template! : aCustomFormTemplate(),
+        templatingVersion: overrides && overrides.hasOwnProperty('templatingVersion') ? overrides.templatingVersion! : 4607,
+    };
+};
+
 export const aDeleteCartGiftCardItemEmailFulfillmentInput = (overrides?: Partial<DeleteCartGiftCardItemEmailFulfillmentInput>): DeleteCartGiftCardItemEmailFulfillmentInput => {
     return {
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'efff04a9-263c-4776-ab02-e54d829b7913',
@@ -3669,6 +5397,27 @@ export const aDeleteCartGuestPayload = (overrides?: Partial<DeleteCartGuestPaylo
     };
 };
 
+export const aFormComponentCheckboxValue = (overrides?: Partial<FormComponentCheckboxValue>): FormComponentCheckboxValue => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'ba5b7301-81bc-4fe3-a8d7-6d16001a4268',
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'dolores',
+    };
+};
+
+export const aFormComponentV2CheckboxValue = (overrides?: Partial<FormComponentV2CheckboxValue>): FormComponentV2CheckboxValue => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'd03dddd9-2de7-416d-ae1c-00d653172a2b',
+        label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'quisquam',
+    };
+};
+
+export const aFormTemplate = (overrides?: Partial<FormTemplate>): FormTemplate => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '5b41abee-e480-4954-8b23-bf9879ad7eef',
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'animi',
+    };
+};
+
 export const aGiftCardDesign = (overrides?: Partial<GiftCardDesign>): GiftCardDesign => {
     return {
         backgroundColor: overrides && overrides.hasOwnProperty('backgroundColor') ? overrides.backgroundColor! : 'quasi',
@@ -3683,10 +5432,15 @@ export const aGiftCardDesign = (overrides?: Partial<GiftCardDesign>): GiftCardDe
 export const aLocation = (overrides?: Partial<Location>): Location => {
     return {
         address: overrides && overrides.hasOwnProperty('address') ? overrides.address! : anAddress(),
+        allowOnlineBooking: overrides && overrides.hasOwnProperty('allowOnlineBooking') ? overrides.allowOnlineBooking! : false,
+        allowOnlineRescheduling: overrides && overrides.hasOwnProperty('allowOnlineRescheduling') ? overrides.allowOnlineRescheduling! : true,
+        arrivalInstructions: overrides && overrides.hasOwnProperty('arrivalInstructions') ? overrides.arrivalInstructions! : 'iste',
         avatar: overrides && overrides.hasOwnProperty('avatar') ? overrides.avatar! : 'aut',
         businessName: overrides && overrides.hasOwnProperty('businessName') ? overrides.businessName! : 'dolores',
+        contactEmail: overrides && overrides.hasOwnProperty('contactEmail') ? overrides.contactEmail! : 'at',
         coordinates: overrides && overrides.hasOwnProperty('coordinates') ? overrides.coordinates! : 'velit',
         externalId: overrides && overrides.hasOwnProperty('externalId') ? overrides.externalId! : 'ratione',
+        hours: overrides && overrides.hasOwnProperty('hours') ? overrides.hours! : [aLocationDays()],
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'bfe52c08-bd42-41df-a3d4-364c80b41fe8',
         insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'vitae',
         isRemote: overrides && overrides.hasOwnProperty('isRemote') ? overrides.isRemote! : true,
@@ -3706,10 +5460,25 @@ export const aLocationConnection = (overrides?: Partial<LocationConnection>): Lo
     };
 };
 
+export const aLocationDays = (overrides?: Partial<LocationDays>): LocationDays => {
+    return {
+        finish: overrides && overrides.hasOwnProperty('finish') ? overrides.finish! : aLocationHours(),
+        open: overrides && overrides.hasOwnProperty('open') ? overrides.open! : false,
+        start: overrides && overrides.hasOwnProperty('start') ? overrides.start! : aLocationHours(),
+    };
+};
+
 export const aLocationEdge = (overrides?: Partial<LocationEdge>): LocationEdge => {
     return {
         cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : 'illum',
         node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : aLocation(),
+    };
+};
+
+export const aLocationHours = (overrides?: Partial<LocationHours>): LocationHours => {
+    return {
+        hour: overrides && overrides.hasOwnProperty('hour') ? overrides.hour! : 6283,
+        minute: overrides && overrides.hasOwnProperty('minute') ? overrides.minute! : 1255,
     };
 };
 
@@ -3729,13 +5498,16 @@ export const aMembership = (overrides?: Partial<Membership>): Membership => {
     return {
         client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
         clientId: overrides && overrides.hasOwnProperty('clientId') ? overrides.clientId! : '4a0aac29-d66f-41b4-a7dc-ca42db940921',
-        endOn: overrides && overrides.hasOwnProperty('endOn') ? overrides.endOn! : '2003-03-24',
+        creditCard: overrides && overrides.hasOwnProperty('creditCard') ? overrides.creditCard! : aCreditCard(),
+        currentBillingError: overrides && overrides.hasOwnProperty('currentBillingError') ? overrides.currentBillingError! : false,
+        endOn: overrides && overrides.hasOwnProperty('endOn') ? overrides.endOn! : '2003-03-23',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'cf18c1f2-8e7d-4a3d-a70d-a877d24df604',
         interval: overrides && overrides.hasOwnProperty('interval') ? overrides.interval! : 'laboriosam',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'ut',
         startOn: overrides && overrides.hasOwnProperty('startOn') ? overrides.startOn! : '1999-01-30',
         status: overrides && overrides.hasOwnProperty('status') ? overrides.status! : SubscriptionStatus.Active,
         termNumber: overrides && overrides.hasOwnProperty('termNumber') ? overrides.termNumber! : 5333,
+        unitPrice: overrides && overrides.hasOwnProperty('unitPrice') ? overrides.unitPrice! : 'facilis',
         vouchers: overrides && overrides.hasOwnProperty('vouchers') ? overrides.vouchers! : [aMembershipVoucher()],
     };
 };
@@ -3751,6 +5523,33 @@ export const aMembershipEdge = (overrides?: Partial<MembershipEdge>): Membership
     return {
         cursor: overrides && overrides.hasOwnProperty('cursor') ? overrides.cursor! : 'voluptatum',
         node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : aMembership(),
+    };
+};
+
+export const aMembershipPaymentMethodUpdateAndRenewInput = (overrides?: Partial<MembershipPaymentMethodUpdateAndRenewInput>): MembershipPaymentMethodUpdateAndRenewInput => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'a1fe8d15-4331-497f-b0fe-7b450acb2485',
+        paymentMethodId: overrides && overrides.hasOwnProperty('paymentMethodId') ? overrides.paymentMethodId! : '4e1eb3a3-84d5-42d7-82d6-be5b6f039b8b',
+    };
+};
+
+export const aMembershipPaymentMethodUpdateAndRenewPayload = (overrides?: Partial<MembershipPaymentMethodUpdateAndRenewPayload>): MembershipPaymentMethodUpdateAndRenewPayload => {
+    return {
+        membership: overrides && overrides.hasOwnProperty('membership') ? overrides.membership! : aMembership(),
+        newCardWasChargedForRenewal: overrides && overrides.hasOwnProperty('newCardWasChargedForRenewal') ? overrides.newCardWasChargedForRenewal! : true,
+    };
+};
+
+export const aMembershipPaymentMethodUpdateInput = (overrides?: Partial<MembershipPaymentMethodUpdateInput>): MembershipPaymentMethodUpdateInput => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '8aca7170-dffb-4af0-b26e-e01d1f916d0c',
+        paymentMethodId: overrides && overrides.hasOwnProperty('paymentMethodId') ? overrides.paymentMethodId! : 'b5650405-a414-4d6d-9a1a-aa9b2722228e',
+    };
+};
+
+export const aMembershipPaymentMethodUpdatePayload = (overrides?: Partial<MembershipPaymentMethodUpdatePayload>): MembershipPaymentMethodUpdatePayload => {
+    return {
+        membership: overrides && overrides.hasOwnProperty('membership') ? overrides.membership! : aMembership(),
     };
 };
 
@@ -3785,6 +5584,27 @@ export const aPageInfo = (overrides?: Partial<PageInfo>): PageInfo => {
     };
 };
 
+export const aReferralInput = (overrides?: Partial<ReferralInput>): ReferralInput => {
+    return {
+        additionalInfo: overrides && overrides.hasOwnProperty('additionalInfo') ? overrides.additionalInfo! : 'sunt',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '1c1b11a6-7ea7-4bd5-9adc-adedc5f6eb17',
+        referralSourceId: overrides && overrides.hasOwnProperty('referralSourceId') ? overrides.referralSourceId! : '42dfadb4-7e61-4689-955e-bfbdb8f14409',
+        referrerClientId: overrides && overrides.hasOwnProperty('referrerClientId') ? overrides.referrerClientId! : 'df211b0e-130e-4ea7-9b93-2d370c9185d5',
+    };
+};
+
+export const aReferralSource = (overrides?: Partial<ReferralSource>): ReferralSource => {
+    return {
+        active: overrides && overrides.hasOwnProperty('active') ? overrides.active! : false,
+        allLocations: overrides && overrides.hasOwnProperty('allLocations') ? overrides.allLocations! : true,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'c29cd158-2b24-442f-8c2d-afdd3408ee81',
+        insertedAt: overrides && overrides.hasOwnProperty('insertedAt') ? overrides.insertedAt! : 'veniam',
+        locationId: overrides && overrides.hasOwnProperty('locationId') ? overrides.locationId! : 'f170a5e6-cf32-4bf0-9983-ccad336f135e',
+        locations: overrides && overrides.hasOwnProperty('locations') ? overrides.locations! : [aLocation()],
+        name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'quae',
+    };
+};
+
 export const aRemoveCartOfferInput = (overrides?: Partial<RemoveCartOfferInput>): RemoveCartOfferInput => {
     return {
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9a4d2ad1-1087-4111-9036-0a16fe84b8a6',
@@ -3808,6 +5628,12 @@ export const aRemoveCartSelectedItemInput = (overrides?: Partial<RemoveCartSelec
 export const aRemoveCartSelectedItemPayload = (overrides?: Partial<RemoveCartSelectedItemPayload>): RemoveCartSelectedItemPayload => {
     return {
         cart: overrides && overrides.hasOwnProperty('cart') ? overrides.cart! : aCart(),
+    };
+};
+
+export const aRemoveCustomFormImageResult = (overrides?: Partial<RemoveCustomFormImageResult>): RemoveCustomFormImageResult => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '67063e94-922d-4176-8394-f5ed407d65fa',
     };
 };
 
@@ -3855,20 +5681,30 @@ export const aRootMutationType = (overrides?: Partial<RootMutationType>): RootMu
         cartClear: overrides && overrides.hasOwnProperty('cartClear') ? overrides.cartClear! : aCartClearPayload(),
         cartSetLocation: overrides && overrides.hasOwnProperty('cartSetLocation') ? overrides.cartSetLocation! : aCartSetLocationPayload(),
         checkoutCart: overrides && overrides.hasOwnProperty('checkoutCart') ? overrides.checkoutCart! : aCheckoutCartPayload(),
+        confirmAppointment: overrides && overrides.hasOwnProperty('confirmAppointment') ? overrides.confirmAppointment! : aConfirmAppointmentPayload(),
         createCart: overrides && overrides.hasOwnProperty('createCart') ? overrides.createCart! : aCreateCartPayload(),
         createCartGiftCardItemEmailFulfillment: overrides && overrides.hasOwnProperty('createCartGiftCardItemEmailFulfillment') ? overrides.createCartGiftCardItemEmailFulfillment! : aCreateCartGiftCardItemEmailFulfillmentPayload(),
         createCartGuest: overrides && overrides.hasOwnProperty('createCartGuest') ? overrides.createCartGuest! : aCreateCartGuestPayload(),
+        createClientNote: overrides && overrides.hasOwnProperty('createClientNote') ? overrides.createClientNote! : aCreateClientNotePayload(),
+        createCreditCard: overrides && overrides.hasOwnProperty('createCreditCard') ? overrides.createCreditCard! : aCreateCreditCardResult(),
+        createCustomForm: overrides && overrides.hasOwnProperty('createCustomForm') ? overrides.createCustomForm! : aCustomForm(),
         deleteCartGiftCardItemEmailFulfillment: overrides && overrides.hasOwnProperty('deleteCartGiftCardItemEmailFulfillment') ? overrides.deleteCartGiftCardItemEmailFulfillment! : aDeleteCartGiftCardItemEmailFulfillmentPayload(),
         deleteCartGuest: overrides && overrides.hasOwnProperty('deleteCartGuest') ? overrides.deleteCartGuest! : aDeleteCartGuestPayload(),
+        membershipPaymentMethodUpdate: overrides && overrides.hasOwnProperty('membershipPaymentMethodUpdate') ? overrides.membershipPaymentMethodUpdate! : aMembershipPaymentMethodUpdatePayload(),
+        membershipPaymentMethodUpdateAndRenew: overrides && overrides.hasOwnProperty('membershipPaymentMethodUpdateAndRenew') ? overrides.membershipPaymentMethodUpdateAndRenew! : aMembershipPaymentMethodUpdateAndRenewPayload(),
         removeCartOffer: overrides && overrides.hasOwnProperty('removeCartOffer') ? overrides.removeCartOffer! : aRemoveCartOfferPayload(),
         removeCartSelectedItem: overrides && overrides.hasOwnProperty('removeCartSelectedItem') ? overrides.removeCartSelectedItem! : aRemoveCartSelectedItemPayload(),
+        removeCustomFormImage: overrides && overrides.hasOwnProperty('removeCustomFormImage') ? overrides.removeCustomFormImage! : aRemoveCustomFormImageResult(),
         requestCode: overrides && overrides.hasOwnProperty('requestCode') ? overrides.requestCode! : aRequestCodePayload(),
         reserveCartBookableItems: overrides && overrides.hasOwnProperty('reserveCartBookableItems') ? overrides.reserveCartBookableItems! : aReserveCartBookableItemsPayload(),
         selectCartPaymentMethod: overrides && overrides.hasOwnProperty('selectCartPaymentMethod') ? overrides.selectCartPaymentMethod! : aSelectCartPaymentMethodPayload(),
         sendCartOwnershipCodeByEmail: overrides && overrides.hasOwnProperty('sendCartOwnershipCodeByEmail') ? overrides.sendCartOwnershipCodeByEmail! : aSendCartOwnershipCodeByEmailPayload(),
         sendCartOwnershipCodeBySms: overrides && overrides.hasOwnProperty('sendCartOwnershipCodeBySms') ? overrides.sendCartOwnershipCodeBySms! : aSendCartOwnershipCodeBySmsPayload(),
+        startCustomFormImageUpload: overrides && overrides.hasOwnProperty('startCustomFormImageUpload') ? overrides.startCustomFormImageUpload! : aStartCustomFormImageUploadResult(),
         takeCartOwnership: overrides && overrides.hasOwnProperty('takeCartOwnership') ? overrides.takeCartOwnership! : aTakeCartOwnershipPayload(),
         takeCartOwnershipByCode: overrides && overrides.hasOwnProperty('takeCartOwnershipByCode') ? overrides.takeCartOwnershipByCode! : aTakeCartOwnershipByCodePayload(),
+        unstableClientPasswordlessAuthRequestCode: overrides && overrides.hasOwnProperty('unstableClientPasswordlessAuthRequestCode') ? overrides.unstableClientPasswordlessAuthRequestCode! : anUnstableClientPasswordlessAuthRequestCodePayload(),
+        unstableClientPasswordlessAuthSignIn: overrides && overrides.hasOwnProperty('unstableClientPasswordlessAuthSignIn') ? overrides.unstableClientPasswordlessAuthSignIn! : anUnstableClientPasswordlessAuthSignInPayload(),
         updateCart: overrides && overrides.hasOwnProperty('updateCart') ? overrides.updateCart! : anUpdateCartPayload(),
         updateCartGiftCardItemEmailFulfillment: overrides && overrides.hasOwnProperty('updateCartGiftCardItemEmailFulfillment') ? overrides.updateCartGiftCardItemEmailFulfillment! : anUpdateCartGiftCardItemEmailFulfillmentPayload(),
         updateCartGuest: overrides && overrides.hasOwnProperty('updateCartGuest') ? overrides.updateCartGuest! : anUpdateCartGuestPayload(),
@@ -3876,6 +5712,9 @@ export const aRootMutationType = (overrides?: Partial<RootMutationType>): RootMu
         updateCartSelectedGiftCardItem: overrides && overrides.hasOwnProperty('updateCartSelectedGiftCardItem') ? overrides.updateCartSelectedGiftCardItem! : anUpdateCartSelectedGiftCardItemPayload(),
         updateCartSelectedPurchasableItem: overrides && overrides.hasOwnProperty('updateCartSelectedPurchasableItem') ? overrides.updateCartSelectedPurchasableItem! : anUpdateCartSelectedPurchasableItemPayload(),
         updateClient: overrides && overrides.hasOwnProperty('updateClient') ? overrides.updateClient! : anUpdateClientPayload(),
+        updateClientInfo: overrides && overrides.hasOwnProperty('updateClientInfo') ? overrides.updateClientInfo! : anUpdateClientInfoPayload(),
+        updateCommunicationSubscriptions: overrides && overrides.hasOwnProperty('updateCommunicationSubscriptions') ? overrides.updateCommunicationSubscriptions! : anUpdateCommunicationSubscriptionsPayload(),
+        updateCustomForm: overrides && overrides.hasOwnProperty('updateCustomForm') ? overrides.updateCustomForm! : aCustomForm(),
     };
 };
 
@@ -3888,10 +5727,15 @@ export const aRootQueryType = (overrides?: Partial<RootQueryType>): RootQueryTyp
         cartBookableStaffVariants: overrides && overrides.hasOwnProperty('cartBookableStaffVariants') ? overrides.cartBookableStaffVariants! : [aCartAvailableBookableItemStaffVariant()],
         cartBookableTimes: overrides && overrides.hasOwnProperty('cartBookableTimes') ? overrides.cartBookableTimes! : [aCartBookableTime()],
         client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
+        customForm: overrides && overrides.hasOwnProperty('customForm') ? overrides.customForm! : aCustomForm(),
+        customFormTemplate: overrides && overrides.hasOwnProperty('customFormTemplate') ? overrides.customFormTemplate! : aCustomFormTemplate(),
         locations: overrides && overrides.hasOwnProperty('locations') ? overrides.locations! : aLocationConnection(),
+        membership: overrides && overrides.hasOwnProperty('membership') ? overrides.membership! : aMembership(),
         myAppointments: overrides && overrides.hasOwnProperty('myAppointments') ? overrides.myAppointments! : anAppointmentConnection(),
+        myCreditCards: overrides && overrides.hasOwnProperty('myCreditCards') ? overrides.myCreditCards! : aCreditCardConnection(),
         myMemberships: overrides && overrides.hasOwnProperty('myMemberships') ? overrides.myMemberships! : aMembershipConnection(),
         node: overrides && overrides.hasOwnProperty('node') ? overrides.node! : aNode(),
+        unstableClientPasswordlessAuthMethods: overrides && overrides.hasOwnProperty('unstableClientPasswordlessAuthMethods') ? overrides.unstableClientPasswordlessAuthMethods! : [anAuthMethod()],
     };
 };
 
@@ -3978,6 +5822,20 @@ export const aStaffRole = (overrides?: Partial<StaffRole>): StaffRole => {
     };
 };
 
+export const aStartCustomFormImageUploadInput = (overrides?: Partial<StartCustomFormImageUploadInput>): StartCustomFormImageUploadInput => {
+    return {
+        filename: overrides && overrides.hasOwnProperty('filename') ? overrides.filename! : 'laborum',
+        locationId: overrides && overrides.hasOwnProperty('locationId') ? overrides.locationId! : '9477c76d-29fe-431c-ac7e-aff7eb47f4ba',
+    };
+};
+
+export const aStartCustomFormImageUploadResult = (overrides?: Partial<StartCustomFormImageUploadResult>): StartCustomFormImageUploadResult => {
+    return {
+        customFormImageId: overrides && overrides.hasOwnProperty('customFormImageId') ? overrides.customFormImageId! : 'f90d1d1f-6e3d-4ad6-acfc-f36d19913ca3',
+        signedPutUrl: overrides && overrides.hasOwnProperty('signedPutUrl') ? overrides.signedPutUrl! : 'sit',
+    };
+};
+
 export const aTakeCartOwnershipByCodeInput = (overrides?: Partial<TakeCartOwnershipByCodeInput>): TakeCartOwnershipByCodeInput => {
     return {
         cartId: overrides && overrides.hasOwnProperty('cartId') ? overrides.cartId! : 'est',
@@ -4001,6 +5859,32 @@ export const aTakeCartOwnershipInput = (overrides?: Partial<TakeCartOwnershipInp
 export const aTakeCartOwnershipPayload = (overrides?: Partial<TakeCartOwnershipPayload>): TakeCartOwnershipPayload => {
     return {
         cart: overrides && overrides.hasOwnProperty('cart') ? overrides.cart! : aCart(),
+    };
+};
+
+export const anUnstableClientPasswordlessAuthRequestCodeInput = (overrides?: Partial<UnstableClientPasswordlessAuthRequestCodeInput>): UnstableClientPasswordlessAuthRequestCodeInput => {
+    return {
+        methodId: overrides && overrides.hasOwnProperty('methodId') ? overrides.methodId! : 'dolores',
+    };
+};
+
+export const anUnstableClientPasswordlessAuthRequestCodePayload = (overrides?: Partial<UnstableClientPasswordlessAuthRequestCodePayload>): UnstableClientPasswordlessAuthRequestCodePayload => {
+    return {
+        requestId: overrides && overrides.hasOwnProperty('requestId') ? overrides.requestId! : 'et',
+    };
+};
+
+export const anUnstableClientPasswordlessAuthSignInInput = (overrides?: Partial<UnstableClientPasswordlessAuthSignInInput>): UnstableClientPasswordlessAuthSignInInput => {
+    return {
+        code: overrides && overrides.hasOwnProperty('code') ? overrides.code! : 8439,
+        requestId: overrides && overrides.hasOwnProperty('requestId') ? overrides.requestId! : 'minima',
+    };
+};
+
+export const anUnstableClientPasswordlessAuthSignInPayload = (overrides?: Partial<UnstableClientPasswordlessAuthSignInPayload>): UnstableClientPasswordlessAuthSignInPayload => {
+    return {
+        client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
+        token: overrides && overrides.hasOwnProperty('token') ? overrides.token! : 'error',
     };
 };
 
@@ -4104,6 +5988,24 @@ export const anUpdateCartSelectedPurchasableItemPayload = (overrides?: Partial<U
     };
 };
 
+export const anUpdateClientInfoInput = (overrides?: Partial<UpdateClientInfoInput>): UpdateClientInfoInput => {
+    return {
+        address: overrides && overrides.hasOwnProperty('address') ? overrides.address! : anAddressInput(),
+        dob: overrides && overrides.hasOwnProperty('dob') ? overrides.dob! : '2005-04-27',
+        emergencyContactName: overrides && overrides.hasOwnProperty('emergencyContactName') ? overrides.emergencyContactName! : 'autem',
+        emergencyContactPhone: overrides && overrides.hasOwnProperty('emergencyContactPhone') ? overrides.emergencyContactPhone! : 'doloremque',
+        emergencyContactRelationship: overrides && overrides.hasOwnProperty('emergencyContactRelationship') ? overrides.emergencyContactRelationship! : 'accusantium',
+        pronoun: overrides && overrides.hasOwnProperty('pronoun') ? overrides.pronoun! : 'aut',
+        referral: overrides && overrides.hasOwnProperty('referral') ? overrides.referral! : aReferralInput(),
+    };
+};
+
+export const anUpdateClientInfoPayload = (overrides?: Partial<UpdateClientInfoPayload>): UpdateClientInfoPayload => {
+    return {
+        client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
+    };
+};
+
 export const anUpdateClientInput = (overrides?: Partial<UpdateClientInput>): UpdateClientInput => {
     return {
         dob: overrides && overrides.hasOwnProperty('dob') ? overrides.dob! : '1981-06-14',
@@ -4111,11 +6013,36 @@ export const anUpdateClientInput = (overrides?: Partial<UpdateClientInput>): Upd
         firstName: overrides && overrides.hasOwnProperty('firstName') ? overrides.firstName! : 'in',
         lastName: overrides && overrides.hasOwnProperty('lastName') ? overrides.lastName! : 'nulla',
         mobilePhone: overrides && overrides.hasOwnProperty('mobilePhone') ? overrides.mobilePhone! : 'eligendi',
+        pronoun: overrides && overrides.hasOwnProperty('pronoun') ? overrides.pronoun! : 'eum',
     };
 };
 
 export const anUpdateClientPayload = (overrides?: Partial<UpdateClientPayload>): UpdateClientPayload => {
     return {
         client: overrides && overrides.hasOwnProperty('client') ? overrides.client! : aClient(),
+    };
+};
+
+export const anUpdateCommunicationSubscriptionsInput = (overrides?: Partial<UpdateCommunicationSubscriptionsInput>): UpdateCommunicationSubscriptionsInput => {
+    return {
+        communicationSubscriptions: overrides && overrides.hasOwnProperty('communicationSubscriptions') ? overrides.communicationSubscriptions! : [aCommunicationSubscriptionInput()],
+    };
+};
+
+export const anUpdateCommunicationSubscriptionsPayload = (overrides?: Partial<UpdateCommunicationSubscriptionsPayload>): UpdateCommunicationSubscriptionsPayload => {
+    return {
+        communicationSubscriptions: overrides && overrides.hasOwnProperty('communicationSubscriptions') ? overrides.communicationSubscriptions! : [aCommunicationSubscription()],
+        success: overrides && overrides.hasOwnProperty('success') ? overrides.success! : true,
+    };
+};
+
+export const anUpdateCustomFormInput = (overrides?: Partial<UpdateCustomFormInput>): UpdateCustomFormInput => {
+    return {
+        answers: overrides && overrides.hasOwnProperty('answers') ? overrides.answers! : [aCustomFormAnswer()],
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '6e691389-9f6f-4780-a6f7-2d02333a1294',
+        offline: overrides && overrides.hasOwnProperty('offline') ? overrides.offline! : false,
+        submit: overrides && overrides.hasOwnProperty('submit') ? overrides.submit! : false,
+        submittedAt: overrides && overrides.hasOwnProperty('submittedAt') ? overrides.submittedAt! : 'nobis',
+        void: overrides && overrides.hasOwnProperty('void') ? overrides.void! : true,
     };
 };

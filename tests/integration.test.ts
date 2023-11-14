@@ -64,6 +64,7 @@ describe("carts", () => {
   test("create and set location", async () => {
     const locations = await anon.locations.list();
     const cart = await anon.carts.create();
+    
     expect(cart).toBeInstanceOf(Cart);
     let categories = await cart.getAvailableCategories();
     const item = categories[0].availableItems[0] as CartAvailableBookableItem;
@@ -207,7 +208,8 @@ describe("carts", () => {
         number: "4242424242424242",
         cvv: "111",
         exp_month: 1,
-        exp_year: 2025
+        exp_year: 2025,
+        address_postal_code: "90210"
       }
     });
 

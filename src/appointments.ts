@@ -88,11 +88,20 @@ class Appointment extends Node<Graph.Appointment> {
   /** A collection of appointment services. */
   appointmentServices: Array<AppointmentService>;
 
+   /** Whether or not the client can cancel this appointment */
+  cancellable: Scalars['Boolean'];
+
   /** Information about the cancellation, if present */
   cancellation: Maybe<AppointmentCancellation>;
 
   /** Boolean signifying if the appointment is cancelled or not */
   cancelled: Scalars["Boolean"];
+
+  /** The duration of the appointment for the client */
+  clientDuration: Scalars['Int'];
+ 
+  /** Whether or not the client can confirm this appointment at this time */
+  confirmable: Scalars['Boolean'];
 
   /** When the appointment was created (in Etc/UTC) */
   createdAt: Scalars["DateTime"];
@@ -106,8 +115,17 @@ class Appointment extends Node<Graph.Appointment> {
   /** The ID of an object */
   id: Scalars["ID"];
 
+  /** Whether or not the appointment is a group appointment */
+  isGroup: Scalars['Boolean'];
+
+  /** Whether or not the appointment is recurring */
+  isRecurring: Scalars['Boolean'];
+
   /** Internal notes on the appointment */
   notes: Maybe<Scalars["String"]>;
+
+  /** Whether or not the client can reschedule this appointment */
+  reschedulable: Scalars['Boolean'];
 
   /** Start time for the appointment */
   startAt: Scalars["DateTime"];
