@@ -12,13 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - name: Yarn install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command          
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
       - run: npm test
         env:
           SANDBOX_API_KEY: ${{ secrets.SANDBOX_API_KEY }}

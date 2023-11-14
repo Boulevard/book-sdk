@@ -1,0 +1,22 @@
+name: Install Dependencies
+description: Installs all project dependencies.
+inputs:
+  github-token:
+    description: Needed for authenticating with GitHub's package repository.
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: Install system dependencies
+      uses: asdf-vm/actions/install@v2
+    - name: Hydrate node modules cache
+      uses: actions/cache@v3
+      with:
+        path: "**/node_modules"
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: Install node modules
+      shell: bash
+      run: |
+        echo "//npm.pkg.github.com/:_authToken=${{ inputs.github-token }}" >> .npmrc
+        yarn install --frozen-lockfile
