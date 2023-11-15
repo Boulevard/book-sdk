@@ -90,13 +90,19 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#appointmentservices" class="tsd-kind-icon">appointment<wbr>Services</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#calendarlinks" class="tsd-kind-icon">calendar<wbr>Links</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#cancellable" class="tsd-kind-icon">cancellable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#cancellation" class="tsd-kind-icon">cancellation</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#cancelled" class="tsd-kind-icon">cancelled</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#clientduration" class="tsd-kind-icon">client<wbr>Duration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#confirmable" class="tsd-kind-icon">confirmable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#createdat" class="tsd-kind-icon">created<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#duration" class="tsd-kind-icon">duration</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#endat" class="tsd-kind-icon">end<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#isgroup" class="tsd-kind-icon">is<wbr>Group</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#isrecurring" class="tsd-kind-icon">is<wbr>Recurring</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#notes" class="tsd-kind-icon">notes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#reschedulable" class="tsd-kind-icon">reschedulable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#startat" class="tsd-kind-icon">start<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="appointments.appointment.html#state" class="tsd-kind-icon">state</a></li>
 							</ul>
@@ -123,7 +129,7 @@
 					<div class="tsd-signature tsd-kind-icon">appointment<wbr>Services<span class="tsd-signature-symbol">:</span> <a href="appointments.appointmentservice.html" class="tsd-signature-type" data-tsd-kind="Class">AppointmentService</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L89">appointments.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L89">appointments.ts:89</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -138,7 +144,7 @@
 					<div class="tsd-signature tsd-kind-icon">calendar<wbr>Links<span class="tsd-signature-symbol">:</span> <a href="../modules/appointments.html#calendarlinks" class="tsd-signature-type" data-tsd-kind="Type alias">CalendarLinks</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L119">appointments.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L137">appointments.ts:137</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -148,12 +154,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="cancellable" class="tsd-anchor"></a>
+					<h3>cancellable</h3>
+					<div class="tsd-signature tsd-kind-icon">cancellable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L92">appointments.ts:92</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether or not the client can cancel this appointment</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="cancellation" class="tsd-anchor"></a>
 					<h3>cancellation</h3>
 					<div class="tsd-signature tsd-kind-icon">cancellation<span class="tsd-signature-symbol">:</span> <a href="appointments.appointmentcancellation.html" class="tsd-signature-type" data-tsd-kind="Class">AppointmentCancellation</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L92">appointments.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L95">appointments.ts:95</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">cancelled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L95">appointments.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L98">appointments.ts:98</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -178,12 +199,42 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="clientduration" class="tsd-anchor"></a>
+					<h3>client<wbr>Duration</h3>
+					<div class="tsd-signature tsd-kind-icon">client<wbr>Duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L101">appointments.ts:101</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The duration of the appointment for the client</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="confirmable" class="tsd-anchor"></a>
+					<h3>confirmable</h3>
+					<div class="tsd-signature tsd-kind-icon">confirmable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L104">appointments.ts:104</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether or not the client can confirm this appointment at this time</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="createdat" class="tsd-anchor"></a>
 					<h3>created<wbr>At</h3>
 					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L98">appointments.ts:98</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L107">appointments.ts:107</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +249,7 @@
 					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L101">appointments.ts:101</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L110">appointments.ts:110</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,7 +264,7 @@
 					<div class="tsd-signature tsd-kind-icon">end<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L104">appointments.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L113">appointments.ts:113</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -228,7 +279,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L107">appointments.ts:107</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L116">appointments.ts:116</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -238,12 +289,42 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="isgroup" class="tsd-anchor"></a>
+					<h3>is<wbr>Group</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Group<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L119">appointments.ts:119</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether or not the appointment is a group appointment</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="isrecurring" class="tsd-anchor"></a>
+					<h3>is<wbr>Recurring</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Recurring<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L122">appointments.ts:122</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether or not the appointment is recurring</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="notes" class="tsd-anchor"></a>
 					<h3>notes</h3>
 					<div class="tsd-signature tsd-kind-icon">notes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L110">appointments.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L125">appointments.ts:125</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -253,12 +334,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="reschedulable" class="tsd-anchor"></a>
+					<h3>reschedulable</h3>
+					<div class="tsd-signature tsd-kind-icon">reschedulable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L128">appointments.ts:128</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether or not the client can reschedule this appointment</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="startat" class="tsd-anchor"></a>
 					<h3>start<wbr>At</h3>
 					<div class="tsd-signature tsd-kind-icon">start<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L113">appointments.ts:113</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L131">appointments.ts:131</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -273,7 +369,7 @@
 					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="../enums/appointments.appointmentstate.html" class="tsd-signature-type" data-tsd-kind="Enumeration">AppointmentState</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L116">appointments.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L134">appointments.ts:134</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -295,7 +391,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L224">appointments.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L242">appointments.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L247">appointments.ts:247</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L265">appointments.ts:265</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -355,7 +451,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L261">appointments.ts:261</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L279">appointments.ts:279</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,7 +478,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L144">appointments.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L162">appointments.ts:162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -424,7 +520,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L174">appointments.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L192">appointments.ts:192</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -466,7 +562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/appointments.ts#L201">appointments.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/appointments.ts#L219">appointments.ts:219</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -546,10 +642,19 @@
 								<a href="appointments.appointment.html#calendarlinks" class="tsd-kind-icon">calendar<wbr>Links</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#cancellable" class="tsd-kind-icon">cancellable</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="appointments.appointment.html#cancellation" class="tsd-kind-icon">cancellation</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="appointments.appointment.html#cancelled" class="tsd-kind-icon">cancelled</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#clientduration" class="tsd-kind-icon">client<wbr>Duration</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#confirmable" class="tsd-kind-icon">confirmable</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="appointments.appointment.html#createdat" class="tsd-kind-icon">created<wbr>At</a>
@@ -564,7 +669,16 @@
 								<a href="appointments.appointment.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#isgroup" class="tsd-kind-icon">is<wbr>Group</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#isrecurring" class="tsd-kind-icon">is<wbr>Recurring</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="appointments.appointment.html#notes" class="tsd-kind-icon">notes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="appointments.appointment.html#reschedulable" class="tsd-kind-icon">reschedulable</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="appointments.appointment.html#startat" class="tsd-kind-icon">start<wbr>At</a>
