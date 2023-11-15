@@ -102,7 +102,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Booking<wbr>Question<wbr>Answer<wbr>Missing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_BOOKING_QUESTION_ANSWER_MISSING&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1187">graph.ts:1187</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1319">graph.ts:1319</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Gift<wbr>Card<wbr>Item<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_GIFT_CARD_ITEM_PRICE&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1197">graph.ts:1197</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1329">graph.ts:1329</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Client<wbr>Information<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_CLIENT_INFORMATION&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1208">graph.ts:1208</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1345">graph.ts:1345</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -153,9 +153,14 @@
 						<a href="#resolution" id="resolution" style="color: inherit; text-decoration: none;">
 							<h2>Resolution</h2>
 						</a>
-						<p>Anonymous carts cannot be checked out. Either an existing user needs to own
-							the cart, or client information must be added using the <code>clientInformation</code>
-						field.</p>
+						<p>Anonymous carts cannot be checked out. Either an authenticated user needs to
+							take ownership of the cart using the <code>takeCartOwnership</code> mutation, or client
+							information must be added using the <code>clientInformation</code> field. The following
+						fields are required before checkout:</p>
+						<ul>
+							<li><code>firstName</code></li>
+						</ul>
+						<p>Other fields are recommended.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -164,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Payment<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_PAYMENT_METHOD&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1227">graph.ts:1227</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1364">graph.ts:1364</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +190,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Item<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEM_TIME&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1240">graph.ts:1240</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1377">graph.ts:1377</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -208,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_ITEMS&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1217">graph.ts:1217</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1354">graph.ts:1354</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -228,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cart<wbr>Missing<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;CART_MISSING_LOCATION&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/d071761/src/graph.ts#L1248">graph.ts:1248</a></li>
+							<li>Defined in <a href="https://github.com/Boulevard/book-sdk/blob/27aac9f/src/graph.ts#L1385">graph.ts:1385</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
