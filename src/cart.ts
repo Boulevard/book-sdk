@@ -740,7 +740,8 @@ class Cart extends Node<Graph.Cart> {
    */
   async getAvailablePaymentMethods(): Promise<Array<CartItemPaymentMethod>> {
     const response = await this.platformClient.request(
-      graph.availablePaymentMethodsQuery
+      graph.availablePaymentMethodsQuery,
+      { id: this.id }
     );
 
     return response.cart.availablePaymentMethods.map(
