@@ -335,7 +335,7 @@ export const availableBookableItemStaffVariantsQuery = gql`
 `;
 
 export const availablePaymentMethodsQuery = gql`
-  ${fragments}
+  ${fragments.paymentMethod}
   query Cart($id: ID!) {
     cart(id: $id) {
       availablePaymentMethods {
@@ -346,7 +346,7 @@ export const availablePaymentMethodsQuery = gql`
 `;
 
 export const bookableStaffVariantsQuery = gql`
-  ${fragments}
+  ${staffFragments}
   query CartBookableStaffVariants($id: ID!, $itemId: ID!, bookableTimeId: ID!) {
     cartBookableStaffVariants(id: $id, itemId: $itemId, bookableTimeId: $bookableTimeId) {
       id
