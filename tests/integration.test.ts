@@ -64,7 +64,7 @@ describe("carts", () => {
   test("create and set location", async () => {
     const locations = await anon.locations.list();
     const cart = await anon.carts.create();
-    
+
     expect(cart).toBeInstanceOf(Cart);
     let categories = await cart.getAvailableCategories();
     const item = categories[0].availableItems[0] as CartAvailableBookableItem;
@@ -188,7 +188,10 @@ describe("carts", () => {
     cart = await cart.addBookableItem(service as CartAvailableBookableItem);
 
     const dates = await cart.getBookableDates();
-    const date = dates[0];
+    // kind of a hack to protect against flaky timezone boundary behaviour
+    // selects the next day after today, just in case today is too late in the day
+    // we should always be able to use tomorrow, but just to be safe fallback on today
+    const date = dates[1] || dates[0];
 
     const times = await cart.getBookableTimes(date);
     const time = times[0];
