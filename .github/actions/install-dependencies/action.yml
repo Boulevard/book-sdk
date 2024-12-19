@@ -1,10 +1,9 @@
 name: Install Dependencies
 description: Installs all project dependencies.
 inputs:
-  github-token:
+  npm-token:
     description: Needed for authenticating with GitHub's package repository.
     required: true
-    type: string
 runs:
   using: "composite"
   steps:
@@ -18,5 +17,7 @@ runs:
     - name: Install node modules
       shell: bash
       run: |
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" >> .npmrc
         echo "registry=https://registry.npmjs.org" >> .npmrc
+        echo "always-auth=true" >> .npmrc
         yarn install --frozen-lockfile
