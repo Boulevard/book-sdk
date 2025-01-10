@@ -16,4 +16,5 @@ jobs:
         uses: ./.github/actions/install-dependencies
       - run: npm test
         env:
+          TZ: "America/Los_Angeles"
           SANDBOX_API_KEY: ${{ secrets.SANDBOX_API_KEY }}

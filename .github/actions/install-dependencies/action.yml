@@ -14,10 +14,12 @@ runs:
       with:
         path: "**/node_modules"
         key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-    - name: Install node modules
+    - name: Configure npmrc
       shell: bash
       run: |
         echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" >> .npmrc
         echo "registry=https://registry.npmjs.org" >> .npmrc
         echo "always-auth=true" >> .npmrc
-        yarn install --frozen-lockfile
+    - name: Install node modules
+      shell: bash
+      run: yarn install --frozen-lockfile
