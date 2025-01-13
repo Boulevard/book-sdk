@@ -26,6 +26,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
       - run: npm run build
-      # if publish is failing, the current token has likely expired and a new token needs to be created
-      # create a new granular token with read/write access to expire in 1 year at https://www.npmjs.com/settings/blvd-it/tokens/
       - run: npm publish --access public

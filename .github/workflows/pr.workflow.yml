@@ -14,7 +14,13 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
       - run: npm test
         env:
           TZ: "America/Los_Angeles"
           SANDBOX_API_KEY: ${{ secrets.SANDBOX_API_KEY }}
+      # if whoami is failing, the current token has likely expired and a new token needs to be created
+      # create a new granular token with read/write access to expire in 1 year at https://www.npmjs.com/settings/blvd-it/tokens/
+      - name: Verify npm token auth
+        run: npm whoami > /dev/null
