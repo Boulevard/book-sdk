@@ -497,9 +497,6 @@ export const deleteGuestMutation = gql`
       cart {
         ...CartProperties
       }
-      guest {
-        ...CartGuestProperties
-      }
     }
   }
 `;

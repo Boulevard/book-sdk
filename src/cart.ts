@@ -386,7 +386,24 @@ class Cart extends Node<Graph.Cart> {
           body: JSON.stringify(details)
         }
       );
-      const { token } = await response.json();
+
+      const result = await response.json();
+
+      if (response.status !== 200) {
+        let reason: string
+
+        switch (result.type) {
+          case "validation":
+            reason = "validation error";
+            break;
+          default:
+            reason = "unknown error";
+        }
+
+        throw new Error(`Failed to tokenize card details: ${reason}`);
+      }
+
+      const { token } = result;
       return token;
     }
   }
