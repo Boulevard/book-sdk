@@ -13,7 +13,6 @@
   </p>
 </div>
 
-
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -29,7 +28,7 @@
 
 ## About the project
 
-[Boulevard](https://joinblvd.com) is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses. 
+[Boulevard](https://joinblvd.com) is an intelligent scheduling solution and comprehensive point of sale system that increases revenue and lowers costs for salons, spas, and other appointment-based businesses.
 
 With this software development kit (SDK) you can create your own custom booking experiences for your business using Boulevard.
 
@@ -94,7 +93,7 @@ await cart.addCardPaymentMethod({
     number: "4242424242424242",
     cvv: "111",
     exp_month: 1,
-    exp_year: 2025,
+    exp_year: 2028,
     address_postal_code: "90210"
   }
 });
@@ -111,6 +110,7 @@ To see available API operations browse the methods tied to class definitions. [E
 ## Development
 
 ### Refresh Sched bindings
+
 This will fetch the graphql schema from Sched and generate the typescript bindings and mocks.
 
 ```
@@ -123,7 +123,7 @@ yarn run gen
 
 ### Run tests
 
-To be able to run tests you need `ts-node` installed globaly 
+To be able to run tests you need `ts-node` installed globaly
 
 ```
 npm -g install ts-node
@@ -157,6 +157,7 @@ yarn run typedoc
 Then Commit and push (inc tags).
 
 ## Contributing
+
 Pull requests are welcome. See the [contribution guidelines](https://github.com/Boulevard/book-sdk/blob/master/CONTRIBUTING.md) for more information.
 
 ## Issues

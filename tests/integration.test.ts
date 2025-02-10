@@ -160,7 +160,7 @@ describe("carts", () => {
   //       number: "4242424242424242",
   //       cvv: "111",
   //       exp_month: 1,
-  //       exp_year: 2025
+  //       exp_year: 2028
   //     }
   //   });
 
@@ -211,7 +211,7 @@ describe("carts", () => {
         number: "4242424242424242",
         cvv: "111",
         exp_month: 1,
-        exp_year: 2025,
+        exp_year: 2028,
         address_postal_code: "90210"
       }
     });
@@ -253,7 +253,7 @@ function generateToken(): string {
   const clientId = "f9d25e50-c5f0-4879-ae20-026303e23405";
 
   const payload = `${prefix}${businessId}${clientId}${timestamp}`;
-  const key = Buffer.from(process.env.API_SECRET_KEY, "base64");
+  const key = Buffer.from(apiKey, "base64");
   const signature = createHmac("sha256", key)
     .update(payload)
     .digest("base64");
