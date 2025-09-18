@@ -3,3 +3,4 @@ lib*
 .env
 schema.json
 .DS_Store
+.npmrc

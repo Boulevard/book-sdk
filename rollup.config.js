@@ -1,6 +1,7 @@
 // rollup.config.js
 import typescript from "@rollup/plugin-typescript";
 import common from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default [
@@ -12,7 +13,7 @@ export default [
       format: "es",
       name: "blvd-book"
     },
-    plugins: [typescript()]
+    plugins: [typescript(), json()]
   },
   {
     input: "src/blvd.ts",
@@ -22,6 +23,6 @@ export default [
       format: "umd",
       name: "boulevard"
     },
-    plugins: [nodeResolve({ browser: true }), common(), typescript()]
+    plugins: [nodeResolve({ browser: true }), common(), typescript(), json()]
   }
 ];
