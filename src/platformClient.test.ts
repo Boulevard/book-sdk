@@ -1,5 +1,6 @@
 import fetch from "cross-fetch";
 import { PlatformClient, PlatformTarget } from "./platformClient";
+import { version } from "./../package.json";
 
 jest.mock("cross-fetch", mockFetch({}));
 
@@ -15,7 +16,7 @@ describe("testing api", () => {
       {
         body: '{"query":""}',
         headers: {
-          "Book-SDK-Version": "1.0.21",
+          "Book-SDK-Version": version,
           Authorization:
             "Basic MTk3ZjNlYWMtZjkwZC00MmIzLTgwZWQtZTNhNjgyODg2NDdiOg==",
           "Content-Type": "application/json"
@@ -40,7 +41,7 @@ describe("testing api", () => {
           Authorization:
             "Basic YTcyMjdhZDAtOTA0Mi00ZThkLTkzNDktMzMyYWI2NTQ0MDI3Og==",
           "Content-Type": "application/json",
-          "Book-SDK-Version": "1.0.21"
+          "Book-SDK-Version": version
         },
         method: "POST"
       }
@@ -64,7 +65,7 @@ describe("testing api", () => {
       {
         body: '{"query":""}',
         headers: {
-          "Book-SDK-Version": "1.0.21",
+          "Book-SDK-Version": version,
           Authorization:
             "Basic MjY1ZTUzNjUtYjc0Mi00MDlmLTk4ZWYtZDg5MGIzZWZkZTcwOg==",
           "Content-Type": "application/json"

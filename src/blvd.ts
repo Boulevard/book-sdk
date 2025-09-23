@@ -1,7 +1,7 @@
 import { Appointments } from "./appointments";
 import { Businesses } from "./businesses";
 import { Carts } from "./carts";
-import { PlatformClient, PlatformTarget } from "./platformClient";
+import { PlatformClient, PlatformTarget, SDK_VERSION } from "./platformClient";
 import { Clients } from "./clients";
 import { Locations } from "./locations";
 import { Maybe, Scalars } from "./graph";
@@ -33,4 +33,4 @@ class Blvd {
   }
 }
 
-export { Blvd, PlatformTarget, Maybe, Scalars };
+export { Blvd, PlatformTarget, Maybe, Scalars, SDK_VERSION };

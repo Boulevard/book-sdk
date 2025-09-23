@@ -2,9 +2,9 @@ import { GraphQLClient } from "graphql-request";
 import { RequestDocument, Variables } from "graphql-request/dist/types";
 import { getSdk, Sdk } from "./graph";
 import { inspect } from "util";
-// import { version } from './../package.json';
+import { version } from "./../package.json";
 
-const version = "1.0.21";
+export const SDK_VERSION = version;
 
 const btoa = string => {
   const buffer = Buffer.from(string.toString(), "binary");
@@ -100,7 +100,7 @@ class PlatformClient {
   private headers(): Record<"Authorization" | "Book-SDK-Version", string> {
     return {
       Authorization: `Basic ${this.token()}`,
-      "Book-SDK-Version": version
+      "Book-SDK-Version": SDK_VERSION
     };
   }
 }
