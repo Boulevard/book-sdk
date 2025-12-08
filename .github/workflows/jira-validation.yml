@@ -1,0 +1,38 @@
+name: Validate JIRA Issue
+
+on:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: validate
+        uses: Boulevard/jira-check-action@main
+        with:
+          require_in_title: "false"
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_body: ${{ github.event.pull_request.body }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          branch_name: ${{ github.event.pull_request.head.ref }}
+
+      - name: Post sticky comment on failure
+        if: steps.validate.outputs.validation_passed == 'false'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: jira-validation
+          message: ${{ steps.validate.outputs.error_message }}
+
+      - name: Delete sticky comment on success
+        if: steps.validate.outputs.validation_passed == 'true'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: jira-validation
+          delete: true
+
+      - name: Fail if invalid
+        if: steps.validate.outputs.validation_passed == 'false'
+        run: exit 1

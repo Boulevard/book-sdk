@@ -163,3 +163,21 @@ Pull requests are welcome. See the [contribution guidelines](https://github.com/
 ## Issues
 
 If you encounter any problems while trying to run the starter kit please create an issue.
+
+## JIRA Issue Validation
+
+Our CI pipeline validates all PR titles and bodies to ensure they contain a valid JIRA issue reference.
+
+A custom GitHub Action (`Boulevard/jira-check-action`) enforces this formatting standard and provides fast feedback in PRs.
+
+### How it works
+
+- Every pull request triggers the JIRA validation workflow.
+- The workflow checks the PR title, description, author, and branch name.
+- Sticky PR comments provide failure reasons.
+- The PR cannot merge if validation fails.
+
+### Expected JIRA formats
+
+Examples of valid PR references:
+PIE-456: Fix bug
