@@ -80,17 +80,45 @@ class Locations {
   constructor(private platformClient: PlatformClient) {}
 
   /**
-   * List locations for the business
+   * List locations for the business.
+   *
+   * Follows the connection's `pageInfo` until every page has been read, so a
+   * business with more locations than a single page holds still gets all of
+   * them. Previously the query took a fixed `first: 200` and ignored
+   * `pageInfo`, so anything past that was dropped with no indication.
    *
    * @async
+   * @param pageSize Locations to request per page. Defaults to 200.
    * @returns Promise containing a list of Locations
-   * @todo Pagination
    */
-  async list(): Promise<Array<Location>> {
-    const response = await this.platformClient.request(getLocationsQuery);
-    return response.locations.edges.map(
-      (edge: Graph.LocationEdge) => new Location(this.platformClient, edge.node)
-    );
+  async list(pageSize: number = 200): Promise<Array<Location>> {
+    const locations: Array<Location> = [];
+    let after: string | null = null;
+
+    for (;;) {
+      const response = await this.platformClient.request(getLocationsQuery, {
+        first: pageSize,
+        after
+      });
+
+      const connection = response.locations;
+
+      locations.push(
+        ...connection.edges.map(
+          (edge: Graph.LocationEdge) =>
+            new Location(this.platformClient, edge.node)
+        )
+      );
+
+      // A server that omits pageInfo yields a single page rather than looping
+      // forever.
+      const pageInfo = connection.pageInfo;
+      if (!pageInfo?.hasNextPage || !pageInfo.endCursor) {
+        return locations;
+      }
+
+      after = pageInfo.endCursor;
+    }
   }
 }
 

@@ -24,13 +24,17 @@ export const businessQuery = gql`
 
 export const businessLocationsQuery = gql`
   ${locationsFragments}
-  query Business {
+  query Business($first: Int, $after: String) {
     business {
-      locations(first: 100) {
+      locations(first: $first, after: $after) {
         edges {
           node {
             ...LocationProperties
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
