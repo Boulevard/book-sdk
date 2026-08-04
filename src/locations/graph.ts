@@ -28,12 +28,16 @@ export const fragments = gql`
 
 export const getLocationsQuery = gql`
   ${fragments}
-  query GetLocations {
-    locations(first: 200) {
+  query GetLocations($first: Int, $after: String) {
+    locations(first: $first, after: $after) {
       edges {
         node {
           ...LocationProperties
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

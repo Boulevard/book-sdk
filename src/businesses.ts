@@ -27,18 +27,45 @@ class Business extends Node<Graph.Business> {
   website: Scalars["String"];
 
   /**
-   * Get all locations for this business
+   * Get all locations for this business.
+   *
+   * Reads every page of the connection rather than the first one only. The
+   * query previously took a fixed `first: 100`, which silently truncated
+   * larger businesses and disagreed with `locations.list()`, where the same
+   * data was capped at 200.
    *
    * @async
    * @public
-   * @todo Pagination
+   * @param pageSize Locations to request per page. Defaults to 100.
    */
-  async getLocations(): Promise<Array<Location>> {
-    const response = await this.platformClient.request(businessLocationsQuery);
+  async getLocations(pageSize: number = 100): Promise<Array<Location>> {
+    const locations: Array<Location> = [];
+    let after: string | null = null;
 
-    return response.business.locations.edges.map(
-      ({ node }: Graph.LocationEdge) => new Location(this.platformClient, node)
-    );
+    for (;;) {
+      const response = await this.platformClient.request(
+        businessLocationsQuery,
+        { first: pageSize, after }
+      );
+
+      const connection = response.business.locations;
+
+      locations.push(
+        ...connection.edges.map(
+          ({ node }: Graph.LocationEdge) =>
+            new Location(this.platformClient, node)
+        )
+      );
+
+      // A server that omits pageInfo yields a single page rather than looping
+      // forever.
+      const pageInfo = connection.pageInfo;
+      if (!pageInfo?.hasNextPage || !pageInfo.endCursor) {
+        return locations;
+      }
+
+      after = pageInfo.endCursor;
+    }
   }
 }
 
